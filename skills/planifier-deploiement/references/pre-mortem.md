@@ -25,7 +25,11 @@ elle, personne ne le fait.
    technique), chacune écrit seule ses raisons d'échec avant de lire les nôtres, pour ne pas être
    ancrée ; les rôles les moins élevés parlent en premier ; leurs apports sont cités avec leur rôle.
    Si l'environnement permet un second agent, lui confier l'écriture des histoires sans lui montrer
-   les parades déjà prévues.
+   les parades déjà prévues. **Sans aucun rôle de l'entreprise** (cas ordinaire d'un dossier écrit hors
+   réunion), la ligne « Contributions » dit « rédigé par le consultant seul ». Le verdict reste celui du
+   consultant : valable pour décider d'engager, mais pas confirmé par ceux qui feront vivre le dispositif. Le
+   plan ajoute alors une étape où chaque rôle concerné écrit seul ses raisons d'échec avant le pilote, et le
+   pré-mortem se rejoue avec elles (étape 7 ci-dessous).
 4. **Raconter chaque histoire retenue** comme un récit concret (qui, quoi, quand, avec quel effet),
    puis noter : vraisemblance et gravité (haut / moyen / bas), signal d'alerte précoce (ce qu'on
    verrait avant l'échec), parade (ce qu'on fait maintenant), condition d'arrêt, propriétaire (rôle).
@@ -33,15 +37,22 @@ elle, personne ne le fait.
    aucune parade possible dans le plan actuel), *à mitiger* (réelle, mais une garde, un test ou un
    ajustement de périmètre la neutralise), *écartée* (théorique, hors périmètre ou déjà couverte :
    nommée avec sa raison, pour ne pas y revenir).
-6. **Rendre le verdict.** *Engager* : rien de bloquant, et chaque objection à mitiger a déjà sa
-   parade dans le plan. *Durcir* : au moins une objection à mitiger sans parade ; ajouter l'étape, le
-   test, le seuil ou la condition d'arrêt, et écrire la version durcie. *Pivoter* : au moins une
-   objection bloquante réelle ; changer d'approche (autre cas, autre option de `40-solutions.md`,
-   mesurer d'abord). Si rien de bloquant n'apparaît, le dire : inventer des objections pour faire
-   sérieux est une faute, comme en taire une.
-7. **Rejouer aux jalons** : fin du pilote, avant la mise en production, après la montée en charge.
-   Une nouvelle information change le paysage des risques ; un pré-mortem fait une fois et jamais
-   relu est un rituel.
+6. **Rendre le verdict, sur la première version du plan**, avant d'y intégrer les parades : celui qui écrit
+   les parades connaît déjà le verdict, et un verdict rendu sur la version durcie serait toujours « engager ».
+   Compter les histoires retenues (m) et celles dont la parade manque dans le plan (n).
+   - *Engager* : aucune objection bloquante et n = 0.
+   - *Durcir* : aucune objection bloquante, n ≥ 1, et chaque parade manquante s'écrit comme une étape, un
+     test, un seuil ou une condition d'arrêt du plan tel qu'il est. Écrire la version durcie.
+   - *Pivoter* : au moins une objection bloquante, ou une parade manquante qui oblige à changer le cas,
+     l'option de `40-solutions.md` ou le périmètre (une étape de plus ne suffit pas) ; ou mesurer d'abord.
+
+   Écrire le motif avec ses nombres (« trois parades manquantes sur quatre histoires »). Si le plan a été écrit
+   en connaissant le pré-mortem, chaque parade ajoutée est marquée « (pré-mortem n° k) » dans l'étape qui la
+   porte et « durci » dans le tableau : le verdict garde sa trace. Si rien de bloquant n'apparaît, le dire :
+   inventer des objections pour faire sérieux est une faute, comme en taire une.
+7. **Rejouer aux jalons** : fin du pilote, avant la mise en production, après la montée en charge, et
+   chaque fois que des rôles de l'entreprise apportent leurs raisons d'échec écrites seuls. Une nouvelle
+   information change le paysage des risques ; un pré-mortem fait une fois et jamais relu est un rituel.
 
 Doser selon l'enjeu : un lot réversible qui touche une seule équipe tient sur une demi-page ; un plan
 qui touche plusieurs équipes, des données sensibles ou une dépense importante passe les familles
@@ -52,7 +63,10 @@ ci-dessous une à une, avec les personnes concernées si possible.
 Parcourir chaque famille, garder celles qui mordent sur ce cas et écrire l'histoire avec ses mots.
 Les seuils sont à fixer avec le propriétaire métier (`<seuil>`, `<délai>`, `<multiple>`, `<n>`), à noter
 `[H]` jusqu'à validation, jamais empruntés à une moyenne de marché. Un seuil qui porte sur un indicateur
-de la spécification n'est pas redéfini ici : citer l'identifiant de l'indicateur et reprendre son seuil.
+de la spécification n'est pas redéfini ici : citer son identifiant `IND-xx` et reprendre son seuil de
+production (`60-specification.md` §14 ; §13 pendant le pilote). Pour une histoire hors des indicateurs (le
+coût de la plateforme, par exemple), dériver le seuil du point mort de `50-rentabilite.md`, calcul montré
+`[E]`, et ajouter au plan la mesure qui le surveille (un relevé mensuel, en rubrique 5 du plan).
 
 | Famille | Histoire type (au passé) | Signal d'alerte précoce | Parade | Condition d'arrêt |
 |---|---|---|---|---|
@@ -62,7 +76,7 @@ de la spécification n'est pas redéfini ici : citer l'identifiant de l'indicate
 | Outil ou fournisseur qui change | le fournisseur avait modifié tarifs, conditions ou interface : le dispositif ne marchait plus ou coûtait plus | avis de changement ; erreurs d'authentification ; facture en hausse | suivre les annonces ; option de repli de `40-solutions.md` documentée ; aucun compte personnel au cœur du dispositif | coût mensuel au-delà de `<seuil>`, ou fonction retirée sans contournement |
 | Dérive des coûts | la facture d'exécution et de modèles d'IA avait grimpé avec le volume ; personne ne la regardait | coût réel supérieur à l'estimation de `50-rentabilite.md` | relevé mensuel ; plafond ou alerte de dépense ; unité de facturation recalculée au volume réel | coût réel au-delà de `<multiple>` de l'estimation `<n>` mois de suite |
 | Panne silencieuse | le traitement s'était arrêté depuis des semaines sans que personne le voie ; on croyait qu'il tournait | résultat attendu absent à l'heure attendue ; compte rendu de succès manquant | alerte sur l'échec et sur l'absence de résultat ; destinataire nommé ; vérification manuelle périodique ; interrupteur | alerte non traitée sous `<délai>` : suspendre et revenir à l'ancienne méthode |
-| Départ du responsable | la personne qui faisait vivre le dispositif avait changé de poste ; personne d'autre ne savait le corriger | un seul nom dans la documentation ; accès sur un compte personnel | suppléant formé ; procédure d'une page essayée par un tiers ; comptes de l'entreprise | pas de propriétaire désigné sous `<délai>` après un départ |
+| Départ du responsable | la personne qui faisait vivre le dispositif avait changé de poste ; personne d'autre ne savait le corriger | un seul nom dans la documentation ; accès sur un compte personnel | suppléant formé ; fiche d'une page essayée par un tiers ; comptes de l'entreprise | pas de propriétaire désigné sous `<délai>` après un départ |
 
 ## 4. Trois familles de plus pour une feuille de route
 
@@ -91,22 +105,25 @@ l'avance, un propriétaire et une action : corriger, suspendre avec l'interrupte
 revenir à l'ancienne méthode. Exemple de forme : « si l'usage hebdomadaire reste sous `<seuil>` après
 `<délai>` de correction, le propriétaire du processus suspend le dispositif et réunit le décideur ».
 Sans seuil, sans fréquence ou sans propriétaire, ce n'est qu'une intention. Quand le fait est un
-indicateur de `60-specification.md`, citer son identifiant : son seuil est celui de la spécification,
-jamais un second.
+indicateur de `60-specification.md`, citer son identifiant `IND-xx` : son seuil est celui de la
+spécification, jamais un second. Quand il n'en est pas un, le seuil se dérive d'un calcul montré (section 3).
 
 ## 7. Gabarit de sortie
 
+Le titre porte le numéro de rubrique du document qui l'accueille : 5 dans la feuille de route, 8 dans le plan.
+
 ```markdown
-## Pré-mortem
+## <n>. Pré-mortem
 
 Thèse attaquée : …
-Contributions : rôles consultés, ou « rédigé par le consultant seul ».
+Contributions : rôles consultés, ou « rédigé par le consultant seul » (et l'étape du plan où chaque rôle écrit seul ses raisons d'échec).
+Point de départ des conditions d'arrêt (plan d'un cas seulement) : celle de 40-solutions §1, et les histoires qui la reprennent.
 
 | # | Histoire d'échec (au passé) | Vraisemblance | Gravité | Signal d'alerte précoce | Parade | Condition d'arrêt | Propriétaire (rôle) | Classement |
 |---|---|---|---|---|---|---|---|---|
 
 Écartées : objection — raison.
-Verdict : engager | durcir | pivoter — en une phrase.
-Version durcie (si durcir) : ce qui s'ajoute au plan, étape par étape.
+Verdict : engager | durcir | pivoter — en une phrase, avec le compte « n parades manquantes sur m histoires retenues ».
+Version durcie (si durcir) : ce qui s'ajoute au plan, étape par étape, chaque ajout renvoyant à son numéro d'histoire.
 À rejouer : aux jalons suivants.
 ```

@@ -26,7 +26,11 @@ Les quatre verdicts :
 - **Automatiser** : fréquent, stable, et soit un gain de temps réel, soit des erreurs coûteuses supprimées.
 - **Standardiser d'abord** : fréquent mais instable, ou fait de trois façons par trois personnes.
   Écrire le processus, choisir une façon, l'exécuter à la main selon l'écrit jusqu'à ce qu'il tienne,
-  puis seulement l'automatiser. La recommandation est l'option 0 ; la suite retourne à `auditer-processus`.
+  puis seulement l'automatiser. L'option 0 s'applique dès maintenant ; son plan (simplifications, nouvelle
+  mesure) est celui de `planifier-deploiement`. Deux sorties : l'option 0 reste la seule recommandation, ou une
+  option à construire est retenue **sous une porte** — une condition mesurable de démarrage, avec sa mesure, son
+  agrégation (moyenne des occurrences, minimum, chaque occurrence) et sa date, écrite en rubrique 10 de la
+  fiche. La construction attend que la porte soit constatée ; la dépense aussi.
 - **Assister seulement** : forte valeur, mais jugement à chaque occurrence ou action irréversible. Le
   dispositif prépare (brouillon, tri, extraction), une personne décide : option 5, ou une part de la 7.
 - **Ne rien construire** : rare, ou gain faible. Liste de contrôle, modèle de document, délégation,
@@ -64,7 +68,9 @@ Les noms de plateformes sont des exemples de catégorie, pas une liste à jour d
 
 - **Chercher l'existant** : outils déjà connectés à la session (lecture seule), fonctions incluses
   dans les licences en place, documentation et catalogues de modèles des éditeurs. Noter où et quand
-  on a cherché ; une recherche non faite s'écrit « non vérifié `[H]` ».
+  on a cherché ; une recherche non faite, ou impossible faute d'accès à ces pages, s'écrit « non vérifié
+  `[H]` » et passe en rubrique 9 de la fiche avec son responsable et sa date. La matrice peut alors conclure,
+  et la recommandation dit qu'elle repose sur des `[H]`.
 - **Assistant ou agent** : un agent n'est justifié que si le chemin varie d'un cas à l'autre. Sinon, un
   workflow qui confie une étape précise à un modèle coûte moins, se prévoit mieux et se teste. Les
   bornes d'un agent : liste fermée d'actions, plafond d'étapes et de coût par exécution, journal de
@@ -90,7 +96,7 @@ Dans tous les cas, nommer le rôle qui maintient après la livraison : la spéci
 
 | Critère | Ce qu'on regarde | Comment le renseigner |
 |---|---|---|
-| Couverture des exigences | chaque Indispensable et chaque Important : couvert entièrement, en partie, pas du tout | tableau exigence × option ; une Indispensable non couverte élimine l'option, sauf si le client la déclasse : c'est sa décision, pas la nôtre |
+| Couverture des exigences | chaque Indispensable et chaque Important : couvert entièrement, en partie, pas du tout | tableau exigence × option ; une Indispensable non couverte élimine l'option, sauf si le client la déclasse : c'est sa décision, pas la nôtre. Pour l'option 0, la couverture se lit « fonction assurée par quelqu'un, à la main », avec l'écart de temps ou de risque noté : l'option 0 n'est jamais éliminée par ce critère, elle sert de référence et de repli |
 | Coût de construction | jours de travail ou prix, selon le profil qui construit | `[E]` d'après un devis ou l'estimation de l'équipe ; sinon `[H]` |
 | Coût de fonctionnement | abonnements, appels de modèle, hébergement : unité facturée × volume réel ; coût marginal si l'outil est déjà payé, à dire | volume `[F]` du diagnostic ; tarif daté de la page de l'éditeur ou `[H]` ; résultat `[E]` |
 | Maintenance | heures par mois : changements d'interface chez les fournisseurs, accès à renouveler, règles à ajuster ; qui s'en charge | `[H]` tant qu'aucun dispositif comparable n'a tourné ; c'est la ligne qu'on oublie facilement |
@@ -103,7 +109,9 @@ Dans tous les cas, nommer le rôle qui maintient après la livraison : la spéci
 **Lire la matrice.**
 
 - Les éliminatoires d'abord : exigence Indispensable non couverte, contrainte ferme de `30-exigences` §8
-  violée (outil imposé, budget plafond, lieu des données).
+  violée (outil imposé, budget plafond, lieu des données). Une option éliminée garde sa colonne, titrée
+  « (éliminée) », avec « non évalué » dans ses cellules ; le motif de l'élimination s'écrit dans la ligne des
+  éliminatoires.
 - Ensuite colonne par colonne : une option est un profil de forces et de risques, pas une somme.
 - Trois appréciations (favorable, acceptable, défavorable) et une raison courte. Pas de note sur dix :
   elle ferait croire à une précision qu'aucun critère n'a.

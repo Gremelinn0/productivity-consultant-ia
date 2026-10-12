@@ -53,18 +53,20 @@ flowchart TB
 | Compétence | Ce qu'elle produit |
 |---|---|
 | `router-mission-ia` | l'état de la mission, la porte, l'étape suivante, le journal des décisions |
-| `decouvrir-cas-usage` | fiche entreprise, cartographie des tâches, portefeuille de cas d'usage classés |
-| `cadrer-besoin` | une fiche besoin d'une page : vrai problème, décision, périmètre, critères de succès |
+| `decouvrir-cas-usage` | fiche entreprise, cartographie des tâches, tri en cinq issues, portefeuille de cas d'usage classés |
+| `cadrer-besoin` | une fiche besoin courte : vrai problème, décision, périmètre, critères de succès, et le nom du dossier du cas |
 | `auditer-processus` | le diagnostic du processus actuel : mesures, goulets, causes, ce qu'on simplifie d'abord |
 | `rediger-cahier-des-charges` | les exigences (avant le choix) puis la spécification de la solution retenue |
 | `concevoir-solution` | des options réellement différentes, y compris ne rien construire, et une recommandation |
 | `chiffrer-rentabilite` | gains, coûts, maintenance, délai de retour, en trois scénarios et hypothèses visibles |
-| `planifier-deploiement` | feuille de route ou plan de déploiement, adoption, mesure, pré-mortem |
+| `planifier-deploiement` | feuille de route ou plan de déploiement (simplifications, porte, pilote), adoption, mesure, pré-mortem |
 
 ## Les règles que suit chaque compétence
 
-- **Chaque nombre porte son statut** : `[F]` fait observé et sourcé, `[H]` hypothèse, `[E]`
-  estimation calculée. Un gain reste « estimé » tant qu'il n'est pas mesuré.
+- **Chaque nombre porte son statut** : `[F]` fait (observé, appuyé par une pièce, ou énoncé par son
+  détenteur), `[H]` hypothèse (avec le rôle qui la confirme), `[E]` estimation calculée, calcul montré.
+  Les définitions sont dans [ARCHITECTURE.md](ARCHITECTURE.md). Un gain reste « estimé » tant qu'il n'est
+  pas mesuré.
 - **L'humain tranche à chaque étape.** Chaque livrable finit par « Décision attendue » ; la décision
   s'inscrit au journal de la mission.
 - **On observe le travail, jamais les personnes.** Aucune évaluation individuelle.
@@ -116,11 +118,15 @@ Ce qui manque est écrit comme manquant, jamais supposé.
 
 ## Ce qui reste imparfait
 
-- Éprouvé sur une mission fictive (voir `examples/`), pas encore sur une mission réelle complète.
+- Éprouvé sur une mission fictive complète (voir `examples/`, déroulée le 12 octobre 2026), qui a relevé
+  94 frictions, corrigées dans cette version ; pas encore sur une mission réelle.
+- Les étapes construire, tester, déployer et mesurer après déploiement ne sont pas dans le pack : elles
+  viendront dans une version suivante. Il s'arrête à la spécification et au plan.
 - Le chiffrage ne vaut que par ses mesures d'entrée : sans temps mesurés, il reste une fourchette.
 - La découverte dépend de ce que l'entreprise branche et des entretiens.
 - L'adoption par les équipes tient dans le plan, pas dans une méthode dédiée.
-- Pas encore de boucle de mesure après déploiement.
+- La recherche de l'existant (pages des éditeurs, modèles publics) suppose un accès au moment du choix ;
+  sans accès, elle s'écrit « non vérifiée » et le pack le dit.
 
 ## Sources et crédits
 

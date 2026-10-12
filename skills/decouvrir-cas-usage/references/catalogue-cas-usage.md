@@ -11,8 +11,8 @@
 1. Parcourir les fonctions présentes dans l'entreprise et chercher, dans les sources ou en entretien, le
    signal de chaque piste.
 2. Une piste entre dans le portefeuille seulement si une tâche de `01-cartographie-taches.md` la fonde
-   (preuve « observé » ou « déclaré »). Sinon elle reste une hypothèse `[H]`, classée « À creuser », avec
-   la question à poser.
+   (preuve observée `[F]` ou déclarée `[H]`). Sinon elle reste une hypothèse `[H]`, classée « À creuser »,
+   avec la question à poser.
 3. Écrire chaque piste comme un résultat métier, pas comme un outil. Si l'entreprise répond « on a déjà
    un outil pour ça », c'est la réponse la moins chère : la noter dans « Déjà disponible ».
 4. Adapter : le secteur, la taille et les outils changent les données, la validation et les contraintes.
@@ -107,12 +107,16 @@
 
 ## À éliminer ou à simplifier avant d'automatiser
 
-Ces tâches reviennent souvent dans les cartographies et appellent d'abord une suppression :
+Ces tâches reviennent souvent dans les cartographies et appellent d'abord une suppression (issue
+« Éliminer ») ou une simplification (issue « Simplifier d'abord ») :
 
 - des rapports que personne ne lit ni n'utilise pour décider ;
 - des validations systématiques qui n'ont jamais rien refusé ;
 - une même information saisie dans deux outils ;
 - des relances ou des contrôles faits « au cas où », sans règle ni effet constaté ;
 - des réunions de suivi qui répètent un tableau déjà lisible ;
+- des règles que chacun applique à sa façon, ou qui ne sont écrites nulle part : les écrire et en choisir
+  une avant d'automatiser (« Simplifier d'abord », puis nouvelle mesure et reclassement) ;
 - des demandes récurrentes provoquées par un défaut d'information : supprimer la cause plutôt que traiter
-  les demandes.
+  les demandes. « Éliminer la cause » se teste avant « Automatiser » ; le test devient une action de la
+  vague 0 de la feuille de route.

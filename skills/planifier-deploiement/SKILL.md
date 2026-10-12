@@ -4,15 +4,15 @@ description: >-
   Quand des cas d'usage sont retenus et qu'il faut dire par où commencer ou comment les mettre en
   service (« par quoi on commence ? », « quelle feuille de route ? », « comment on le déploie et on
   s'assure que l'équipe s'en sert ? ») → ordonner un portefeuille en feuille de route (valeur,
-  facilité, risque, prérequis, jalons) ou détailler un cas en plan de déploiement (lots courts,
-  pilote, recette, adoption, exploitation, mesure), puis le soumettre à un pré-mortem avant de
-  s'engager. Dernière étape des deux portes du pack consultant-ia, après le chiffrage. Triggers :
-  « feuille de route », « roadmap », « plan de déploiement », « plan de mise en œuvre », « par où
-  commencer », « pilote », « mise en production », « conduite du changement », « adoption »,
-  « pré-mortem », « rollout plan », « change management ».
+  facilité, risque, prérequis, jalons, simplifications d'abord) ou détailler un cas en plan de
+  déploiement (lots courts, porte, pilote, recette, adoption, exploitation, mesure), puis le soumettre
+  à un pré-mortem avant de s'engager. Dernière étape des deux portes du pack consultant-ia, après le
+  chiffrage. Triggers : « feuille de route », « roadmap », « plan de déploiement », « plan de mise en
+  œuvre », « par où commencer », « pilote », « mise en production », « conduite du changement »,
+  « adoption », « pré-mortem », « rollout plan », « change management ».
 metadata:
   scope: "l'ordre de mise en œuvre d'un portefeuille de cas retenus, ou le chemin d'un cas spécifié jusqu'à un dispositif utilisé, entretenu et mesuré"
-  owns: "la feuille de route (priorités, ordre, prérequis, dépendances, responsables par rôle, jalons, indicateurs), le plan de déploiement (lots, pilote, recette, mise en production, adoption, exploitation, revue des indicateurs, communication) et le pré-mortem"
+  owns: "la feuille de route (priorités, ordre, vague 0 des simplifications, prérequis, dépendances, responsables par rôle, jalons, indicateurs), le plan de déploiement (lots dont celui des simplifications, porte, pilote, recette, mise en production, adoption, exploitation, revue des indicateurs, communication) et le pré-mortem"
   consumes: "mission/00-contexte.md, 02-portefeuille.md et 03-chiffrage.md (feuille de route) ; mission/cas-<slug>/20-diagnostic.md, 30-exigences.md, 40-solutions.md, 50-rentabilite.md et 60-specification.md (plan de déploiement) ; mission/sources/"
 ---
 
@@ -26,15 +26,18 @@ metadata:
 > premier lot — ou de la feuille de route et des premiers cas — et la décision s'inscrit dans
 > `mission/journal.md`. Contrôle de forme : le modèle est complet (cinq rubriques pour la feuille de
 > route, huit pour le plan), chaque lot compte trois à six étapes vérifiables, les six questions
-> d'adoption ont une réponse ou un `?`, le pré-mortem rend un verdict, chaque nombre a son statut
-> `[F]`, `[H]` ou `[E]`. Exemple de référence : `examples/` du pack. **Boucle** : aucune.
+> d'adoption ont une réponse ou un `?`, le pré-mortem rend un verdict avec son compte, chaque nombre a
+> son statut `[F]`, `[H]` ou `[E]` (définis dans `ARCHITECTURE.md`). Exemple de référence : `examples/` du
+> pack. **Boucle** : aucune.
 
 ## Ce que cette compétence résout
 
 Une bonne solution ne se déploie pas toute seule : un dispositif que personne ne reprend, que
 l'équipe contourne ou que rien ne mesure devient un coût. Cette compétence ordonne d'abord les cas
 retenus pour que les premiers réussissent vite et visiblement, puis décrit, pour chaque cas, le
-chemin jusqu'à un dispositif utilisé, entretenu et mesuré.
+chemin jusqu'à un dispositif utilisé, entretenu et mesuré. Quand la solution recommandée passe par une
+porte (standardiser d'abord, construire ensuite), le plan des simplifications et le constat de la porte
+sont les siens.
 
 Deux modes : la **feuille de route** (porte « aucun besoin ») ordonne un portefeuille, le **plan de
 déploiement** (porte « besoin connu ») détaille un cas spécifié ; un pré-mortem attaque chacun.
@@ -50,14 +53,22 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
 2. **Ordonner par valeur, facilité et risque, pas par insistance.** L'ordre devient explicable : on
    peut dire pourquoi un cas passe avant un autre.
 3. **Les prérequis avant le calendrier.** Une donnée absente, un accès à ouvrir, un processus à
-   standardiser sont des tâches de la feuille de route, avec responsable et date, pas des retards.
+   standardiser sont des tâches de la feuille de route, avec responsable et date, pas des retards. Une
+   simplification sans construction (supprimer, standardiser, vérifier) est une action de la vague 0, ou du
+   premier lot du plan : responsable, date, pièce.
 4. **Un indicateur que l'entreprise suit déjà** pour chaque cas de la feuille de route (délai, volume,
-   taux d'erreur, satisfaction) : pas de tableau de bord à bâtir, et la mesure de départ existe.
+   taux d'erreur, satisfaction) : pas de tableau de bord à bâtir, et la mesure de départ existe. Une action
+   de la vague 0 n'en a pas toujours : on écrit « aucun indicateur suivi » et la mesure de départ de ce
+   qu'on supprime.
 5. **Dire ce qu'on ne fait pas, avec la raison.** Un item qu'on ne nomme pas revient à chaque réunion.
 6. **Des lots courts, dont chaque étape se vérifie.** Trois à six étapes ; chacune dit ce que le
    lecteur constate, sans avoir à croire l'auteur. Le plan ne déclare rien « fait » : l'avancement se
-   lit sur les preuves.
-7. **Casser le plan avant de s'y engager.** Le pré-mortem tient l'échec pour acquis et en cherche les
+   lit sur les preuves. Les dates et les durées sont des propositions `[H]` que le décideur confirme en
+   validant.
+7. **Citer, jamais recopier.** Le plan reprend les critères du pilote et les indicateurs `IND-xx` par leur
+   identifiant (rubrique 13 de la spécification pour le pilote, rubrique 14 pour la production) : deux jeux de
+   valeurs finissent par diverger. Les seuils du pilote et ceux de la production sont distincts, et le plan le dit.
+8. **Casser le plan avant de s'y engager.** Le pré-mortem tient l'échec pour acquis et en cherche les
    causes, au moment le moins cher pour changer de direction. Un modèle de langage approuve volontiers
    ce qu'on lui soumet : il faut lui demander explicitement de démolir.
 
@@ -65,46 +76,61 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
 
 1. **Choisir le mode et lire ce qui existe.** `02-portefeuille.md` et `03-chiffrage.md` présents, des
    cas retenus sans ordre → feuille de route (lire aussi `00-contexte.md`). `60-specification.md`
-   d'un cas présent → plan de ce cas (lire aussi `30-exigences.md`, `40-solutions.md` : condition
-   d'arrêt et repli, `50-rentabilite.md` : hypothèses `[H]`, mesure de départ, maintenance
-   supposée). La spécification définit déjà recette, critères de pilote, indicateurs (identifiants,
-   seuils) et propriétaire de la maintenance : le plan les reprend sans les réécrire et y ajoute
-   dates, responsables, rythme de revue et actions aux seuils. En cas d'écart avec la feuille de
-   route, c'est elle qu'on corrige.
+   d'un cas présent → plan de ce cas (lire aussi `30-exigences.md`, `40-solutions.md` : porte, condition
+   d'arrêt et repli, `50-rentabilite.md` : hypothèses `[H]`, mesure de départ, maintenance supposée). La
+   spécification définit déjà recette, critères de pilote, indicateurs (identifiants, seuils) et propriétaire
+   de la maintenance : le plan les reprend sans les réécrire et y ajoute dates, responsables, rythme de revue
+   et actions aux seuils. Si la mise en plan révèle un trou ou un écart dans un livrable validé (une
+   spécification muette sur un mode, une feuille de route qui contredit une valeur), on le corrige par une
+   version datée et une ligne « correction » au journal (`ARCHITECTURE.md`), puis le plan cite le § et la
+   version. Une échéance déjà passée à la date du plan se redate dans le plan, avec l'ancienne date : ce n'est
+   pas une correction.
 2. **Feuille de route — noter, choisir, ordonner.** Reprendre la facilité et le risque de
-   `02-portefeuille.md` (haut / moyen / bas, avec leur raison) et la valeur de `03-chiffrage.md`
-   (gain net central et fourchette) ; combler ce qui manque. Choisir trois à cinq premiers cas, forte
-   valeur et faible effort (les « gains rapides »), idéalement un par équipe ; s'il n'y en a pas trois,
-   le dire et commencer par le prérequis qui en débloque. Ordonner en vagues avec prérequis,
-   dépendances, responsable par rôle, jalon et indicateur métier déjà suivi (mesure de départ
-   comprise), puis écrire ce qu'on ne fait pas maintenant et la condition pour le rouvrir.
-3. **Plan — lots et pilote.** Lots courts de trois à six étapes vérifiables, avec « ce qu'on ne fait
-   pas dans ce lot » ; au-delà de six, scinder ; le premier lot relève la mesure de départ et lève
-   les prérequis. Pilote : périmètre réduit (qui, quel volume), dates, critères de poursuite et d'arrêt
-   repris de la spécification, hypothèses `[H]` de `50-rentabilite.md` à confirmer, décideur de la
-   suite — continuer, corriger ou arrêter —, le tout écrit avant de commencer.
-4. **Plan — recette et mise en production.** Tests et critères d'acceptation repris de
-   `60-specification.md` ; le plan ajoute le côté humain : qui recette, sur des données réelles ou
-   fidèlement reconstituées ; quel jour et dans quel ordre on bascule (progressivement ou d'un bloc) ;
-   qui déclenche le retour arrière, sur quel signal, et comment on vérifie que l'ancienne méthode a
-   repris.
+   `02-portefeuille.md` (haut / moyen / bas, avec leur raison ; un « à classer » reçoit sa note ici) et la
+   valeur de `03-chiffrage.md` (gain net central et fourchette) ; combler ce qui manque. Mettre en vague 0 les
+   actions sans construction (éliminer, simplifier, vérifier). Choisir trois à cinq premiers cas, forte valeur
+   et faible effort (les « gains rapides »), idéalement un par équipe ; s'il n'y en a pas trois, le dire et
+   commencer par le prérequis qui en débloque. Ordonner en vagues avec prérequis (un renvoi court à la
+   rubrique 3, qui porte le détail daté), dépendances, responsable par rôle, jalon et indicateur métier déjà
+   suivi (mesure de départ comprise), puis écrire ce qu'on ne fait pas maintenant et la condition pour le
+   rouvrir.
+3. **Plan — lots et pilote.** Lots courts de trois à six étapes vérifiables, avec « ce qu'on ne fait pas
+   dans ce lot » ; au-delà de six, scinder. Le premier lot relève la mesure de départ, lève les prérequis et
+   porte les simplifications du diagnostic (`20-diagnostic.md` §7), avec la re-mesure qui nourrit la porte.
+   Quand plusieurs mesures et accords doivent précéder la porte, deux lots se chevauchent : le dire, et dire ce
+   qui dépend des deux. Numéroter les étapes une fois pour tout le plan. Écrire la charge des personnes
+   pendant les lots (heures par rôle, de `50-rentabilite.md`), en disant si les séances habituelles ou celles
+   du pilote y sont comprises. Pilote : périmètre réduit (qui, quel volume), dates, critères de poursuite, de
+   prolongation et d'arrêt cités de la spécification (rubrique 13) et signés sur une fiche avant de commencer,
+   hypothèses `[H]` de `50-rentabilite.md` à confirmer, décideur de la suite — continuer, prolonger ou arrêter.
+4. **Plan — porte, recette et mise en production.** La porte de `40-solutions.md` §10 devient une étape
+   datée qui la constate : une fiche, une ligne par condition avec sa pièce, la mesure avec son agrégation
+   (moyenne, minimum, chaque occurrence) telle que la solution l'a écrite, et ce qui se passe si une condition est
+   « non » (la construction ne démarre pas, l'option 0 reste en place). Une décision sans livrable (porte
+   constatée, fin de pilote, bascule) s'inscrit au journal avec sa pièce. Recette : tests et critères repris de
+   `60-specification.md` ; le plan ajoute qui recette (pas celui qui construit), sur des données réelles ou
+   fidèlement reconstituées. Mise en production : quel jour et dans quel ordre on bascule ; qui déclenche le
+   retour arrière, sur quel signal, et comment on vérifie que l'ancienne méthode a repris.
 5. **Plan — adoption et exploitation.** Répondre aux six questions de la rubrique 4 du modèle, ou les
    marquer `?` avec le rôle qui doit trancher. Propriétaire et suppléant (cf. spécification) ; heures de
-   maintenance cohérentes avec `50-rentabilite.md` ; procédure d'une page, essayée par quelqu'un qui
-   ne l'a pas écrite ; alerte sur l'échec et sur le silence ; comptes de l'entreprise, non personnels.
-6. **Plan — protocole de mesure et communication.** Reprendre chaque indicateur de la spécification
-   par son identifiant, sans redéfinir ses seuils, et fixer ce qui revient au plan : qui le relit
-   (rôle), à quel rythme, et l'action déclenchée à chaque seuil — correction, alerte, arrêt avec
-   retour arrière. Communication : qui est informé de quoi et quand, le pourquoi avant le quoi, en
-   disant aussi ce qui disparaît avec l'ancienne méthode.
+   maintenance cohérentes avec `50-rentabilite.md` ; fiche d'une page, essayée par quelqu'un qui ne l'a pas
+   écrite ; alerte sur l'échec et sur le silence ; comptes de l'entreprise, non personnels.
+6. **Plan — protocole de mesure et communication.** Reprendre chaque `IND-xx` de la spécification par son
+   identifiant, sans redéfinir ses seuils, et fixer ce qui revient au plan : qui le relit (rôle), à quel rythme,
+   et l'action déclenchée à chaque seuil — correction, alerte, arrêt avec retour arrière. Pendant le pilote,
+   l'arrêt est celui de la rubrique 13 ; après la bascule, celui de la rubrique 14. Communication : qui est
+   informé de quoi et quand, le pourquoi avant le quoi, en disant aussi ce qui disparaît avec l'ancienne méthode.
 7. **Pré-mortem, dans les deux modes.** Écrire la thèse en une phrase falsifiable, puis : « dans six
    mois, ce projet a échoué : racontez pourquoi ». Raconter les histoires d'échec plausibles
    (adoption, qualité des données, processus qui change, outil ou fournisseur qui change, dérive des
    coûts, panne silencieuse, départ du responsable), chacune avec son signal d'alerte précoce, sa
    parade et sa condition d'arrêt (partir de celle de `40-solutions.md`). Classer les objections :
-   bloquante, à mitiger, écartée mais nommée. Verdict : **engager**, **durcir** (parades intégrées)
-   ou **pivoter** (un bloquant réel). Ouvrir `references/pre-mortem.md` pour le déroulé, les familles
-   d'échec et le gabarit.
+   bloquante, à mitiger, écartée mais nommée. Verdict rendu sur la première version du plan, avec son compte
+   (n parades manquantes sur m histoires) : **engager** (aucune parade manquante), **durcir** (chaque parade
+   manquante s'écrit comme une étape, un test ou un seuil du plan), **pivoter** (un bloquant réel, ou une parade
+   qui change le cas, l'option ou le périmètre). Les parades ajoutées portent « (pré-mortem n° k) ». Sans rôle
+   de l'entreprise, il est « rédigé par le consultant seul » et le plan prévoit l'étape où chaque rôle écrit
+   seul ses raisons d'échec. Ouvrir `references/pre-mortem.md` pour le déroulé, les familles d'échec et le gabarit.
 8. **Relire, puis finir par la décision attendue.** Toute formule en suspens (« on verra », « à
    définir ») devient une action, une hypothèse `[H]` avec son confirmateur, ou une question dans
    « Décision attendue ». Suite : chaque cas de la feuille de route entre par `cadrer-besoin`, le plan
@@ -112,83 +138,45 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
 
 ## Le livrable
 
-Modèle de `mission/04-feuille-de-route.md` (portefeuille, porte « aucun besoin ») :
+Le modèle complet, ses consignes de remplissage, le gabarit du pré-mortem et les lignes de journal sont dans
+`references/modeles.md` : l'ouvrir pour rédiger. Les titres ci-dessous sont ceux du modèle.
+
+Squelette de `mission/04-feuille-de-route.md` (portefeuille, porte « aucun besoin ») :
 
 ```markdown
 # Feuille de route — <entreprise ou périmètre>
-
-Date · Décideur (rôle) · Rédigé par · Sources : 02-portefeuille, 03-chiffrage
-
-## 1. Les cas, notés
-| Cas | Équipe | Valeur (gain net central, fourchette) `[E]` | Facilité | Risque | Rang |
-Principe d'ordre en une phrase : ce qui fait passer un cas avant un autre, et combien démarrent ensemble.
-
-## 2. La séquence
-| Vague | Cas | Prérequis | Dépend de | Responsable (rôle) | Jalon `[H]` | Indicateur déjà suivi · mesure de départ |
-
-## 3. Prérequis à lever d'abord
-Ce qui manque (donnée, accès, processus à standardiser), pour quels cas, qui le lève, pour quelle date.
-
+Date · Demandeur (rôle) · Valideur (rôle) · Décideur (rôle) · Rédigé par · Sources : 02-portefeuille, 03-chiffrage
+## 1. Les cas, notés — valeur, facilité, risque, rang, principe d'ordre
+## 2. La séquence — vague 0 des actions sans construction, puis les vagues ; prérequis en renvoi court
+## 3. Prérequis à lever d'abord — le détail daté
 ## 4. Ce qu'on ne fait pas maintenant
-| Cas ou chantier | Pourquoi pas maintenant | Se rouvre si |
-
 ## 5. Pré-mortem
-Thèse · histoires d'échec retenues · signaux d'alerte · conditions d'arrêt · verdict.
-
 ## Décision attendue
-Valider l'ordre, les cas de la première vague et leurs responsables, puis lancer le premier cas : il
-entre par `cadrer-besoin`.
 ```
 
-Modèle de `mission/cas-<slug>/70-plan.md` (plan de déploiement, porte « besoin connu ») :
+Squelette de `mission/cas-<slug>/70-plan.md` (plan de déploiement, porte « besoin connu ») :
 
 ```markdown
 # Plan de déploiement — <titre court du cas>
-
-Date · Responsable du cas (rôle) · Rédigé par · Sources : 30-exigences, 50-rentabilite, 60-specification
-
+Date · Demandeur (rôle) · Responsable du cas (rôle) · Décideur du plan (rôle) · Rédigé par · Sources : 30-exigences, 40-solutions, 50-rentabilite, 60-specification (version lue)
 ## 1. Objectif et critères de réussite
-Repris du besoin et des exigences, avec leur mesure de départ.
-
-## 2. Lots
-### Lot 1 — <nom> (durée `[H]`)
-| # | Étape | Responsable (rôle) | Preuve que c'est fait | Dépend de |
-Ce qu'on ne fait pas dans ce lot : …
-
-## 3. Pilote, recette et mise en production
-Pilote : périmètre · dates · critères de poursuite et d'arrêt (de la spécification) · hypothèses `[H]`
-à confirmer · décideur de la suite. Recette : qui accepte, sur quelles données. Mise en production :
-jour et ordre de bascule · retour arrière (qui, signal, vérification) · interrupteur.
-
-## 4. Adoption (une réponse, un rôle, une échéance par question — ou `?`)
-1. Qui reprendra le dispositif, avec quel niveau d'autonomie ?
-2. Quels gestes l'équipe doit-elle savoir faire sans le consultant ?
-3. Quels rôles ont besoin d'une formation, d'un guide, d'une vidéo ou d'une documentation technique ?
-4. Quels accès, propriétaires de comptes et procédures de secours faut-il transmettre ?
-5. Comment vérifier que l'équipe a compris et sait corriger une erreur courante ?
-6. Quel support après la transmission, et qu'est-ce qui relève d'une nouvelle mission ?
-
+## 2. Lots — trois à six étapes vérifiables, dates en propositions [H]
+## 3. Porte, pilote, recette et mise en production
+## 4. Adoption — six questions, une réponse, un rôle, une échéance, ou ?
 ## 5. Exploitation
-Propriétaire et suppléant (rôles, de la spécification) · maintenance : qui, rythme, heures `[H]` · procédure d'une page · comptes et accès à transmettre · alertes.
-
-## 6. Protocole de mesure (indicateurs et seuils définis dans la spécification, rubrique 14)
-| Indicateur (identifiant de 60-specification) | Relu par (rôle) | Rythme de la revue | Action au seuil de correction | Action au seuil d'alerte | Action au seuil d'arrêt |
-
+## 6. Protocole de mesure — les IND-xx de la spécification
 ## 7. Communication
-| Public | Message (le pourquoi d'abord) | Canal | Moment |
-
 ## 8. Pré-mortem
-Thèse · histoires d'échec retenues · signaux · parades · conditions d'arrêt · verdict · version durcie.
-
 ## Décision attendue
-Valider le plan et lancer le premier lot.
 ```
 
-Lignes de journal, au moment où le décideur tranche :
+Lignes de journal, au moment où le décideur tranche ; les décisions sans livrable (porte constatée, fin de
+pilote, bascule) citent la pièce qui les prouve :
 
 ```markdown
 - 2026-11-04 · découverte · 04-feuille-de-route validée par le comité de direction · « première vague : un cas par équipe ; le cas des achats attend la donnée fournisseurs »
 - 2026-11-18 · cas-saisie-commandes · 70-plan validé par la direction commerciale · « pilote sur une équipe, arrêt si l'adoption reste sous le seuil convenu »
+- 2026-11-24 · cas-saisie-commandes · porte constatée par le responsable des opérations · « sept conditions remplies, fiche de porte jointe »
 ```
 
 ## Décisions et rejets
@@ -196,9 +184,11 @@ Lignes de journal, au moment où le décideur tranche :
 | Décision | Pourquoi | Option écartée | Se rouvre si |
 |---|---|---|---|
 | Trois à cinq cas pour la première vague | des résultats visibles tôt valent plus qu'une couverture large ; au-delà, rien ne se termine | lancer tout le portefeuille d'un coup | l'entreprise a les équipes et les prérequis pour mener davantage de cas en parallèle |
-| Critères du pilote, indicateurs et seuils repris de la spécification par leur identifiant ; décision de continuer ou d'arrêter écrite avant de commencer | deux jeux de critères ou de seuils finissent par diverger, et une décision prise après coup se prend sur l'enthousiasme | réécrire critères et seuils dans le plan, ou un pilote sans critères | jamais : sans critères écrits, ce n'est pas un pilote |
-| Le pré-mortem fait partie du plan, dans les deux modes | c'est le moment le moins cher pour changer de direction | un pré-mortem seulement sur demande | le plan tient en un lot réversible sans effet sur d'autres équipes : une demi-page suffit |
+| Critères du pilote et indicateurs cités par leur identifiant, jamais recopiés ; décision de continuer, prolonger ou arrêter écrite avant de commencer | deux jeux de critères ou de seuils finissent par diverger, et une décision prise après coup se prend sur l'enthousiasme | réécrire critères et seuils dans le plan, ou un pilote sans critères | jamais : sans critères écrits, ce n'est pas un pilote |
+| Les simplifications sont des actions de la vague 0, ou du premier lot : responsable, date, pièce | sans elles, une solution « standardiser d'abord » n'a aucun plan, et la porte n'a rien à constater | les laisser en annexe du diagnostic, sans suivi | l'entreprise mène seule ses simplifications et en fournit la pièce : le plan ne garde que la porte |
+| Le pré-mortem fait partie du plan, dans les deux modes ; son verdict se rend sur la première version | c'est le moment le moins cher pour changer de direction ; celui qui écrit les parades connaît déjà le verdict | un pré-mortem seulement sur demande, ou un verdict rendu sur la version déjà durcie | le plan tient en un lot réversible sans effet sur d'autres équipes : une demi-page suffit |
 | L'adoption se traite par six questions, pas par un programme de conduite du changement | une équipe qui reprend le dispositif a besoin de réponses concrètes ; un programme complet dépasse la mission | un volet conduite du changement détaillé | le déploiement touche une grande partie de l'entreprise : on le propose comme mission distincte |
+| Une échéance passée se redate dans le plan ; un livrable amont ne se corrige par version que s'il contredit une valeur ou une décision | les dates sont des propositions `[H]` : les versionner noierait les vraies corrections | corriger chaque date amont par une nouvelle version | une date amont engage un tiers (contrat, échéance de l'éditeur) : elle est corrigée et tracée |
 
 ## Frontières
 
@@ -206,8 +196,9 @@ Lignes de journal, au moment où le décideur tranche :
   recalcule pas). Tri et portefeuille → `decouvrir-cas-usage` ; chaque cas lancé →
   `cadrer-besoin`.
 - Exigences et spécification (recette, critères de pilote, indicateurs et seuils, propriétaire de la
-  maintenance) → `rediger-cahier-des-charges` ; choix de l'option → `concevoir-solution` ; processus
-  actuel et ses mesures → `auditer-processus` ; état de la mission et journal → `router-mission-ia`.
+  maintenance) → `rediger-cahier-des-charges` ; choix de l'option et définition de la porte →
+  `concevoir-solution` ; processus actuel, ses mesures et ses simplifications → `auditer-processus` ; état de
+  la mission et journal → `router-mission-ia`.
 - Construire, installer, former et mesurer à la place de l'entreprise : hors du pack.
 - Facultatif, s'ils sont installés : `change-request` et `runbook` (plugin `operations`) pour mettre
   en forme les rubriques 3 et 5 ; `router-consulting-strategy` pour le contre-cas d'une feuille de
@@ -215,10 +206,13 @@ Lignes de journal, au moment où le décideur tranche :
 
 ## Preuves restantes
 
-- Éprouvée sur la mission fictive de `examples/` (les deux modes).
+- Éprouvée sur la mission fictive du 12/10/2026 (`examples/`, les deux modes), qui a relevé 94 frictions
+  dans le pack ; celles qui touchent la feuille de route et le plan (vague 0, porte, lots en parallèle,
+  indicateurs, pré-mortem, journal) sont corrigées ici.
 - NON MESURÉ sur une mission réelle : le premier déploiement dira si trois à six étapes par lot et
-  six questions d'adoption suffisent, et si le pré-mortem nomme les échecs qui surviennent vraiment.
-  Le pack ne relit pas le protocole de mesure après déploiement : c'est l'entreprise qui mesure.
+  six questions d'adoption suffisent, si le critère de verdict du pré-mortem départage bien durcir et
+  pivoter, et si le pré-mortem nomme les échecs qui surviennent vraiment. Le pack ne relit pas le
+  protocole de mesure après déploiement : c'est l'entreprise qui mesure.
 - Sources et crédits : pré-mortem, méthode de Gary Klein (« Performing a Project Premortem », Harvard
   Business Review, 2007), écriture individuelle avant partage et relance aux jalons adaptées de gcamilo,
   « management-consulting » (MIT, https://github.com/gcamilo/management-consulting) ; retour arrière,
