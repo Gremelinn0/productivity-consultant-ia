@@ -1,0 +1,16 @@
+# Les données d'une mission n'appartiennent jamais à ce dépôt.
+/mission/
+mission-*/
+
+# Secrets
+*.local
+.env*
+secrets*
+*token*
+*credential*
+
+# Bruit
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

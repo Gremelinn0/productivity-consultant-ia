@@ -1,0 +1,12 @@
+{
+  "name": "consultant-ia",
+  "description": "Le pack du consultant IA et automatisation : huit compétences et deux portes d'entrée. On part d'un besoin, et le pack enchaîne cadrage, audit du processus, cahier des charges, solutions comparées, rentabilité, spécification et plan. Ou l'on part d'aucun besoin : on le branche sur le contexte de l'entreprise, il cartographie les tâches, les trie et rend un portefeuille de cas d'usage chiffrés. Chaque nombre porte son statut, l'humain tranche à chaque étape, et rien ne sort du dossier de mission.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Florent Maisoncelle"
+  },
+  "homepage": "https://github.com/Gremelinn0/productivity-consultant-ia",
+  "repository": "https://github.com/Gremelinn0/productivity-consultant-ia",
+  "license": "MIT",
+  "keywords": ["consulting", "automation", "ai", "process-optimization", "use-cases", "roi", "prd"]
+}

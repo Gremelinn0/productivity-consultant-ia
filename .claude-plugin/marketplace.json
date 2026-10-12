@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "consultant-ia",
+  "owner": {
+    "name": "Florent Maisoncelle"
+  },
+  "metadata": {
+    "description": "Mener une mission de conseil IA et automatisation, du premier besoin au plan chiffré.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "consultant-ia",
+      "source": "./",
+      "description": "Deux portes (besoin connu, découverte) et sept étapes : cadrer, auditer, exiger, concevoir, chiffrer, spécifier, planifier.",
+      "category": "productivity"
+    }
+  ]
+}
