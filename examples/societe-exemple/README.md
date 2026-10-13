@@ -39,7 +39,7 @@ Un seul cas est déroulé. Les deux autres cas retenus par la feuille de route (
 3. `mission/journal.md` : les décisions, dans l'ordre.
 4. `mission/sources/` : les entretiens, les exports et la séance enregistrée, puis les pièces de la mise en service et de la mesure (compte rendu de la passe 3, messages du client, relevés du pilote et de production, lecture d'échantillon) que les livrables citent.
 
-Pour rejouer la partie réelle, depuis `mission/cas-relances-factures/85-recette/` : `python -X utf8 test_recette.py` (les 43 tests, une vingtaine de secondes) et `python -X utf8 sabotage.py` (les 17 sabotages) ; depuis `95-mesure/` : `python -X utf8 calculs-v1.2.py`. Les sorties rangées à côté sont celles de l'exécution du 2026-10-13 ; elles ne se réécrivent pas à chaque rejeu.
+Pour rejouer la partie réelle, depuis `mission/cas-relances-factures/85-recette/` : `python -X utf8 test_recette.py` (les 43 tests, une vingtaine de secondes) et `python -X utf8 sabotage.py` (les 17 sabotages) ; depuis `95-mesure/` : `python -X utf8 calculs-v1.2.py`. Les sorties rangées à côté sont celles de l'exécution du 2026-10-13 ; elles ne se réécrivent pas à chaque rejeu. Rejoué le même jour sur une copie neuve du dépôt : 43 sur 43. Sous Windows, placer le dépôt dans un dossier au chemin court : les chemins de l'exemple vont jusqu'à 151 signes, et un chemin total de plus de 260 signes fait échouer le test du retour arrière (T-34), qui ne trouve plus son archive.
 
 ## État de la mission
 

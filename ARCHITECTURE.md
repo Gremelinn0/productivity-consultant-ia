@@ -169,8 +169,10 @@ Un besoin traité seul par la porte 1 n'a que `journal.md` et son dossier `cas-<
    son livrable contre trois choses. Le besoin (`10-besoin`, ou `00-contexte` pour une découverte) : il
    répond à ce qui est demandé, dans le périmètre. Les preuves : chaque nombre et chaque affirmation qui
    pèse sur la décision renvoie à sa source (`mission/sources/`, un livrable validé) ou à son calcul ;
-   sinon il devient une `[H]` ou une question `Q-xx`. Les livrables déjà validés : une contradiction se
-   corrige par une version datée, jamais en silence. Ce qui ne passe pas se corrige avant la remise.
+   sinon il devient une `[H]` ou une question `Q-xx`. La source se note au moment où le chiffre s'écrit ;
+   une source retrouvée après coup se dit « retrouvée après coup », jamais présentée comme l'origine. Les
+   livrables déjà validés : une contradiction se corrige par une version datée, jamais en silence. Ce qui
+   ne passe pas se corrige avant la remise.
 
 ## Les conventions communes
 
