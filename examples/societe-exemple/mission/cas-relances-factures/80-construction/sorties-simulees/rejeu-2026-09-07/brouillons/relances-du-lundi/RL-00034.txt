@@ -1,0 +1,15 @@
+X-Relance-Id: FA-2026-1347|1
+A: contact.c069@exemple-c069.invalid
+Objet: Facture FA-2026-1347 — rappel de paiement
+Etat: brouillon
+Cree-par: service-messagerie
+Cree-le: 2026-09-07 09:30:00
+
+Bonjour Contact C069,
+
+Sauf erreur de notre part, la facture FA-2026-1347 d'un montant de 1306,43 € HT, échue le 29/08/2026, n'est pas réglée à ce jour.
+
+Si le paiement est déjà parti, merci de ne pas tenir compte de ce message. Sinon, nous vous remercions de procéder au règlement dans les meilleurs délais.
+
+Cordialement,
+Le service comptabilité clients, Société Exemple

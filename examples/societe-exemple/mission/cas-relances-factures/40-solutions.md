@@ -1,6 +1,7 @@
 # Solutions — Relances de factures échues
 
 2026-10-06 · Demandeur : direction générale · Valideur et décideur : responsable financier (règle d'engagement : il décide sous 3 000 € de construction et 100 € de coût récurrent par mois `[F]`, la direction générale au-delà ; l'option retenue reste sous ces seuils `[H]`) · Rédigé par : consultant IA · Exigences lues : `30-exigences.md` du 2026-10-02, version 1
+Version 1.1, précisée le 2026-10-15 : la rubrique 8 dit quel rôle tranche la plateforme, la continuité du service et le devenir des données à la résiliation, et la rubrique 11 gagne la question Q-12. La recommandation, la matrice, la porte et les options ne changent pas.
 S1 à S4 désignent les systèmes en place de `30-exigences.md` §6 : logiciel de facturation, tableur partagé, messagerie, outil de tickets.
 
 ## 1. Recommandation
@@ -121,6 +122,9 @@ Pour l'option 4.
 - Volume : environ 150 actions par séance `[E]` (61 factures évaluées + 24 brouillons + 24 envois + 24 lignes d'historique + 17 étapes fixes `[H]`), soit 600 par mois `[E]`, 660 avec la croissance de 10 % `[E]`.
 - Ordre de grandeur du coût mensuel : 20 € `[E]`, premier palier d'une offre à l'action. Tarif et quota inclus non lus : `[H]`.
 - Page de l'éditeur lue : non, `[H]`. À lire et dater par le responsable financier avant le 2026-10-09 : unité, quota, limites, région des données, export, engagement.
+- Qui tranche la plateforme : la fiche ne la nomme pas. Elle est proposée par le devis de l'indépendant (`70-plan.md`, étape 7), lue et datée par le responsable financier sur la page de l'éditeur (étape 8), puis confirmée par lui, qui décide sous 3 000 € et 100 € par mois, par une ligne du journal. La plateforme arrêtée par le plan et confirmée au journal fait foi pour la construction ; le constructeur n'en choisit pas une autre.
+- Continuité du service : disponibilité promise, support de l'éditeur et préavis d'arrêt, à lire sur la page de l'éditeur avant de signer `[H]`. Si le service s'arrête, la méthode à la main (option 0) reprend le même lundi (ENF-04), et la liste du lundi suivant couvre toute facture sans relance consignée à son niveau (EF-01, version 1.1).
+- Données à la résiliation : le flux ne garde que ce que `60-specification.md` §5 liste, dans les onglets du dispositif (S2), qui restent à l'entreprise. Ce que la plateforme garde de son côté (historique d'exécution) se fait supprimer par écrit à la résiliation `[H]` ; sa durée de conservation est la question Q-12.
 - Façon d'en sortir : exporter le flux ; les entrées sont des fichiers, les règles et modèles sont écrits dans la spécification ; l'option 3 peut le remplacer en 3 jours environ `[H]`.
 
 ## 9. À vérifier avant de signer
@@ -157,6 +161,7 @@ Tant que la porte est fermée : l'option 0 s'applique, la gestionnaire clients m
 | Q-03 | Qui tient la liste des comptes clés ? | responsable financier | ouverte, échéance 2026-10-09 `[H]` |
 | Q-06 | Le rapprochement avant la séance a-t-il été tenu le lundi 2026-10-05, et à quel jour et quelle heure le fixer ? | comptable | ouverte, constat attendu `[H]`, bloquante avant le pilote |
 | Q-09 | Quelle plateforme, quel éditeur, quelle région d'hébergement ? | indépendant, après lecture des pages des éditeurs | ouverte, avant le devis du 2026-10-09 `[H]` |
+| Q-12 | Combien de temps la plateforme garde-t-elle l'historique d'exécution, et peut-il être supprimé à la résiliation ? | indépendant, après lecture de la page de l'éditeur | ouverte, non bloquante, avant la signature `[H]` |
 
 ## Décision attendue
 

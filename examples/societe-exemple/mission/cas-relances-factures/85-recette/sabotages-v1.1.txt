@@ -1,0 +1,126 @@
+Sabotages de la recette · version gelée 1.1
+  flux_relances.py   SHA-256 83f1698c3ed46221a4796fdeee6d45acc6d241ba9bd9269ebed45bf76e404030
+  essai_s2_s3.py     SHA-256 af697cc0437b8dd8afbc9ed49da4d70a6831b090402122f107191d2b5e0788bf
+  MANIFESTE.sha256   SHA-256 829258c36d5ad24fffd7402c1e78cb29bf9bf49aea1cea7ed717ef22ad111181
+  contrôle de la livraison contre son manifeste : conforme
+
+S-1 · test visé T13 · protège : cas limite critique : fraîcheur du rapprochement (CA-10)
+  régression introduite dans une copie : retirer le contrôle de fraîcheur du rapprochement à l'étape 1
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: 'ok' != 'refus'
+  suite entière sur la copie : 2 test(s) en échec sur 43 : T-13, T-13b
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-2 · test visé T12 · protège : dédoublonnage : un brouillon par clé
+  régression introduite dans une copie : sauter la recherche de la clé dans « propositions » et dans la boîte avant de créer un brouillon
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: Lists differ: ['CC-[52 chars]7', 'CC-00045', 'CC-00054', 'CC-00060', 'CC-00[900 chars]086'] != ['CC-[52 chars]7', 'RL-00002', 'RL-00003', 'RL-00
+  suite entière sur la copie : 6 test(s) en échec sur 43 : T-12, T-15b, T-26, T-29, T-38, T-40
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-3 · test visé T10 · protège : permissions : le compte de service n'envoie pas (EF-10)
+  régression introduite dans une copie : donner le droit d'envoi au compte de service de la messagerie
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: DroitRefuse not raised
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-10
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-4 · test visé T18 · protège : interrupteur « Suspendre » lu à chaque passage de la veille
+  régression introduite dans une copie : ne plus lire la case « Suspendre » pendant la veille
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: Lists differ: [Brouillon(id='RL-00003', dossier='Relance[25584 chars]\n")] != []
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-18
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-5 · test visé T17 · protège : plafond de 100 propositions par exécution
+  régression introduite dans une copie : relever le plafond à un milliard
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: Tuples differ: ('ok', 101) != ('volume', 0)
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-17
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-6 · test visé T22 · protège : changement non approuvé : empreinte des règles et des modèles
+  régression introduite dans une copie : supprimer le refus quand l'empreinte diffère de la version approuvée
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: 'ok' != 'refus'
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-22
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-7 · test visé T29 · protège : reprise après plantage : brouillon créé avant l'enregistrement de la clé
+  régression introduite dans une copie : ne plus adopter le brouillon déjà présent dans la boîte (pas de réconciliation)
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: Tuples differ: (43, 42) != (42, 42)
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-29
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-8 · test visé T07 · protège : validation humaine des comptes clés (alerte « envoi hors validation »)
+  régression introduite dans une copie : retirer l'alerte quand un compte clé part d'un autre compte que celui du responsable financier
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: [] is not true : aucune alerte « envoi hors validation »
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-07
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-9 · test visé T03 · protège : exclusion des factures payées (relance à tort)
+  régression introduite dans une copie : retirer le motif d'exclusion « payée »
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: Tuples differ: ('retenue', '') != ('écartée', 'payée')
+  suite entière sur la copie : 17 test(s) en échec sur 43 : T-01, T-03, T-09, T-11, T-12, T-15, T-15b, T-17, T-18, T-20, T-25, T-27, T-28, T-29, T-30, T-38, T-40
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-10 · test visé T22 · protège : processus instable : l'exécution garde les règles de son début
+  régression introduite dans une copie : relire les règles à chaque brouillon
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: 'urgent' unexpectedly found in 'Facture FA-2026-1221 — rappel urgent' : FA-2026-1221|1 : la règle changée en cours d'exécution s'applique
+  suite entière sur la copie : 2 test(s) en échec sur 43 : T-22, T-28
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-11 · test visé T02 · protège : une facture ne saute jamais de niveau
+  régression introduite dans une copie : proposer le niveau atteint par l'âge au lieu du niveau qui suit la dernière relance
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: Lists differ: ['FA-T02-J25|2', 'FA-T02-J7|1', 'FA-T02-J8|1', 'FA-T02-LEVE|1'] != ['FA-T02-J25|1', 'FA-T02-J7|1', 'FA-T02-J8|1', 'FA-T02-LEVE|1']
+  suite entière sur la copie : 18 test(s) en échec sur 43 : T-01, T-02, T-04, T-09, T-11, T-12, T-15, T-15b, T-18, T-20, T-21, T-25, T-27, T-28, T-29, T-30, T-38, T-40
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-12 · test visé T18 · protège : alerte sur silence (flux non lancé à 10 h)
+  régression introduite dans une copie : désactiver l'alerte « aucune exécution »
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: 0 != 1 : pas d'alerte au responsable financier à 10 h
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-18
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-13 · test visé T33 · protège : secrets : aucune valeur de secret dans la livraison
+  régression introduite dans une copie : glisser dans le code une valeur fictive qui ressemble à une clé
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: 2 != 0 : {'secret': [(WindowsPath('<temp>/sabotage-j1_78agm/livraison/flux_relances.py'), 1056, 'API_KEY = "sk_
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-33
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-14 · test visé T34 · protège : retour arrière : l'export de la version précédente existe
+  régression introduite dans une copie : supprimer l'export de la version précédente (archives/flux-relances-v1.0.zip)
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: False is not true : l'export de la version précédente manque
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-34
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-15 · test visé T06 · protège : EF-04 : un litige signalé retire le brouillon
+  régression introduite dans une copie : ne plus relire la liste des litiges à la veille
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: Lists differ: [Brouillon(id='RL-00002', dossier='Relance[628 chars]\n")] != []
+  suite entière sur la copie : 2 test(s) en échec sur 43 : T-06, T-19
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-16 · test visé T27 · protège : lecture après écriture : le brouillon relu est celui qui était voulu
+  régression introduite dans une copie : neutraliser la comparaison du corps et de la clé relus
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: 0 != 1 : un brouillon corrompu est resté, ou trop de brouillons manquent : []
+  suite entière sur la copie : 1 test(s) en échec sur 43 : T-27
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+S-17 · test visé T32 · protège : aucun nom ni adresse de contact dans les traces
+  régression introduite dans une copie : écrire le nom du contact dans le journal d'une proposition retenue
+  test visé sur la copie : ÉCHEC, comme attendu · AssertionError: False is not true : nom ou adresse dans journal.csv
+  suite entière sur la copie : 2 test(s) en échec sur 43 : T-14, T-32
+  copie jetée ; version gelée inchangée (empreintes et manifeste) : oui
+  test visé relancé sur la version gelée : réussi
+
+BILAN : 17 sabotages · 17 échecs constatés · 17 rétablissements vérifiés · 17 re-tests réussis

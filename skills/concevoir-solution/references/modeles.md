@@ -85,8 +85,12 @@ défavorable, une raison courte, le statut du chiffre.
 Même grille de lecture que l'option retenue : raisons, conditions, contre-argument.
 
 ## 8. Plateforme ou code
-Seulement si une option passe par une plateforme sans code : unité de facturation, volume, ordre de
-grandeur du coût mensuel `[E]`, page de l'éditeur lue (date) ou `[H]`, façon d'en sortir.
+Seulement si une option passe par une plateforme sans code ou un logiciel du marché. La plateforme est
+nommée ; si la fiche ne donne que sa famille (flux sans code, scénario, script, agent), elle dit **quel
+rôle tranche la plateforme avant la construction** (la plateforme arrêtée par `70-plan` et confirmée par le
+décideur au journal fait foi). Puis : unité de facturation, volume, ordre de grandeur du coût mensuel `[E]`,
+page de l'éditeur lue (date) ou `[H]`, continuité du service (disponibilité promise, support, préavis
+d'arrêt), façon d'en sortir et devenir des données à la résiliation.
 
 ## 9. À vérifier avant de signer
 | Hypothèse `[H]` | Qui la confirme | Avant quand |

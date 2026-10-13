@@ -1,0 +1,78 @@
+
+== A. Duree de la seance et minutes par relance
+depart : 3 lundis, 176 factures, 73 relances, 343 min ; moyenne 114.33 min (min 111, max 119) ; 24.33 relances par lundi ; 4.699 min par relance
+production avec le flux : 3 lundis, 90 relances hors cles, 15 cles, 175 min ; moyenne 58.33 min (min 55, max 62) ; 30.00 relances par lundi ; 1.944 min par relance
+gain par relance = 4.699 - 1.944 = 2.754 min ; par seance type de 24 relances 66.1 min ; au volume reel de 30 relances par lundi 82.6 min
+50 : par relance bas 2.417, central 3.458, haut 4.167 min
+temoin : seance a la main du 2026-12-28 = 118 min pour 26 relances = 4.538 min par relance (depart 4.699)
+controle croise : 4 lundis reels 293 min contre 545.0 min tout a la main au rythme du depart ; ecart 252.0 min (gain du flux seul 247.9 min)
+validation des comptes cles par le RF : 40 min en 4 lundis (10.0 min par lundi), depart non chronometre
+
+== B. Volume et adoption
+relances hors cles : 90 par le flux + 26 a la main = 116 ; depart pour 4 lundis 97.3 ; variation +19 %
+adoption IND-08 (seances) = 3 sur 4 = 75 % ; en relances = 90 / 116 = 77.6 % ; sans le lundi de panne 100 %
+relances envoyees en tout (cles comprises) : 135 ; par le flux 105
+
+== C. Gain brut observe
+heures liberees = 90 x 2.754 / 60 = 4.131 h = 247.9 min ; valeur a 31 EUR = 128.07 EUR
+appels : 4 appels, 88 min (22 min par appel) ; reemploi = 1.467 / 4.131 = 35.5 %
+gain temps reemploye = 128.07 x 0.3550 = 45.47 EUR [F] ; temps libere non reemploye 2.665 h = 82.60 EUR de valeur non financiere
+usage nomme par la direction generale : 12 appels par mois x 22 min = 264 min = 4.40 h
+reclamations : depart 13 par mois, observe 8 sur 4 semaines ; evitees en tout 5, dont 1 imputee a l'option 4 (l'option 0 en retire 4 [H]) ; cout d'une erreur 6.7667 EUR ; gain 6.77 EUR [E]
+pour 100 relances envoyees : depart 13.5 (13 pour 96) ; observe 5.9 (8 pour 135)
+GAIN BRUT observe = 45.47 + 6.77 = 52.23 EUR [E] ; dont [F] 45.47
+50 central (apport) : gain brut 135.68 EUR ; temps 123.50 ; erreurs 12.18
+
+== D. Couts reels de la periode
+fonctionnement (facture de decembre, palier Equipe) 35.00 ; maintenance 1.5 h = 0.7 x 31 + 0.8 x 52 = 63.30 ; supervision 24 min x 52 / 60 = 20.80 ; incidents 62.27
+   incident 2026-12-14 : RF 0.3 h = 15.60 EUR ; attente GC 40 min = 20.67 EUR
+   incident 2026-12-28 : RF 0.5 h = 26.00 EUR ; attente GC 0 min = 0.00 EUR
+construction : payee 900 + mobilisee 693 (8 h x 31 + 5.5 h x 52 + 3 h x 34 + 1.5 h x 38) = 1593 EUR contre 1348 estimes (+18 %)
+total des couts de la periode : 181.37 EUR ; sans incidents 119.10
+
+== E. Gain net observe
+GAIN NET observe = 52.23 - 181.37 = -129.13 EUR [E] ; sans les incidents -66.87 ; sans compter les erreurs evitees -135.90 [F]
+50 central : gain net 84.68 ; ecart -213.82 ; cumul apres 1 periode -129.13
+seuil de rentabilite mensuelle : gain brut 52.23 contre fonctionnement + maintenance 98.30 (+ supervision 20.80 = 119.10) : coute plus qu il ne rapporte
+
+== F. Decomposition de l'ecart entre 50 (central) et l'observe, terme apres terme (ordre ecrit)
+depart (50 central) : 84.68
+   volume 96 -> 116 relances hors cles                              +25.73 ->   110.41
+   adoption 90 % -> 77.6 % des relances                             -22.26 ->    88.15
+   minutes 3.458 -> 2.754 par relance                               -26.19 ->    61.96
+   reemploi 80 % -> 35.5 %                                          -56.99 ->     4.97
+   erreurs evitees 2 -> 1 (adoption deja comptee)                    -3.73 ->     1.23
+   fonctionnement 20 -> 35                                          -15.00 ->   -13.77
+   maintenance 31 -> 63.30                                          -32.30 ->   -46.07
+   supervision 0 -> 20.80                                           -20.80 ->   -66.87
+   incidents 0 -> 62.27                                             -62.27 ->  -129.13
+arrivee : -129.13 (observe -129.13)
+
+== G. Retour : une seule formule, celle de 50 section 4, appliquee aux termes observes
+   periode telle que relevee : gain net -129.13 <= 0 -> PAS DE RETOUR (un gain net nul ou negatif n'a pas de delai de retour ; formule de 50 : (construction payee + construction mobilisee + gain brut x m) / gain net mensuel)
+   sans les incidents : gain net -66.87 <= 0 -> PAS DE RETOUR (un gain net nul ou negatif n'a pas de delai de retour ; formule de 50 : (construction payee + construction mobilisee + gain brut x m) / gain net mensuel)
+   cumul reel apres une periode : -129.13 EUR contre une construction de 1593 EUR : non rattrape
+   cout de poursuite par mois [E], tel que releve (fonctionnement 35.00 + maintenance 63.30 + supervision 20.80), hors incidents : 119.10
+   seuil de rentabilite mensuelle : gain brut 52.23 contre 119.10 ; il manque 66.87 EUR par periode
+   un appel de 22 min reemploie 11.37 EUR de temps libere ; gain net nul, au volume et a l'adoption observes, a 87.7 % de reemploi du temps libere (4.13 h, soit 11.3 appels de 22 min), c'est-a-dire 9.9 appels par periode (observe : 4)
+   maximum possible, tout le temps libere reemploye : gain net +15.74 EUR (hors incidents)
+
+== H. Point mort a 18 mois recalcule (formules de chiffrer-rentabilite, section 6)
+50 : (1348 + 18 x 51) / (18 - 0.75) = 131.36 EUR de gain brut
+   construction reelle, couts de 50 (20 + 31)                         gain brut minimal  145.57 EUR ; minutes par relance (volume 96, reemploi 80 %) 3.50, soit 84.0 min par seance de 24
+   construction reelle, couts releves (35 + 63,30 + 20,80)            gain brut minimal  216.63 EUR ; minutes par relance (volume 96, reemploi 80 %) 5.29, soit 126.9 min par seance de 24
+   observe : 2.754 min par relance, soit 66.1 min par seance de 24 ; brut observe 52.23
+
+== I. Indicateurs de 60 section 14
+IND-05 par lundi : 24.4 %, 27.5 %, 27.7 % ; agrege (23 + 11) / 128 = 26.6 %
+   au pilote (lundis 2 a 4) : 18 suppressions sur 23 sont des factures sous 15 EUR (78 %) [F] ; production avec la meme part [E] : IND-05 passerait de 26.6 % a 12.5 % (18 suppressions de moins)
+IND-01 : 8 sur 4 semaines (cible 7 par mois, depart 13)
+IND-04 : 0 sur 105 relances du flux ; IND-02 : 0
+IND-09 : novembre 957 operations (20 EUR), decembre 1069 (35 EUR, palier Equipe) ; somme des semaines 1070 ; janvier au 10 : 351 ; projection de janvier 1389 [E] (21 jours restants a 346 par semaine)
+IND-10 : 1.5 h sur 4 semaines
+IND-03 : moyenne des lundis avec le flux 58.3 min (cible 60)
+consommation estimee par la maquette : 10 min = 1482 par mois ; 30 min sans passage de 17 h = 932 par mois [E]
+
+== J. Lecture de cas
+tirage au hasard : 2 echecs sur 30 = 6.7 % ; intervalle de Wilson a 95 % : 1.8 a 21.3 %
+cas lus distincts 54 ; echecs 3 (alerte 0, lecture 2, reclamation 1)

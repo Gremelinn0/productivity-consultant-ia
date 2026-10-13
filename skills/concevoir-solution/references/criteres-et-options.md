@@ -102,7 +102,7 @@ Dans tous les cas, nommer le rôle qui maintient après la livraison : la spéci
 | Maintenance | heures par mois : changements d'interface chez les fournisseurs, accès à renouveler, règles à ajuster ; qui s'en charge | `[H]` tant qu'aucun dispositif comparable n'a tourné ; c'est la ligne qu'on oublie facilement |
 | Fiabilité et risque | comment ça tombe en panne, si on le voit, ce que coûte une erreur silencieuse ; pour une option IA, le taux d'erreur sur échantillon réel | `[F]` si mesuré, sinon `[H]` ; la parade (validation, file des échecs, interrupteur d'arrêt) |
 | Sécurité et lieu des données | où les données transitent et sont stockées ; ce qui part vers un service tiers ou un modèle ; durée de conservation ; sous-traitants | documentation de l'éditeur lue et datée ; conformité à confirmer par le responsable concerné `[H]` |
-| Dépendance et portabilité | si l'éditeur change de prix, de conditions ou disparaît : export possible, coût de sortie | conditions de l'éditeur ; test d'export si possible |
+| Dépendance et portabilité | si l'éditeur change de prix, de conditions, est racheté ou disparaît : export possible, coût de sortie, devenir des données à la résiliation ; continuité du service (disponibilité promise, support, préavis d'arrêt) | conditions de l'éditeur ; test d'export si possible |
 | Compétences internes pour maintenir | qui sait faire, qui peut apprendre, formation nécessaire | échange avec le responsable de l'équipe concernée ; des rôles, pas des noms |
 | Délai | jusqu'à une première version utilisable, puis jusqu'à la production | `[E]` ; compter les accès à obtenir et les validations |
 
@@ -163,8 +163,9 @@ clients, déploiement automatisé), vérifier que l'éditeur le permet avant de 
 
 **Lire la page d'un éditeur.** Noter l'adresse de la page et la date de lecture ; l'unité de facturation
 et le quota inclus ; les limites (taille des données, durée d'exécution, nombre d'étapes, appels par
-minute) ; les régions et le lieu de stockage des données ; la possibilité d'exporter ; les conditions de
-l'offre (engagement, évolution des prix). Ce qu'on n'a pas pu lire reste `[H]`.
+minute) ; les régions et le lieu de stockage des données ; la possibilité d'exporter et le devenir des
+données à la résiliation ; la continuité (disponibilité promise, support, préavis d'arrêt) ; les conditions
+de l'offre (engagement, évolution des prix). Ce qu'on n'a pas pu lire reste `[H]`.
 
 ## 6. Pièges de l'évaluation
 

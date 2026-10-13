@@ -1,0 +1,15 @@
+X-Relance-Id: FA-2026-1311|2
+A: contact.c045@exemple-c045.invalid
+Objet: Facture FA-2026-1311 — deuxième rappel
+Etat: brouillon
+Cree-par: service-messagerie
+Cree-le: 2026-09-07 09:30:00
+
+Bonjour Contact C045,
+
+Nous vous avons déjà écrit au sujet de la facture FA-2026-1311 d'un montant de 1058,20 € HT, échue le 16/08/2026. Elle reste impayée à ce jour.
+
+Merci de nous indiquer sous huit jours la date de règlement prévue, ou le motif du retard.
+
+Cordialement,
+Le service comptabilité clients, Société Exemple

@@ -2,6 +2,7 @@
 
 2026-09-22 · Demandeur et valideur : direction générale · Rédigé par : consultant IA · Sources : `02-portefeuille.md`, `03-chiffrage.md` (et `00-contexte.md` pour les contraintes)
 Version 1.1, précisée le 2026-10-12 : le seuil de retard de la colonne « litige » (pré-mortem, ligne 1) passe de 2 jours à 3 jours ouvrés, comme dans `60-specification.md` §10. Rien d'autre ne change.
+Version 1.2, précisée le 2026-10-14 : la rubrique 3 ouvre sur le socle commun des cas (plateforme, qui l'exploite, règles de sécurité communes) et la décision attendue le demande. L'ordre, les rangs et les dates ne changent pas.
 
 Ce document ordonne les trois cas retenus et les actions sans construction, jusqu'au 2026-12-18.
 
@@ -26,7 +27,17 @@ Principe d'ordre. Un cas passe avant un autre quand son chiffrage est meilleur (
 | 1 | Tri des tickets | voir 3 : règles d'affectation, outil lu ; mesure sur 50 tickets (pré-mortem n° 2) | — | responsable du support | cadrage le 2026-10-01 ; plan validé avant le 2026-10-23 | tickets non classés · 67 par mois, soit 5,4 % `[F]` |
 | 2 | Statut de commande | voir 3 : avis d'expédition vérifié (vague 0), échantillon de 100 tickets de statut ; suivi du transporteur lisible sans saisie | vague 0 (avis d'expédition) ; décision de pilote de la vague 1 | responsable du support | décision de reprise le 2026-11-27 | tickets de statut · 480 par mois `[F]` |
 
-## 3. Prérequis à lever d'abord
+## 3. Socle commun et prérequis à lever d'abord
+
+D'abord le socle commun : ce qui sert à plusieurs cas et se lève une seule fois.
+
+| Socle commun | Retenu ou envisagé `[H]` | Qui l'exploite (rôle) | Règles de sécurité communes | Pour quels cas |
+|---|---|---|---|---|
+| Plateforme de flux sans code | envisagée `[H]` : une seule plateforme pour les cas qui lisent des fichiers ou des listes et écrivent des brouillons ; elle est nommée après lecture de la page de l'éditeur et du devis, dans le plan de chaque cas | responsable financier pour les relances ; le responsable du support pour les autres cas qui s'en serviraient `[H]` | compte de service nommé, jamais un compte personnel ; secrets dans le coffre de la plateforme, jamais en clair ; droits en lecture seule, sauf les onglets propres au dispositif ; données clients hébergées dans l'Union européenne, écrit par l'éditeur (contrainte ferme de `00-contexte.md`) | relances ; statut de commande, s'il est repris ; tri, seulement si les règles de l'outil de tickets ne suffisent pas |
+| Règles de classement de l'outil de tickets | envisagées `[H]` : jamais activées | responsable du support | droits d'administration limités au responsable du support ; aucun nom de client hors de l'outil | tri |
+| Comptes de service du tableur partagé et de la messagerie | à créer `[H]` : un compte par usage | responsable financier, qui administre les accès | droits minimaux ; le compte de la messagerie crée des brouillons et ne peut rien envoyer | relances ; statut de commande, s'il est repris |
+
+Puis ce qui manque.
 
 | Ce qui manque | Pour quels cas | Qui le lève | Pour quelle date `[H]` |
 |---|---|---|---|
@@ -72,4 +83,4 @@ Version durcie : (a) ajouter à la séquence la mesure sur 50 tickets avant le t
 
 ## Décision attendue
 
-Valider l'ordre, les cas de la première vague et leurs responsables, puis lancer le premier cas : il entre par `cadrer-besoin`.
+Valider l'ordre, les cas de la première vague et leurs responsables, le socle commun (plateforme, qui l'exploite, règles de sécurité), puis lancer le premier cas : il entre par `cadrer-besoin`.

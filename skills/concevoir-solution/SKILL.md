@@ -3,16 +3,17 @@ name: concevoir-solution
 description: >-
   Quand les exigences sont écrites et qu'il faut choisir comment y répondre (« quelle solution
   choisir ? », « on automatise avec quoi ? », « n8n ou du code ? », « faut-il vraiment automatiser ? »)
-  → décider d'abord s'il faut automatiser, puis comparer de vraies options, dont ne rien construire et
-  les outils déjà en place, sur une matrice (couverture des exigences, coûts, fiabilité, données,
-  dépendance, délai), et recommander d'abord, avec le contre-argument, la condition d'arrêt et l'option
-  de repli ; quand il faut standardiser avant de construire, retenir l'option sous une porte mesurable.
+  → poser la stratégie d'automatisation (faut-il automatiser, quel type de solution, sur quelle
+  plateforme), puis comparer de vraies options, dont ne rien construire et les outils déjà en place, sur
+  une matrice (couverture des exigences, coûts, fiabilité, données, dépendance, délai), et recommander
+  d'abord, avec le contre-argument, la condition d'arrêt et l'option de repli ; quand il faut
+  standardiser avant de construire, retenir l'option sous une porte mesurable.
   Quatrième étape de la porte « besoin connu » du pack consultant-ia. Triggers : « choisir une
   solution », « comparer les options », « faut-il automatiser », « build or buy », « quelle
   plateforme », « agent ou workflow », « solution design », « automation strategy ».
 metadata:
   scope: "le choix de la réponse à un besoin déjà traduit en exigences : faut-il automatiser, quelle option, construite par qui, et sous quelle porte"
-  owns: "la porte d'entrée « faut-il automatiser », le catalogue d'options, la matrice d'évaluation, le partage entre automatisme et humain, la recommandation avec son contre-argument et son repli, la porte de démarrage quand on standardise d'abord"
+  owns: "la stratégie d'automatisation (faire ou non, quel type de solution, quelle plateforme et qui la nomme), la porte d'entrée « faut-il automatiser », le catalogue d'options, la matrice d'évaluation, le partage entre automatisme et humain, la recommandation avec son contre-argument et son repli, la porte de démarrage quand on standardise d'abord"
   consumes: "30-exigences, 20-diagnostic et 10-besoin du cas ; mission/sources/ ; mission/journal.md ; les pages des éditeurs pour les capacités et les prix, lues au moment du choix"
 ---
 
@@ -77,6 +78,15 @@ laisse au décideur le choix de l'option et de qui la construit.
 
 ## Étapes
 
+La stratégie d'automatisation que cette étape pose tient en trois décisions, dans cet ordre : **faire ou
+non** (étape 2), **quel type de solution** (flux, agent, appel direct à un modèle, logiciel du marché ou
+code : les options 0 à 7, étapes 3 à 6), **quelle plateforme, et qui la nomme** (étapes 7 à 9, rubrique 8).
+Pour la plateforme, cinq critères de la matrice pèsent le plus : le coût
+complet (maintenance et unité facturée comprises), la fiabilité, le lieu des données, la compétence interne
+pour maintenir, la réversibilité (sortie possible). Si la fiche ne donne que la famille de plateforme (flux
+sans code, scénario, script, agent), elle dit qui tranche la plateforme avant la construction : la
+plateforme arrêtée par `70-plan` et confirmée par le décideur au journal fait foi (`ARCHITECTURE.md`).
+
 1. **Lire ce qui existe.** `30-exigences` d'abord : s'il manque, appeler `rediger-cahier-des-charges`
    en mode exigences, sinon on compare des options à des préférences. Puis `20-diagnostic` (mesures,
    causes, simplifications déjà repérées), `10-besoin` (décision attendue), `mission/sources/`.
@@ -105,7 +115,9 @@ laisse au décideur le choix de l'option et de qui la construit.
 7. **Remplir la matrice** (critères et plateformes : parties 4 et 5). D'abord les éliminatoires, puis
    les neuf critères ; chaque cellule porte une appréciation, une raison courte et le statut du
    chiffre. Un tarif ou une capacité de plateforme est daté (« lu le … sur la page de l'éditeur ») ou `[H]`.
-   L'option 0 ne s'élimine pas par la couverture ; une option éliminée garde sa colonne, marquée telle.
+   L'option 0 ne s'élimine pas par la couverture ; une option éliminée garde sa colonne, marquée telle. Pour une
+   option fournisseur, lire aussi sa continuité (disponibilité promise, support, préavis d'arrêt), le devenir des
+   données à la résiliation et la sortie (critère « dépendance et portabilité »).
 8. **Lire la matrice, ne pas la sommer.** Dégager l'option retenue et le repli. Si les décideurs ne
    s'accordent pas sur ce qui compte, leur faire classer les trois critères les plus importants et
    relire la matrice avec ce classement.
@@ -113,7 +125,8 @@ laisse au décideur le choix de l'option et de qui la construit.
    condition avec la personne qui la confirme ; ce qui ferait changer d'avis ; condition d'arrêt
    observable. Un seuil qui ne se calcule qu'au business case s'écrit « fixé par le point mort de
    `50-rentabilite` » et la porte le reprend. Examiner le repli avec la même grille. Si le contre-argument
-   est plus fort que les raisons, changer de recommandation.
+   est plus fort que les raisons, changer de recommandation. Pour arbitrer, appeler
+   `router-consulting-strategy` (lentille options stratégiques) ; le livrable reste celui de cette étape.
 10. **Écrire la fiche en commençant par la recommandation**, finir par la décision attendue, proposer
     `chiffrer-rentabilite` (business case de l'option retenue et du repli, apport de chaque phase). Quand le
     décideur tranche, ajouter une ligne à `mission/journal.md`. Une solution imposée par le client suit le même
@@ -174,10 +187,12 @@ Ligne de journal, au moment où le décideur tranche (exemple fictif) :
 - Calendrier, plan de simplification, constat de la porte, pilote planifié, formation, pré-mortem →
   `planifier-deploiement`.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.
-- Construire l'automatisation ou l'agent : hors du pack.
-- Facultatif : si `automation-strategy` est installé, il peut approfondir le choix de plateforme ; si
-  `router-consulting-strategy` l'est, l'arbitrage d'affaires entre options. Ne dire qu'on s'en est
-  servi que s'ils ont réellement été appelés.
+- Construire l'option retenue, en essai → `construire-solution`, qui reprend l'option et la plateforme de
+  cette fiche ; la recette → `tester-solution` ; toute action sur un outil de l'entreprise →
+  `piloter-mise-en-service`.
+- Pour une plateforme ou un fournisseur précis : `COMPAGNONS.md` du pack, lignes « Stratégie
+  d'automatisation » et « Concevoir ». On ne dit s'en être servi que si on l'a réellement appelé ; sans
+  compagnon, la méthode ci-dessus est le repli maison.
 
 ## Preuves restantes
 
@@ -185,10 +200,7 @@ Ligne de journal, au moment où le décideur tranche (exemple fictif) :
   avec l'option 0 dans la matrice, un repli examiné et une porte ; les corrections sont dans cette version.
 - NON MESURÉ sur une mission réelle : le premier cas réel dira si neuf critères sont trop ou trop
   peu, si la porte d'entrée qualitative suffit sans seuils chiffrés et si une porte à une condition suffit.
-- Sources et crédits : porte d'entrée « faut-il automatiser », piège du processus cassé, unités de
-  facturation, comparaison plateforme ou code et anti-motifs adaptés de la compétence
-  `automation-strategy` d'Eric Risco (MIT, https://github.com/ericrisco/rsc-harness) ; options
-  réelles, contre-cas et recommandation d'abord inspirés de `router-consulting-strategy`
-  (https://github.com/Gremelinn0/claude-skill-hub) ; matrice comparative inspirée de la compétence
-  `vendor-review` du plugin `operations` d'Anthropic (Apache-2.0,
-  https://github.com/anthropics/knowledge-work-plugins). Réécrit avec nos mots.
+- Sources et crédits : les compagnons de cette étape et leurs licences sont dans `COMPAGNONS.md` ; les
+  méthodes dont elle s'inspire (porte d'entrée, unités de facturation, plateforme ou code, matrice
+  comparative, options réelles et recommandation d'abord) sont créditées dans la section « Sources et
+  crédits » du `README.md`. Réécrit avec nos mots, aucun texte repris.

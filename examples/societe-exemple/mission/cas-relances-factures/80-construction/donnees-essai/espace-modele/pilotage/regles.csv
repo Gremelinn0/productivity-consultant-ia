@@ -1,0 +1,20 @@
+parametre,valeur
+version,R1
+date_version,2026-10-28
+delai_niveau_1,7
+delai_niveau_2,21
+delai_niveau_3,35
+limite_age_jours,60
+plafond_propositions,100
+fraicheur_rapprochement_jours_ouvres,1
+jours_feries,2026-11-01;2026-11-11;2026-12-25;2027-01-01;2027-04-05
+reprises_secondes,60;300;900
+duree_max_reprises_secondes,1800
+variation_reprises,0.1
+delai_alerte_secondes,300
+silence_heure,10:00
+litiges_sans_maj_jours_ouvres,3
+liste_vide_age_jours,7
+libelle_niveau_1,rappel de paiement
+libelle_niveau_2,deuxième rappel
+libelle_niveau_3,dernier rappel

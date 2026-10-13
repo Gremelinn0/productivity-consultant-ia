@@ -1,0 +1,9 @@
+# commande : python -X utf8 donnees-essai/essai_retour_arriere.py 1.0
+# exécuté le 2026-10-13 12:25:00 (date réelle de la machine)
+restauration de l'archive flux-relances-v1.0.zip : 0.01 s
+version restaurée : flux_relances 1.0
+contrôle du manifeste : livraison conforme au manifeste (code 0)
+rejeu de la séance par la version restaurée : exécution : ok ; propositions 42 ; écartées 19 ; à traiter à la main 0 ; brouillons créés 42 ; 42 propositions
+durée totale du retour arrière essayé : 0.48 s
+RETOUR ARRIÈRE ESSAYÉ : conforme
+# code de sortie : 0

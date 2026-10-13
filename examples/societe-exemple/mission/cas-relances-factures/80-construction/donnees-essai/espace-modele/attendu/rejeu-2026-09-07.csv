@@ -1,0 +1,62 @@
+numero_facture,id_client,categorie,niveau,issue,dossier
+FA-2026-1200,C026,litige,2,litige,
+FA-2026-1203,C014,compte_cle,1,mise_a_part,Comptes clés à valider
+FA-2026-1206,C040,envoyee,1,proposee,Relances du lundi
+FA-2026-1209,C047,attente,1,proposee,Relances du lundi
+FA-2026-1212,C054,envoyee,3,proposee,Relances du lundi
+FA-2026-1215,C061,envoyee,1,proposee,Relances du lundi
+FA-2026-1218,C068,litige,1,litige,
+FA-2026-1221,C075,petite,1,proposee,Relances du lundi
+FA-2026-1224,C082,petite,2,proposee,Relances du lundi
+FA-2026-1227,C029,litige,3,litige,
+FA-2026-1230,C036,litige,1,litige,
+FA-2026-1233,C043,attente,1,proposee,Relances du lundi
+FA-2026-1236,C050,envoyee,3,proposee,Relances du lundi
+FA-2026-1239,C021,compte_cle,2,mise_a_part,Comptes clés à valider
+FA-2026-1242,C064,payee,1,payee,
+FA-2026-1245,C071,envoyee,1,proposee,Relances du lundi
+FA-2026-1248,C078,payee,2,payee,
+FA-2026-1251,C085,litige,1,litige,
+FA-2026-1254,C032,payee,3,payee,
+FA-2026-1257,C039,payee,1,payee,
+FA-2026-1260,C046,envoyee,2,proposee,Relances du lundi
+FA-2026-1263,C053,deja_relancee,3,deja_relancee,
+FA-2026-1266,C060,envoyee,2,proposee,Relances du lundi
+FA-2026-1269,C067,envoyee,2,proposee,Relances du lundi
+FA-2026-1272,C074,attente,1,proposee,Relances du lundi
+FA-2026-1275,C025,compte_cle,3,mise_a_part,Comptes clés à valider
+FA-2026-1278,C028,envoyee,2,proposee,Relances du lundi
+FA-2026-1281,C035,payee,2,payee,
+FA-2026-1284,C042,payee,1,payee,
+FA-2026-1287,C049,payee,1,payee,
+FA-2026-1290,C056,petite,1,proposee,Relances du lundi
+FA-2026-1293,C011,compte_cle,1,mise_a_part,Comptes clés à valider
+FA-2026-1296,C070,envoyee,1,proposee,Relances du lundi
+FA-2026-1299,C077,envoyee,2,proposee,Relances du lundi
+FA-2026-1302,C084,petite,2,proposee,Relances du lundi
+FA-2026-1305,C031,envoyee,1,proposee,Relances du lundi
+FA-2026-1308,C038,payee,1,payee,
+FA-2026-1311,C045,envoyee,2,proposee,Relances du lundi
+FA-2026-1314,C052,petite,1,proposee,Relances du lundi
+FA-2026-1317,C059,deja_relancee,1,deja_relancee,
+FA-2026-1320,C066,envoyee,1,proposee,Relances du lundi
+FA-2026-1323,C073,envoyee,1,proposee,Relances du lundi
+FA-2026-1326,C080,envoyee,1,proposee,Relances du lundi
+FA-2026-1329,C027,deja_relancee,2,deja_relancee,
+FA-2026-1332,C034,envoyee,3,proposee,Relances du lundi
+FA-2026-1335,C041,envoyee,1,proposee,Relances du lundi
+FA-2026-1338,C048,attente,2,proposee,Relances du lundi
+FA-2026-1341,C055,envoyee,1,proposee,Relances du lundi
+FA-2026-1344,C062,envoyee,1,proposee,Relances du lundi
+FA-2026-1347,C069,envoyee,1,proposee,Relances du lundi
+FA-2026-1350,C076,envoyee,1,proposee,Relances du lundi
+FA-2026-1353,C083,petite,1,proposee,Relances du lundi
+FA-2026-1356,C015,compte_cle,1,mise_a_part,Comptes clés à valider
+FA-2026-1359,C037,envoyee,1,proposee,Relances du lundi
+FA-2026-1362,C044,envoyee,2,proposee,Relances du lundi
+FA-2026-1365,C051,litige,1,litige,
+FA-2026-1368,C058,attente,1,proposee,Relances du lundi
+FA-2026-1371,C065,payee,2,payee,
+FA-2026-1374,C072,attente,1,proposee,Relances du lundi
+FA-2026-1377,C079,attente,2,proposee,Relances du lundi
+FA-2026-1380,C026,deja_relancee,1,deja_relancee,

@@ -1,0 +1,12 @@
+# commande : python -X utf8 donnees-essai/balayer.py
+# exécuté le 2026-10-13 12:25:12 (date réelle de la machine) · version gelée 1.0 · livraison, donnees-essai et sorties-simulees
+balayer.py · 83 fichiers lus dans 80-construction
+  secret    : 0 ligne(s) à relire
+  chaine    : 0 ligne(s) à relire
+  courriel  : 0 ligne(s) à relire
+  telephone : 0 ligne(s) à relire
+  adresse   : 0 ligne(s) à relire
+  fichier   : 0 ligne(s) à relire
+  noms de secrets cités (écartés) : 4 ligne(s) ; mentions du mot sans valeur : 7 ligne(s)
+RIEN À RELIRE
+# code de sortie : 0

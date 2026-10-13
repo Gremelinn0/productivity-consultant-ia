@@ -63,9 +63,10 @@ PRD qu'un constructeur qui n'a pas vécu la mission peut suivre.
 5. **Un identifiant par exigence, et tout s'y rattache.** Critères, tests et indicateurs renvoient à
    `EF-01`, `EF-02`… : on voit ce qui n'est testé nulle part et ce qui est construit sans avoir été
    demandé.
-6. **Les garanties d'exécution se spécifient avant la construction.** Erreurs, doublons, secrets,
-   journal, interrupteur d'arrêt : un dispositif livré sans eux marche jusqu'au premier incident, puis
-   personne ne sait quoi faire. Ce sont des exigences, pas des détails de réalisation.
+6. **Les garanties d'exécution se spécifient avant la construction.** Contrats d'entrée et de sortie,
+   refus, erreurs, panne, doublons, secrets, journal, interrupteur d'arrêt : un dispositif livré sans eux
+   marche jusqu'au premier incident, puis personne ne sait quoi faire. Ce sont des exigences, pas des
+   détails de réalisation.
 7. **Un indicateur sert une décision, et ses seuils vivent à un seul endroit.** Sans décision au bout,
    c'est de la décoration ; sans mesure de départ, on ne saura jamais s'il a bougé ; sans prudence sur
    l'attribution, on s'attribuera un gain dû à la saison. Les exigences nomment l'indicateur (`IND-xx`), sa
@@ -107,13 +108,17 @@ PRD qu'un constructeur qui n'a pas vécu la mission peut suivre.
    elle est fiable, la cible issue de `10-besoin` ; pas de seuils ici. Mode spécification : la fréquence de lecture,
    le responsable de la qualité de la donnée, les seuils de production (correction, alerte, arrêt ; « arrêt : sans
    objet » pour un indicateur de contexte) et la façon d'attribuer sans fausse causalité. À tout indicateur de volume
-   ou de rapidité, associer un indicateur de qualité.
+   ou de rapidité, associer un indicateur de qualité. La spécification ajoute, à la suite de la série, un indicateur
+   d'adoption (occurrences passées par le dispositif, par rôle), un de coût d'usage et un de maintenance : sans eux,
+   `mesurer-gains` ne peut pas recalculer le gain net.
 6. **Mode spécification : partir de l'option retenue** (`references/modeles.md`, partie B). Reprendre
    chaque exigence Indispensable et Important dans le comportement étape par étape, avec la table
    exigence → étape → test ; marquer les validations humaines décidées dans `40-solutions` ; faire de
    chaque « ce qui doit être vrai » un test ou une vérification du pilote ; reprendre la porte de
-   `40-solutions`, avec sa mesure, son agrégation et sa date ; rédiger ensuite les garanties d'exécution (erreurs,
-   dédoublonnage, secrets, observabilité, environnements).
+   `40-solutions`, avec sa mesure, son agrégation et sa date ; rédiger ensuite les contrats d'entrée et de sortie, les
+   cas de refus et de panne, puis les garanties d'exécution (erreurs, dédoublonnage, secrets, observabilité,
+   environnements). Parcourir les familles de cas limites de la rubrique 12. Écrire toujours le mode du pilote (rubrique 13) : parallèle
+   (sans effet réel), préparation avec validation, ou réel.
 7. **Aligner sur les chiffres.** Volumes et temps de maintenance de la spécification doivent concorder
    avec `50-rentabilite` ; en cas d'écart, le dire et renvoyer à `chiffrer-rentabilite` plutôt que
    corriger en silence. Le propriétaire de la maintenance (qui décide, détient les comptes) peut différer de celui qui
@@ -163,16 +168,16 @@ Mode spécification : <raison tirée du journal, en une ligne>
 ## 1. Problème et objectif — renvois vers 10-besoin, 30-exigences, 50-rentabilite ; la porte reprise de 40-solutions
 ## 2. Non-objectifs — avec la raison
 ## 3. Utilisateurs et scénarios — « En tant que …, je veux …, afin de … »
-## 4. Comportement étape par étape — avec les points de validation humaine (et le rôle borné du modèle d'IA, s'il y en a un)
-## 5. Flux de données — d'où vers où, sous quelle forme, conservé combien de temps
+## 4. Comportement étape par étape — avec les points de validation humaine, les cas de refus (et le rôle borné du modèle d'IA, s'il y en a un)
+## 5. Flux de données — d'où vers où, sous quelle forme, conservé combien de temps ; contrats d'entrée et de sortie
 ## 6. Intégrations et droits — moindre privilège, comptes de service
-## 7. Gestion des erreurs — reprises, file des échecs, alerte, interrupteur d'arrêt
+## 7. Gestion des erreurs — reprises, file des échecs, alerte, interrupteur d'arrêt ; cas de panne
 ## 8. Dédoublonnage — clé stable vérifiée avant toute écriture non répétable
 ## 9. Secrets — dans le coffre de l'outil, jamais en clair
 ## 10. Observabilité — journal, compte des réussites et échecs, alerte sur silence
 ## 11. Environnements et versions — test avant production, sauvegarde, retour arrière
 ## 12. Plan de test et recette — dont le cas limite critique
-## 13. Pilote — périmètre, mode, seuils de poursuite et d'arrêt du pilote
+## 13. Pilote — périmètre, mode (parallèle · préparation avec validation · réel, toujours écrit), seuils de poursuite et d'arrêt du pilote
 ## 14. Indicateurs — protocole de mesure et seuils de production
 ## 15. Risques — probabilité, impact, parade, signal d'alerte
 ## 16. Questions ouvertes
@@ -210,10 +215,10 @@ Lignes de journal, au moment où le demandeur tranche (exemples fictifs) :
   revues d'indicateurs après déploiement → `planifier-deploiement` ; ici on fixe chaque indicateur, sa décision, son
   départ, sa fréquence de lecture souhaitée et ses seuils.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.
-- Construire, tester en réel, mesurer le gain après déploiement : hors du pack.
-- Facultatif : si le plugin `product-management` d'Anthropic est installé, sa compétence `write-spec`
-  peut approfondir un PRD de produit logiciel. Ne dire qu'on l'a utilisée que si elle a réellement été
-  appelée.
+- Construire en essai → `construire-solution` ; recetter → `tester-solution` ; agir sur un outil réel →
+  `piloter-mise-en-service` ; mesurer le gain après déploiement → `mesurer-gains`. Ici on spécifie.
+- Pour approfondir un PRD de produit logiciel : `COMPAGNONS.md` du pack, ligne « Spécifier ». On ne dit
+  s'en être servi que si on l'a réellement appelé ; sans compagnon, le modèle de la partie B est le repli maison.
 
 ## Preuves restantes
 
@@ -221,9 +226,7 @@ Lignes de journal, au moment où le demandeur tranche (exemples fictifs) :
   remplissent sans rubrique vide ni solution nommée dans les exigences, les corrections sont dans cette version.
 - NON MESURÉ sur une mission réelle : le premier cas réel dira si douze et dix-sept rubriques sont
   trop ou trop peu, et si un prestataire peut chiffrer à partir des seules exigences.
-- Sources et crédits : structure PRD, priorisation et critères d'acceptation inspirés de la compétence
-  `write-spec` du plugin `product-management` d'Anthropic (Apache-2.0,
-  https://github.com/anthropics/knowledge-work-plugins) ; garanties d'exécution (dédoublonnage, erreurs
-  et file des échecs, secrets, observabilité, environnements) adaptées de la compétence
-  `automation-strategy` d'Eric Risco (MIT, https://github.com/ericrisco/rsc-harness). Réécrit avec
-  nos mots.
+- Sources et crédits : les compagnons de cette étape et leurs licences sont dans `COMPAGNONS.md` ; les
+  méthodes dont elle s'inspire (structure PRD, priorisation, critères d'acceptation, garanties d'exécution :
+  dédoublonnage, erreurs et file des échecs, secrets, observabilité, environnements) sont créditées dans la
+  section « Sources et crédits » du `README.md`. Réécrit avec nos mots, aucun texte repris.

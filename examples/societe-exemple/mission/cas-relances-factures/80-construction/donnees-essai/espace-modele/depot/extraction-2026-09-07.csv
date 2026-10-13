@@ -1,0 +1,62 @@
+numero_facture,id_client,nom_contact,adresse_courriel,montant_ht,date_echeance,etat_paiement
+FA-2026-1200,C026,Contact C026,contact.c026@exemple-c026.invalid,3774.97,2026-08-15,non rapprochée
+FA-2026-1203,C014,Contact C014,contact.c014@exemple-c014.invalid,1521.47,2026-08-31,non rapprochée
+FA-2026-1206,C040,Contact C040,contact.c040@exemple-c040.invalid,2261.25,2026-08-26,non rapprochée
+FA-2026-1209,C047,Contact C047,contact.c047@exemple-c047.invalid,752.67,2026-08-25,non rapprochée
+FA-2026-1212,C054,Contact C054,contact.c054@exemple-c054.invalid,2996.36,2026-08-03,non rapprochée
+FA-2026-1215,C061,Contact C061,contact.c061@exemple-c061.invalid,3052.14,2026-08-31,non rapprochée
+FA-2026-1218,C068,Contact C068,contact.c068@exemple-c068.invalid,655.76,2026-08-27,non rapprochée
+FA-2026-1221,C075,Contact C075,contact.c075@exemple-c075.invalid,13.43,2026-08-31,non rapprochée
+FA-2026-1224,C082,Contact C082,contact.c082@exemple-c082.invalid,13.51,2026-08-13,non rapprochée
+FA-2026-1227,C029,Contact C029,contact.c029@exemple-c029.invalid,2274.29,2026-07-29,non rapprochée
+FA-2026-1230,C036,Contact C036,contact.c036@exemple-c036.invalid,2014.24,2026-08-30,non rapprochée
+FA-2026-1233,C043,Contact C043,contact.c043@exemple-c043.invalid,2832.92,2026-08-27,non rapprochée
+FA-2026-1236,C050,Contact C050,contact.c050@exemple-c050.invalid,3859.64,2026-08-03,non rapprochée
+FA-2026-1239,C021,Contact C021,contact.c021@exemple-c021.invalid,4104.51,2026-08-15,non rapprochée
+FA-2026-1242,C064,Contact C064,contact.c064@exemple-c064.invalid,1808.54,2026-08-26,rapprochée
+FA-2026-1245,C071,Contact C071,contact.c071@exemple-c071.invalid,2909.98,2026-08-28,non rapprochée
+FA-2026-1248,C078,Contact C078,contact.c078@exemple-c078.invalid,1947.37,2026-08-17,rapprochée
+FA-2026-1251,C085,Contact C085,contact.c085@exemple-c085.invalid,1954.87,2026-08-28,non rapprochée
+FA-2026-1254,C032,Contact C032,contact.c032@exemple-c032.invalid,1624.96,2026-07-29,rapprochée
+FA-2026-1257,C039,Contact C039,contact.c039@exemple-c039.invalid,1053.69,2026-08-30,rapprochée
+FA-2026-1260,C046,Contact C046,contact.c046@exemple-c046.invalid,4455.51,2026-08-13,non rapprochée
+FA-2026-1263,C053,Contact C053,contact.c053@exemple-c053.invalid,2677.63,2026-07-29,non rapprochée
+FA-2026-1266,C060,Contact C060,contact.c060@exemple-c060.invalid,1174.23,2026-08-13,non rapprochée
+FA-2026-1269,C067,Contact C067,contact.c067@exemple-c067.invalid,685.06,2026-08-17,non rapprochée
+FA-2026-1272,C074,Contact C074,contact.c074@exemple-c074.invalid,2801.62,2026-08-31,non rapprochée
+FA-2026-1275,C025,Contact C025,contact.c025@exemple-c025.invalid,2662.21,2026-07-28,non rapprochée
+FA-2026-1278,C028,Contact C028,contact.c028@exemple-c028.invalid,2436.62,2026-08-11,non rapprochée
+FA-2026-1281,C035,Contact C035,contact.c035@exemple-c035.invalid,1435.80,2026-08-12,rapprochée
+FA-2026-1284,C042,Contact C042,contact.c042@exemple-c042.invalid,3876.87,2026-08-31,rapprochée
+FA-2026-1287,C049,Contact C049,contact.c049@exemple-c049.invalid,2326.72,2026-08-31,rapprochée
+FA-2026-1290,C056,Contact C056,contact.c056@exemple-c056.invalid,14.28,2026-08-30,non rapprochée
+FA-2026-1293,C011,Contact C011,contact.c011@exemple-c011.invalid,2770.01,2026-08-28,non rapprochée
+FA-2026-1296,C070,Contact C070,contact.c070@exemple-c070.invalid,2271.47,2026-08-28,non rapprochée
+FA-2026-1299,C077,Contact C077,contact.c077@exemple-c077.invalid,2556.60,2026-08-16,non rapprochée
+FA-2026-1302,C084,Contact C084,contact.c084@exemple-c084.invalid,7.46,2026-08-14,non rapprochée
+FA-2026-1305,C031,Contact C031,contact.c031@exemple-c031.invalid,2602.05,2026-08-25,non rapprochée
+FA-2026-1308,C038,Contact C038,contact.c038@exemple-c038.invalid,163.36,2026-08-27,rapprochée
+FA-2026-1311,C045,Contact C045,contact.c045@exemple-c045.invalid,1058.20,2026-08-16,non rapprochée
+FA-2026-1314,C052,Contact C052,contact.c052@exemple-c052.invalid,7.66,2026-08-25,non rapprochée
+FA-2026-1317,C059,Contact C059,contact.c059@exemple-c059.invalid,3339.65,2026-08-28,non rapprochée
+FA-2026-1320,C066,Contact C066,contact.c066@exemple-c066.invalid,3179.78,2026-08-31,non rapprochée
+FA-2026-1323,C073,Contact C073,contact.c073@exemple-c073.invalid,3136.93,2026-08-31,non rapprochée
+FA-2026-1326,C080,Contact C080,contact.c080@exemple-c080.invalid,3669.48,2026-08-25,non rapprochée
+FA-2026-1329,C027,Contact C027,contact.c027@exemple-c027.invalid,4211.29,2026-08-11,non rapprochée
+FA-2026-1332,C034,Contact C034,contact.c034@exemple-c034.invalid,1209.97,2026-08-03,non rapprochée
+FA-2026-1335,C041,Contact C041,contact.c041@exemple-c041.invalid,873.90,2026-08-31,non rapprochée
+FA-2026-1338,C048,Contact C048,contact.c048@exemple-c048.invalid,4251.79,2026-08-11,non rapprochée
+FA-2026-1341,C055,Contact C055,contact.c055@exemple-c055.invalid,2386.03,2026-08-25,non rapprochée
+FA-2026-1344,C062,Contact C062,contact.c062@exemple-c062.invalid,957.71,2026-08-31,non rapprochée
+FA-2026-1347,C069,Contact C069,contact.c069@exemple-c069.invalid,1306.43,2026-08-29,non rapprochée
+FA-2026-1350,C076,Contact C076,contact.c076@exemple-c076.invalid,2528.08,2026-08-31,non rapprochée
+FA-2026-1353,C083,Contact C083,contact.c083@exemple-c083.invalid,12.85,2026-08-29,non rapprochée
+FA-2026-1356,C015,Contact C015,contact.c015@exemple-c015.invalid,4194.65,2026-08-27,non rapprochée
+FA-2026-1359,C037,Contact C037,contact.c037@exemple-c037.invalid,4085.34,2026-08-29,non rapprochée
+FA-2026-1362,C044,Contact C044,contact.c044@exemple-c044.invalid,131.50,2026-08-15,non rapprochée
+FA-2026-1365,C051,Contact C051,contact.c051@exemple-c051.invalid,183.85,2026-08-29,non rapprochée
+FA-2026-1368,C058,Contact C058,contact.c058@exemple-c058.invalid,674.15,2026-08-30,non rapprochée
+FA-2026-1371,C065,Contact C065,contact.c065@exemple-c065.invalid,3687.82,2026-08-13,rapprochée
+FA-2026-1374,C072,Contact C072,contact.c072@exemple-c072.invalid,1861.36,2026-08-25,non rapprochée
+FA-2026-1377,C079,Contact C079,contact.c079@exemple-c079.invalid,2231.32,2026-08-12,non rapprochée
+FA-2026-1380,C026,Contact C026,contact.c026@exemple-c026.invalid,2726.42,2026-08-25,non rapprochée

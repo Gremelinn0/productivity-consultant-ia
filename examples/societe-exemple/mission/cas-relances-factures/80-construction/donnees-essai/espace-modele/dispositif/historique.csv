@@ -1,0 +1,66 @@
+numero_facture,niveau,date_envoi,expediteur
+FA-2026-1200,1,2026-08-22,gestionnaire clients
+FA-2026-1212,1,2026-08-12,gestionnaire clients
+FA-2026-1212,2,2026-08-26,gestionnaire clients
+FA-2026-1224,1,2026-08-20,gestionnaire clients
+FA-2026-1227,1,2026-08-06,gestionnaire clients
+FA-2026-1227,2,2026-08-20,gestionnaire clients
+FA-2026-1236,1,2026-08-10,gestionnaire clients
+FA-2026-1236,2,2026-08-25,gestionnaire clients
+FA-2026-1239,1,2026-08-24,gestionnaire clients
+FA-2026-1248,1,2026-08-26,gestionnaire clients
+FA-2026-1254,1,2026-08-07,gestionnaire clients
+FA-2026-1254,2,2026-08-21,gestionnaire clients
+FA-2026-1260,1,2026-08-22,gestionnaire clients
+FA-2026-1263,1,2026-08-07,gestionnaire clients
+FA-2026-1263,2,2026-08-21,gestionnaire clients
+FA-2026-1263,3,2026-09-04,comptable
+FA-2026-1266,1,2026-08-23,gestionnaire clients
+FA-2026-1269,1,2026-08-27,gestionnaire clients
+FA-2026-1275,1,2026-08-04,gestionnaire clients
+FA-2026-1275,2,2026-08-20,gestionnaire clients
+FA-2026-1278,1,2026-08-20,gestionnaire clients
+FA-2026-1281,1,2026-08-22,gestionnaire clients
+FA-2026-1299,1,2026-08-26,gestionnaire clients
+FA-2026-1302,1,2026-08-21,gestionnaire clients
+FA-2026-1311,1,2026-08-25,gestionnaire clients
+FA-2026-1317,1,2026-09-04,comptable
+FA-2026-1329,1,2026-08-21,gestionnaire clients
+FA-2026-1329,2,2026-09-04,comptable
+FA-2026-1332,1,2026-08-10,gestionnaire clients
+FA-2026-1332,2,2026-08-25,gestionnaire clients
+FA-2026-1338,1,2026-08-19,gestionnaire clients
+FA-2026-1362,1,2026-08-24,gestionnaire clients
+FA-2026-1371,1,2026-08-22,gestionnaire clients
+FA-2026-1377,1,2026-08-21,gestionnaire clients
+FA-2026-1380,1,2026-09-04,comptable
+FA-2026-0700,2,2026-06-30,gestionnaire clients
+FA-2026-0705,2,2026-07-26,gestionnaire clients
+FA-2026-0710,2,2026-06-26,gestionnaire clients
+FA-2026-0715,2,2026-06-24,gestionnaire clients
+FA-2026-0720,3,2026-07-30,gestionnaire clients
+FA-2026-0725,2,2026-06-04,gestionnaire clients
+FA-2026-0730,2,2026-07-25,gestionnaire clients
+FA-2026-0735,2,2026-07-23,gestionnaire clients
+FA-2026-0740,3,2026-07-10,gestionnaire clients
+FA-2026-0745,3,2026-07-07,gestionnaire clients
+FA-2026-0750,1,2026-07-30,gestionnaire clients
+FA-2026-0755,1,2026-07-06,gestionnaire clients
+FA-2026-0760,3,2026-07-28,gestionnaire clients
+FA-2026-0765,1,2026-07-04,gestionnaire clients
+FA-2026-0770,1,2026-06-14,gestionnaire clients
+FA-2026-0775,3,2026-06-30,gestionnaire clients
+FA-2026-0780,1,2026-06-18,gestionnaire clients
+FA-2026-0785,1,2026-06-04,gestionnaire clients
+FA-2026-0790,2,2026-06-24,gestionnaire clients
+FA-2026-0795,2,2026-07-21,gestionnaire clients
+FA-2026-0800,2,2026-06-08,gestionnaire clients
+FA-2026-0805,1,2026-06-27,gestionnaire clients
+FA-2026-0810,2,2026-07-27,gestionnaire clients
+FA-2026-0815,2,2026-06-29,gestionnaire clients
+FA-2026-0820,3,2026-06-08,gestionnaire clients
+FA-2026-0825,3,2026-07-21,gestionnaire clients
+FA-2026-0830,2,2026-06-19,gestionnaire clients
+FA-2026-0835,2,2026-06-27,gestionnaire clients
+FA-2026-0840,3,2026-06-22,gestionnaire clients
+FA-2026-0845,1,2026-07-22,gestionnaire clients

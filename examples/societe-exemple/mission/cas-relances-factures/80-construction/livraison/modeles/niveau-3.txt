@@ -1,0 +1,8 @@
+Bonjour {contact},
+
+Dernier rappel : la facture {numero} d'un montant de {montant} € HT, échue le {echeance}, n'est toujours pas réglée malgré nos précédents messages.
+
+Sans règlement de votre part sous huit jours, nous serons conduits à vous contacter par téléphone, puis par courrier.
+
+Cordialement,
+Le service comptabilité clients, Société Exemple

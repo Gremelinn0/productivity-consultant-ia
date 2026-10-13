@@ -130,8 +130,9 @@ de solution choisie, pas de chiffrage fin.
    - **À creuser** : une donnée manquante empêche de classer — écrire laquelle et qui la fournit ;
    - **À écarter** : valeur faible, risque disproportionné ou besoin déjà couvert — écrire la raison.
 10. **Recommander, puis s'arrêter sur la décision.** Recommander trois à cinq cas à faible effort et forte valeur,
-    idéalement un par équipe concernée, et dire ce qui ferait changer cette recommandation. À chaque validation
-    (`00`, `01`, `02`), ajouter une ligne à `mission/journal.md` ; celle de `02` nomme les cas à creuser. Proposer
+    idéalement un par équipe concernée, et dire ce qui ferait changer cette recommandation. Pour arbitrer,
+    appeler `router-consulting-strategy` (lentille priorisation) ; le livrable reste celui de cette étape. À chaque
+    validation (`00`, `01`, `02`), ajouter une ligne à `mission/journal.md` ; celle de `02` nomme les cas à creuser. Proposer
     ensuite `chiffrer-rentabilite` (ordre de grandeur des seuls cas à creuser → `03-chiffrage.md`),
     `planifier-deploiement` (feuille de route → `04-feuille-de-route.md`), puis `cadrer-besoin` pour chaque cas
     retenu, depuis sa fiche.
@@ -208,5 +209,5 @@ Ligne de journal, au moment où le décideur tranche (une par document validé ;
   découverte sont corrigées ici.
 - NON MESURÉ sur une mission réelle : le premier cas réel dira si les douze colonnes suffisent, si le tri en cinq
   issues est assez fin et si trois à cinq cas est le bon nombre.
-- Sources et crédits : la forme de l'entretien s'inspire de `smb-onboard`, plugin `small-business` d'Anthropic
-  (Apache-2.0, https://github.com/anthropics/knowledge-work-plugins). Méthode réécrite, aucun passage repris.
+- Sources et crédits : la méthode dont s'inspire la forme de l'entretien est créditée dans la section « Sources et
+  crédits » du `README.md` ; `COMPAGNONS.md` liste les compagnons du pack. Méthode réécrite, aucun passage repris.

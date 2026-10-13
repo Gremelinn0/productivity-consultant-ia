@@ -1,0 +1,143 @@
+Recette de la maquette flux_relances · test_recette.py
+  exécution réelle : 2026-10-13T13:01:06 · Python 3.14.6
+  livraison testée : examples/societe-exemple\mission\cas-relances-factures\80-construction\livraison
+  version du flux  : 1.0
+  flux_relances.py : SHA-256 e6564afc43b75882d6669e8d63b8b903b0f7f44ac1bd050d9f96e983f3d4888d
+  essai_s2_s3.py   : SHA-256 af697cc0437b8dd8afbc9ed49da4d70a6831b090402122f107191d2b5e0788bf
+  MANIFESTE.sha256 : SHA-256 782e7da35dcab25163266e12edb6c862b77b59578bb9fa5a4002945a5165dec5
+  contrôle de la livraison contre son manifeste : conforme
+  test_recette.py  : SHA-256 b139eec2c679a1448276770da86164c393448ee51c4e5e429c5d96e1448d02e1
+
+T-01 · EF-01, CA-01 · rejeu de la séance du 2026-09-07 : les 61 factures sont traitées, chacune au bon niveau ... ok
+T-02 · EF-01, règle de niveau, CA-01 v1.1 · J+6 absente, J+7 et J+8 niveau 1, J+25 niveau 1, litige levé : revient ... ok
+T-03 · EF-02, CA-02 · les 9 factures dont le paiement est rapproché ne sont pas proposées, motif « payée » ... ok
+T-04 · EF-03, CA-03 · les 4 factures déjà relancées à leur niveau ne sont pas proposées, motif « déjà relancée » ... ok
+T-05 · EF-04, CA-04 · les 6 factures en litige ne sont pas proposées, motif « litige » ... ok
+T-06 · EF-04, CA-04, étape 9 · un litige saisi après la création des brouillons retire le brouillon à la veille suivante ... ok
+T-07 · EF-06, CA-06 · 5 comptes clés : brouillons à part, rien ne part ; envoi par un autre rôle : alerte ... ok
+T-08 · EF-07, CA-07 · modèle du niveau, numéro, montant, échéance exacts : 0 écart sur les 42 brouillons (dont les 24 envoyés) ... ok
+T-09 · EF-08, CA-11 · chaque brouillon est lisible avec son niveau avant tout envoi ; la gestionnaire clients est avertie ... ok
+T-10 · EF-10, CA-08 · tentative d'envoi par le compte de service : refusée, aucun courriel, tentative au journal ... ok
+T-11 · EF-11, CA-09 · 24 courriels envoyés par une personne : 24 lignes d'historique (facture, niveau, date, expéditeur) ... ok
+T-12 · dédoublonnage, CA-09 · flux lancé deux fois ; courriel envoyé deux fois : ni brouillon ni ligne en double, alerte « double envoi » ... ok
+T-13 · ENF-09, CA-10 (cas limite critique) · payé vendredi, non rapproché, rapprochement du jeudi : aucune relance, « rapprochement trop ancien » ... ok
+T-13b · ENF-09 · un jour ouvré passe, deux non ; jours fériés comptés ; date absente : refus (60 §4 cas de refus, §5 règles) ... ok
+T-14 · ENF-08 · 3 factures sans adresse plausible : jamais proposées, listées « à traiter à la main », sans adresse dans la trace ... ok
+T-15 · erreur passagère · S2 coupé 10 min au lancement : reprises espacées de 1, 5 puis 15 min, puis succès (60 §7) ... ok
+T-15b · reprise après panne · processus arrêté net après 10 propositions : la relance ne double rien et ne perd rien ... ok
+T-16 · erreur définitive · extraction illisible : aucune reprise, file des échecs, alerte en moins de 5 min (60 §7) ... ok
+T-17 · pointe de volume, ENF-05 · 150 factures dont 90 propositions : traitées ; plus de 100 propositions : arrêt et alerte « volume anormal » ... ok
+T-18 · ENF-10 · case « Suspendre » cochée : brouillons non envoyés supprimés, aucun nouveau, historique juste ... ok
+T-19 · pilote, lundi 1 · étape 8 désactivée : aucune alerte, aucune ligne d'historique du flux ; remise en route : l'envoi est consigné ... ok
+T-20 · ENF-04, panne longue · S2 puis S3 coupés plusieurs heures le lundi ; relance le lendemain : un brouillon par clé, aucune oubliée ... ok
+T-21 · cas de refus, entrée hors contrat · colonne absente : rien traité ; J+60 proposée, J+61 écartée ; échéance vide et doublon à la main ... ok
+T-22 · garde-fou « changement non approuvé » · modèle modifié hors procédure : aucune exécution ; approuvé : appliqué ; règle changée en cours : sans effet ... ok
+T-23 · EF-11, Q-11 · objet conforme : proposition « envoyée » et une ligne ; objet modifié ou sans proposition : file des échecs et alerte ... ok
+T-24 · ENF-08 · facture à J+8 dont l'historique note une relance de niveau 2 : non proposée, « à traiter à la main » ... ok
+T-25 · cas de refus · l'extraction de la veille est déposée, celle du jour manque : jamais traitée ; reprises, échecs, alerte sous 30 min ... ok
+T-26 · EF-01 v1.1, 60 §2 et §4 · un brouillon supprimé à la main (petite facture) ne bloque pas la séance suivante : la facture revient ... FAIL
+    [état final conservé pour comprendre : <temp>\recette-k9cpm14q]
+T-27 · lecture après écriture, 60 §5 et §7 · un brouillon enregistré différemment est supprimé, sa clé va en échecs, la gestionnaire est alertée ... FAIL
+    [état final conservé pour comprendre : <temp>\recette-p4sk7u0r]
+T-28 · erreur passagère · S2 puis S3 coupés 10 min pendant la création des brouillons : reprises, un brouillon par clé, aucun orphelin ... 
+  T-28 · erreur passagère · S2 puis S3 coupés 10 min pendant la création des brouillons : reprises, un brouillon par clé, aucun orphelin ... ERROR
+    [état final conservé pour comprendre : <temp>\recette-8uk3hzfd]
+    [état final conservé pour comprendre : <temp>\recette-wlwscwzq]
+    [état final conservé pour comprendre : <temp>\recette-wpr3ay6g]
+T-29 · reprise après plantage · arrêt net juste après la création d'un brouillon, avant sa clé : un seul brouillon à la fin, « réconcilié » ... ok
+T-30 · dédoublonnage, appel reçu deux fois · une exécution à la fois : la seconde est refusée ; un verrou de plus de 30 min est repris ... ok
+T-31 · CA-09, EF-11 · arrêt net pendant l'écriture de l'historique (étape 8), puis relevé rejoué : 24 lignes, aucun doublon, aucune alerte ... ok
+T-32 · ENF-06, 60 §5 et §10 · journal, propositions, échecs, compteurs, messages aux personnes : ni nom ni adresse de contact ... ok
+T-33 · secrets et données personnelles, 60 §9 · balayage de la livraison : rien à relire ; une clé fictive glissée dans une copie est trouvée ... ok
+T-34 · retour arrière, 60 §11 · la version 1.0 restaurée depuis son archive reprend l'état laissé par la version testée, sans rien doubler ni perdre ...     [retour arrière essayé : 0.53 s, archive restaurée, contrôlée, relancée sur l'état courant]
+ok
+T-35 · permissions, 60 §6 · le flux n'écrit ni dans le dépôt ni dans le classeur de pilotage, seulement dans ses onglets ... ok
+T-36 · alertes, 60 §10 et R-05 · liste des litiges sans mise à jour depuis plus de 3 jours ouvrés : alerte ; mise à jour de vendredi : aucune ... ok
+T-37 · alertes, 60 §10 et cas vides de 60 §3 · factures de plus de 7 jours sans proposition ni motif : alerte ; extraction vide : dite telle ... ok
+T-38 · 60 §7 file des échecs · les clés cochées « rejouer » sont reprises seules, une fois ; un second rejeu ne fait rien ; rien n'est doublé ... ok
+T-39 · EF-04, CA-04, étape 9 · litige signalé alors que le courriel est déjà parti : le flux ne prétend pas avoir retiré un brouillon ... FAIL
+    [état final conservé pour comprendre : <temp>\recette-z76408rc]
+T-40 · caractérisation (D-02) · après un arrêt net, la relance est refusée « une exécution est déjà en cours » jusqu'à 30 min, puis passe ... ok
+T-41 · formats d'entrée, 60 §5 · colonnes permutées, fins de ligne Windows, caractères spéciaux, champ long, virgule : lus ; montant nul, négatif, illisible ou date non ISO : à la main ... ok
+
+======================================================================
+ERROR: T-28 · erreur passagère · S2 puis S3 coupés 10 min pendant la création des brouillons : reprises, un brouillon par clé, aucun orphelin
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\85-recette\test_recette.py", line 970, in test_T28_pannes_en_cours_d_execution
+    res = b.flux.executer()
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\flux_relances.py", line 379, in executer
+    self._executer(maintenant.date(), res, cles_filtre)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\flux_relances.py", line 389, in _executer
+    self._derouler(jour, res, cles_filtre)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\flux_relances.py", line 433, in _derouler
+    self._etape5(evaluation, res)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\flux_relances.py", line 638, in _etape5
+    self._creer_brouillon(prop, res)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\flux_relances.py", line 685, in _creer_brouillon
+    self._ecrire_proposition(prop, "brouillon créé", dossier, id_message)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\flux_relances.py", line 612, in _ecrire_proposition
+    self.classeur.ecrire_ligne("propositions", ("cle",), ligne)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\essai_s2_s3.py", line 146, in ecrire_ligne
+    self.ecrire_lignes(onglet, cle_champs, [ligne])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\85-recette\test_recette.py", line 128, in ecrire_lignes
+    super().ecrire_lignes(onglet, cle_champs, lignes)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\essai_s2_s3.py", line 152, in ecrire_lignes
+    self._verifier_panne()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\80-construction\livraison\essai_s2_s3.py", line 79, in _verifier_panne
+    raise ErreurPassagere("S2 indisponible")
+flux_relances.ErreurPassagere: S2 indisponible
+
+======================================================================
+FAIL: T-26 · EF-01 v1.1, 60 §2 et §4 · un brouillon supprimé à la main (petite facture) ne bloque pas la séance suivante : la facture revient
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\85-recette\test_recette.py", line 936, in test_T26_brouillon_supprime_a_la_main_la_facture_revient
+    self.assertEqual(len(revenue), 1, "la facture dont le brouillon a été supprimé n'est pas revenue sur la liste")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : la facture dont le brouillon a été supprimé n'est pas revenue sur la liste
+
+======================================================================
+FAIL: T-27 · lecture après écriture, 60 §5 et §7 · un brouillon enregistré différemment est supprimé, sa clé va en échecs, la gestionnaire est alertée
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\85-recette\test_recette.py", line 953, in test_T27_lecture_apres_ecriture
+    self.assertTrue([1 for e, c in b.alertes(GEST) if cle in c], "la gestionnaire clients n'est pas alertée (erreur définitive, 60 §7)")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : la gestionnaire clients n'est pas alertée (erreur définitive, 60 §7)
+
+======================================================================
+FAIL: T-39 · EF-04, CA-04, étape 9 · litige signalé alors que le courriel est déjà parti : le flux ne prétend pas avoir retiré un brouillon
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<pack>\examples\societe-exemple\mission\cas-relances-factures\85-recette\test_recette.py", line 1214, in test_T39_litige_signale_apres_le_depart_du_courriel
+    self.assertEqual(faux, [], "le flux dit avoir retiré un brouillon qui était déjà parti")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [('[alerte] brouillon retiré : litige sign[111 chars]00")] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+('[alerte] brouillon retiré : litige signalé', "étape : 9\nclé : FA-2026-1206|1\nerreur : la facture vient d'entrer en litige\nheure : 2026-09-07 09:40:00")
+
++ []
+- [('[alerte] brouillon retiré : litige signalé',
+-   'étape : 9\n'
+-   'clé : FA-2026-1206|1\n'
+-   "erreur : la facture vient d'entrer en litige\n"
+-   'heure : 2026-09-07 09:40:00')] : le flux dit avoir retiré un brouillon qui était déjà parti
+
+----------------------------------------------------------------------
+Ran 43 tests in 20.934s
+
+FAILED (failures=3, errors=1)
+
+BILAN : 43 tests joués · 39 réussis · 3 échoués · 1 en erreur

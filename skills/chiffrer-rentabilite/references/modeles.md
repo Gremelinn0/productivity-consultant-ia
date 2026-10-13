@@ -78,7 +78,8 @@ en suit une autre (simplifications, puis construction), la référence de la sec
 |---|---|---|---|---|
 | | | | | |
 
-*Puis : valeurs à relever avant le déploiement (qui, comment) et valeurs à relire après.*
+*Puis : valeurs à relever avant le déploiement (qui, comment) et valeurs à relire après dans `95-mesure.md`
+(`mesurer-gains`), où le réel s'écrit à côté de cette estimation, qui reste intacte.*
 
 ## 3. Calcul par option
 *Colonnes : option retenue, option de repli et, quand l'option retenue suit une autre, une colonne « apport de

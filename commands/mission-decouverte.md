@@ -11,7 +11,8 @@ Utilise la compétence `router-mission-ia` :
 2. Ouvre la porte « découverte » pour : $ARGUMENTS
 3. Commence par `decouvrir-cas-usage` : inventorie les sources disponibles (fichiers déposés dans
    `mission/sources/`, outils déjà connectés à la session, entretiens à mener) et demande
-   l'autorisation de lire chacune avant de l'ouvrir.
+   l'autorisation de lire chacune avant de l'ouvrir. Chaque cas retenu entre ensuite par la porte
+   « besoin connu » (`/mission-besoin`).
 
-Rien ne sort du dossier de mission : pas d'envoi, pas de publication, pas de modification des outils
-de l'entreprise.
+Rien ne touche un outil réel sans la validation de l'action précise (règle 7 d'`ARCHITECTURE.md`) : la
+découverte lit ce qu'on lui donne et n'écrit que dans `mission/`.

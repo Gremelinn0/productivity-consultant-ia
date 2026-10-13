@@ -1,0 +1,15 @@
+X-Relance-Id: FA-2026-1344|1
+A: contact.c062@exemple-c062.invalid
+Objet: Facture FA-2026-1344 — rappel de paiement
+Etat: brouillon
+Cree-par: service-messagerie
+Cree-le: 2026-09-07 09:30:00
+
+Bonjour Contact C062,
+
+Sauf erreur de notre part, la facture FA-2026-1344 d'un montant de 957,71 € HT, échue le 31/08/2026, n'est pas réglée à ce jour.
+
+Si le paiement est déjà parti, merci de ne pas tenir compte de ce message. Sinon, nous vous remercions de procéder au règlement dans les meilleurs délais.
+
+Cordialement,
+Le service comptabilité clients, Société Exemple

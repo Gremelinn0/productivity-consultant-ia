@@ -5,14 +5,14 @@
     "name": "Florent Maisoncelle"
   },
   "metadata": {
-    "description": "Mener une mission de conseil IA et automatisation, du premier besoin au plan chiffré.",
-    "version": "0.1.0"
+    "description": "Mener une mission de conseil IA et automatisation, du premier besoin à la solution mesurée.",
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "consultant-ia",
       "source": "./",
-      "description": "Deux portes (besoin connu, découverte) et sept étapes : cadrer, auditer, exiger, concevoir, chiffrer, spécifier, planifier.",
+      "description": "Deux portes (besoin connu, découverte) et onze compétences d'étape, de la découverte à la mesure du gain : découvrir, cadrer, auditer, spécifier, concevoir, chiffrer, planifier, construire, tester, mettre en service, mesurer. Rien ne touche un outil réel sans la validation de l'action précise.",
       "category": "productivity"
     }
   ]

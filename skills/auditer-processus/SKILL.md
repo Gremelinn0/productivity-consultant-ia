@@ -70,7 +70,8 @@ d'abord.
    « théorique » tant qu'elle n'est pas confrontée au réel. Observer deux personnes quand c'est possible : leurs
    écarts nourrissent le test de stabilité.
 3. **Décrire le processus** : étapes (un verbe, un objet), rôle, outil, entrées et sorties, passages de main,
-   attentes, points de décision, exceptions, étapes hors périmètre comprises. Ajouter un schéma Mermaid si le flux
+   attentes, points de décision, exceptions (et la conduite à tenir quand elles arrivent), variantes (ce qui
+   change d'une personne, d'un client ou d'un cas à l'autre), étapes hors périmètre comprises. Ajouter un schéma Mermaid si le flux
    comporte des branches. Faire relire la description par une personne qui fait le travail, pas seulement par son
    responsable, et écrire dans l'en-tête qui a relu et quand ; sans relecture possible, l'écrire.
 4. **Mesurer** : volume, fréquence, temps par étape, délai total comparé au temps de travail effectif, taux d'erreur
@@ -87,9 +88,10 @@ d'abord.
    l'étiqueter processus, organisation, donnée ou outil (la dominante). Une cause d'organisation (« personne ne
    tient la liste ») ne se règle pas avec un outil.
 7. **Tester la stabilité** avec les quatre questions de la rubrique 5. Une réponse négative ne bloque pas le
-   diagnostic : elle fait de la standardisation la première opportunité — écrire la procédure unique, la tester à la
-   main sur quelques occurrences, re-mesurer, puis seulement automatiser. Si une seule personne a été observée, le
-   dire et garder les deux versions du récit.
+   diagnostic : elle fait de la standardisation la première opportunité — écrire le mode opératoire du processus
+   cible (rubrique 7 : étapes, rôle de chacune, exceptions et conduite à tenir, variantes gardées ou supprimées,
+   indicateur de suivi), le tester à la main sur quelques occurrences, re-mesurer, puis seulement automatiser. Si
+   une seule personne a été observée, le dire et garder les deux versions du récit.
 8. **Trier chaque étape en cinq issues**, avec les critères de la découverte (fréquence, coût, valeur, risque si
    ça se trompe), dans cet ordre de questions :
    - **Éliminer** : prend du temps, apporte peu, personne ne remarquerait sa disparition, ou naît d'une cause qu'on
@@ -153,7 +155,7 @@ Date · Demandeur (rôle) · Valideur (rôle) · Rédigé par · Source de la de
 ## 4. Causes — la chaîne des pourquoi, la cause actionnable, sa nature
 ## 5. Stabilité — quatre questions, un verdict
 ## 6. Tri des étapes — cinq issues, ou « hors périmètre »
-## 7. À simplifier et à standardiser d'abord — l'effet attendu, la mesure, l'échéance
+## 7. À simplifier et à standardiser d'abord — l'effet attendu, la mesure, l'échéance ; le mode opératoire du processus cible
 ## 8. Les huit questions d'automatisation
 ## 9. Opportunités classées
 ## Décision attendue
@@ -185,9 +187,9 @@ Ligne de journal, au moment où le demandeur tranche :
 - Le gain et le coût → `chiffrer-rentabilite` ; le calendrier, dont le plan des simplifications →
   `planifier-deploiement`.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.
-- Facultatif : si les compétences `process-optimization` et `process-doc` (plugin `operations`) ou
-  `automation-strategy` sont installées, elles peuvent servir de contre-lecture. Ne dire qu'on les a utilisées que
-  si elles ont réellement été appelées.
+- Pour rédiger le mode opératoire du processus cible, un compagnon existe : `COMPAGNONS.md` du pack, ligne
+  « Diagnostiquer ». On ne dit s'en être servi que si on l'a réellement appelé ; sans lui, la rubrique 7 du modèle
+  est le repli maison.
 
 ## Preuves restantes
 
@@ -196,8 +198,7 @@ Ligne de journal, au moment où le demandeur tranche :
 - NON MESURÉ sur une mission réelle : le premier cas réel dira si le diagnostic reste lisible quand le processus
   compte beaucoup d'étapes, si le test de stabilité à quatre questions suffit et si les neuf rubriques sont toutes
   utiles.
-- Sources et crédits : la description du processus et l'analyse des gaspillages s'inspirent de
-  `process-optimization` et `process-doc`, plugin `operations` d'Anthropic (Apache-2.0,
-  https://github.com/anthropics/knowledge-work-plugins) ; le test de stabilité et le garde-fou humain s'inspirent de
-  `automation-strategy` d'Eric Risco (MIT, https://github.com/ericrisco/rsc-harness). Méthode réécrite avec nos
-  mots, aucun passage repris.
+- Sources et crédits : les compagnons de cette étape et leurs licences sont dans `COMPAGNONS.md` ; les méthodes
+  dont elle s'inspire (description du processus, analyse des gaspillages, test de stabilité, garde-fou humain) sont
+  créditées dans la section « Sources et crédits » du `README.md`. Méthode réécrite avec nos mots, aucun passage
+  repris.

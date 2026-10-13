@@ -26,9 +26,12 @@ Date · Demandeur (rôle) · Valideur (rôle) · Rédigé par · Source de la de
 entier, puis la rubrique 6 les marque « hors périmètre ». Dire quelle source a servi, en rôles, ce qui n'a pas été
 observé, et qui a relu la description (une personne qui fait le travail, pas seulement son responsable).*
 
-| Étape | Rôle | Outil | Entrées | Sorties | Passage de main ou attente | Décision ou exception |
+| Étape | Rôle | Outil | Entrées | Sorties | Passage de main ou attente | Décision, exception ou variante |
 |---|---|---|---|---|---|---|
 | | | | | | | |
+
+*Dans la dernière colonne : la règle de décision, l'exception et ce que l'on fait quand elle arrive, la variante
+(ce qui change d'une personne, d'un client ou d'un cas à l'autre).*
 
 *Schéma Mermaid facultatif.*
 
@@ -86,6 +89,14 @@ procédure unique. Pour chacun : l'effet attendu `[E]` quand il y a un gain de t
 qui le vérifiera et sa cible `[H]` (par exemple l'accord de deux personnes sur dix cas, ou le nombre de règles non
 écrites) ; la mesure ; l'échéance proposée `[H]`. Le plan de simplification (qui fait quoi, quand) appartient à
 `planifier-deploiement`, qui reprend cette liste.*
+
+*Puis le mode opératoire du processus cible (la procédure du métier, pas la fiche d'exploitation du dispositif, qui
+s'écrit plus tard en 80), quand le verdict de la rubrique 5 est « à standardiser d'abord » ou qu'une procédure
+unique est retenue : une page que la personne qui fait le travail peut suivre sans la lire deux fois.*
+
+| Étape cible | Rôle | Exceptions et conduite à tenir | Variantes (gardée · supprimée, pourquoi) | Indicateur de suivi |
+|---|---|---|---|---|
+| | | | | |
 
 ## 8. Les huit questions d'automatisation
 *Chercher la réponse dans le besoin, les sources et l'observation avant de demander ; écrire la source dans la

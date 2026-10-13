@@ -1,0 +1,7 @@
+Pour: gestionnaire clients
+Objet: Relances du lundi prêtes
+Cree-le: 2026-09-07 09:30:00
+
+propositions : 42
+comptes clés à valider : 5
+factures à traiter à la main : 0

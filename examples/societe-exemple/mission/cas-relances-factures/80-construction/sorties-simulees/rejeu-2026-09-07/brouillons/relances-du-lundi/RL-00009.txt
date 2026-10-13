@@ -1,0 +1,15 @@
+X-Relance-Id: FA-2026-1236|3
+A: contact.c050@exemple-c050.invalid
+Objet: Facture FA-2026-1236 — dernier rappel
+Etat: brouillon
+Cree-par: service-messagerie
+Cree-le: 2026-09-07 09:30:00
+
+Bonjour Contact C050,
+
+Dernier rappel : la facture FA-2026-1236 d'un montant de 3859,64 € HT, échue le 03/08/2026, n'est toujours pas réglée malgré nos précédents messages.
+
+Sans règlement de votre part sous huit jours, nous serons conduits à vous contacter par téléphone, puis par courrier.
+
+Cordialement,
+Le service comptabilité clients, Société Exemple

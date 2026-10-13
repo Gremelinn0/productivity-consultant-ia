@@ -67,8 +67,9 @@ recommandation — y aller, ne pas y aller ou mesurer d'abord — que le décide
 6. **Des fourchettes et un point mort, pas un chiffre.** Trois scénarios qui font varier les deux ou
    trois hypothèses les plus incertaines, et le seuil où la décision bascule (« reste rentable tant
    que le temps gagné dépasse N minutes par occurrence »). Le décideur voit ce qu'il parie.
-7. **Estimé n'est pas mesuré.** On décide vite sur des estimations à la louche, puis on les corrige
-   avec le réel : mesure de départ définie avant le déploiement, valeurs relues après.
+7. **Estimé n'est pas mesuré.** On décide vite sur des estimations à la louche. Cette étape garde
+   l'estimation intacte ; le réel se lit dans `mesurer-gains` (`95-mesure.md`), qui seul déclare un gain
+   observé `[F]`, à partir d'une mesure de départ définie avant le déploiement.
 8. **La valeur non financière se nomme, elle ne se convertit pas.** Qualité, risque, satisfaction,
    délai client : écrits à côté du calcul, pas transformés en euros, qui auraient l'air d'un fait.
 
@@ -129,16 +130,18 @@ recommandation — y aller, ne pas y aller ou mesurer d'abord — que le décide
 8. **Classer ou recommander.** La logique est fixe. *Solide* : même le scénario bas passe → recommander d'y
    aller. *À mesurer d'abord* : le central passe, le bas non, et une mesure courte peut lever l'hypothèse
    fragile. *Douteux* : le central ne passe pas. Ce que « passe » veut dire dépend du critère. Par défaut, deux
-   repères d'alerte (issus d'une source citée en « Preuves restantes » ; non mesurés ici) : un délai de retour
+   repères d'alerte (issus d'une source créditée en « Preuves restantes » ; non mesurés ici) : un délai de retour
    au-delà d'environ douze mois rend le cas douteux ; une maintenance au-delà de 30 à 50 % du gain brut
    signale une charge, pas un outil. Si l'entreprise a son propre critère (étape 3), il remplace ces repères
    dans la même logique, et les repères du pack restent affichés à côté, en alerte. Le décideur peut renverser
    la recommandation : sa décision s'inscrit au journal. « Mesurer d'abord » n'empêche pas de préparer la
-   spécification quand la mesure est déjà au calendrier ; la construction, elle, attend la porte.
+   spécification quand la mesure est déjà au calendrier ; la construction, elle, attend la porte. Pour
+   arbitrer, appeler `router-consulting-strategy` (lentille business case) ; le livrable reste celui de
+   cette étape.
 9. **Définir la mesure** : avant le déploiement, les valeurs `[H]` à relever (comment, par qui) ;
-   après, les valeurs à relire pour remplacer l'estimation par le réel. Indicateurs et seuils :
-   `rediger-cahier-des-charges` (spécification) ; rythme des revues et action à chaque seuil :
-   `planifier-deploiement`.
+   après, les valeurs à relire dans `mesurer-gains` : l'estimation de cette fiche reste intacte, le réel
+   s'écrit à côté, dans `95-mesure.md`. Indicateurs et seuils : `rediger-cahier-des-charges`
+   (spécification) ; rythme des revues et action à chaque seuil : `planifier-deploiement`.
 10. **Nommer la valeur non financière**, rédiger avec le modèle ci-dessous, finir par la décision
     attendue. Suite : `planifier-deploiement` (feuille de route) après un ordre de grandeur ;
     `rediger-cahier-des-charges` (mode spécification) après un business case « on y va ». Quand le
@@ -208,10 +211,11 @@ Lignes de journal, au moment où le décideur tranche (étiquette « découverte
 - Les exigences, la spécification, les indicateurs et leurs seuils → `rediger-cahier-des-charges`.
 - L'ordre de mise en œuvre, les jalons, le rythme des revues et l'action à chaque seuil →
   `planifier-deploiement`.
+- Le réel après la mise en service (relevés, gain observé, coûts réels, continuer · corriger · étendre ·
+  arrêter) → `mesurer-gains`.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.
-- Facultatif : `router-consulting-strategy` (lentille « business case ») et `automation-strategy`
-  (décision d'automatiser, choix de plateforme selon l'unité de facturation) s'ils sont installés
-  dans la session. Ne dire qu'on les a utilisés que s'ils ont réellement été appelés.
+- Pour la décision d'automatiser et le choix de plateforme selon l'unité de facturation : `COMPAGNONS.md`
+  du pack, ligne « Stratégie d'automatisation ». On ne dit s'en être servi que si on l'a réellement appelé.
 
 ## Preuves restantes
 
@@ -222,9 +226,8 @@ Lignes de journal, au moment où le décideur tranche (étiquette « découverte
 - NON MESURÉ sur une mission réelle : le premier cas réel dira si les fourchettes tiennent, si
   l'entreprise fournit un coût horaire chargé, si les repères de douze mois et de 30 à 50 % aident le
   décideur, si la colonne « apport de l'option » se lit sans effort, et quel écart sépare le gain estimé
-  du gain relevé (le pack n'a pas de boucle de mesure après déploiement : c'est l'entreprise qui mesure).
-- Sources et crédits : adapté d'Eric Risco, « automation-strategy » (licence MIT,
-  https://github.com/ericrisco/rsc-harness) : formule de retour avec ligne de maintenance, repères de
-  douze mois et de 30 à 50 % ; et de gcamilo, « management-consulting » (licence MIT,
-  https://github.com/gcamilo/management-consulting) : fourchettes bas–central–haut, sensibilité,
-  normes de preuve. Les exemples chiffrés de ces sources ne sont pas repris.
+  du gain relevé (la lecture du réel appartient à `mesurer-gains`, qui dépend des relevés du client).
+- Sources et crédits : les compagnons de cette étape et leurs licences sont dans `COMPAGNONS.md` ; les
+  méthodes dont elle s'inspire (formule de retour avec ligne de maintenance, repères de douze mois et de
+  30 à 50 %, fourchettes bas–central–haut, sensibilité, normes de preuve) sont créditées dans la section
+  « Sources et crédits » du `README.md`. Les exemples chiffrés de ces sources ne sont pas repris.

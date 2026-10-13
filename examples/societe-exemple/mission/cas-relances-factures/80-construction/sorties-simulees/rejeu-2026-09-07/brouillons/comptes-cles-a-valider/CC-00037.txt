@@ -1,0 +1,15 @@
+X-Relance-Id: FA-2026-1356|1
+A: contact.c015@exemple-c015.invalid
+Objet: Facture FA-2026-1356 — rappel de paiement
+Etat: brouillon
+Cree-par: service-messagerie
+Cree-le: 2026-09-07 09:30:00
+
+Bonjour Contact C015,
+
+Sauf erreur de notre part, la facture FA-2026-1356 d'un montant de 4194,65 € HT, échue le 27/08/2026, n'est pas réglée à ce jour.
+
+Si le paiement est déjà parti, merci de ne pas tenir compte de ce message. Sinon, nous vous remercions de procéder au règlement dans les meilleurs délais.
+
+Cordialement,
+Le service comptabilité clients, Société Exemple

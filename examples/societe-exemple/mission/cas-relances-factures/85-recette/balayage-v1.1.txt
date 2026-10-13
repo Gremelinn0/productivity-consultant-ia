@@ -1,0 +1,13 @@
+# commande : python -X utf8 80-construction/donnees-essai/balayer.py 85-recette  (depuis le dossier du cas ; pièces de la recette : test_recette.py, sabotage.py et les trois sorties)
+# exécuté le 2026-10-13 15:56:51 (date réelle de la machine), après la réécriture du témoin positif : la même commande, avec le témoin écrit en clair dans les deux programmes, signalait deux lignes
+balayer.py · 5 fichiers lus dans 85-recette
+  secret    : 0 ligne(s) à relire
+  chaine    : 0 ligne(s) à relire
+  courriel  : 0 ligne(s) à relire
+  telephone : 0 ligne(s) à relire
+  adresse   : 0 ligne(s) à relire
+  fichier   : 0 ligne(s) à relire
+  noms de secrets cités (écartés) : 0 ligne(s) ; mentions du mot sans valeur : 3 ligne(s)
+RIEN À RELIRE
+# lecture : aucune ligne à relire. Le témoin positif de T-33 et du sabotage S-13, une fausse clé de forme réaliste, se compose à l'exécution : il n'est écrit dans aucun fichier et aucune sortie ne le montre en entier (balayer.py n'affiche plus qu'un début de valeur : préfixe, 4 caractères, « … »)
+# code de sortie du balayage : 0

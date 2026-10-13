@@ -16,8 +16,9 @@ Règles communes de remplissage :
 - Une phrase, une exigence : un « et » peut cacher deux exigences.
 - Identifiants : `EF-01` (fonctionnelle), `ENF-01` (non fonctionnelle), `CA-01` (critère d'acceptation),
   `T-01` (test), `R-01` (risque), `IND-01` (indicateur), `Q-01` (question ouverte). Chaque série est numérotée
-  une fois pour tout le cas : `Q-07` désigne la même question de 30 à 70. Tout renvoie à l'identifiant, jamais à
-  « la ligne du dessus ».
+  une fois pour tout le cas : `Q-07` désigne la même question de 30 à 95. Les identifiants des étapes suivantes
+  (`D` défaut, `A` action sur un outil réel, `EV` cas d'évaluation de l'IA) sont définis dans `ARCHITECTURE.md`.
+  Tout renvoie à l'identifiant, jamais à « la ligne du dessus ».
 - Un renvoi cite le livrable, le § et, si le livrable a été corrigé, la version lue (« 60-specification §13,
   v1.1 ») ; sans version, il vise la version 1.
 - Définir chaque sigle à sa première occurrence, ou dans le paragraphe « Vocabulaire » de la rubrique 1.
@@ -132,7 +133,8 @@ reprises), conversion (passage à l'étape suivante), résultat (temps, argent, 
 indicateur de résultat et un de qualité : l'activité seule montre qu'on s'agite, pas qu'on a gagné. Pourquoi :
 la décision que l'indicateur permet. Départ : la mesure avant dispositif, son statut, et la période sur laquelle
 elle est fiable (par exemple depuis le changement du système source). Cible : celle de 10-besoin §8. Pas de
-seuils de correction, d'alerte ni d'arrêt ici : ils vivent dans 60-specification §14.*
+seuils de correction, d'alerte ni d'arrêt ici : ils vivent dans 60-specification §14. L'adoption, le coût d'usage et
+la maintenance se fixent en spécification (rubrique 14), pas ici.*
 
 | ID | Indicateur | Type | Pourquoi (décision permise) | Départ et période fiable | Cible issue du besoin |
 |---|---|---|---|---|---|
@@ -210,6 +212,14 @@ test qui le vérifie.*
 |---|---|---|---|---|---|
 | | | | | | |
 
+**Cas de refus** — *ce que le dispositif doit refuser de traiter, et ce qui se passe alors : entrée hors périmètre,
+donnée manquante ou contradictoire, confiance sous le seuil, action non autorisée. Un refus n'est pas une erreur
+(rubrique 7) : il est voulu, il a son motif lisible, son destinataire et son test.*
+
+| Cas refusé | Ce qui se passe (motif écrit, élément mis de côté, personne prévenue, rien d'écrit chez un tiers) | Qui le voit · sous quel délai | Test |
+|---|---|---|---|
+| | | | |
+
 *Si une étape confie un jugement à un modèle d'IA, ajouter : son rôle (ce qu'il peut faire, ce qu'il ne
 peut pas faire) ; le format de ce qu'il reçoit et de ce qu'il rend ; le seuil de confiance sous lequel
 un humain prend la main ; le jeu d'exemples réels qui sert à le vérifier et le taux d'erreur toléré
@@ -231,6 +241,15 @@ validée, et ce qui ne doit jamais quitter l'entreprise (notamment vers un servi
 | Donnée | Origine | Traitement | Stockage et durée | Qui y accède | Sort-elle de l'entreprise ? |
 |---|---|---|---|---|---|
 | | | | | | |
+
+**Contrats d'entrée et de sortie** — *pour chaque point où le dispositif reçoit ou rend une donnée (système relié,
+personne, modèle d'IA) : à l'entrée, les champs obligatoires, leur format, les valeurs permises, et ce qui est refusé
+(cas de refus, rubrique 4) ; à la sortie, la forme de ce qui est produit et ce que l'on garantit. Un contrat écrit
+permet de tester sans le système réel.*
+
+| Point (S1…, personne, modèle) | Sens | Champs obligatoires · format · valeurs permises | Ce qui est garanti en sortie |
+|---|---|---|---|
+| | | | |
 
 ## 6. Intégrations et droits
 *Moindre privilège : lecture seule partout où l'écriture n'est pas indispensable, portée limitée aux
@@ -262,6 +281,15 @@ procédure manuelle de repli (la méthode d'avant).*
 *Plafonds : traitements simultanés, cadence, volume maximal par exécution ; protection contre les
 boucles (un traitement qui en redéclenche un autre qui le redéclenche).*
 
+**Cas de panne** — *un système relié, le service du modèle d'IA ou la plateforme est indisponible pendant des
+heures ou des jours, bien au-delà des reprises d'une erreur passagère : mode dégradé ou retour à la méthode
+d'avant, ce qui attend dans la file et pendant combien de temps, qui est prévenu et quand, comment la reprise
+évite les doublons (rubrique 8).*
+
+| Panne de… | Ce que fait le dispositif | Méthode d'avant ou mode dégradé | Qui est prévenu · quand | Reprise sans doublon |
+|---|---|---|---|---|
+| | | | | |
+
 ## 8. Dédoublonnage
 *Toute écriture dont la répétition fait du mal (envoi d'un message, paiement, création d'un
 enregistrement, émission d'un document) : une clé stable — identifiant de l'événement ou identifiant
@@ -291,20 +319,25 @@ l'exécution attendue n'a pas eu lieu dans sa fenêtre, parce qu'une tâche qui 
 produit aucune erreur. Destinataire : un rôle nommé. Revue : qui lit le journal, à quel rythme.*
 
 ## 11. Environnements et versions
-*Un environnement de test séparé de la production, avec des données fictives ou anonymisées (ou le rejeu d'une
-situation réelle reconstituée sans donnée personnelle : le dire) ; une sauvegarde (export ou instantané) avant
+*Un environnement de test séparé de la production (l'environnement d'essai, que `construire-solution` nomme une fois),
+avec des données fictives ou anonymisées (ou le rejeu d'une situation réelle reconstituée sans donnée personnelle :
+le dire) ; une sauvegarde (export ou instantané) avant
 toute modification du dispositif en production ; une version numérotée à chaque changement ; un retour arrière :
 version précédente connue et temps nécessaire pour y revenir.*
 
 ## 12. Plan de test et recette
-*Couvrir : le nominal ; chaque chemin d'erreur (passagère, définitive) ; les cas limites ; ce qui ne
-doit pas arriver ; le même événement reçu deux fois ; la reprise après panne ; la pointe de volume ;
-l'arrêt d'urgence ; le mode parallèle du pilote. Si le dispositif comprend un modèle d'IA : le jeu d'exemples et
+*Couvrir : le nominal ; chaque chemin d'erreur (passagère, définitive) ; chaque cas de refus ; les cas limites ;
+une entrée hors contrat ; ce qui ne doit pas arriver ; le même événement reçu deux fois ; la panne longue et la
+reprise ; la pointe de volume ; l'arrêt d'urgence ; le mode du pilote. Si le dispositif comprend un modèle d'IA : le jeu d'exemples et
 le taux d'erreur mesuré.*
 
 | ID | Exigence ou étape couverte | Scénario | Données | Résultat attendu | Environnement |
 |---|---|---|---|---|---|
 | T-01 | | | | | |
+
+**Familles de cas limites à parcourir** — *états partiels d'un objet (payé, livré ou annulé en partie) ; doublons ; valeurs
+manquantes ou mal formées ; dates (fin de mois, jours fériés, changement d'heure) ; volumes extrêmes ; deux exécutions en
+même temps ; droits retirés ou compte désactivé ; outil indisponible. Pour chaque famille : un test, ou « sans objet » et la raison.*
 
 **Cas limite critique** — *le cas qui ferait le plus de mal s'il était mal traité, identifié avec le
 responsable métier à partir de 20-diagnostic. Il a son test nommé, et la recette échoue sans lui.*
@@ -313,8 +346,12 @@ responsable métier à partir de 20-diagnostic. Il a son test nommé, et la rece
 anonymisées, ou rejeu d'une séance réelle reconstituée), avec quels critères (30-exigences §9).*
 
 ## 13. Pilote
-*Périmètre réduit (qui, quoi, combien), durée, mode (en parallèle de la méthode actuelle, rien n'étant
-envoyé ; ou en préparation avec validation systématique), mesures relevées, seuils du pilote —
+*Périmètre réduit (qui, quoi, combien), durée, **mode — toujours écrit**, l'un des trois : *parallèle* (la méthode
+actuelle continue, le dispositif ne produit aucun effet réel : rien n'est envoyé ni écrit chez un tiers) ;
+*préparation avec validation* (le dispositif prépare, une personne valide chaque action : l'effet est réel dès cette
+validation) ; *réel*. Le mode décide de ce que la recette peut laisser au pilote : `tester-solution` ne rend
+« prêt » avec un critère Indispensable laissé au pilote que si le mode empêche tout effet réel tant qu'il n'est pas
+vérifié, c'est-à-dire en parallèle. Puis mesures relevées, seuils du pilote —
 généralisation, prolongation, arrêt — écrits à l'avance, et qui décide. Ce sont les seuils du pilote : ils sont
 distincts des seuils de production de la rubrique 14 (un pilote s'arrête souvent plus tôt), et le document le dit
 quand ils diffèrent. Un seuil qui porte sur un indicateur cite son IND-xx. La porte (rubrique 1) précède la
@@ -323,7 +360,10 @@ construction ; le pilote suit la recette. Le calendrier et l'accompagnement sont
 
 ## 14. Indicateurs
 *Reprend les `IND-xx` de 30-exigences §10 et fixe leur protocole : source de la mesure, méthode, périodicité,
-qui mesure (l'entreprise, pas le pack), mesure de départ à relever avant le pilote. C'est la seule maison des
+qui mesure (l'entreprise, pas le pack), mesure de départ à relever avant le pilote. Ajoute, à la suite de la série,
+ce qui manque parmi trois indicateurs que `mesurer-gains` lira : l'adoption (occurrences passées par le dispositif,
+par rôle, jamais par personne), le coût d'usage (unité facturée × volume réel) et la maintenance (heures par mois,
+au taux de celui qui les fait) ; sans eux, un gain net ne se recalcule pas. C'est la seule maison des
 seuils de production : correction, alerte, arrêt (« arrêt : sans objet » pour un indicateur de contexte, qui ne
 justifie aucun arrêt). Attribution : écrire « a contribué à » tant qu'il n'y a ni période comparable ni groupe
 témoin ; sinon nommer la comparaison (même période de l'an passé, équipe pilote contre équipe témoin). Un gain
@@ -348,8 +388,9 @@ reste « estimé » tant qu'il n'est pas observé.*
 ## 17. Propriétaire de la maintenance
 *Un rôle propriétaire (qui décide des changements de règles et détient les comptes) et, s'il est autre, le rôle
 qui fait la maintenance courante : c'est son coût horaire que reprend 50-rentabilite. Un suppléant, une fiche
-d'une page : ce que fait le dispositif, ses dépendances, comment le mettre en pause, comment rejouer la file des
-échecs. Rythme de revue (échéance des accès, changements des systèmes reliés), comment un changement est demandé,
+d'une page, celle de la fiche d'exploitation de `80-construction` : ce que fait le dispositif, ses dépendances,
+puis quatre réponses (comment vérifier que ça marche, que faire en cas d'incident, qui joindre, comment revenir en
+arrière), dont comment le mettre en pause et comment rejouer la file des échecs. Rythme de revue (échéance des accès, changements des systèmes reliés), comment un changement est demandé,
 testé, déployé. Temps de maintenance attendu par mois `[H]`, cohérent avec 50-rentabilite.*
 
 ## Décision attendue
@@ -394,5 +435,6 @@ Exemple de ligne de protocole (exemple de calcul, chiffres fictifs) :
 | Secret dans le document | une clé, un mot de passe, un jeton | le retirer, ne garder que son nom ; le faire changer s'il a circulé |
 | Compte personnel | le dispositif tourne avec l'accès d'une personne | compte de service, droits minimaux |
 | Pilote sans seuil d'arrêt | « on verra » | seuils de généralisation, de prolongation et d'arrêt écrits à l'avance |
+| Pilote sans mode écrit | la rubrique 13 ne dit pas s'il est parallèle, préparé avec validation ou réel | écrire le mode : sans lui, la recette ne sait pas ce qu'elle peut laisser au pilote |
 | Porte oubliée | la spécification démarre la construction sans reprendre la condition de 40-solutions | reprendre la porte en rubrique 1, avec sa mesure et sa date |
 | Maintenance sans propriétaire | « l'équipe informatique » | un rôle, un suppléant, une fiche d'une page |

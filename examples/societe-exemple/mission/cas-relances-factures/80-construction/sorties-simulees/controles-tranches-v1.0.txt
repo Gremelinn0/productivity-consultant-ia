@@ -1,0 +1,34 @@
+# commande : python -X utf8 donnees-essai/controles_tranches.py
+# exécuté le 2026-10-13 12:24:28 (date réelle de la machine) · version gelée 1.0 · flux_relances 1.0
+controles_tranches.py · maquette flux_relances 1.0 · Python 3.14.6
+[tranche 0] OK     lancement à vide : statut ok, 5 lignes au journal, début et fin présents
+[tranche 0] OK     aucun brouillon, message d'avertissement posté : 0 brouillon, 1 message à la gestionnaire clients
+[tranche 0] OK     case « Suspendre » cochée : statut suspendu, 0 brouillon
+[tranche 0] OK     verrou : une exécution à la fois : statut verrou, aucun brouillon
+[tranche 0] OK     isolement : envoi refusé, écriture hors onglets refusée, mode réel refusé : envoi refusé True, écriture refusée True, mode réel : code 2, « Envoyés » vide
+[tranche 0] OK     la tentative d'envoi est consignée : 1 ligne « refus » au journal de la boîte
+[tranche 1] OK     extraction du jour lue, liste candidate complète : 42 propositions + 19 écartées + 0 à la main = 61
+[tranche 1] OK     niveaux proposés dans 1 à 3 : niveaux [1, 2, 3]
+[tranche 1] OK     rapprochement trop ancien : aucune proposition : statut refus, 0 brouillon
+[tranche 1] OK     …et le motif est lisible par la gestionnaire clients : alerte reçue : ['[alerte] rapprochement trop ancien']
+[tranche 1] OK     rapprochement du vendredi accepté un lundi : statut ok
+[tranche 1] OK     colonne absente : arrêt sans reprise : statut echec, pauses []
+[tranche 2] OK     écarts par motif : {'litige': 6, 'payée': 9, 'déjà relancée': 4}
+[tranche 2] OK     comptes clés mis à part : 5 propositions de compte clé
+[tranche 2] OK     motif de chaque écart au journal : 19 lignes d'écart avec motif
+[tranche 3] OK     brouillons créés dans les deux dossiers : 37 + 5
+[tranche 3] OK     chaque brouillon porte son niveau dans l'objet : 37 objets lus
+[tranche 3] OK     une proposition par brouillon, état relu : 42 propositions
+[tranche 3] OK     flux lancé deux fois : aucun doublon : 42 brouillons, 42 déjà faits
+[tranche 3] OK     arrêt entre l'écriture et l'enregistrement, puis reprise sans doublon : arrêt code 137 après 10 brouillons et 9 propositions ; reprise : 42 brouillons, 42 clés distinctes
+[tranche 4] OK     courriel envoyé par une personne : ligne d'historique : 4 lignes d'historique du jour, bilan {'envoyée': 4}
+[tranche 4] OK     litige saisi : brouillon retiré au passage suivant : brouillon de FA-2026-1203|1 retiré, bilan {'retirees': 1}
+[tranche 4] OK     étape 8 désactivée le premier lundi du pilote : bilan {'desactivee': 1}, aucun échec, aucune ligne d'historique du jour
+[tranche 5] OK     S3 coupé 10 min : reprises puis succès : statut ok, pauses [59, 274, 886] s, 42 brouillons
+[tranche 5] OK     S3 coupé plusieurs heures : file des échecs : statut echec, 42 lignes dans la file
+[tranche 5] OK     150 propositions : arrêt avant création et alerte : statut volume, alertes ['[alerte] volume anormal']
+[tranche 5] OK     aucune exécution à 10 h : alerte : état alerte, alertes ['[alerte] aucune exécution']
+[tranche 5] OK     …et pas d'alerte quand l'exécution a eu lieu : état ok
+
+28 contrôles passés sur 28.
+# code de sortie : 0

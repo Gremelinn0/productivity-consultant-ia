@@ -1,0 +1,37 @@
+# commandes : python -X utf8 donnees-essai/mesure_operations.py  puis  ... --pas 30  puis  ... --pas 20
+# exécuté le 2026-10-13 12:31:47 (date réelle de la machine) · version gelée 1.0
+mesure_operations.py · maquette flux_relances 1.0 · pas de la veille 10 min
+   153  exécution du lundi (étapes 1 à 6)
+    20  veille du lundi : passages à vide
+   146  veille du lundi : passages avec travail
+     2  alerte sur silence de 10 h
+    21  passage de 17 h, mardi à vendredi (étape 8)
+  ----
+   342  opérations pour la semaine type (15 passages de la veille le lundi, dont 11 avec travail)
+  durée de l'exécution du lundi par la maquette : 0.27 s (horloge réelle, 42 brouillons)
+    1482  opérations par mois (342 × 52/12), quota du palier d'entrée : 1000
+    148 %  du quota
+
+mesure_operations.py · maquette flux_relances 1.0 · pas de la veille 30 min
+   153  exécution du lundi (étapes 1 à 6)
+    55  veille du lundi : passages avec travail
+     2  alerte sur silence de 10 h
+     5  veille du lundi : passages à vide
+    21  passage de 17 h, mardi à vendredi (étape 8)
+  ----
+   236  opérations pour la semaine type (5 passages de la veille le lundi, dont 4 avec travail)
+  durée de l'exécution du lundi par la maquette : 0.22 s (horloge réelle, 42 brouillons)
+    1023  opérations par mois (236 × 52/12), quota du palier d'entrée : 1000
+    102 %  du quota
+
+mesure_operations.py · maquette flux_relances 1.0 · pas de la veille 20 min
+   153  exécution du lundi (étapes 1 à 6)
+    81  veille du lundi : passages avec travail
+     2  alerte sur silence de 10 h
+    10  veille du lundi : passages à vide
+    21  passage de 17 h, mardi à vendredi (étape 8)
+  ----
+   267  opérations pour la semaine type (8 passages de la veille le lundi, dont 6 avec travail)
+  durée de l'exécution du lundi par la maquette : 0.19 s (horloge réelle, 42 brouillons)
+    1157  opérations par mois (267 × 52/12), quota du palier d'entrée : 1000
+    116 %  du quota

@@ -54,9 +54,15 @@ départ de ce qu'on supprime.*
 | 0 | | | | | | aucun indicateur suivi · <mesure de départ> |
 | 1 | | voir 3 | | | | |
 
-## 3. Prérequis à lever d'abord
-*Ce qui manque (donnée, accès, processus à standardiser), pour quels cas, qui le lève, pour quelle date. Une
-échéance déjà passée à la date du document est redatée ici.*
+## 3. Socle commun et prérequis à lever d'abord
+*D'abord le socle commun : ce qui sert à plusieurs cas et se lève une seule fois (plateformes retenues ou
+envisagées `[H]`, qui les exploite, règles de sécurité communes : comptes de l'entreprise, droits, secrets, lieu
+des données). Puis ce qui manque (donnée, accès, processus à standardiser), pour quels cas, qui le lève, pour
+quelle date. Une échéance déjà passée à la date du document est redatée ici.*
+
+| Socle commun | Retenu ou envisagé `[H]` | Qui l'exploite (rôle) | Règles de sécurité communes | Pour quels cas |
+|---|---|---|---|---|
+| | | | | |
 
 | Ce qui manque | Pour quels cas | Qui le lève | Pour quelle date `[H]` |
 |---|---|---|---|
@@ -71,8 +77,8 @@ départ de ce qu'on supprime.*
 *Gabarit de la partie C, rubrique numérotée 5.*
 
 ## Décision attendue
-Valider l'ordre, les cas de la première vague et leurs responsables, puis lancer le premier cas : il entre par
-`cadrer-besoin`.
+Valider l'ordre, les cas de la première vague et leurs responsables, le socle commun (plateformes, qui les
+exploite, règles de sécurité), puis lancer le premier cas : il entre par `cadrer-besoin`.
 ```
 
 ## B. Plan de déploiement — modèle de `mission/cas-<slug>/70-plan.md`
@@ -122,7 +128,8 @@ signés avant de commencer : on cite la fiche signée sans recopier les valeurs)
 *Recette : qui accepte (pas celui qui construit), sur quelles données, quand.*
 
 *Mise en production : jour et ordre de bascule · retour arrière (qui, sur quel signal, comment on vérifie que
-l'ancienne méthode a repris) · interrupteur.*
+l'ancienne méthode a repris) · interrupteur. Le plan prévoit ; les actions, le feu vert et la bascule se
+tiennent dans 90-mise-en-service.*
 
 ## 4. Adoption
 *Une réponse, un rôle et une échéance par question, ou `?`.*
@@ -136,8 +143,9 @@ l'ancienne méthode a repris) · interrupteur.*
 
 ## 5. Exploitation
 *Propriétaire et suppléant (rôles, de 60-specification §17) · maintenance : qui, rythme, heures `[H]` (cohérentes
-avec 50-rentabilite, au taux de celui qui la fait) · fiche d'une page (la même que 60-specification §17), essayée
-par quelqu'un qui ne l'a pas écrite · comptes et accès à transmettre · alertes. Une limite de coût ou d'usage qui
+avec 50-rentabilite, au taux de celui qui la fait) · fiche d'une page (la même que 60-specification §17), qui
+répond à quatre questions : comment vérifier que ça marche, que faire en cas d'incident, qui joindre, comment revenir
+en arrière ; essayée par quelqu'un qui ne l'a pas écrite · comptes et accès à transmettre · alertes. Une limite de coût ou d'usage qui
 n'est pas un indicateur se calcule ici, calcul montré, et se relève chaque mois.*
 
 ## 6. Protocole de mesure

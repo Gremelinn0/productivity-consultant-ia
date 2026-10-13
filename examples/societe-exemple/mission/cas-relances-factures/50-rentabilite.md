@@ -1,6 +1,7 @@
 # Rentabilité — Relances de factures échues
 
 2026-10-08 · Demandeur, valideur et décideur : direction générale (critère d'investissement : retour en 18 mois au plus sur le scénario central `[F]`, entretien direction) · Rédigé par : consultant IA · Options chiffrées (de `40-solutions.md`, version 1) : 4 retenue, après 0 / 0 repli
+Version 1.1, précisée le 2026-10-16 : la rubrique 2 renvoie la relecture après le pilote à `95-mesure.md`, où le réel s'écrit à côté de cette estimation, qui reste intacte. Aucun nombre ne change.
 
 ## 1. Situation de référence
 
@@ -35,7 +36,7 @@ Ce que le processus coûte aujourd'hui (`20-diagnostic.md`).
 
 **À relever avant le déploiement**, dans l'ordre de sensibilité. 1. Minutes gagnables : chronométrer les phases É1, É2, É5 et É6 sur trois lundis consécutifs, avec un horodatage par facture (gestionnaire clients). Leur total, en moyenne sur les trois lundis, doit être au moins égal à 112 min `[E]` (80 gagnables + 32 résiduelles `[H]`, voir le point mort). 2. Usage du temps libéré : la direction générale le nomme avec une échéance, le responsable financier compte les appels passés. 3. Heures de maintenance : estimation écrite de l'indépendant, à comparer à 1 h. 4. Devis et tarif de la plateforme, datés. 5. Motif des 13 réclamations d'un mois (responsable du support).
 
-**À relire après**, de la même façon, sur les quatre lundis du pilote : minutes avec le dispositif, adoption, appels passés, heures de maintenance réelles, factures reçues, réclamations. Écrire l'écart avec l'estimation et remplacer `[E]` par `[F]` là où l'observation existe.
+**À relire après**, de la même façon, dans `95-mesure.md` (`mesurer-gains`), à partir des quatre lundis du pilote puis des relevés de production : minutes avec le dispositif, adoption, appels passés, heures de maintenance réelles, coût de la plateforme, factures reçues, réclamations. Le réel s'écrit à côté de l'estimation de ce document, qui reste intacte, avec l'écart ; un gain n'est un fait qu'en `95-mesure.md`.
 
 ## 3. Calcul par option
 

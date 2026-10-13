@@ -156,9 +156,10 @@ non arrondies, montée en charge comprise), et non 5,4 comme si la construction 
 - **Avant le déploiement** : relever les termes `[H]`, dans l'ordre de leur sensibilité, avec la
   méthode qui servira après (même comptage, même chronométrage), en nommant qui mesure, comment et à
   quelle date. Sans mesure de départ, aucun gain ne pourra être déclaré observé.
-- **Après** : relire les mêmes termes de la même façon, plus l'usage réel (adoption), les coûts
-  réels (factures), les heures de maintenance réelles et les incidents. Écrire l'écart avec
-  l'estimation, remplacer `[E]` par `[F]` là où l'observation existe, dater la mise à jour.
+- **Après** : la lecture du réel appartient à `mesurer-gains` (`95-mesure.md`) : mêmes termes relus de
+  la même façon, plus l'usage réel (adoption), les coûts réels (factures), les heures de maintenance
+  réelles et les incidents. L'estimation de ce fichier reste intacte ; l'écart se lit terme par terme
+  dans 95, où un gain ne devient `[F]` que sur un relevé daté.
 - Les indicateurs ont un identifiant `IND-xx`. La spécification dit lesquels sont exigés et pourquoi
   (`30-exigences.md` §10), et porte seule leurs seuils d'alerte et d'arrêt de production
   (`60-specification.md` §14) ; les seuils du pilote (§13) sont distincts et dits tels. Le rythme des
