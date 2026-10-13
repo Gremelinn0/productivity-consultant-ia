@@ -169,7 +169,8 @@ Un besoin traité seul par la porte 1 n'a que `journal.md` et son dossier `cas-<
    son livrable contre trois choses. Le besoin (`10-besoin`, ou `00-contexte` pour une découverte) : il
    répond à ce qui est demandé, dans le périmètre. Les preuves : chaque nombre et chaque affirmation qui
    pèse sur la décision renvoie à sa source (`mission/sources/`, un livrable validé) ou à son calcul ;
-   sinon il devient une `[H]` ou une question `Q-xx`. La source se note au moment où le chiffre s'écrit ;
+   sinon il devient une `[H]` ou une question `Q-xx`. Chaque calcul affiché se refait, arrondis compris :
+   une égalité qui ne tombe pas juste se corrige. La source se note au moment où le chiffre s'écrit ;
    une source retrouvée après coup se dit « retrouvée après coup », jamais présentée comme l'origine. Les
    livrables déjà validés : une contradiction se corrige par une version datée, jamais en silence. Ce qui
    ne passe pas se corrige avant la remise.
@@ -245,6 +246,14 @@ que si elle les a réellement appelées ; sans compagnon, elle suit sa méthode 
   17 sabotages), la mise en service et la mesure sont simulées (rôles, décisions et relevés inventés,
   calculs réels). Aucune plateforme n'a été touchée, et le constructeur y est aussi le testeur ; chaque
   compétence dit, dans « Preuves restantes », ce qui n'est pas mesuré.
+- Un seul essai comparé, qui ne démontre pas d'avantage. Le 13/10/2026, la même mission fictive a été
+  menée par une session avec le pack et par une session sans ; un autre modèle les a notées à l'aveugle sur
+  une grille de 15 points écrite avant l'essai : 14 contre 12. L'écart est sous le seuil de 3 points fixé
+  d'avance. Il tient à des gains mieux qualifiés et à la maintenance comptée dans le coût complet. L'aveugle
+  était imparfait : les livrables du pack se nommaient eux-mêmes.
+- Dans une session chargée de nombreuses compétences, une demande de mission peut partir vers une autre
+  compétence (essai du 13/10, dans `COMPAGNONS.md`) : une mission se commence par `/mission-besoin` ou
+  `/mission-decouverte`.
 - Les compagnons de `COMPAGNONS.md` sont lus, pas essayés : leurs notes sont des notes de lecture.
 - Le chiffrage ne vaut que par ses mesures d'entrée : sans temps mesurés, il reste une fourchette.
   De même, la mesure ne vaut que par les relevés que le client fournit : sans relevé, `95-mesure` reste

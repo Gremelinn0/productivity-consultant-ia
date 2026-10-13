@@ -156,6 +156,13 @@ Ce qui manque est écrit comme manquant, jamais supposé.
   construction et la recette y sont réelles (une maquette exécutable, 43 tests, 17 sabotages), la mise
   en service et la mesure sont simulées (décisions et relevés inventés, calculs réels). Aucune
   plateforme n'a été touchée, et le constructeur y est aussi le testeur.
+- Un seul essai comparé, qui ne démontre pas d'avantage. Le 13/10/2026, la même mission fictive a été
+  menée par une session avec le pack et par une session sans ; un autre modèle les a notées à l'aveugle sur
+  15 points, avec une grille écrite avant l'essai : 14 contre 12. L'écart est sous le seuil de 3 points
+  fixé d'avance. L'aveugle était imparfait : les livrables du pack se nommaient eux-mêmes.
+- Dans une session chargée de nombreuses compétences, une demande peut partir vers une autre compétence :
+  commencez une mission par `/mission-besoin` ou `/mission-decouverte` (essai dans
+  [COMPAGNONS.md](COMPAGNONS.md)).
 - Les compagnons sont lus, pas essayés.
 - Le chiffrage ne vaut que par ses mesures d'entrée, et la mesure par les relevés que vous fournissez :
   sans relevé, aucun gain n'est un fait.
