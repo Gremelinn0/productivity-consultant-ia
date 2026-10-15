@@ -116,6 +116,14 @@ une étape ne dit s'en être servie que si elle les a réellement appelées. San
 /plugin install consultant-ia
 ```
 
+Si la première commande répond « SSH authentication failed » (aucune clé SSH GitHub sur la machine),
+donnez l'adresse complète :
+
+```bash
+/plugin marketplace add https://github.com/Gremelinn0/productivity-consultant-ia.git
+/plugin install consultant-ia
+```
+
 Puis, dans le dossier de la mission : `/mission-besoin automatiser la relance des factures impayées`
 ou `/mission-decouverte`.
 
