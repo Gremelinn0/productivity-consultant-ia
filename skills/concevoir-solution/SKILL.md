@@ -14,7 +14,7 @@ description: >-
 metadata:
   scope: "le choix de la réponse à un besoin déjà traduit en exigences : faut-il automatiser, quelle option, construite par qui, et sous quelle porte"
   owns: "la stratégie d'automatisation (faire ou non, quel type de solution, quelle plateforme et qui la nomme), la porte d'entrée « faut-il automatiser », le catalogue d'options, la matrice d'évaluation, le partage entre automatisme et humain, la recommandation avec son contre-argument et son repli, la porte de démarrage quand on standardise d'abord"
-  consumes: "30-exigences, 20-diagnostic et 10-besoin du cas ; mission/sources/ ; mission/journal.md ; les pages des éditeurs pour les capacités et les prix, lues au moment du choix"
+  consumes: "30-exigences, 20-diagnostic et 10-besoin du cas ; mission/sources/ ; mission/journal.md ; les pages des éditeurs pour les capacités et les prix, lues au moment du choix ; COMPLEMENTAIRES.md du pack"
 ---
 
 # Concevoir la solution
@@ -193,6 +193,9 @@ Ligne de journal, au moment où le décideur tranche (exemple fictif) :
 - Pour une plateforme ou un fournisseur précis : `COMPAGNONS.md` du pack, lignes « Stratégie
   d'automatisation » et « Concevoir ». On ne dit s'en être servi que si on l'a réellement appelé ; sans
   compagnon, la méthode ci-dessus est le repli maison.
+- Compétences complémentaires (facultatives, à installer à part) : quand l'option retenue est un système
+  (agents, mémoire, intégrations) ou comprend un site, `COMPLEMENTAIRES.md` du pack cite celles qui aident à
+  en dessiner l'architecture. Le livrable reste celui de cette étape (`router-mission-ia`, étape 3).
 
 ## Preuves restantes
 

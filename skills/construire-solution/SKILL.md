@@ -14,7 +14,7 @@ description: >-
 metadata:
   scope: "la construction de l'option retenue et spécifiée, dans un environnement d'essai et sur des données fictives ou anonymisées, jusqu'à une version gelée prête pour la recette"
   owns: "le découpage en tranches, l'environnement d'essai, les garde-fous construits, la recherche d'un modèle existant avant de construire, le registre des écarts avec la spécification, le journal des versions, la fiche d'exploitation, la liste de ce qui reste au client"
-  consumes: "60-specification (version lue), 40-solutions (option, plateforme, porte), 70-plan (lots, porte, limites du lot), 30-exigences et 50-rentabilite du cas ; mission/sources/ ; mission/journal.md ; COMPAGNONS.md du pack"
+  consumes: "60-specification (version lue), 40-solutions (option, plateforme, porte), 70-plan (lots, porte, limites du lot), 30-exigences et 50-rentabilite du cas ; mission/sources/ ; mission/journal.md ; COMPAGNONS.md et COMPLEMENTAIRES.md du pack"
 ---
 
 # Construire la solution
@@ -244,7 +244,7 @@ messages). Ligne de journal, quand le valideur tranche (exemple fictif) :
   arrière, faite par le client après validation de l'action. Les comptes et secrets de l'essai sont créés
   par le client avant la construction.
 - Mesurer le gain réel → `mesurer-gains`. L'état de la mission et le journal → `router-mission-ia`.
-- Plateformes et compagnons → `COMPAGNONS.md` du pack.
+- Compétences complémentaires (facultatives) → `COMPLEMENTAIRES.md` ; plateformes et compagnons → `COMPAGNONS.md`.
 - Un écart qui remet l'option en cause renvoie à `concevoir-solution`, par le routeur (`router-mission-ia`).
 
 ## Preuves restantes

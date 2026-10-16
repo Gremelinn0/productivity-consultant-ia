@@ -238,6 +238,12 @@ précis (flux, scénario, agent codé, évaluation de l'IA, mise en service, mes
 condition où les appeler. Elles ne sont jamais copiées dans le pack. Une étape ne dit s'en être servie
 que si elle les a réellement appelées ; sans compagnon, elle suit sa méthode maison.
 
+`COMPLEMENTAIRES.md` liste de la même façon les compétences d'autres auteurs qui aident à concevoir
+l'architecture d'un système IA (agents, mémoire, intégrations, site) puis à fabriquer ses compétences, ses
+agents et sa mémoire, avec leur auteur, leur licence et leur commande d'installation. Elles sont
+facultatives aussi : le livrable reste celui de l'étape (`concevoir-solution` ou `construire-solution`) et
+le parcours ne change pas.
+
 ## Ce qui reste imparfait
 
 - Pas encore éprouvé sur une mission réelle. La mission fictive (`examples/`) a éprouvé les étapes de
@@ -254,7 +260,8 @@ que si elle les a réellement appelées ; sans compagnon, elle suit sa méthode 
 - Dans une session chargée de nombreuses compétences, une demande de mission peut partir vers une autre
   compétence (essai du 13/10, dans `COMPAGNONS.md`) : une mission se commence par `/mission-besoin` ou
   `/mission-decouverte`.
-- Les compagnons de `COMPAGNONS.md` sont lus, pas essayés : leurs notes sont des notes de lecture.
+- Les compagnons de `COMPAGNONS.md` et les compétences de `COMPLEMENTAIRES.md` sont lus, pas essayés : leurs
+  notes sont des notes de lecture.
 - Le chiffrage ne vaut que par ses mesures d'entrée : sans temps mesurés, il reste une fourchette.
   De même, la mesure ne vaut que par les relevés que le client fournit : sans relevé, `95-mesure` reste
   une demande de relevés et aucun gain n'est un fait.
@@ -275,4 +282,6 @@ que si elle les a réellement appelées ; sans compagnon, elle suit sa méthode 
 3. Chaque compétence — la méthode de sa responsabilité.
 4. **README** — présentation et installation.
 5. **`COMPAGNONS.md`** — les compétences d'autres auteurs qui vont avec le pack, et leurs licences.
-6. `examples/` — une mission fictive déroulée par les deux portes, jamais une source de méthode.
+6. **`COMPLEMENTAIRES.md`** — les compétences d'autres auteurs qui aident à concevoir l'architecture d'un
+   système IA puis à fabriquer ses compétences, ses agents et sa mémoire, avec leur commande d'installation.
+7. `examples/` — une mission fictive déroulée par les deux portes, jamais une source de méthode.

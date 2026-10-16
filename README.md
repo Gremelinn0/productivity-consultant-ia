@@ -109,6 +109,44 @@ mesure), avec leur licence et la condition où les appeler. Elles ne sont jamais
 une étape ne dit s'en être servie que si elle les a réellement appelées. Sans compagnon installé, chaque
 étape suit sa méthode maison.
 
+## Compétences complémentaires (à installer à part)
+
+Quand l'option retenue est un système (des agents, une mémoire, des intégrations), des compétences d'autres
+auteurs aident à en dessiner l'architecture, puis à fabriquer ses compétences, ses agents et sa mémoire.
+Elles sont facultatives : le livrable reste celui de l'étape, et sans elles le parcours ne change pas. Le rôle
+de chacune, la version lue, l'auteur et la licence sont dans [COMPLEMENTAIRES.md](COMPLEMENTAIRES.md).
+
+**Concevoir l'architecture** : `system-design` et `architecture` (plugin `engineering` d'Anthropic),
+`bmad-architecture` et `bmad-agent-architect` (méthode BMad), et `site-architecture` (marketingskills)
+seulement si la solution comprend un site.
+
+```bash
+/plugin marketplace add anthropics/knowledge-work-plugins
+/plugin install engineering@knowledge-work-plugins
+/plugin marketplace add coreyhaines31/marketingskills
+/plugin install marketing-skills@marketingskills
+```
+
+BMad s'installe depuis le terminal, dans le dossier du projet (Node.js, Python et uv requis, d'après son
+README) :
+
+```bash
+npx bmad-method install
+```
+
+**Fabriquer en essai** : `skill-creator` (une compétence), `agent-development` du plugin `plugin-dev` (un
+agent) et `memory-management` du plugin `productivity` (une mémoire).
+
+```bash
+/plugin install skill-creator@claude-plugins-official
+/plugin install plugin-dev@claude-plugins-official
+/plugin marketplace add anthropics/knowledge-work-plugins
+/plugin install productivity@knowledge-work-plugins
+```
+
+Un plugin apporte d'autres compétences que celle citée et peut déclarer des connecteurs : n'installer que ce
+que la mission utilise, et n'autoriser un connecteur que source par source, en lecture seule.
+
 ## Installation
 
 ```bash
@@ -148,7 +186,7 @@ Ce qui manque est écrit comme manquant, jamais supposé.
 | Hôte | Claude Code ou Cowork |
 | Outils de l'entreprise | aucun requis ; les connecteurs présents dans la session sont lus en lecture seule, et toute action sur un outil réel est proposée, jamais faite sans votre validation |
 | Langue | français |
-| Dépendances | aucune (les compagnons de `COMPAGNONS.md` sont facultatifs) |
+| Dépendances | aucune (les compagnons de `COMPAGNONS.md` et les compétences de `COMPLEMENTAIRES.md` sont facultatifs) |
 
 ## Ce que le pack ne fait pas
 
@@ -171,7 +209,7 @@ Ce qui manque est écrit comme manquant, jamais supposé.
 - Dans une session chargée de nombreuses compétences, une demande peut partir vers une autre compétence :
   commencez une mission par `/mission-besoin` ou `/mission-decouverte` (essai dans
   [COMPAGNONS.md](COMPAGNONS.md)).
-- Les compagnons sont lus, pas essayés.
+- Les compagnons et les compétences complémentaires sont lus, pas essayés.
 - Le chiffrage ne vaut que par ses mesures d'entrée, et la mesure par les relevés que vous fournissez :
   sans relevé, aucun gain n'est un fait.
 - La découverte dépend de ce que l'entreprise branche et des entretiens.
@@ -186,8 +224,8 @@ Ce qui manque est écrit comme manquant, jamais supposé.
 ## Sources et crédits
 
 Le pack est écrit avec ses propres mots ; il s'appuie sur des méthodes ouvertes. Les compétences d'autres
-auteurs qui vont avec lui sont créditées, avec leur licence, dans [COMPAGNONS.md](COMPAGNONS.md). Les
-méthodes dont il s'inspire sont :
+auteurs qui vont avec lui sont créditées, avec leur licence, dans [COMPAGNONS.md](COMPAGNONS.md) et
+[COMPLEMENTAIRES.md](COMPLEMENTAIRES.md). Les méthodes dont il s'inspire sont :
 
 - [automation-strategy](https://github.com/ericrisco/rsc-harness/tree/main/skills/automation-strategy)
   d'Eric Risco (MIT) — décider s'il faut automatiser, piège du processus cassé, test de stabilité et

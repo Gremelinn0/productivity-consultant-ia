@@ -4,7 +4,8 @@ Le pack ne contient que ses propres compétences. Pour certaines étapes, une co
 éditeur ou un praticien reconnu va plus loin sur une plateforme précise : elle est citée ici, avec le
 commit lu, sa licence et la condition où l'appeler. Elle n'est jamais copiée dans le pack, et une étape
 ne dit l'avoir utilisée que si elle l'a réellement appelée. Sans compagnon installé, chaque étape suit
-sa méthode maison.
+sa méthode maison. Pour concevoir l'architecture d'un système IA puis fabriquer ses compétences, ses agents
+et sa mémoire, quelle que soit la plateforme : `COMPLEMENTAIRES.md`.
 
 Lecture du 12 octobre 2026 : fichiers lus au commit indiqué, notés sur 100 avec une grille de lecture
 (adéquation, procédure, vérification, maintenance, portabilité, sécurité, contexte, provenance). Ce
