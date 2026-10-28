@@ -20,7 +20,7 @@
   ],
   "pistes": [
     {"constat": "Elle répond seule, le soir, à des messages de suivi de commande qui prennent 5 à 10 minutes chacun.",
-     "piste": "Un agent pourrait préparer les réponses de suivi de commande, qu'elle relirait avant l'envoi."},
+     "piste": "Les réponses de suivi de commande pourraient l'attendre le matin, prêtes à relire, au lieu de lui prendre ses soirées."},
     {"constat": "Une date de livraison fausse a déjà été donnée une fois.",
      "piste": "Les réponses sur les délais pourraient venir de l'état réel de la commande, jamais d'une estimation."}
   ],

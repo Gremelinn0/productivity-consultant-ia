@@ -11,7 +11,7 @@ cet ordre.
 
 | # | Question | Ce qu'elle décide | D'abord |
 |---|---|---|---|
-| DI01 | Quels sont les deux ou trois résultats que l'entreprise doit atteindre cette année ? | La valeur des cas, le choix des équipes | la personne |
+| DI01 | Quels sont les deux ou trois résultats que l'entreprise doit atteindre, chiffrés si possible, et d'ici quand ? | La valeur des cas, le choix des équipes, le chiffre à viser et l'échéance | la personne |
 
 ## 2. Temps
 

@@ -35,19 +35,19 @@
     },
     "pistes": {
       "type": "array",
-      "description": "Là où une automatisation ou un agent aiderait. Sans prix, sans volume, sans délai, sans nom d'outil.",
+      "description": "Ce que la personne y gagnerait, dit comme un résultat pour elle (ce qui serait trouvé, fait ou épargné), jamais le moyen : aucun des mots « agent », « automatisation », « IA », « outil », « logiciel », « plateforme ». Sans prix, sans volume, sans délai, sans nom d'outil.",
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["constat", "piste"],
         "properties": {
           "constat": { "type": "string", "minLength": 1, "description": "Ce que la personne a dit, sans l'interpréter, en français." },
-          "piste": { "type": "string", "minLength": 1, "description": "La direction possible, au conditionnel, en français." }
+          "piste": { "type": "string", "minLength": 1, "description": "Le résultat possible pour la personne, au conditionnel, en français." }
         }
       }
     },
     "questions_ouvertes": { "type": "array", "items": { "type": "string" }, "description": "Ce qui reste à demander, et ce que la personne a demandé au consultant (prix, délai, solution), noté pour lui." },
-    "prochaine_etape": { "type": "string", "minLength": 1, "description": "Ce que la plateforme propose à la personne pour la suite, ou « à définir avec le consultant »." },
+    "prochaine_etape": { "type": "string", "minLength": 1, "description": "Ce que la page propose à la personne pour la suite, ou « à définir avec le consultant »." },
     "pour_la_base": { "type": "array", "items": { "type": "string" }, "description": "Ce que la personne a soulevé et qu'aucune question de la base ne couvrait, formulé en question générale, sans nom : le consultant décide de l'ajouter à la base." },
     "noms_a_retirer": { "type": "array", "items": { "type": "string" }, "description": "Les noms de personnes ou d'entreprises que la personne a écrits, tels qu'écrits, pour les retirer de la transcription. Jamais recopiés ailleurs dans le compte rendu." }
   }

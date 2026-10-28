@@ -58,9 +58,42 @@ guide d'entretien lu à voix haute.
 6. **S'arrêter** quand les décisions du sujet sont couvertes, ou à douze. Huit réponses concrètes valent mieux que douze
    vagues. Ce qui reste à demander va dans `questions_ouvertes`.
 
-Une question par tour. Une question de la base qui en contient plusieurs se pose en plusieurs tours, en ne gardant
-que ce que la décision exige. Les questions barrées de la base (retirées, leur numéro gardé) n'entrent pas dans la
-consigne.
+Les questions barrées de la base (retirées, leur numéro gardé) n'entrent pas dans la consigne.
+
+## Compter : douze questions, la question d'ouverture comprise
+
+Douze questions au plus, la question d'ouverture comprise. C'est une promesse faite au visiteur, l'ouverture la lui
+annonce : à la douzième au plus tard, le récapitulatif.
+
+- **Compter comme le visiteur.** Une chose demandée est une question, et celle de l'ouverture est la première. Une
+  question de la base posée en deux tours en compte deux. Une relance redemande la même chose : elle ne compte pas, mais
+  elle ne glisse jamais une chose neuve. Le récapitulatif et sa validation sont annoncés à part et ne comptent pas.
+- **Recompter avant chaque message.** Un compte qu'on ne refait pas se perd. L'agent relit à chaque tour les questions
+  déjà posées dans la conversation, la première comprise.
+- **À la douzième, la fin.** Le tour qui suit sa réponse est le récapitulatif, sans relance ni treizième question, même
+  si la réponse est courte : ce qui manque va dans `questions_ouvertes`. « Dernière question » ne se dit que si le tour
+  suivant est le récapitulatif.
+
+## Un audit : deux réponses qui ne manquent jamais
+
+Quand la personne n'a pas de projet précis (un audit), deux réponses figurent dans le récapitulatif, sauf si elle les a
+déjà données ou que la page les a demandées :
+
+- **Ce qui casserait si le volume doublait** : EQ14, de la découverte avec les équipes (partie « Temps et volume »). Le
+  point de rupture dit où alléger en premier, donc quoi trier.
+- **L'objectif** (quel résultat, chiffré si possible, d'ici quand) : DI01, de la découverte avec la direction (partie
+  « Objectifs »). Sans objectif, aucun gain ne se mesure.
+
+Elles passent avant les questions moins décisives : l'agent leur garde leur place dès le début, dans les douze. Si la
+place vient à manquer, ce sont les autres questions qui sautent, jamais ces deux-là.
+
+## Une seule chose par message
+
+Un message demande une seule chose : un seul point d'interrogation, et les réponses à cliquer répondent à cette
+question-là, pas à une autre. Avec deux choses dans un message (« combien de temps s'écoule-t-il, et qui intervient ? »),
+les choix n'en couvrent qu'une moitié et la personne perd l'autre. Une question de la base qui en contient deux se pose
+en deux tours, ou se réduit à la seule part que la décision exige. Un résultat avec son chiffre et son échéance reste une
+seule chose : c'est l'objectif. Le récapitulatif de la fin est la seule exception : sa validation tient en deux phrases.
 
 ## Ce que la personne lit : l'outil `afficher`
 
@@ -76,29 +109,46 @@ ni puces, la page l'affiche tel quel.
 Quand la question s'y prête (une fréquence, une taille, un outil parmi les usuels, oui / en partie / non), la page montre
 de 2 à 6 choix courts, 60 caractères au plus chacun, que la personne clique. Ils couvrent tout l'espace des réponses, des
 fourchettes qui se suivent plutôt qu'un chiffre qui oriente ; « Je ne sais pas » en fait partie quand la personne peut
-l'ignorer. `plusieurs` ne vaut vrai que lorsque plusieurs choix peuvent s'appliquer ensemble (plusieurs outils, plusieurs
-canaux) ; il ne vaut jamais vrai pour une question à choix unique (une fréquence, une taille, oui / en partie / non). Une
-question qui demande un récit ou un exemple (« la dernière fois… ») n'a pas de suggestions. La personne peut toujours
-écrire avec ses mots au lieu de cliquer, et l'agent le lui dit une fois. Un choix ne porte jamais un prix, un outil à
-acheter, un délai ni un conseil. Ce qui est cliqué ou écrit est la réponse, telle quelle, et reste dit de mémoire.
+l'ignorer. Ils répondent à la seule question du message : des choix qui n'en couvrent qu'une moitié disent que le
+message demande deux choses. `plusieurs` ne vaut vrai que lorsque plusieurs choix peuvent s'appliquer ensemble (plusieurs
+outils, plusieurs canaux) ; il ne vaut jamais vrai pour une question à choix unique (une fréquence, une taille, oui / en
+partie / non). Une question qui demande un récit ou un exemple (« la dernière fois… ») n'a pas de suggestions. La personne
+peut toujours écrire avec ses mots au lieu de cliquer, et l'agent le lui dit une fois. Un choix ne porte jamais un prix,
+un outil à acheter, un délai ni un conseil. Ce qui est cliqué ou écrit est la réponse, telle quelle, et reste dit de
+mémoire.
 
 ## Le plan de l'audit
 
 Dès que le sujet est choisi, la page affiche à côté de la conversation un plan de 3 à 7 étapes, dans les mots de la
-personne : ce qui prend du temps, comment ça se passe aujourd'hui, ce qui coince, si le volume doublait, le
-récapitulatif. Une seule étape est en cours à la fois. L'agent renvoie le plan complet à chaque tour : l'étape qui se
-termine passe à fait, la suivante à en cours ; il en ajoute, en retire ou en renomme quand la conversation prend un autre
-chemin, sans sortir de 3 à 7. La dernière étape est toujours le récapitulatif. Le plan dit où en est la personne, donc
-l'agent ne le répète pas dans son `message`.
+personne : ce qui prend du temps, comment ça se passe aujourd'hui, ce qui coince, si le volume doublait, l'objectif, le
+récapitulatif. Chaque étape annonce ce que l'agent va demander dans ses douze questions : il n'annonce rien qu'il
+laissera tomber. Une seule étape est en cours à la fois, celle de la question posée dans ce message. L'agent renvoie le
+plan complet à chaque tour : l'étape qui se termine passe à fait, la suivante à en cours.
+
+Une fois affiché, le plan ne se récrit plus sous les yeux de la personne :
+
+- une étape « fait » ou « en cours » ne change plus de nom et ne disparaît plus ;
+- seules les étapes « à venir » s'ajoutent, se retirent ou se renomment, toujours entre 3 et 7 étapes ;
+- une étape passe à « fait » seulement quand ce qu'elle annonce a été demandé (ou que la personne l'avait déjà dit),
+  jamais pour faire joli, jamais en bloc à la fin : un plan tout vert dont une étape n'a pas été demandée est faux ;
+- la dernière étape est toujours le récapitulatif. Avant de le donner, l'agent retire du plan les étapes « à venir » qu'il
+  ne demandera plus ; ce qu'elles auraient demandé va dans `questions_ouvertes`.
+
+Le plan dit où en est la personne, donc l'agent ne le répète pas dans son `message`.
 
 ## La fin
 
 Quand les questions retenues sont passées, ou si la personne doit s'arrêter pour de bon : un récapitulatif de trois à six
-lignes dans sa langue, qu'elle valide ou corrige (« Est-ce juste ? Voulez-vous ajouter ou corriger quelque chose ? »),
-avec deux réponses à cliquer, « C'est juste » et « Je veux ajouter ou corriger ». Puis le compte rendu, et dans le
-`message` du dernier tour un remerciement, la prochaine étape que la plateforme propose et, si elles servent, les pistes
-en deux phrases, au conditionnel. Une personne qui dit « je reprends plus tard » ne déclenche pas le
-compte rendu : tout est gardé.
+lignes dans sa langue (sa demande, ce qui prend du temps, ce qui coince ; pour un audit, aussi ce qui casserait si le
+volume doublait et son objectif), qu'elle valide ou corrige (« Est-ce juste ? Voulez-vous ajouter ou corriger quelque
+chose ? »), avec deux réponses à cliquer, « C'est juste » et « Je veux ajouter ou corriger ». Puis le compte rendu, et
+dans le `message` du dernier tour un remerciement, la prochaine étape que la page propose (elle demande l'adresse e-mail
+et propose le rendez-vous) et, si elles servent, les pistes en deux phrases, au conditionnel. Une personne qui dit « je
+reprends plus tard » ne déclenche pas le compte rendu : tout est gardé.
+
+Les pistes disent le résultat pour la personne : ce qui serait trouvé, fait ou épargné pour elle, jamais le moyen. Aucun
+des mots « agent », « automatisation », « IA », « outil », « logiciel », « plateforme », ni leurs formes voisines. Au
+visiteur, on parle du résultat ; le consultant choisira le moyen.
 
 ## Ce qu'il ne fait jamais
 
@@ -106,7 +156,7 @@ compte rendu : tout est gardé.
 - **Promettre ou chiffrer** : un prix, un volume, un gain, un délai, un outil, une solution. Une question de ce genre est
   transmise au consultant, dans `questions_ouvertes`.
 - **Conseiller avant la fin.** L'agent recueille. Les pistes viennent après la validation du récapitulatif, sans prix, sans
-  délai, sans nom d'outil.
+  délai, sans nom d'outil, et dites comme un résultat pour la personne (voir « La fin »).
 - **Demander ou accepter un mot de passe ou une clé.** Si la personne en écrit un, l'agent ne le répète pas, lui dit de ne
   pas le partager, et le laisse hors du compte rendu.
 - **Demander ou recopier un nom, une adresse, un numéro.** Ils sont remplacés par [retiré] ; les noms écrits sont listés
@@ -119,11 +169,12 @@ compte rendu : tout est gardé.
 
 Le schéma est `compte-rendu-en-ligne.schema.json`. Sept champs sont obligatoires : `demande` (mot pour mot), `contexte`
 (`taille`, `metier`, `outils`), `sujet` (le nom de fichier d'un sujet de la base), `reponses` (`id`, `question`,
-`reponse` ; une seule entrée par numéro, douze au plus), `pistes` (`constat`, `piste`), `questions_ouvertes`,
-`prochaine_etape`. Deux sont facultatifs et reprennent l'autre schéma : `pour_la_base` et `noms_a_retirer`. Une question
-posée en plusieurs tours (une relance, une sous-question) reste une seule entrée, dont `reponse` réunit ce que la personne
-a dit, dans l'ordre. Les réponses sont mot pour mot, dans la langue de la personne ; tout le reste est en français. Aucun
-chiffre n'y porte de statut : tout est dit de mémoire, donc `[H]` dans la note, à confirmer par la personne.
+`reponse` ; une seule entrée par numéro, douze au plus), `pistes` (`constat`, `piste` : le résultat pour la personne,
+comme à la fin), `questions_ouvertes`, `prochaine_etape` (ce que la page propose). Deux sont facultatifs et reprennent
+l'autre schéma : `pour_la_base` et `noms_a_retirer`. Une question posée en plusieurs tours (une relance, une
+sous-question) reste une seule entrée, dont `reponse` réunit ce que la personne a dit, dans l'ordre. Les réponses sont
+mot pour mot, dans la langue de la personne ; tout le reste est en français. Aucun chiffre n'y porte de statut : tout est
+dit de mémoire, donc `[H]` dans la note, à confirmer par la personne.
 
 ## Ce que l'hôte fait
 
@@ -197,7 +248,13 @@ la consigne à chaque tour.
 
 ## Preuves restantes
 
-- Éprouvé par les essais du script : la consigne, le schéma, le contrôle et la note sur un compte rendu fictif.
+- Éprouvé par les essais du script : la consigne, le schéma, le contrôle et la note sur un compte rendu fictif, et les
+  règles ci-dessus (compte des questions, plan stable, deux réponses d'un audit, fin sans moyens) dans la méthode et dans
+  la consigne.
+- Le premier essai, le 28/10, avec un faux visiteur (quinze tours), a relevé cinq défauts : douze questions promises et
+  quatorze posées, un plan qui changeait sous les yeux du visiteur et finissait tout vert, un objectif jamais demandé,
+  deux messages qui demandaient deux choses, une fin qui parlait d'automatisation et d'agent. Les règles ci-dessus
+  y répondent.
 - NON MESURÉ sur un vrai visiteur : le premier entretien réel dira si douze questions sont trop, si les suggestions
   orientent les réponses, si le plan se lit bien à côté de la conversation, et combien de visiteurs vont jusqu'au
-  récapitulatif.
+  récapitulatif. Un second essai dira si le modèle tient le compte, le plan et la fin, ce que seul un essai montre.

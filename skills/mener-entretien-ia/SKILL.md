@@ -40,7 +40,10 @@ metadata:
 > consigne en ligne de plus de 60 000 caractères. L'agent en ligne : `entretien.py consigne-en-ligne` écrit sa ligne
 > (consigne, schéma, sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`),
 > fusionne les entrées d'un même numéro de question, et refuse une question absente de la base, plus de douze questions
-> différentes, une adresse ou un numéro, un prix dans une piste.
+> différentes, une adresse ou un numéro, un prix dans une piste. Les cinq règles qu'a demandées le premier essai en ligne
+> (douze questions, la question d'ouverture comprise ; un plan qui ne se récrit pas ; deux réponses d'un audit ; une
+> seule chose par message ; une fin sans les moyens) sont écrites dans la méthode et dans la consigne, et des essais
+> rougissent quand l'une manque.
 > Essais : `python -m unittest discover -s skills/mener-entretien-ia/tests`. **Boucle** : aucune.
 
 > ❓ **Une question pour l'entreprise sort de la base de questions** (`references/base-questions/`, un fichier par
@@ -184,6 +187,10 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
 | Douze questions au plus | un entretien écrit long s'abandonne ; le reste a sa place dans la séance d'observation ou l'audit | tout le module | une seule personne détient tout et le demande : deux entretiens, pas un long |
 | En ligne, tout ce que la personne lit passe par `afficher.message` | le modèle range en bloc de réflexion vide le texte écrit avant un appel d'outil : un message écrit à côté de l'outil n'atteint pas la personne | un texte libre avant l'appel d'outil | un hôte qui montre aussi le texte écrit hors d'un appel d'outil |
 | La note fusionne les entrées d'un même numéro de question, sans refuser le compte rendu | un entretien réel a rendu SC05 deux fois (une question reprise) : refuser la note privait le consultant du compte rendu du visiteur ; la consigne demande pourtant une seule entrée par numéro, et le plafond de douze compte les numéros différents | refuser le doublon (le contrôle d'avant) | deux réponses qui se contredisent sous un même numéro : la fusion cacherait un compte rendu faux |
+| En ligne, les douze questions se comptent comme le visiteur les compte, la question d'ouverture comprise | l'ouverture promet douze questions : le premier essai (28/10) en a posé quatorze et a dit « Dernière question » à la quatorzième | ne compter que les questions de la base venues après l'ouverture ; laisser la fin à l'appréciation de l'agent | un hôte qui affiche le compte à côté du plan |
+| En ligne, un plan affiché ne se récrit plus : seules les étapes « à venir » bougent, et « fait » veut dire demandé | le premier essai a laissé une étape « en cours » disparaître sans passer à « fait », en a renommé une trois fois et a fini sur un plan tout vert dont une étape n'avait jamais été demandée | un plan que l'agent ajuste librement à chaque tour (la règle d'avant) | jamais pour une étape en cours ou faite |
+| En ligne, un audit demande toujours ce qui casserait si le volume doublait (EQ14) et l'objectif (DI01), avant les questions moins décisives | le premier essai n'a demandé ni l'un ni l'autre : le visiteur a ajouté l'objectif lui-même au récapitulatif, et la base n'avait aucune question sur le volume | les laisser au choix de l'agent parmi douze | la personne les a déjà données, ou la page les a demandées |
+| En ligne, un message demande une seule chose, et les pistes de la fin disent un résultat, jamais le moyen | deux messages du premier essai demandaient deux choses, et les réponses à cliquer n'en couvraient qu'une ; la fin parlait d'« une automatisation ou un agent » : au visiteur, on parle du résultat | des messages à double question ; des pistes qui nomment l'agent, l'automatisation ou la plateforme | jamais pour le visiteur : le consultant choisit le moyen |
 | Une méthode, deux modes (en ligne, local) | seul l'accès aux données change ; deux méthodes divergeraient | un agent local à part | jamais |
 | Une base de questions par sujet, guides fixes compris | une question vit à un seul endroit ; chaque entretien, audit ou rendez-vous enrichit la même base au lieu de réinventer ses questions | une liste dans chaque compétence (guides, cadrage, modules par objectif, jusqu'au 28/10/2026) | jamais |
 
@@ -213,6 +220,11 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
   sur un compte rendu fictif. NON MESURÉ sur un vrai visiteur : si douze questions sont trop, si les réponses à cliquer
   orientent, si le plan se lit à côté de la conversation, combien vont jusqu'au récapitulatif. La consigne reprend toute
   la base : elle grossit avec elle, et `verifier` s'arrête à 60 000 caractères (au-delà, charger les sujets à la demande).
+- Premier essai de l'agent en ligne (28/10/2026, un faux visiteur, quinze tours) : cinq défauts relevés (douze questions
+  promises et quatorze posées ; un plan récrit sous les yeux du visiteur, fini tout vert ; un objectif jamais demandé ; deux
+  choses demandées dans un message ; une fin qui parle d'automatisation et d'agent). La version 0.8.2 y répond par cinq
+  règles écrites dans la méthode et dans la consigne, gardées par des essais. NON MESURÉ après correction : un second essai
+  dira si le modèle tient le compte, le plan et la fin.
 - Le `message` obligatoire de `afficher` et la fusion d'une question reprise sont éprouvés par les essais du script ; un
   entretien réel les a motivés (un texte perdu hors de l'outil, SC05 revenu deux fois), aucun second entretien ne les a
   encore mesurés.

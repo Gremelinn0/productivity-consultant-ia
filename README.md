@@ -105,11 +105,13 @@ Seul change ce que l'agent a pu lire ; les données lues restent chez l'entrepri
 et la transcription sort adresses et numéros retirés. Le consultant relit la note avant de s'en servir.
 
 Devant un visiteur que personne n'a rencontré, il n'y a ni consultant ni questionnaire préparé : **l'agent d'entretien en
-ligne** choisit lui-même ses questions, mais seulement dans la base de questions, douze au plus, jamais en dehors. La
-page commence par quelques questions à cliquer ; l'agent mène ensuite l'audit (ce qui prend du temps, ce qui coince, ce
-qui casserait si le volume doublait, ou le sujet de la page de cas d'usage), propose des réponses à cliquer, affiche son
-plan de 3 à 7 étapes à côté de la conversation, fait valider un récapitulatif, puis rend un compte rendu avec ses pistes.
-Il ne promet ni prix, ni volume, ni délai, ne conseille pas avant la fin, et ne demande ni mot de passe ni clé :
+ligne** choisit lui-même ses questions, mais seulement dans la base de questions, douze au plus (la question d'ouverture
+comprise), jamais en dehors. La page commence par quelques questions à cliquer ; l'agent mène ensuite l'audit (ce qui
+prend du temps, ce qui coince, ce qui casserait si le volume doublait, l'objectif, ou le sujet de la page de cas
+d'usage), propose des réponses à cliquer, affiche son plan de 3 à 7 étapes à côté de la conversation (un plan qui ne se
+récrit pas une fois affiché), fait valider un récapitulatif, puis rend un compte rendu avec ses pistes, dites comme un
+résultat pour la personne et jamais comme un moyen. Il ne promet ni prix, ni volume, ni délai, ne conseille pas avant la
+fin, et ne demande ni mot de passe ni clé :
 
 ```bash
 python skills/mener-entretien-ia/scripts/entretien.py consigne-en-ligne --sortie ligne.json

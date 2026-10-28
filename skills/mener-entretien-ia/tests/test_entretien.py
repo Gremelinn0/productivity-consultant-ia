@@ -781,6 +781,153 @@ class AgentEnLigneSurUneCopie(unittest.TestCase):
         self.assertTrue(any(e.startswith("consigne en ligne : ") and "plus que les 1 000" in e for e in ecarts), ecarts)
 
 
+# ---- les cinq défauts du premier essai en ligne (28/10/2026) : chaque règle qui y répond est écrite dans la méthode
+# (agent-en-ligne.md) ET dans la consigne (consigne-en-ligne.md), et dite pareil
+MOTS_DE_MOYEN = ("agent", "automatisation", "IA", "outil", "logiciel", "plateforme")   # jamais dits au visiteur à la fin
+AUDIT = "Un audit : deux réponses qui ne manquent jamais"
+_PLAN = ["ne change plus de nom et ne disparaît plus", "s'ajoutent, se retirent ou se renomment",
+         "seulement quand ce qu'elle annonce a été demandé", "ou que la personne l'avait déjà dit",
+         "toujours entre 3 et 7 étapes"]
+_UNE_CHOSE = ["un seul point d'interrogation", "répondent à cette question-là", "se pose en deux tours",
+              "combien de temps s'écoule-t-il, et qui intervient ?"]
+_AUDIT = [AUDIT.split(" : ")[1], "EQ14", "DI01", "chiffré si possible", "d'ici quand",
+          "passent avant les questions moins décisives"]
+_FIN = ["les pistes disent le résultat pour la personne", "ce qui serait trouvé, fait ou épargné pour elle",
+        "jamais le moyen", "la prochaine étape que la page propose"] + [f"« {mot} »" for mot in MOTS_DE_MOYEN]
+# règle -> (ce que la méthode écrit, ce que la consigne écrit une fois remplie), lus sans casse ni retour à la ligne.
+# La méthode dit « douze », la consigne « 12 » : un fragment commun ne porte pas le nombre.
+REGLES_DE_L_ESSAI = {
+    "douze questions, la question d'ouverture comprise": (
+        ["la question d'ouverture comprise", "en deux tours en compte deux", "est le récapitulatif, sans relance ni",
+         "« dernière question » ne se dit que si le tour suivant est le récapitulatif"],
+        ["la question d'ouverture comprise", "en deux tours en compte deux", "est le récapitulatif, sans relance ni",
+         "ne dis « dernière question » que si ton tour suivant est le récapitulatif", "la première des 12"]),
+    "un plan qui ne se récrit pas": (_PLAN, _PLAN),
+    "deux réponses d'un audit": (_AUDIT, _AUDIT),
+    "une seule chose par message": (_UNE_CHOSE, _UNE_CHOSE),
+    "une fin sans les moyens": (_FIN, _FIN),
+}
+
+
+def texte_normalise(chemin):
+    """Le texte d'un fichier sur une seule ligne : une phrase coupée par un retour à la ligne se lit entière."""
+    return " ".join(pathlib.Path(chemin).read_text(encoding="utf-8").split())
+
+
+def instructions_en_ligne():
+    """La consigne remplie sans l'index des sujets ni la liste des questions : ce qui s'adresse au modèle."""
+    return " ".join(entretien.consigne_en_ligne().split("## Les sujets de la base")[0].split())
+
+
+def regles_manquantes(methode, consigne):
+    """Les règles de l'essai du 28/10 dont un fragment manque dans la méthode ou dans la consigne."""
+    manquantes = []
+    for regle, (dans_methode, dans_consigne) in REGLES_DE_L_ESSAI.items():
+        if (any(f.lower() not in methode.lower() for f in dans_methode)
+                or any(f.lower() not in consigne.lower() for f in dans_consigne)):
+            manquantes.append(regle)
+    return manquantes
+
+
+def section(texte, titre):
+    """Une section « ## titre » du texte, jusqu'à la suivante."""
+    debut = texte.index(f"## {titre}")
+    fin = texte.find("\n## ", debut + 1)
+    return texte[debut:] if fin == -1 else texte[debut:fin]
+
+
+class ConsigneApresLEssaiEnLigne(unittest.TestCase):
+    """Le premier essai en ligne (28/10/2026, un faux visiteur, quinze tours) a relevé cinq défauts : douze questions
+    promises et quatorze posées, un plan qui change sous les yeux du visiteur, un objectif jamais demandé, deux choses
+    demandées dans un message, une fin qui parle d'automatisation et d'agent. Chaque règle est écrite dans la méthode
+    et dans la consigne ; retirer une règle de la consigne fait rougir l'essai qui la garde."""
+
+    METHODE = entretien.COMPETENCE / "references" / "agent-en-ligne.md"
+
+    def methode(self):
+        return texte_normalise(self.METHODE)
+
+    def test_aucune_regle_ne_manque_ni_dans_la_methode_ni_dans_la_consigne(self):
+        self.assertEqual(len(REGLES_DE_L_ESSAI), 5)   # une règle par défaut relevé
+        self.assertEqual(regles_manquantes(self.methode(), instructions_en_ligne()), [])
+
+    def test_sabotage_une_regle_retiree_de_la_consigne_fait_rougir_son_essai(self):
+        gabarit = entretien.CONSIGNE_EN_LIGNE.read_text(encoding="utf-8")
+        for cle, valeur in (("MAX", 12), ("PLAN_MIN", 3), ("PLAN_MAX", 7)):   # les nombres du code, remplis d'avance
+            gabarit = gabarit.replace("{{" + cle + "}}", str(valeur))
+        vrai = entretien.CONSIGNE_EN_LIGNE
+        with tempfile.TemporaryDirectory() as d:
+            copie = pathlib.Path(d) / "consigne-en-ligne.md"
+            try:
+                for regle, (_, dans_consigne) in REGLES_DE_L_ESSAI.items():
+                    texte = gabarit
+                    for fragment in dans_consigne:
+                        texte = re.sub(r"\s+".join(map(re.escape, fragment.split())), "", texte, flags=re.I)
+                    self.assertNotEqual(texte, gabarit, regle)
+                    copie.write_text(texte, encoding="utf-8")
+                    entretien.CONSIGNE_EN_LIGNE = copie
+                    self.assertEqual(regles_manquantes(self.methode(), instructions_en_ligne()), [regle], regle)
+            finally:
+                entretien.CONSIGNE_EN_LIGNE = vrai
+        self.assertEqual(regles_manquantes(self.methode(), instructions_en_ligne()), [])
+
+    def test_l_ouverture_promet_douze_questions_puis_un_recapitulatif_et_pose_la_premiere(self):
+        consigne = instructions_en_ligne()
+        self.assertIn("12 questions au plus, puis un court récapitulatif à valider", consigne)
+        self.assertIn("la première des 12", consigne)
+        self.assertIn("Compter : 12 questions, la question d'ouverture comprise", consigne)
+
+    def test_la_fin_liste_les_mots_de_moyen_sans_les_employer(self):
+        textes = (("méthode", self.METHODE.read_text(encoding="utf-8")), ("consigne", entretien.consigne_en_ligne()))
+        for nom, brut in textes:
+            fin = " ".join(section(brut, "La fin").split())
+            hors_citations = re.sub(r"« [^»]*»", "", fin)   # les mots ne se citent que pour être interdits
+            for racine in ("agent", "automati", "intelligence artificielle", "outil", "logiciel", "plateforme"):
+                self.assertNotIn(racine, hors_citations.lower(), f"{nom} : {racine}")
+            self.assertIsNone(re.search(r"\bIA\b", hors_citations), nom)
+            for mot in MOTS_DE_MOYEN:
+                self.assertIn(f"« {mot} »", fin, f"{nom} : {mot}")
+
+    def test_les_anciennes_phrases_ont_disparu(self):
+        textes = (("méthode", self.methode()), ("consigne", texte_normalise(entretien.CONSIGNE_EN_LIGNE)),
+                  ("schéma", texte_normalise(entretien.SCHEMA_EN_LIGNE)))
+        for ancien in ("la prochaine étape que la plateforme propose", "ce que la plateforme propose",
+                       "où une automatisation ou un agent pourrait aider", "toutes les étapes du plan à `fait`",
+                       "ajoute, retire ou renomme une étape quand la conversation",
+                       "en renomme quand la conversation prend un autre chemin",
+                       "Là où une automatisation ou un agent aiderait"):
+            for nom, texte in textes:
+                self.assertNotIn(ancien.lower(), texte.lower(), f"{nom} : {ancien}")
+
+    def test_les_deux_reponses_d_un_audit_sont_des_questions_de_la_base_qui_se_posent_a_la_personne(self):
+        actives = entretien.questions_en_ligne()
+        methode = section(self.METHODE.read_text(encoding="utf-8"), AUDIT)
+        consigne = section(entretien.consigne_en_ligne(), AUDIT)
+        for nom, texte in (("méthode", methode), ("consigne", consigne)):
+            self.assertEqual(set(re.findall(r"\b[A-Z]{2,4}\d{2,3}\b", texte)), {"EQ14", "DI01"}, nom)
+        volume, objectif = actives["EQ14"], actives["DI01"]
+        for q in (volume, objectif):
+            self.assertEqual(q["dabord"], "la personne", q["id"])   # un visiteur ne lit ni un outil ni un document
+            self.assertIn(f"« {q['partie']} »", " ".join(methode.split()), q["id"])
+        self.assertTrue(all(m in volume["question"] for m in ("volume", "doublait")), volume["question"])
+        self.assertTrue(all(m in objectif["question"] for m in ("résultats", "chiffrés", "d'ici quand")),
+                        objectif["question"])
+        for guide in ("equipes", "court"):   # un sujet qui s'enrichit ne rallonge pas son guide fixe
+            self.assertNotIn("EQ14", [q["base"] for q in entretien.questionnaire(guide)["questions"]], guide)
+
+    def test_le_schema_du_compte_rendu_parle_de_la_page_et_du_resultat(self):
+        p = entretien.schema_en_ligne()["properties"]
+        self.assertIn("Ce que la page propose", p["prochaine_etape"]["description"])
+        self.assertIn("jamais le moyen", p["pistes"]["description"])
+        for mot in MOTS_DE_MOYEN:
+            self.assertIn(f"« {mot} »", p["pistes"]["description"], mot)
+
+    def test_le_compte_rendu_fictif_donne_l_exemple_de_pistes_en_resultats(self):
+        for p in CR_EN_LIGNE["pistes"]:
+            for mot in MOTS_DE_MOYEN:
+                self.assertIsNone(re.search(rf"\b{mot}s?\b", p["piste"], re.I), p["piste"])
+
+
 class NoteDeLAgentEnLigne(unittest.TestCase):
     """Le compte rendu de l'agent en ligne donne une note de même structure que les autres, avec ses pistes ; le contrôle
     refuse ce qui enfreint la méthode : une question hors base, trop de réponses, une adresse, un prix."""
@@ -810,7 +957,7 @@ class NoteDeLAgentEnLigne(unittest.TestCase):
         self.assertIn("> « I want an agent that answers my customers, I spend my evenings on emails. »", note)
         self.assertIn("Contexte : métier : boutique en ligne ; taille : 8 personnes ; outils : boîte de réception, "
                       "tableur, outil de boutique en ligne.", note)
-        self.assertIn("→ piste : Un agent pourrait préparer les réponses de suivi de commande", note)
+        self.assertIn("→ piste : Les réponses de suivi de commande pourraient l'attendre le matin, prêtes à relire", note)
         self.assertIn("Prochaine étape : À définir avec le consultant.", note)
         self.assertIn("- Combien coûterait un agent", note)
         self.assertIn("- Les clients professionnels ont-ils un interlocuteur à part ?", note)

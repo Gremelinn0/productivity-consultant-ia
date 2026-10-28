@@ -25,6 +25,7 @@ repérer des candidats, pas de quoi les mesurer.
 | # | Question | Ce qu'elle décide | D'abord |
 |---|---|---|---|
 | EQ03 | La dernière fois, combien de temps cela a-t-il pris pour une unité (une relance, un ticket) ? Combien d'unités par mois ? À quelle fréquence ? Pouvez-vous me montrer un exemple récent ? | Colonnes de `01` : Durée par occurrence, Volume par mois, Fréquence, avec leur statut | la personne |
+| EQ14 | Si le volume doublait demain, qu'est-ce qui ne tiendrait plus en premier ? | Le point de rupture à plus grand volume, donc où alléger en premier | la personne |
 
 ## 4. Outils et données
 
