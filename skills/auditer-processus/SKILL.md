@@ -14,7 +14,7 @@ description: >-
 metadata:
   scope: "un processus nommé et cadré, de la description de l'existant au diagnostic, avant tout choix de solution"
   owns: "le diagnostic : carte du processus actuel, mesures, goulets, causes, test de stabilité, tri par étape en cinq issues, simplifications à faire d'abord, opportunités classées"
-  consumes: "mission/cas-<slug>/10-besoin.md ; mission/sources/ ; la fiche du cas dans mission/02-portefeuille.md et ses lignes de 01-cartographie-taches.md ; les réponses des personnes qui font le travail"
+  consumes: "mission/cas-<slug>/10-besoin.md ; mission/sources/ ; la fiche du cas dans mission/02-portefeuille.md et ses lignes de 01-cartographie-taches.md ; les traces que gardent les outils du processus (boîte de support, tickets, CRM, commandes), lues en lecture seule ; les réponses des personnes qui font le travail"
 ---
 
 # Auditer le processus
@@ -42,9 +42,11 @@ d'abord.
 
 ## Stratégie
 
-1. **Observer plutôt que se faire raconter.** L'enregistrement d'une personne qui fait la tâche (vidéo ou partage
-   d'écran, avec son accord) montre ce qu'on omet par habitude : contrôles informels, copier-coller, fichiers « à
-   côté ». Ces contournements sont l'information ; aucune procédure écrite ne les contient.
+1. **Observer plutôt que se faire raconter.** Ce que l'outil garde du travail (messages reçus et envoyés, tickets,
+   commandes) se lit soi-même, en lecture seule, avant tout entretien : on ne fait pas compter de mémoire ce que
+   l'outil montre. L'enregistrement d'une personne qui fait la tâche (vidéo ou partage d'écran, avec son accord)
+   montre ce qu'on omet par habitude : contrôles informels, copier-coller, fichiers « à côté ». Ces contournements
+   sont l'information ; aucune procédure écrite ne les contient.
 2. **Mesurer avant de changer.** Sans point de départ, aucun gain ne se démontre. Chaque nombre porte son statut :
    `[F]` fait (relevé, pièce, observation, règle énoncée par son détenteur), `[H]` hypothèse (avec qui la confirme),
    `[E]` estimation (calcul montré) ; définitions dans `ARCHITECTURE.md`. Ce qui n'est pas mesuré se dit, avec le moyen
@@ -64,11 +66,19 @@ d'abord.
 1. **Lire ce qui existe** : `10-besoin.md` (périmètre, critères de succès, mesures de départ connues),
    `mission/sources/` et, si le cas vient de la porte découverte, sa fiche dans `02-portefeuille.md` et ses lignes
    de `01-cartographie-taches.md`. Ne pas redemander ce qui s'y trouve.
-2. **Choisir la source de la description**, par ordre de préférence : l'enregistrement d'une personne qui fait
-   réellement la tâche (transcription déposée dans `mission/sources/`, protocole dans `decouvrir-cas-usage`) ; un
-   entretien sur la dernière occurrence réelle (« la dernière fois que… ») ; une procédure écrite, notée `[H]`
-   « théorique » tant qu'elle n'est pas confrontée au réel. Observer deux personnes quand c'est possible : leurs
-   écarts nourrissent le test de stabilité.
+2. **Lire les traces de l'outil, puis choisir la source de la description.** Si le processus passe par un outil
+   lisible (accès en lecture accordé au consultant, ou session de l'entreprise en local), relever soi-même, en
+   lecture seule et sur une période nommée (trois mois par défaut) : volume, canaux, types de demandes avec un
+   exemple chacun, réponses envoyées, délais ; et écrire ce qui n'arrive pas dans l'outil (une adresse non
+   reliée, le téléphone), car l'entretien devra le chercher. Cette lecture précède tout entretien, y compris
+   celui de l'objectif (`cadrer-besoin`, étape 3 ; `mener-entretien-ia`) : l'entretien confirme ce qu'elle
+   établit et complète le reste, il ne fait pas ressaisir ce qu'on peut lire. Les données brutes (noms,
+   adresses, textes) restent hors des livrables : des comptes, et des exemples sans nom. Pour décrire le travail
+   lui-même, par ordre de préférence : l'enregistrement d'une personne qui fait réellement la tâche
+   (transcription déposée dans `mission/sources/`, protocole dans `decouvrir-cas-usage`) ; un entretien sur la
+   dernière occurrence réelle (« la dernière fois que… ») ; une procédure écrite, notée `[H]` « théorique » tant
+   qu'elle n'est pas confrontée au réel. Observer deux personnes quand c'est possible : leurs écarts nourrissent
+   le test de stabilité.
 3. **Décrire le processus** : étapes (un verbe, un objet), rôle, outil, entrées et sorties, passages de main,
    attentes, points de décision, exceptions (et la conduite à tenir quand elles arrivent), variantes (ce qui
    change d'une personne, d'un client ou d'un cas à l'autre), étapes hors périmètre comprises. Ajouter un schéma Mermaid si le flux
@@ -77,9 +87,10 @@ d'abord.
 4. **Mesurer** : volume, fréquence, temps par étape, délai total comparé au temps de travail effectif, taux d'erreur
    ou de reprise (part des occurrences qui reviennent à une étape précédente), temps d'attente. Séparer cas simples
    et cas complexes : une moyenne cache la variabilité. Une durée chronométrée sur une seule occurrence est `[F]`
-   pour cette occurrence et `[H]` comme durée typique ; une ligne par mesure et par statut. Si rien n'est mesuré,
-   écrire comment le faire — chronométrer un échantillon d'occurrences, compter pendant une semaine, demander un
-   export. Cette mesure de départ précède tout changement.
+   pour cette occurrence et `[H]` comme durée typique ; une ligne par mesure et par statut. Un compte tiré des
+   traces de l'outil (étape 2) est `[F]` pour ce qui passe par l'outil, pas pour tout le service : l'écrire avec
+   le canal qui manque. Si rien n'est mesuré, écrire comment le faire : chronométrer un échantillon d'occurrences,
+   compter pendant une semaine, demander un export. Cette mesure de départ précède tout changement.
 5. **Repérer goulets et gaspillages** : ressaisie, copier-coller entre outils, attente de validation, contrôles en
    double, recherche d'information, rapports manuels, exceptions traitées au cas par cas. Les situer sur une étape
    et leur donner un coût `[E]` quand les mesures le permettent. Un délai fait d'attente ne se réduit pas en
@@ -172,6 +183,7 @@ Ligne de journal, au moment où le demandeur tranche :
 | Décision | Pourquoi | Option écartée | Se rouvre si |
 |---|---|---|---|
 | Observer d'abord, interroger ensuite | un processus décrit de mémoire est la version théorique ; les contournements n'apparaissent qu'à l'écran | un questionnaire adressé au responsable | personne ne peut être enregistré ou le cas est trop rare : entretien sur la dernière occurrence, nombres en `[H]` |
+| Lire soi-même les traces de l'outil avant tout entretien | ce que l'outil garde est un relevé `[F]` ; le faire raconter coûte le temps de la personne et rend une estimation | demander à la personne de compter, ou de passer ses messages un par un en rendez-vous | aucun accès en lecture n'est accordé : export demandé, ou derniers cas passés avec la personne, nombres en `[H]` |
 | Mesure de départ avant toute recommandation | sans point de départ, aucun gain ne se démontre | estimer d'abord, mesurer plus tard | le processus est trop rare pour un échantillon : estimation assumée, marquée `[H]` |
 | Test de stabilité avant tout « Automatiser » ; sinon « Simplifier d'abord » | automatiser un processus instable fige le chaos et coûte en maintenance | automatiser puis corriger ; ranger une étape mécanique instable dans « Garder » | l'entreprise impose l'automatisation : le risque est écrit dans le diagnostic, la décision est la sienne |
 | Causes classées par nature (processus, organisation, donnée, outil) | la nature dicte qui peut agir ; un problème de donnée ne se règle pas par un outil | une liste plate de problèmes | jamais |
@@ -195,6 +207,9 @@ Ligne de journal, au moment où le demandeur tranche :
 
 - Éprouvée sur la mission fictive du 12/10/2026 (`examples/`), qui a relevé 94 frictions ; celles qui touchent le
   diagnostic sont corrigées ici.
+- Lecture des traces éprouvée le 28/10/2026 avant un entretien réel (service client d'une boutique en ligne) :
+  trois mois de boîte de réception et de tickets, lus en lecture seule, ont montré environ une demande par semaine
+  et aucun email reçu dans l'outil ; les questions de l'entretien ont été réécrites sur ce qui n'y arrive pas.
 - NON MESURÉ sur une mission réelle : le premier cas réel dira si le diagnostic reste lisible quand le processus
   compte beaucoup d'étapes, si le test de stabilité à quatre questions suffit et si les neuf rubriques sont toutes
   utiles.

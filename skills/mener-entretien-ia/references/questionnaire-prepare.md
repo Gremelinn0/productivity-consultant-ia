@@ -10,8 +10,11 @@ modèle.
 1. **L'objectif en une phrase**, à l'infinitif et dans les mots du client : « mettre en place un agent qui
    réponde aux demandes des clients de la boutique ». Toutes les questions le servent.
 2. **Lire tout ce qui est accessible, en lecture seule** : la demande, les notes de `mission/sources/`, les
-   échanges, le site de l'entreprise. En local (la session de l'entreprise, le pack installé), aussi ses
-   dossiers, exports et outils déjà branchés : la boîte de support, le CRM, le back-office. Noter ce qu'on a lu.
+   échanges, le site de l'entreprise. Si l'outil du processus est lisible (accès accordé au consultant, ou en
+   local la session de l'entreprise avec ses dossiers, exports et outils branchés : la boîte de support, le CRM,
+   le back-office), relever d'abord ses traces comme le fait `auditer-processus` (étape 2) : volume, canaux,
+   types, réponses, et ce qui n'arrive pas dans l'outil. Ce relevé passe en « Déjà établi » ; les questions ne
+   portent plus que sur ce qu'il ne montre pas. Noter ce qu'on a lu.
 3. **Prendre les questions candidates** : les huit de `cadrer-besoin` (étape 3), puis le module de l'objectif
    dans `cadrer-besoin/references/questions-par-objectif.md`, puis, si le processus est déjà nommé, les huit
    d'`auditer-processus` (étape 9).

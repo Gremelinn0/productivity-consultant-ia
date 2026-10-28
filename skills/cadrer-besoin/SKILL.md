@@ -81,7 +81,8 @@ quelle décision la suite de la mission doit permettre.
 
    **L'entretien de l'objectif.** Quand l'objectif relève d'un domaine (service client, prospection, CRM,
    données, reporting, contenu, transmission), on prépare l'entretien avec les questions qui manquent du module
-   de `references/questions-par-objectif.md`, un seul module, réécrites dans les mots de la personne. Mené par
+   de `references/questions-par-objectif.md`, un seul module, réécrites dans les mots de la personne, après avoir
+   lu soi-même les traces de l'outil quand il est lisible (`auditer-processus`, étape 2). Mené par
    écrit par une IA, en ligne ou dans la session de l'entreprise, c'est `mener-entretien-ia` (questionnaire
    préparé) ; sa note entre dans `mission/sources/` comme celle d'un entretien en direct.
 4. **Si une réponse manque**, écrire l'hypothèse provisoire, la marquer `[H]` avec la personne qui

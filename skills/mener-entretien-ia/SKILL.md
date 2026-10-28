@@ -71,8 +71,10 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    mesurer). Les guides `besoin` (les huit questions de `cadrer-besoin`) et `processus` (les huit
    d'`auditer-processus`) servent quand rien n'a pu être lu avant. Un questionnaire par entretien et par rôle.
 2. **Préparer le questionnaire de l'objectif** : c'est ce qui fait la valeur de l'entretien. Lire tout ce qui est
-   accessible (la demande, `mission/sources/`, le site, et en local les dossiers et outils de l'entreprise),
-   prendre les huit questions du cadrage et le module de l'objectif (`cadrer-besoin/references/questions-par-objectif.md`),
+   accessible (la demande, `mission/sources/`, le site, et en local les dossiers et outils de l'entreprise), en
+   commençant par les traces de l'outil du processus quand un accès en lecture existe (`auditer-processus`,
+   étape 2) : l'entretien confirme ce qu'elles montrent et cherche le reste, il ne fait pas ressaisir ce qu'on
+   peut lire. Prendre les huit questions du cadrage et le module de l'objectif (`cadrer-besoin/references/questions-par-objectif.md`),
    puis trancher chacune : réponse sûre → elle ne se pose pas (« Déjà établi ») ; incertaine → elle se fait
    confirmer (« Déjà su ») ; absente → elle se pose, dans les mots de la personne. Douze au plus. Le fichier
    `mission/sources/questionnaire-<objet>-<date>.md` suit `references/questionnaire-prepare.md` et se fait
