@@ -8,35 +8,81 @@ une question corrigée ici l'est partout.
 
 ## Les sujets
 
-Le nom d'un sujet est le titre de son fichier ; le préfixe ouvre le numéro de chacune de ses questions.
+Le nom d'un sujet est le titre de son fichier ; le préfixe ouvre le numéro de chacune de ses questions. Deux
+familles, chacune en petits groupes : les étapes d'une mission valent pour toute demande, dans l'ordre où on les
+traverse ; ce que veut le client se choisit selon l'objectif de la demande.
 
-### Pour toute demande, dans l'ordre d'une mission
+### Les étapes d'une mission
+
+#### Premier contact
 
 | Sujet | Préfixe | Quand l'ouvrir |
 |---|---|---|
 | [Le premier échange avec un prospect](premier-echange.md) | PE | Avant toute mission : une entreprise qui n'a encore rien demandé, ou qui vient de se manifester |
+
+#### Découvrir
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
 | [La découverte avec la direction](decouverte-direction.md) | DI | Aucun besoin nommé : où l'IA peut aider, vu par la direction |
 | [La découverte avec les équipes](decouverte-equipes.md) | EQ | Aucun besoin nommé : le travail réel des équipes, tâche par tâche |
+
+#### Cadrer
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
 | [Le cadrage d'un besoin](cadrage.md) | CA | Toute demande : le résultat attendu, le périmètre, qui décide, le budget, la date, les contraintes |
 | [Les outils, les comptes et les accès](outils-et-acces.md) | OA | Toute mission : ce qui est en place, qui paie, quels accès, la confidentialité |
+
+#### Analyser et chiffrer
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
 | [L'automatisation d'un processus](processus.md) | AP | Avant d'automatiser un processus ou d'y confier une étape à l'IA |
 | [La valeur et la rentabilité](rentabilite.md) | RT | Chiffrer ce que le projet rapporte, et ce qu'il demande aux équipes |
+
+#### Mettre en service et suivre
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
 | [L'essai et la mise en service](essai-et-mise-en-service.md) | ES | Avant un essai ou une mise en service : le pré-mortem, le pilote, toucher à ce qui tourne |
 | [La transmission et l'adoption](transmission.md) | TR | Faire vivre le dispositif sans le consultant |
 | [L'accueil, le suivi et le bilan d'une mission](suivi-de-mission.md) | SM | Une fois la mission signée : la facturation, le suivi, la décision de fin |
 
-### Par objectif
+### Ce que veut le client
+
+#### Trouver des clients
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
+| [Le ciblage, qui viser et comment le repérer](ciblage.md) | CI | Avant toute prospection : les meilleurs clients, la cible, les décideurs, les signaux, les exclusions |
+| [La prospection et l'acquisition](prospection.md) | PR | Trouver de nouveaux clients : les canaux, les comptes, les messages, l'essai |
+
+#### Suivre ses contacts et ses ventes
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
+| [Le CRM et le suivi commercial](crm.md) | CR | Le CRM et le suivi commercial |
+| [L'emailing et les relances automatiques](emailing.md) | EM | Les emails aux contacts et aux clients, les relances après un achat raté |
+
+#### Servir ses clients
 
 | Sujet | Préfixe | Quand l'ouvrir |
 |---|---|---|
 | [Support client et agent du service client](support-client.md) | SC | Le service client, ou un agent qui répond aux clients |
 | [L'accueil des nouveaux clients](accueil-des-clients.md) | AC | Accueillir les nouveaux clients de l'entreprise |
-| [Le ciblage, qui viser et comment le repérer](ciblage.md) | CI | Avant toute prospection : les meilleurs clients, la cible, les décideurs, les signaux, les exclusions |
-| [La prospection et l'acquisition](prospection.md) | PR | Trouver de nouveaux clients : les canaux, les comptes, les messages, l'essai |
-| [Le CRM et le suivi commercial](crm.md) | CR | Le CRM et le suivi commercial |
+
+#### Ses données et ses chiffres
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
 | [Les données, l'enrichissement et la segmentation](donnees.md) | DO | La qualité des données, l'enrichissement, la segmentation |
-| [L'emailing et les relances automatiques](emailing.md) | EM | Les emails aux contacts et aux clients, les relances après un achat raté |
 | [Le reporting et les indicateurs](reporting.md) | RE | Les indicateurs, les tableaux de bord, un écart à expliquer |
+
+#### Produire du contenu
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
 | [Le contenu](contenu.md) | CO | Produire du contenu avec l'IA |
 
 ## Se servir de la base
@@ -77,8 +123,10 @@ entretien guidé le propose déjà (« Pour la base de questions »).
 range la question : il refuse celle qui est déjà dans la base (accents, casse et ponctuation mis à part), donne le
 numéro suivant et place la ligne à la fin de la partie. Un sujet qui manque s'ouvre avec la question qui le fait
 naître : `entretien.py creer-sujet --sujet <nom> --prefixe XX --titre "…" --quand "…" --partie "…" --question "…"
---decide "…"`, qui l'inscrit dans le tableau ci-dessus. Finance, ressources humaines, juridique : pas de sujet tant
-qu'aucune question n'y a servi ; le cadrage et l'automatisation d'un processus suffisent.
+--decide "…" [--groupe "…"]`, qui l'inscrit dans l'index des sujets ci-dessus, à la fin du groupe que nomme
+`--groupe` (par défaut le dernier groupe de « Ce que veut le client »). Un groupe qui n'existe pas est refusé, sauf
+avec `--creer-groupe`, qui l'ouvre à la fin de cette famille. Finance, ressources humaines, juridique : pas de sujet
+tant qu'aucune question n'y a servi ; le cadrage et l'automatisation d'un processus suffisent.
 
 ## Ce qui n'est pas dans la base
 
@@ -107,5 +155,6 @@ ici ce qu'elles ajoutent ; chacune le rappelle en tête de son `SKILL.md`.
 - `rediger-cahier-des-charges` : ce que le cahier des charges ne sait pas encore (`cadrage`, `processus`).
 
 `python skills/mener-entretien-ia/scripts/entretien.py verifier` contrôle la base : un préfixe par sujet, aucune
-question en double dans toute la base, une décision et un « D'abord » à chaque ligne, ce tableau à jour, et le
-rappel en tête de chaque compétence citée ci-dessus. `scripts/verifier_pack.py` le lance aussi.
+question en double dans toute la base, une décision et un « D'abord » à chaque ligne, l'index des sujets à jour
+(chaque sujet une seule fois, rangé dans un groupe d'une famille), et le rappel en tête de chaque compétence citée
+ci-dessus. `scripts/verifier_pack.py` le lance aussi.

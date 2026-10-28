@@ -1,7 +1,10 @@
 """Essais de scripts/entretien.py : python -m unittest discover -s skills/mener-entretien-ia/tests"""
+import contextlib
 import copy
+import io
 import json
 import pathlib
+import re
 import shutil
 import sys
 import tempfile
@@ -360,6 +363,132 @@ class UneSeuleMaison(unittest.TestCase):
         with self.assertRaises(entretien.Erreur):
             entretien.creer_sujet("factures", "FA", "les factures", "…", "…", "Une autre question ?", "Rien",
                                   dossier=self.base)
+
+    # ---- l'index des sujets : deux familles, chacune en groupes nommés (28/10/2026)
+    RANGEMENT = [
+        ("Les étapes d'une mission", [
+            ("Premier contact", ["premier-echange"]),
+            ("Découvrir", ["decouverte-direction", "decouverte-equipes"]),
+            ("Cadrer", ["cadrage", "outils-et-acces"]),
+            ("Analyser et chiffrer", ["processus", "rentabilite"]),
+            ("Mettre en service et suivre", ["essai-et-mise-en-service", "transmission", "suivi-de-mission"]),
+        ]),
+        ("Ce que veut le client", [
+            ("Trouver des clients", ["ciblage", "prospection"]),
+            ("Suivre ses contacts et ses ventes", ["crm", "emailing"]),
+            ("Servir ses clients", ["support-client", "accueil-des-clients"]),
+            ("Ses données et ses chiffres", ["donnees", "reporting"]),
+            ("Produire du contenu", ["contenu"]),
+        ]),
+    ]
+
+    def creer(self, sujet="facturation", prefixe="FA", **options):
+        return entretien.creer_sujet(sujet, prefixe, "la " + sujet, "Quand le sujet se pose", "Ce qui se fait",
+                                     f"Combien de {sujet} partent chaque mois, et par quel outil ?",
+                                     "Le volume et l'outil de départ", "l'outil", dossier=self.base, **options)
+
+    def groupes(self, famille):
+        return dict(dict(entretien.rangement(self.base))[famille])
+
+    def test_l_index_range_les_dix_neuf_sujets_en_deux_familles_et_dix_groupes(self):
+        self.assertEqual(entretien.rangement(), self.RANGEMENT)
+        self.assertEqual(entretien.rangement(self.base), self.RANGEMENT)
+        inscrits = sorted(s for _, groupes in entretien.rangement() for _, sujets in groupes for s in sujets)
+        self.assertEqual(inscrits, entretien.sujets())
+        self.assertEqual((len(self.RANGEMENT), sum(len(g) for _, g in self.RANGEMENT), len(inscrits)), (2, 10, 19))
+
+    def test_sabotage_un_sujet_hors_de_tout_groupe(self):
+        self.remplacer("README.md", "#### Premier contact\n\n", "")
+        self.assertIn("README : le sujet premier-echange n'est pas rangé dans un groupe (#### …) d'une famille (### …)",
+                      self.ecarts())
+
+    def test_sabotage_une_ligne_de_sujet_posee_hors_de_l_index(self):
+        self.remplacer("README.md", "## Se servir de la base\n",
+                       "## Se servir de la base\n\n| [Le contenu](contenu.md) | CO | Un second rangement |\n")
+        ecarts = self.ecarts()
+        self.assertIn("README : le sujet contenu est listé deux fois", ecarts)
+        self.assertIn("README : le sujet contenu n'est pas rangé dans un groupe (#### …) d'une famille (### …)", ecarts)
+
+    def test_sabotage_un_groupe_sans_sujet(self):
+        self.remplacer("README.md", "| [Le contenu](contenu.md) | CO | Produire du contenu avec l'IA |\n", "")
+        ecarts = self.ecarts()
+        self.assertIn("README : le groupe « Produire du contenu » n'a aucun sujet", ecarts)
+        self.assertIn("contenu.md : absent du tableau des sujets du README", ecarts)
+
+    def test_sabotage_une_famille_sans_groupe(self):
+        self.remplacer("README.md", "## Se servir de la base\n", "### Une famille vide\n\n## Se servir de la base\n")
+        self.assertIn("README : la famille « Une famille vide » n'a aucun groupe", self.ecarts())
+
+    def test_sabotage_un_sujet_deux_fois_dans_l_index(self):
+        ligne = "| [Le contenu](contenu.md) | CO | Produire du contenu avec l'IA |\n"
+        self.remplacer("README.md", ligne, ligne + ligne)
+        self.assertIn("README : le sujet contenu est listé deux fois", self.ecarts())
+
+    def test_sabotage_deux_groupes_de_meme_nom(self):
+        self.remplacer("README.md", "#### Cadrer\n", "#### DÉCOUVRIR\n")
+        self.assertIn("README : deux groupes s'appellent « DÉCOUVRIR »", self.ecarts())
+
+    def test_creer_sujet_sans_groupe_va_au_dernier_groupe_de_ce_que_veut_le_client(self):
+        self.creer()
+        self.assertEqual(entretien.rangement(self.base)[1][1][-1], ("Produire du contenu", ["contenu", "facturation"]))
+        self.assertEqual(entretien.rangement(self.base)[0], self.RANGEMENT[0])
+        self.assertEqual(self.ecarts(), [])
+
+    def test_creer_sujet_dans_le_groupe_nomme_sans_se_soucier_de_la_casse_ni_des_accents(self):
+        self.creer(groupe="SERVIR SES CLIENTS")
+        self.assertEqual(self.groupes("Ce que veut le client")["Servir ses clients"],
+                         ["support-client", "accueil-des-clients", "facturation"])
+        self.assertEqual(self.groupes("Ce que veut le client")["Produire du contenu"], ["contenu"])
+        self.creer("avenants", "AV", groupe="Cadrer")  # un groupe de l'autre famille
+        self.assertEqual(self.groupes("Les étapes d'une mission")["Cadrer"],
+                         ["cadrage", "outils-et-acces", "avenants"])
+        self.assertEqual(self.ecarts(), [])
+
+    def test_un_groupe_inconnu_est_refuse_sans_rien_ecrire_sauf_avec_creer_groupe(self):
+        avant = (self.base / "README.md").read_text(encoding="utf-8")
+        with self.assertRaises(entretien.Erreur) as e:
+            self.creer(groupe="Facturer et encaisser")
+        self.assertIn("--creer-groupe", str(e.exception))
+        self.assertIn("Servir ses clients", str(e.exception))  # les groupes connus aident à choisir
+        self.assertEqual((self.base / "README.md").read_text(encoding="utf-8"), avant)
+        self.assertFalse((self.base / "facturation.md").exists())
+        self.creer(groupe="Facturer et encaisser", creer_groupe=True)
+        self.assertEqual(entretien.rangement(self.base)[1][1][-1], ("Facturer et encaisser", ["facturation"]))
+        self.assertEqual(len(entretien.rangement(self.base)[1][1]), 6)
+        self.assertEqual(entretien.rangement(self.base)[0], self.RANGEMENT[0])
+        self.assertEqual(self.ecarts(), [])
+
+    def test_un_nom_de_groupe_vide_ou_malforme_est_refuse(self):
+        for nom in ("", "   ", "Facturer \u2014 encaisser", "Factures | relances"):
+            with self.assertRaises(entretien.Erreur, msg=repr(nom)):
+                self.creer(groupe=nom, creer_groupe=True)
+        self.assertFalse((self.base / "facturation.md").exists())
+
+    def test_un_index_sans_groupes_recoit_le_sujet_a_la_suite_du_dernier(self):
+        f = self.base / "README.md"
+        f.write_text(re.sub(r"^#{3,4} .*\n", "", f.read_text(encoding="utf-8"), flags=re.M), encoding="utf-8")
+        self.creer()
+        rangees = [l for l in f.read_text(encoding="utf-8").splitlines() if l.startswith("| [")]
+        self.assertTrue(rangees[-1].startswith("| [La facturation](facturation.md) | FA |"), rangees[-1])
+        with self.assertRaises(entretien.Erreur):
+            self.creer("avenants", "AV", groupe="Cadrer")
+
+    def test_la_ligne_de_commande_nomme_le_groupe(self):
+        vrai = entretien.BASE
+        entretien.BASE = self.base
+        sortie, erreur = io.StringIO(), io.StringIO()
+        base = ["creer-sujet", "--sujet", "facturation", "--prefixe", "FA", "--titre", "la facturation", "--quand",
+                "Les factures", "--partie", "Aujourd'hui", "--question", "Combien de factures partent chaque mois ?",
+                "--decide", "Le volume"]
+        try:
+            with contextlib.redirect_stdout(sortie), contextlib.redirect_stderr(erreur):
+                inconnu = entretien.main(base + ["--groupe", "Facturer"])
+                code = entretien.main(base + ["--groupe", "Facturer", "--creer-groupe"])
+        finally:
+            entretien.BASE = vrai
+        self.assertEqual((inconnu, code), (1, 0), erreur.getvalue())
+        self.assertIn("--creer-groupe", erreur.getvalue())
+        self.assertEqual(entretien.rangement(self.base)[1][1][-1], ("Facturer", ["facturation"]))
 
 
 if __name__ == "__main__":

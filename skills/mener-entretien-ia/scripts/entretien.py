@@ -9,15 +9,17 @@ Usage :
                                [--garder SC02,SC05,…] --sortie mission/sources/questionnaire-<objet>-<date>.md
   python entretien.py ajouter --sujet support-client --partie 4 --question "…" --decide "…" [--dabord "la personne"]
   python entretien.py creer-sujet --sujet facturation --prefixe FA --titre "la facturation" --quand "…" --partie "…"
+                                  --question "…" --decide "…" [--groupe "Servir ses clients" [--creer-groupe]]
   python entretien.py verifier
   python entretien.py schema
   python entretien.py note --compte-rendu cr.json [--questionnaire …] [--transcription messages.json] --sortie mission/sources
 
 Les questions ne sont écrites qu'à un endroit, la base de questions : `references/base-questions/<sujet>.md`, un
-fichier par sujet, indexé par `references/base-questions/README.md`. Les guides fixes (direction, équipes, version
-courte, besoin, processus) en sont des blocs : ce script les lit là et n'en garde aucune copie. `preparer` tire de
-la base le brouillon d'un questionnaire ; `ajouter` y range une question nouvelle, `creer-sujet` un sujet qui
-manque ; `verifier` contrôle la base et rend 1 au moindre écart. Un questionnaire préparé pour un objectif (guide
+fichier par sujet, indexé par `references/base-questions/README.md` (deux familles de sujets, chacune en groupes).
+Les guides fixes (direction, équipes, version courte, besoin, processus) en sont des blocs : ce script les lit là et
+n'en garde aucune copie. `preparer` tire de la base le brouillon d'un questionnaire ; `ajouter` y range une question
+nouvelle, `creer-sujet` un sujet qui manque, au groupe voulu de l'index ; `verifier` contrôle la base et rend 1 au
+moindre écart. Un questionnaire préparé pour un objectif (guide
 `prepare`) est un fichier de la mission, au modèle de `references/questionnaire-prepare.md`, validé avant
 l'entretien. `note` refuse un compte rendu qui enfreint les règles du pack (statuts, données personnelles) et rend 1.
 """
@@ -104,18 +106,95 @@ def _empreinte(question):
     return " ".join(re.findall(r"[a-z0-9]+", t))
 
 
-def _index(dossier=None):
-    """Le tableau des sujets du README : {sujet: (préfixe, nom)}, et les compétences qui partent de la base."""
-    dossier = pathlib.Path(dossier or BASE)
-    chemin = pathlib.Path(dossier) / "README.md"
+RANGEE_SUJET = re.compile(r"^\| \[([^\]]+)\]\(([a-z0-9-]+)\.md\) \| ([A-Z]{2,4}) \|")
+# L'index du README range les sujets en deux niveaux sous « ## Les sujets » : des familles (`### …`) qui portent des
+# groupes (`#### …`), un tableau de sujets par groupe. Un sujet neuf va, par défaut, au dernier groupe de la famille
+# « Ce que veut le client ».
+FAMILLE_PAR_DEFAUT = "Ce que veut le client"
+ENTETE_INDEX = ["| Sujet | Préfixe | Quand l'ouvrir |", "|---|---|---|"]
+
+
+def _plan(lignes):
+    """Où sont rangés les sujets dans le README (la liste de ses lignes). Rend {"familles", "groupes", "sujets"} : une
+    famille {titre, rang, groupes}, un groupe {titre, famille, rang, sujets, dernier} (`dernier` : le rang de sa
+    dernière ligne de sujet, None s'il n'en a pas), un sujet {sujet, prefixe, nom, rang, famille, groupe} (famille et
+    groupe valent None pour une ligne posée hors de l'index). `rang` : le numéro de la ligne, depuis 0."""
+    familles, groupes, sujets = [], [], []
+    famille = groupe = None
+    dans = False
+    for rang, ligne in enumerate(lignes):
+        t = ligne.strip()
+        if t.startswith("## "):
+            dans, famille, groupe = t.startswith("## Les sujets"), None, None
+        elif dans and t.startswith("### "):
+            famille = {"titre": t[4:].strip(), "rang": rang, "groupes": []}
+            familles.append(famille)
+            groupe = None
+        elif dans and t.startswith("#### "):
+            groupe = {"titre": t[5:].strip(), "famille": famille, "rang": rang, "sujets": [], "dernier": None}
+            groupes.append(groupe)
+            if famille:
+                famille["groupes"].append(groupe)
+        else:
+            m = RANGEE_SUJET.match(t)
+            if m:
+                s = {"sujet": m.group(2), "prefixe": m.group(3), "nom": m.group(1), "rang": rang,
+                     "famille": famille, "groupe": groupe}
+                sujets.append(s)
+                if groupe:
+                    groupe["sujets"].append(s)
+                    groupe["dernier"] = rang
+    return {"familles": familles, "groupes": groupes, "sujets": sujets}
+
+
+def _readme(dossier=None):
+    """Le README de la base : son plan (`_plan`), et les compétences qui partent de la base."""
+    chemin = pathlib.Path(dossier or BASE) / "README.md"
     if not chemin.exists():
         raise Erreur("README.md absent de la base de questions : il en est l'index")
     texte = _lire(chemin)
-    index = {m.group(2): (m.group(3), m.group(1)) for m in
-             re.finditer(r"^\| \[([^\]]+)\]\(([a-z0-9-]+)\.md\) \| ([A-Z]{2,4}) \|", texte, re.M)}
     m = re.search(r"^## Qui part de la base.*?$(.*?)(?=^## |\Z)", texte, re.M | re.S)
     lecteurs = re.findall(r"^- `([a-z0-9-]+)`", m.group(1), re.M) if m else []
-    return index, lecteurs
+    return _plan(texte.splitlines()), lecteurs
+
+
+def _par_sujet(plan):
+    return {s["sujet"]: (s["prefixe"], s["nom"]) for s in plan["sujets"]}
+
+
+def _index(dossier=None):
+    """Les sujets du README : {sujet: (préfixe, nom)}, et les compétences qui partent de la base."""
+    plan, lecteurs = _readme(dossier)
+    return _par_sujet(plan), lecteurs
+
+
+def rangement(dossier=None):
+    """L'index en deux niveaux, dans l'ordre du README : [(famille, [(groupe, [sujet, …]), …]), …]."""
+    plan, _ = _readme(dossier)
+    return [(f["titre"], [(g["titre"], [s["sujet"] for s in g["sujets"]]) for g in f["groupes"]])
+            for f in plan["familles"]]
+
+
+def _ecarts_de_l_index(plan):
+    """Le rangement des sujets dans le README : chacun une seule fois, dans un groupe (`#### …`) d'une famille
+    (`### …`) ; aucune famille ni aucun groupe vide ; aucun nom de famille ou de groupe pris deux fois."""
+    ecarts, vus = [], set()
+    for s in plan["sujets"]:
+        if s["sujet"] in vus:
+            ecarts.append(f"README : le sujet {s['sujet']} est listé deux fois")
+        vus.add(s["sujet"])
+        if not s["groupe"] or not s["famille"]:
+            ecarts.append(f"README : le sujet {s['sujet']} n'est pas rangé dans un groupe (#### …) d'une famille "
+                          "(### …)")
+    for genre, elements in (("famille", plan["familles"]), ("groupe", plan["groupes"])):
+        noms = set()
+        for e in elements:
+            if _empreinte(e["titre"]) in noms:
+                ecarts.append(f"README : deux {genre}s s'appellent « {e['titre']} »")
+            noms.add(_empreinte(e["titre"]))
+    ecarts += [f"README : la famille « {f['titre']} » n'a aucun groupe" for f in plan["familles"] if not f["groupes"]]
+    ecarts += [f"README : le groupe « {g['titre']} » n'a aucun sujet" for g in plan["groupes"] if not g["sujets"]]
+    return ecarts
 
 
 def _nom(texte):
@@ -128,19 +207,22 @@ def verifier_base(dossier=None, skills=None):
     """Les écarts de la base de questions ; une liste vide veut dire qu'elle est saine. Contrôle : chaque sujet se
     lit, un préfixe par sujet et un sujet par préfixe, chaque ligne a sa question, sa décision et un « D'abord »
     connu, aucun tiret cadratin, aucune question en double dans toute la base, le README liste exactement les
-    sujets, et chaque compétence qu'il cite comme lectrice renvoie à la base en tête de son SKILL.md."""
+    sujets, chacun une fois dans un groupe d'une famille, et chaque compétence qu'il cite comme lectrice renvoie à la
+    base en tête de son SKILL.md."""
     dossier = pathlib.Path(dossier or BASE)
     skills = pathlib.Path(skills or SKILLS)
     ecarts, vus, prefixes = [], {}, {}
     try:
-        index, lecteurs = _index(dossier)
+        plan, lecteurs = _readme(dossier)
     except Erreur as e:
         return [str(e)]
+    index = _par_sujet(plan)
     presents = sujets(dossier)
     for s in sorted(set(presents) - set(index)):
         ecarts.append(f"{s}.md : absent du tableau des sujets du README")
     for s in sorted(set(index) - set(presents)):
         ecarts.append(f"README : le sujet {s} n'a pas de fichier")
+    ecarts += _ecarts_de_l_index(plan)
     for s in presents:
         texte = _lire(pathlib.Path(dossier) / f"{s}.md")
         if not texte.startswith(TITRE_SUJET):
@@ -248,10 +330,47 @@ def ajouter(sujet, partie, question, decide, dabord="la personne", creer_partie=
     return numero
 
 
+def _place_du_sujet(lignes, groupe=None, creer_groupe=False):
+    """Où inscrire un sujet neuf dans le README (la liste de ses lignes) : (rang de la ligne après laquelle poser la
+    sienne, lignes à poser avant elle). Sans nom de groupe : à la fin du dernier groupe de « Ce que veut le client ».
+    Un groupe nommé s'écrit comme dans le README (accents et casse mis à part) ; s'il n'existe pas, il est refusé, ou
+    ouvert à la fin de « Ce que veut le client » avec `creer_groupe`."""
+    plan = _plan(lignes)
+    if not plan["groupes"]:  # l'ancien tableau unique, sans groupes : à la suite de sa dernière ligne
+        if groupe is not None:
+            raise Erreur("README : l'index n'a pas de groupes (#### …) : --groupe n'a rien à nommer")
+        if not plan["sujets"]:
+            raise Erreur("README : le tableau des sujets est introuvable")
+        return plan["sujets"][-1]["rang"], []
+    famille = next((f for f in plan["familles"] if _empreinte(f["titre"]) == _empreinte(FAMILLE_PAR_DEFAUT)), None)
+    dernier = famille["groupes"][-1] if famille and famille["groupes"] else None
+    noms = ", ".join(g["titre"] for g in plan["groupes"])
+    if groupe is None:
+        cible = dernier
+        if cible is None:
+            raise Erreur(f"README : la famille « {FAMILLE_PAR_DEFAUT} » est introuvable ; --groupe nomme le groupe "
+                         f"voulu (groupes : {noms})")
+    else:
+        cible = next((g for g in plan["groupes"] if _empreinte(g["titre"]) == _empreinte(groupe)), None)
+        if cible is None:
+            if not creer_groupe:
+                raise Erreur(f"groupe absent du README : {groupe} (groupes : {noms}) ; --creer-groupe pour l'ouvrir à "
+                             f"la fin de « {FAMILLE_PAR_DEFAUT} »")
+            if dernier is None or dernier["dernier"] is None:
+                raise Erreur(f"README : la famille « {FAMILLE_PAR_DEFAUT} » n'a pas de groupe rempli : le groupe "
+                             f"{groupe} n'a pas où s'ouvrir")
+            return dernier["dernier"], ["", f"#### {groupe.strip()}", ""] + ENTETE_INDEX
+    if cible["dernier"] is None:
+        raise Erreur(f"README : le groupe « {cible['titre']} » n'a aucun sujet ; le corriger à la main")
+    return cible["dernier"], []
+
+
 def creer_sujet(sujet, prefixe, titre, quand, partie, question, decide, dabord="la personne", intro="",
-                dossier=None):
+                dossier=None, groupe=None, creer_groupe=False):
     """Ouvre un sujet qui manque, avec la question qui le fait naître : son fichier, sa première partie, et sa ligne
-    dans le tableau des sujets du README. Les questions suivantes s'y rangent avec `ajouter`."""
+    dans l'index des sujets du README, à la fin du groupe `groupe` (par défaut le dernier groupe de « Ce que veut le
+    client » ; un groupe qui n'existe pas se refuse, sauf avec `creer_groupe`). Les questions suivantes s'y rangent
+    avec `ajouter`."""
     dossier = pathlib.Path(dossier or BASE)
     if not re.fullmatch(r"[a-z0-9-]+", sujet):
         raise Erreur("le sujet s'écrit en minuscules, chiffres et tirets : facturation, ressources-humaines")
@@ -263,8 +382,10 @@ def creer_sujet(sujet, prefixe, titre, quand, partie, question, decide, dabord="
         raise Erreur(f"le sujet {sujet} existe déjà")
     if prefixe in {p for p, _ in index.values()}:
         raise Erreur(f"le préfixe {prefixe} est pris par {next(s for s, (p, _) in index.items() if p == prefixe)}")
-    if "—" in titre + quand + partie + intro or "|" in quand:
-        raise Erreur("pas de tiret cadratin, ni de barre verticale dans « quand »")
+    if "—" in titre + quand + partie + intro + (groupe or "") or "|" in quand + (groupe or ""):
+        raise Erreur("pas de tiret cadratin, ni de barre verticale dans « quand » ou dans le nom du groupe")
+    if groupe is not None and not groupe.strip():
+        raise Erreur("--groupe : le nom du groupe est vide")
     question, decide = _question_neuve(question, decide, dabord, dossier)
     texte = [f"{TITRE_SUJET}{titre}", "", (intro.strip() or f"Quand l'objectif touche à {titre}.") +
              " Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, douze au "
@@ -272,10 +393,8 @@ def creer_sujet(sujet, prefixe, titre, quand, partie, question, decide, dabord="
         + ENTETE_TABLEAU + [_ligne(f"{prefixe}01", question, decide, dabord)]
     readme = pathlib.Path(dossier) / "README.md"
     lignes = _lire(readme).splitlines()
-    rangs = [i for i, l in enumerate(lignes) if re.match(r"^\| \[[^\]]+\]\([a-z0-9-]+\.md\) \|", l)]
-    if not rangs:
-        raise Erreur("README : le tableau des sujets est introuvable")
-    lignes.insert(rangs[-1] + 1, f"| [{_nom(TITRE_SUJET + titre)}]({sujet}.md) | {prefixe} | {quand.strip()} |")
+    rang, avant = _place_du_sujet(lignes, groupe, creer_groupe)
+    lignes[rang + 1:rang + 1] = avant + [f"| [{_nom(TITRE_SUJET + titre)}]({sujet}.md) | {prefixe} | {quand.strip()} |"]
     chemin.write_text("\n".join(texte) + "\n", encoding="utf-8")
     readme.write_text("\n".join(lignes) + "\n", encoding="utf-8")
     return chemin
@@ -641,6 +760,10 @@ def main(argv):
     a.add_argument("--decide", required=True)
     a.add_argument("--dabord", default="la personne", choices=DABORD)
     a.add_argument("--intro", default="")
+    a.add_argument("--groupe", help="le groupe (#### …) du README où ranger le sujet ; par défaut le dernier groupe de "
+                                    "« Ce que veut le client »")
+    a.add_argument("--creer-groupe", action="store_true",
+                   help="ouvrir le groupe nommé s'il n'existe pas, à la fin de « Ce que veut le client »")
     sp.add_parser("verifier", help="contrôler la base de questions (rend 1 au moindre écart)")
     sp.add_parser("schema")
     a = sp.add_parser("note")
@@ -674,7 +797,8 @@ def main(argv):
             print(ajouter(args.sujet, args.partie, args.question, args.decide, args.dabord, args.creer_partie))
         elif args.commande == "creer-sujet":
             print(creer_sujet(args.sujet, args.prefixe, args.titre, args.quand, args.partie, args.question,
-                              args.decide, args.dabord, args.intro))
+                              args.decide, args.dabord, args.intro, groupe=args.groupe,
+                              creer_groupe=args.creer_groupe))
         elif args.commande == "verifier":
             ecarts = verifier_base()
             for e in ecarts:
