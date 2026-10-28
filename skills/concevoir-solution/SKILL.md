@@ -29,6 +29,9 @@ metadata:
 > ou `[E]` (définis dans `ARCHITECTURE.md`) ; toute capacité ou tout prix de plateforme est daté ou marqué
 > `[H]`. Exemple de référence : `examples/` du pack. **Boucle** : aucune.
 
+> ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`, un fichier par sujet ; ici `processus`) :
+> lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui manquait (`entretien.py ajouter`).
+
 ## Ce que cette compétence résout
 
 Face à un besoin, le réflexe est de choisir un outil : celui qu'on connaît, celui qu'un fournisseur a

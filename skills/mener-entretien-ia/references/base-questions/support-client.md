@@ -84,6 +84,7 @@ Retour d'expérience : [Dust, support](https://dust.tt/blog/how-dust-runs-suppor
 | SC33 | Combien de demandes par semaine votre équipe peut-elle reprendre sans que les délais dérapent ? | Le plafond de transfert | la personne |
 | SC37 | Quels gestes l'agent peut-il faire seul sur une commande (adresse, annulation, avoir), et jusqu'à quel montant ? | Ce que l'agent a le droit de modifier | la personne |
 | SC38 | Combien de réponses justes faut-il voir avant de laisser partir une réponse sans relecture ? | Quand la relecture peut s'arrêter | la personne |
+| SC40 | Quand un client demande un remboursement, signale un colis perdu ou un produit abîmé, que se passe-t-il aujourd'hui ? | Le traitement actuel des cas à transférer | la personne |
 
 Retour d'expérience : [Fin, politique d'escalade](https://fin.ai/blog/blueprint/how-to-set-your-escalation-policy).
 

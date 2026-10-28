@@ -8,14 +8,17 @@ description: >-
   incertain fait confirmer) ou un guide du pack (direction, équipes, version courte, cadrage, audit), la consigne
   de l'intervieweur (une question à la fois, relance sur la dernière occurrence réelle et l'ordre de grandeur,
   aucune promesse, aucun nom, la langue de la personne), puis transformer son compte rendu en note
-  `mission/sources/entretien-<rôle>-<date>.md` aux statuts [F]/[H]/[E], contrôlée. Outil du pack consultant-ia,
-  appelé par decouvrir-cas-usage, cadrer-besoin et auditer-processus ; ne possède aucune étape. Triggers :
-  « entretien guidé par IA », « entretien asynchrone », « questionnaire envoyé au client », « prépare les
-  questions pour son objectif », « interview bot », « AI-led interview », « async discovery interview ».
+  `mission/sources/entretien-<rôle>-<date>.md` aux statuts [F]/[H]/[E], contrôlée. Tient aussi la base de
+  questions par sujet (une mission de bout en bout, du premier échange au bilan, et chaque objectif, du
+  support client à la prospection) : toute question à poser à une entreprise en part, et ce qui manquait y est rangé.
+  Outil du pack consultant-ia, appelé par decouvrir-cas-usage, cadrer-besoin et auditer-processus ; ne possède
+  aucune étape. Triggers : « entretien guidé par IA », « entretien asynchrone », « questionnaire envoyé au
+  client », « prépare les questions pour son objectif », « fais-moi les questions pour », « quelles questions
+  poser à », « base de questions », « range cette question », « interview bot », « AI-led interview ».
 metadata:
-  scope: "un entretien du pack mené par écrit par une IA, sans le consultant, et sa note dans mission/sources/"
-  owns: "la consigne de l'intervieweur, le schéma du compte rendu, le choix et la préparation du questionnaire, le contrôle et le rendu de la note et de sa transcription"
-  consumes: "les questions de decouvrir-cas-usage/references/guides-entretien.md, de cadrer-besoin (étape 3 et references/questions-par-objectif.md) et d'auditer-processus (étape 9) ; ce que le consultant ou la session de l'entreprise a pu lire ; la conversation menée"
+  scope: "un entretien du pack mené par écrit par une IA, sans le consultant, et sa note dans mission/sources/ ; la base de questions par sujet"
+  owns: "la base de questions (references/base-questions/, un fichier par sujet, guides fixes compris), la consigne de l'intervieweur, le schéma du compte rendu, le choix et la préparation du questionnaire, le contrôle et le rendu de la note et de sa transcription"
+  consumes: "ce que le consultant ou la session de l'entreprise a pu lire ; la conversation menée ; les règles d'entretien de decouvrir-cas-usage/references/guides-entretien.md"
 ---
 
 # Mener un entretien guidé par IA
@@ -28,8 +31,13 @@ metadata:
 > rendu qui enfreint les règles (une réponse par question dans l'ordre, ouverture dite, `[F]` fondé, `[H]` avec qui
 > confirme, `[E]` avec son calcul, aucune adresse ni numéro) ; la transcription sort adresses et numéros retirés.
 > Un questionnaire préparé sans objectif écrit, sans validation, ou de plus de douze questions est refusé.
-> Essais : `python -m unittest discover -s skills/mener-entretien-ia/tests` (17, dont 11 sabotages). **Boucle** :
-> aucune.
+> La base de questions : `entretien.py verifier` refuse un doublon dans toute la base, un préfixe pris deux fois,
+> une ligne sans décision ou sans « D'abord », un index périmé, une compétence lectrice sans son rappel en tête.
+> Essais : `python -m unittest discover -s skills/mener-entretien-ia/tests`. **Boucle** : aucune.
+
+> ❓ **Une question pour l'entreprise sort de la base de questions** (`references/base-questions/`, un fichier par
+> sujet, index `README.md`) : lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui
+> manquait (`entretien.py ajouter` ; un sujet absent : `entretien.py creer-sujet`).
 
 ## Ce que cette compétence résout
 
@@ -44,8 +52,9 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
 
 ## Stratégie
 
-1. **Les questions ne s'écrivent qu'une fois.** Le script lit le questionnaire là où il vit (guides, cadrer-besoin,
-   auditer-processus) ; une question corrigée là-bas l'est ici. Aucun questionnaire recopié.
+1. **Les questions ne s'écrivent qu'une fois, dans la base.** Un fichier par sujet (`references/base-questions/`),
+   chaque question avec la décision qu'elle sert ; les guides fixes en sont des blocs, et le script les y lit. Une
+   question corrigée dans la base l'est partout ; chaque entretien enrichit la même base. Aucun questionnaire recopié.
 2. **Ne demander que ce qui manque.** Un entretien qui redemande ce que l'entreprise a déjà écrit lasse la
    personne et coûte des réponses. Avant d'ouvrir, l'agent lit tout ce qui lui est accessible, ne pose pas ce qui
    est établi, fait confirmer ce qui est incertain, et vise l'objectif écrit. Une méthode, deux modes : en
@@ -68,14 +77,15 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
 1. **Choisir le questionnaire.** L'objectif est nommé (porte « besoin connu ») → un questionnaire préparé pour lui
    (étape 2), le cas courant d'une mission. Pas encore d'objectif → un guide du pack : `direction` ou `equipes`
    (découverte), `court` quand le temps manque (trois questions, de quoi repérer des candidats, pas de quoi
-   mesurer). Les guides `besoin` (les huit questions de `cadrer-besoin`) et `processus` (les huit
-   d'`auditer-processus`) servent quand rien n'a pu être lu avant. Un questionnaire par entretien et par rôle.
+   mesurer). Les guides `besoin` (le socle du cadrage, CA01 à CA08) et `processus` (les huit questions
+   d'automatisation, AP01 à AP08) servent quand rien n'a pu être lu avant. Un questionnaire par entretien et par rôle.
 2. **Préparer le questionnaire de l'objectif** : c'est ce qui fait la valeur de l'entretien. Lire tout ce qui est
    accessible (la demande, `mission/sources/`, le site, et en local les dossiers et outils de l'entreprise), en
    commençant par les traces de l'outil du processus quand un accès en lecture existe (`auditer-processus`,
    étape 2) : l'entretien confirme ce qu'elles montrent et cherche le reste, il ne fait pas ressaisir ce qu'on
-   peut lire. Prendre les huit questions du cadrage et le bloc du sujet dans la base de questions (`references/base-questions/<sujet>.md`, sinon le module de `cadrer-besoin/references/questions-par-objectif.md`),
-   puis trancher chacune : réponse sûre → elle ne se pose pas (« Déjà établi ») ; incertaine → elle se fait
+   peut lire. Prendre le bloc du sujet dans la base (`references/base-questions/<sujet>.md`, index `README.md`)
+   et le cadrage (`cadrage`) quand le sujet ne le pose pas dans ses mots ; un sujet absent s'ouvre dans la base.
+   Puis trancher chacune : réponse sûre → elle ne se pose pas (« Déjà établi ») ; incertaine → elle se fait
    confirmer (« Déjà su ») ; absente → elle se pose, dans les mots de la personne. Douze au plus. Le fichier
    `mission/sources/questionnaire-<objet>-<date>.md` suit `references/questionnaire-prepare.md` et se fait
    valider avant l'entretien ; le script refuse celui qui n'est pas validé. Pour un guide du pack, écrire
@@ -99,7 +109,8 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    `python …/entretien.py note --compte-rendu cr.json [--questionnaire mission/sources/questionnaire-….md] --transcription messages.json --sortie mission/sources`.
    Un refus liste chaque écart ; on corrige le compte rendu (ou on le fait refaire), jamais la règle.
 7. **Enrichir la base** : la section « Pour la base de questions » de la note propose ce qui manquait ; le
-   consultant l'ajoute à `references/base-questions/<sujet>.md`, avec la décision que la question sert, ou l'écarte.
+   consultant le range, ou l'écarte : `entretien.py ajouter --sujet <sujet> --partie <n> --question "…" --decide "…"`
+   (il refuse un doublon de toute la base et donne le numéro suivant), puis `entretien.py verifier`.
 8. **Relire la note** comme le consultant relirait la sienne : ce qui est `[H]` reste à confirmer, les questions
    ouvertes partent dans le message de suite, et la note alimente l'étape qui l'a demandée.
 
@@ -138,12 +149,14 @@ Le compte rendu qui la produit suit `references/compte-rendu.schema.json` ; la c
 | Préparé, validé, puis seulement ouvert | ce que l'agent croit savoir lui est lu ; une erreur dans « Déjà su » se dit à la personne | laisser l'IA choisir ses questions en direct | jamais |
 | Douze questions au plus | un entretien écrit long s'abandonne ; le reste a sa place dans la séance d'observation ou l'audit | tout le module | une seule personne détient tout et le demande : deux entretiens, pas un long |
 | Une méthode, deux modes (en ligne, local) | seul l'accès aux données change ; deux méthodes divergeraient | un agent local à part | jamais |
+| Une base de questions par sujet, guides fixes compris | une question vit à un seul endroit ; chaque entretien, audit ou rendez-vous enrichit la même base au lieu de réinventer ses questions | une liste dans chaque compétence (guides, cadrage, modules par objectif, jusqu'au 28/10/2026) | jamais |
 
 ## Frontières
 
-- Les questions elles-mêmes → `decouvrir-cas-usage` (guides direction, équipes, version courte), `cadrer-besoin`
-  (étape 3, modules par objectif), `auditer-processus` (étape 9). Les corriger là-bas. Ce qui est propre à une
-  mission (le questionnaire préparé) vit dans `mission/sources/`.
+- Quand poser quelles questions, combien et comment noter les réponses → `decouvrir-cas-usage` (règles des
+  entretiens, séance d'enregistrement), `cadrer-besoin` (étape 3), `auditer-processus` (étapes 2 et 9). Les
+  questions elles-mêmes vivent ici, dans la base. Ce qui est propre à une mission (le questionnaire préparé) vit
+  dans `mission/sources/`.
 - La séance où l'on enregistre une personne qui fait la tâche → `decouvrir-cas-usage` : un entretien écrit ne la
   remplace pas, on n'y voit pas les contournements.
 - Ce qu'on fait de la note (fiche besoin, diagnostic, cartographie) → l'étape qui l'a demandée.

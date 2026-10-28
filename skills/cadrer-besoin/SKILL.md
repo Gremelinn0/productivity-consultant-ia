@@ -25,6 +25,9 @@ metadata:
 > nombre son statut `[F]`, `[H]` ou `[E]` (définis dans `ARCHITECTURE.md`). Exemple de référence :
 > `examples/` du pack. **Boucle** : aucune.
 
+> ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`, un fichier par sujet) :
+> lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui manquait (`entretien.py ajouter`).
+
 ## Ce que cette compétence résout
 
 Une demande arrive presque toujours sous la forme d'une solution : « il nous faut un chatbot ».
@@ -63,15 +66,9 @@ quelle décision la suite de la mission doit permettre.
    nom de sa fiche. Créer `mission/cas-<slug>/` ; le slug ne change plus. Créer `mission/journal.md`
    s'il n'existe pas.
 3. **Poser en un seul message les questions qui manquent**, les plus décisives d'abord. Le socle tient en
-   huit questions, chacune nourrit des rubriques du modèle :
-   - Quel résultat concret doit être obtenu pour que la mission soit considérée comme réussie ? (rubrique 8)
-   - Quelle est la situation actuelle, et qu'est-ce qui ne fonctionne pas assez bien aujourd'hui ? (3, 9)
-   - Quel périmètre est prioritaire, et qu'est-ce qui doit rester explicitement hors périmètre ? (6)
-   - Qui décide, qui valide et qui utilisera réellement le dispositif ? (4, 5)
-   - Quelles informations, données, accès ou disponibilités peuvent être fournis ? (7, 9)
-   - Quel budget est prévu, et couvre-t-il un pilote, une première phase ou la production complète ? (7)
-   - Quel calendrier est souhaité : une charge de travail, une date butoir, des jours consécutifs ? (7)
-   - Quelles contraintes de sécurité, de conformité, de propriété des données ou d'outils s'imposent ? (7)
+   huit questions, dans la base de questions (`mener-entretien-ia/references/base-questions/cadrage.md`, CA01 à
+   CA08) : le résultat attendu, la situation actuelle, le périmètre, qui décide et qui utilisera, ce qui peut
+   être fourni, le budget, le calendrier, les contraintes. La base dit quelle rubrique du modèle chacune nourrit.
 
    Au premier contact, le message ne contient que deux questions : celles qui changent le périmètre, le
    coût ou les conditions de réussite. Les questions de diagnostic détaillé attendent l'audit. **Un cas
@@ -79,10 +76,11 @@ quelle décision la suite de la mission doit permettre.
    `02-portefeuille.md` et `mission/sources/`, et une rubrique sans réponse prend un `?`. Les questions
    posées et les réponses reçues se déposent dans `mission/sources/` (note d'échange datée) ; la fiche les cite.
 
-   **L'entretien de l'objectif.** Quand l'objectif relève d'un domaine (service client, prospection, CRM,
-   données, reporting, contenu, transmission), on prépare l'entretien avec les questions qui manquent du module
-   de `references/questions-par-objectif.md`, un seul module, réécrites dans les mots de la personne, après avoir
-   lu soi-même les traces de l'outil quand il est lisible (`auditer-processus`, étape 2). Mené par
+   **L'entretien de l'objectif.** Quand l'objectif relève d'un sujet de la base (service client, prospection,
+   CRM, données, reporting, contenu, transmission ; l'index : `base-questions/README.md`), on prépare l'entretien
+   avec les questions qui manquent de ce seul sujet, réécrites dans les mots de la personne, après avoir lu
+   soi-même les traces de l'outil quand il est lisible (`auditer-processus`, étape 2). Un sujet absent s'ouvre
+   dans la base avec la première question qui a servi (`entretien.py creer-sujet`). Mené par
    écrit par une IA, en ligne ou dans la session de l'entreprise, c'est `mener-entretien-ia` (questionnaire
    préparé) ; sa note entre dans `mission/sources/` comme celle d'un entretien en direct.
 4. **Si une réponse manque**, écrire l'hypothèse provisoire, la marquer `[H]` avec la personne qui

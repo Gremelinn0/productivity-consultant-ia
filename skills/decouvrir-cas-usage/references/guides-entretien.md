@@ -26,7 +26,7 @@ déposer dans `mission/sources/`.
   résume ce qu'elle attend est notée telle quelle : `cadrer-besoin` la reprendra entre guillemets, et une
   citation doit figurer dans une note de `mission/sources/`.
 - **Version courte (20 minutes)** quand le temps manque : la semaine type, la tâche qu'on voudrait ne plus
-  faire, les informations recopiées d'un outil à l'autre. Ces trois questions suffisent à repérer des
+  faire, les informations recopiées d'un outil à l'autre (EQ01, EQ10, EQ05). Ces trois questions suffisent à repérer des
   candidats ; elles ne suffisent pas à les mesurer.
 
 ## Guide direction (environ 45 minutes)
@@ -34,39 +34,20 @@ déposer dans `mission/sources/`.
 À mener en premier, avant de rédiger `00-contexte.md` : ses réponses (objectifs, contraintes, budget, essais
 passés) remplissent la fiche entreprise.
 
-| # | Thème | Question | Alimente |
-|---|---|---|---|
-| 1 | Objectifs | Quels sont les deux ou trois résultats que l'entreprise doit atteindre cette année ? | la valeur des cas, le choix des équipes |
-| 2 | Temps | Où le temps de l'entreprise part-il le plus, sans rapporter autant qu'il le devrait ? | les signaux, les équipes à écouter |
-| 3 | Disparition | Quelle tâche pourrait disparaître demain sans que personne ne la regrette ? | l'issue « Éliminer » |
-| 4 | Priorités | Si un seul sujet devait s'améliorer d'ici six mois, lequel ? Qu'est-ce qui ne doit surtout pas changer ? | le classement, le périmètre |
-| 5 | Contraintes | Quelles données ne doivent jamais quitter l'entreprise ? Quelles règles (contrats, conformité, clients) encadrent le travail ? Quels outils sont imposés ? | `00` (contraintes), « Limites » des fiches |
-| 6 | Budget | Quel ordre de grandeur de budget envisagez-vous, et pour quoi : un essai, une première phase, un déploiement ? Qui décide à partir de quel montant ? | la classe « Projets », le décideur des livrables |
-| 7 | Déjà essayé | Qu'avez-vous déjà essayé (outils, essais d'IA, automatisations) ? Qu'en reste-t-il, qu'est-ce qui a été abandonné, et pourquoi ? | « Déjà disponible », les freins d'adoption |
-| 8 | Équipes et accès | Quelles équipes écouter en premier ? Peut-on observer et enregistrer leur travail, et quels documents ou outils peut-on consulter ? | `00` (autorisations), le plan des entretiens |
-| 9 | Décision | Qui décide des cas à lancer, et sur quels critères ? | la décision attendue, les parties prenantes |
-| 10 | Clôture | Qu'est-ce que je n'ai pas demandé et qu'il faudrait savoir ? | les questions ouvertes |
+Les dix thèmes et leurs questions vivent dans la base de questions,
+`mener-entretien-ia/references/base-questions/decouverte-direction.md` (DI01 à DI10), chacun avec ce
+qu'il alimente : on les y corrige et on les y complète.
 
 ## Guide équipes (45 à 60 minutes)
 
 À mener avec une équipe à la fois, de préférence avec deux personnes qui font la même tâche : leurs écarts
 alimentent le test de stabilité d'`auditer-processus`. Quand une seule personne fait la tâche, ou que sa
-suppléante n'est pas disponible, le dire dans la note : la question 9 repose alors sur un récit croisé, les deux
+suppléante n'est pas disponible, le dire dans la note : la question des règles (EQ09) repose alors sur un récit croisé, les deux
 versions sont gardées, la suppléante est notée « non observée » et une séance avec elle est proposée.
 
-| # | Thème | Question | Colonne de `01` alimentée |
-|---|---|---|---|
-| 1 | Semaine type | Racontez-moi votre dernière semaine, jour par jour : qu'avez-vous fait ? Quelles sont les trois activités qui vous ont pris le plus de temps au total, petites actions répétées comprises ? | Tâche, Déclencheur |
-| 2 | Répétitif | Qu'avez-vous fait plusieurs fois cette semaine à peu près de la même façon ? | Fréquence ; les candidats à l'automatisation |
-| 3 | Temps et volume | La dernière fois, combien de temps cela a-t-il pris pour une unité (une relance, un ticket) ? Combien d'unités par mois ? À quelle fréquence ? Pouvez-vous me montrer un exemple récent ? | Durée par occurrence (par unité), Volume (par mois), Fréquence, avec leur statut |
-| 4 | Outils et données | Quels outils ouvrez-vous pour cette tâche, dans quel ordre, et que cherchez-vous dans chacun ? | Outils, Données |
-| 5 | Copier-coller | Y a-t-il des informations que vous recopiez d'un outil à l'autre, ou que vous saisissez deux fois ? | Passages, Erreurs / reprises |
-| 6 | Validations | Qui doit donner son accord avant que ce soit terminé, et combien de temps attendez-vous ? | Passages entre équipes |
-| 7 | Erreurs et reprises | Que se passe-t-il quand cela se passe mal ? Qu'est-ce qu'il faut refaire, et à quelle fréquence ? | Erreurs / reprises |
-| 8 | Exceptions | Dans quels cas la tâche ne se passe-t-elle pas comme d'habitude ? Qui décide alors, et comment ? | Stabilité des règles ; l'issue « Garder » |
-| 9 | Règles | Les règles sont-elles écrites quelque part ? Un collègue qui fait la même tâche la fait-il de la même façon ? | Stabilité des règles ; l'issue « Simplifier d'abord » |
-| 10 | Ne plus faire | Si vous pouviez ne plus jamais faire une seule chose, laquelle ? Qu'est-ce que vous devriez faire davantage ou mieux, et que vous ne faites pas faute de temps ? | l'issue « Éliminer », la valeur, l'adoption |
-| 11 | Clôture | Qui d'autre pourrait m'en parler ? Qu'est-ce que je n'ai pas demandé ? | d'autres sources, les questions ouvertes |
+Les onze thèmes et leurs questions vivent dans la base de questions,
+`mener-entretien-ia/references/base-questions/decouverte-equipes.md` (EQ01 à EQ11), chacun avec la
+colonne de `01` qu'il alimente : on les y corrige et on les y complète.
 
 ## Séance d'enregistrement du travail réel
 
@@ -105,9 +86,9 @@ rien lui-même ; le consultant et l'entreprise organisent la séance, la session
 
 Quand la personne ne peut pas donner le temps d'un entretien en direct, `mener-entretien-ia` fait poser ces mêmes
 questions par écrit par une IA, avec les règles ci-dessus (une question à la fois, l'occurrence réelle, rien de
-promis) ; sa note suit le modèle ci-dessous. Une question corrigée ici l'est aussi là-bas : le script la lit ici.
-Quand l'objectif est déjà nommé, ce ne sont plus ces guides mais un questionnaire préparé pour lui
-(`cadrer-besoin/references/questions-par-objectif.md`).
+promis) ; sa note suit le modèle ci-dessous. Le script lit les questions dans la base : une question corrigée là
+l'est partout. Quand l'objectif est déjà nommé, ce ne sont plus ces guides mais un questionnaire préparé pour
+lui, tiré du sujet de l'objectif dans la même base.
 
 ## Modèle de note d'entretien
 

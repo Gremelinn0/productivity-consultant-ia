@@ -27,6 +27,9 @@ metadata:
 > chaque tâche parmi cinq, chaque fiche de cas ses onze rubriques, chaque nombre son statut `[F]`, `[H]`
 > ou `[E]` (définis dans `ARCHITECTURE.md`). Exemple de référence : `examples/` du pack. **Boucle** : aucune.
 
+> ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`, un fichier par sujet) :
+> lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui manquait (`entretien.py ajouter`).
+
 ## Ce que cette compétence résout
 
 « Où l'IA peut-elle nous aider ? » n'est pas un besoin, c'est une question sur un travail que l'entreprise ne voit

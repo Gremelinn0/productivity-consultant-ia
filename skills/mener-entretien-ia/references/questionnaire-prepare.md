@@ -19,9 +19,9 @@ modèle.
    `python skills/mener-entretien-ia/scripts/entretien.py preparer --base support-client --objectif "…" --role "…" --sortie mission/sources/questionnaire-<objet>-<date>.md`
    écrit le brouillon avec toutes les questions du sujet (ou celles de `--garder SC02,SC05,…`), chacune avec son
    numéro de base et la décision qu'elle sert. On ne réécrit rien : on garde, on adapte les mots, on tranche
-   (étape 4). Sans fichier pour le sujet : les huit de `cadrer-besoin` (étape 3), le module de
-   `cadrer-besoin/references/questions-par-objectif.md` et les huit d'`auditer-processus` (étape 9) ; le sujet
-   reçoit ensuite son fichier.
+   (étape 4). Le cadrage (`cadrage`, CA01 à CA08) s'ajoute quand le sujet ne pose pas déjà ces questions dans
+   ses mots ; l'automatisation d'un processus (`processus`) quand l'objectif en est une. Sans fichier pour le
+   sujet : le cadrage et `processus`, puis le sujet s'ouvre dans la base avec les questions qui ont servi.
 4. **Trancher chaque candidate avec ce qu'on a lu** :
    - la réponse est sûre (une pièce, une règle dite par son détenteur) → la question ne se pose pas ; le fait
      va dans « Déjà établi », avec sa source. Une pièce prouve ce qu'elle contient, pas qu'il n'y a rien d'autre :
@@ -78,5 +78,5 @@ attend encore sa réponse.
 - Une question qui demande un document (export, modèle, politique écrite) dit aussi à qui l'envoyer : l'IA ne
   reçoit pas de pièce ; la promesse va dans « Documents ou accès promis ».
 - Rien dans « Déjà su » qu'on ne dirait pas à la personne elle-même : l'IA le lui lit.
-- Une question qui a changé le cadrage, le coût ou la réussite d'une mission rejoint son module (règle
-  « Ajouter une question » de `questions-par-objectif.md`), réécrite sans le nom du client.
+- Une question qui a changé le cadrage, le coût ou la réussite d'une mission rejoint son sujet dans la base,
+  réécrite sans le nom du client (`base-questions/README.md`, « Enrichir la base » ; `entretien.py ajouter`).

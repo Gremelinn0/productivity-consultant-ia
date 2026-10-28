@@ -1,5 +1,6 @@
 """Contrôle du pack consultant-ia : forme des compétences, unicité du routeur de stratégie,
-compétences complémentaires (COMPLEMENTAIRES.md et ses renvois), versions des manifestes, liens publics.
+compétences complémentaires (COMPLEMENTAIRES.md et ses renvois), versions des manifestes, liens publics,
+base de questions (mener-entretien-ia, `entretien.py verifier`).
 
 Usage :
   python scripts/verifier_pack.py      contrôle tout (0 = aucun écart)
@@ -244,6 +245,18 @@ def controler_liens():
               "chemin trop long sous Windows ? placer le dépôt dans un dossier au chemin court")
 
 
+def controler_base_questions():
+    """La base de questions de mener-entretien-ia, seule maison des questions du pack : son propre contrôle."""
+    sys.path.insert(0, str(RACINE / "skills" / "mener-entretien-ia" / "scripts"))
+    import entretien  # noqa: E402
+    trouves = entretien.verifier_base()
+    for e in trouves:
+        ecart(f"base de questions : {e}")
+    if not trouves:
+        n = sum(len(entretien.base(s)) for s in entretien.sujets())
+        print(f"base de questions : {len(entretien.sujets())} sujets, {n} questions")
+
+
 def main(arguments):
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")  # « ✗ » et les accents passent aussi dans un tuyau Windows
@@ -257,6 +270,7 @@ def main(arguments):
     controler_complementaires(noms)
     controler_versions()
     controler_liens()
+    controler_base_questions()
 
     print("Écarts :", ecarts)
     return 1 if ecarts else 0

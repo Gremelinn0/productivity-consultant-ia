@@ -28,6 +28,9 @@ metadata:
 > étape son issue parmi cinq (ou « hors périmètre »), chaque nombre son statut `[F]`, `[H]` ou `[E]`
 > (définis dans `ARCHITECTURE.md`). Exemple de référence : `examples/` du pack. **Boucle** : aucune.
 
+> ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`, un fichier par sujet) :
+> lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui manquait (`entretien.py ajouter`).
+
 ## Ce que cette compétence résout
 
 Une fiche besoin dit ce qu'on veut obtenir ; elle ne dit pas comment le travail se fait aujourd'hui. Un processus
@@ -120,15 +123,11 @@ d'abord.
    sous validation humaine : l'automatisation prépare, un humain valide. Une étape hors périmètre est décrite à la
    rubrique 1 et marquée « hors périmètre » ici, sans issue.
 9. **Poser les huit questions d'automatisation qui manquent**, en une seule fois, après avoir cherché la réponse
-   dans le besoin, les sources et l'observation :
-   1. Quel événement déclenche le processus, et quel résultat doit-il produire ?
-   2. Quelles étapes sont stables et répétitives, lesquelles exigent une décision humaine ?
-   3. Quels systèmes, comptes et droits faut-il lire ou modifier ?
-   4. Quel volume, quelle fréquence, quel niveau de criticité ?
-   5. Quelles erreurs sont acceptables, lesquelles doivent bloquer, et qui alerter ?
-   6. Quelles données sensibles, règles de conformité ou validations humaines doivent encadrer l'IA ?
-   7. Quel cas limite doit absolument fonctionner avant de généraliser ?
-   8. Qui maintiendra automatisations, prompts, modèles et accès après livraison ?
+   dans le besoin, les sources et l'observation : le déclencheur et le résultat, les étapes stables et celles qui
+   demandent une décision, les systèmes et les droits, le volume et la criticité, les erreurs tolérées, les
+   garde-fous de l'IA, le cas limite, la maintenance. Elles vivent dans la base de questions
+   (`mener-entretien-ia/references/base-questions/processus.md`, AP01 à AP08) ; une question d'automatisation
+   qui a manqué s'y range.
 
    Une réponse manquante devient une hypothèse `[H]` avec la personne qui peut la confirmer. Ces réponses sont
    l'entrée de `rediger-cahier-des-charges` (mode exigences).

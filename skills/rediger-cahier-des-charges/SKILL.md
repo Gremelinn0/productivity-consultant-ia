@@ -30,6 +30,9 @@ metadata:
 > dans `ARCHITECTURE.md`) ; le mode exigences ne nomme aucune solution hors des rubriques Intégrations et
 > Contraintes. Exemple de référence : `examples/` du pack. **Boucle** : aucune.
 
+> ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`, un fichier par sujet ; ici `cadrage` et `processus`) :
+> lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui manquait (`entretien.py ajouter`).
+
 ## Ce que cette compétence résout
 
 « Cahier des charges » désigne deux documents qui ne servent pas à la même chose. Avant le choix

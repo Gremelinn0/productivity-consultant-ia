@@ -2,6 +2,7 @@
 import copy
 import json
 import pathlib
+import shutil
 import sys
 import tempfile
 import unittest
@@ -158,8 +159,8 @@ class BaseDeQuestions(unittest.TestCase):
     def test_le_sujet_support_client_se_lit_avec_sa_decision(self):
         self.assertIn("support-client", entretien.sujets())
         q = entretien.base("support-client")
-        self.assertEqual(len(q), 39)
-        self.assertEqual(len({x["id"] for x in q}), 39)
+        self.assertTrue({f"SC{i:02d}" for i in range(1, 40)} <= {x["id"] for x in q})  # un numéro ne se perd pas
+        self.assertEqual(len({x["id"] for x in q}), len(q))
         self.assertTrue(all(x["question"] and x["decide"] and x["partie"] for x in q))
         self.assertTrue(all(x["dabord"] in ("l'outil", "un document", "la personne") for x in q))
 
@@ -228,6 +229,137 @@ class DefautsDuTestLocal(unittest.TestCase):
         texte = entretien.consigne("besoin", "dirigeante", "Exemple")
         self.assertNotIn("de le consultant", texte)
         self.assertIn("pour le consultant", texte)
+
+
+class UneSeuleMaison(unittest.TestCase):
+    """La base de questions est la seule maison des questions : chaque contrôle se prouve par un sabotage, sur une
+    copie de la base et des compétences qui la lisent."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        racine = pathlib.Path(self._tmp.name)
+        self.base = racine / "base"
+        shutil.copytree(entretien.BASE, self.base)
+        self.skills = racine / "skills"
+        for nom in entretien._index()[1]:
+            (self.skills / nom).mkdir(parents=True)
+            shutil.copy(entretien.SKILLS / nom / "SKILL.md", self.skills / nom / "SKILL.md")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def ecarts(self):
+        return entretien.verifier_base(self.base, self.skills)
+
+    def remplacer(self, fichier, avant, apres):
+        f = self.base / fichier
+        texte = f.read_text(encoding="utf-8")
+        self.assertIn(avant, texte)
+        f.write_text(texte.replace(avant, apres, 1), encoding="utf-8")
+
+    def test_la_base_du_pack_est_saine(self):
+        self.assertEqual(entretien.verifier_base(), [])
+        self.assertEqual(self.ecarts(), [])
+
+    def test_les_guides_fixes_se_lisent_dans_la_base(self):
+        court = entretien.questionnaire("court")
+        self.assertEqual([q["base"] for q in court["questions"]], ["EQ01", "EQ10", "EQ05"])
+        self.assertEqual([q["base"] for q in entretien.questionnaire("besoin")["questions"]],
+                         [f"CA0{i}" for i in range(1, 9)])
+        self.assertEqual(entretien.questionnaire("direction")["questions"][0]["theme"], "Objectifs")
+        self.assertEqual(entretien.questionnaire("processus")["questions"][0]["theme"], "")
+
+    def test_une_question_corrigee_dans_la_base_l_est_dans_le_guide(self):
+        self.remplacer("decouverte-direction.md", "Quels sont les deux ou trois résultats",
+                       "Quels sont les trois résultats")
+        vrai = entretien.BASE
+        entretien.BASE = self.base
+        try:
+            q = entretien.questionnaire("direction")["questions"][0]["question"]
+        finally:
+            entretien.BASE = vrai
+        self.assertTrue(q.startswith("Quels sont les trois résultats"))
+
+    def test_sabotage_un_doublon_dans_un_autre_sujet(self):
+        ca01 = entretien.base("cadrage")[0]["question"]
+        self.remplacer("prospection.md", "| la personne |\n", "| la personne |\n| PR99 | "
+                       + ca01.upper().replace("É", "E") + " | Rien | la personne |\n")
+        self.assertTrue(any("même question que CA01" in e for e in self.ecarts()), self.ecarts())
+
+    def test_sabotage_un_sujet_absent_de_l_index(self):
+        f = self.base / "README.md"
+        f.write_text(f.read_text(encoding="utf-8").replace("| [Le contenu](contenu.md) | CO |", "| Le contenu | CO |"),
+                     encoding="utf-8")
+        self.assertIn("contenu.md : absent du tableau des sujets du README", self.ecarts())
+
+    def test_sabotage_une_ligne_sans_decision_ou_au_d_abord_inconnu(self):
+        self.remplacer("crm.md", "| Les étapes à corriger en premier | la personne |", "|  | le CRM |")
+        ecarts = self.ecarts()
+        self.assertTrue(any(e.startswith("CR01 : « Ce qu'elle décide » est vide") for e in ecarts), ecarts)
+        self.assertTrue(any(e.startswith("CR01 : « D'abord »") for e in ecarts), ecarts)
+
+    def test_sabotage_un_prefixe_pris_par_deux_sujets(self):
+        self.remplacer("contenu.md", "| CO01 |", "| TR90 |")
+        ecarts = self.ecarts()
+        self.assertTrue(any("préfixe TR pris par deux sujets" in e for e in ecarts), ecarts)
+
+    def test_sabotage_un_nom_d_index_qui_n_est_plus_le_titre(self):
+        self.remplacer("crm.md", "# Base de questions : le CRM et le suivi commercial", "# Base de questions : le CRM")
+        self.assertIn("README : le sujet crm s'appelle « Le CRM et le suivi commercial », son fichier « Le CRM »",
+                      self.ecarts())
+
+    def test_sabotage_un_tiret_cadratin(self):
+        self.remplacer("reporting.md", "Quand l'objectif est de mesurer et de décider :",
+                       "Quand l'objectif est de mesurer \u2014 et de décider :")
+        self.assertTrue(any(e.startswith("reporting.md : tiret cadratin") for e in self.ecarts()))
+
+    def test_sabotage_une_competence_lectrice_sans_son_rappel(self):
+        f = self.skills / "cadrer-besoin" / "SKILL.md"
+        f.write_text(f.read_text(encoding="utf-8").replace("base-questions", "banque"), encoding="utf-8")
+        self.assertIn("cadrer-besoin : son SKILL.md ne renvoie pas à la base de questions en tête (40 premières "
+                      "lignes)", self.ecarts())
+
+    def test_ajouter_range_a_la_fin_de_la_partie_avec_le_numero_suivant(self):
+        n = entretien.ajouter("crm", "2", "Quelles propriétés personnalisées ne sont plus remplies depuis six mois ?",
+                              "Les propriétés à archiver", "l'outil", dossier=self.base)
+        self.assertEqual(n, "CR14")
+        q = entretien.base("crm", self.base)
+        self.assertEqual([x["id"] for x in q if x["partie"] == "Les données et leurs sources"][-1], "CR14")
+        self.assertEqual(self.ecarts(), [])
+
+    def test_ajouter_refuse_un_doublon_de_toute_la_base(self):
+        with self.assertRaises(entretien.Erreur) as e:
+            entretien.ajouter("crm", "1", "quel résultat concret doit etre obtenu pour que la mission soit "
+                              "consideree comme reussie", "Rien", dossier=self.base)
+        self.assertIn("une question finit par", str(e.exception))
+        with self.assertRaises(entretien.Erreur) as e:
+            entretien.ajouter("crm", "1", "quel résultat concret doit etre obtenu pour que la mission soit "
+                              "consideree comme reussie ?", "Rien", dossier=self.base)
+        self.assertIn("CA01 (cadrage)", str(e.exception))
+        with self.assertRaises(entretien.Erreur):
+            entretien.ajouter("crm", "1", "Une question neuve ?", "", dossier=self.base)
+
+    def test_ajouter_ouvre_une_partie_seulement_si_on_le_demande(self):
+        with self.assertRaises(entretien.Erreur):
+            entretien.ajouter("contenu", "La relecture", "Qui relit un post avant qu'il parte ?", "Le relecteur",
+                              dossier=self.base)
+        n = entretien.ajouter("contenu", "La relecture", "Qui relit un post avant qu'il parte ?", "Le relecteur",
+                              creer_partie=True, dossier=self.base)
+        self.assertEqual(n, "CO03")
+        self.assertEqual(entretien.base("contenu", self.base)[-1]["partie"], "La relecture")
+        self.assertIn("Retour d'expérience", (self.base / "contenu.md").read_text(encoding="utf-8"))
+        self.assertEqual(self.ecarts(), [])
+
+    def test_creer_sujet_l_inscrit_dans_l_index(self):
+        entretien.creer_sujet("facturation", "FA", "la facturation", "Les factures, les relances, les paiements",
+                              "Ce qui se fait aujourd'hui", "Combien de factures partent chaque mois, et par quel "
+                              "outil ?", "Le volume et l'outil de départ", "l'outil", dossier=self.base)
+        self.assertIn("facturation", entretien.sujets(self.base))
+        self.assertEqual(entretien.base("facturation", self.base)[0]["id"], "FA01")
+        self.assertEqual(self.ecarts(), [])
+        with self.assertRaises(entretien.Erreur):
+            entretien.creer_sujet("factures", "FA", "les factures", "…", "…", "Une autre question ?", "Rien",
+                                  dossier=self.base)
 
 
 if __name__ == "__main__":

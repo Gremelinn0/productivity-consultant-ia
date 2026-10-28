@@ -30,6 +30,9 @@ metadata:
 > sont calculés sur des valeurs non arrondies. Exemple de référence : `examples/` du pack.
 > **Boucle** : aucune.
 
+> ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`, un fichier par sujet ; ici `rentabilite`) :
+> lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui manquait (`entretien.py ajouter`).
+
 ## Ce que cette compétence résout
 
 Le gain annoncé d'une automatisation est la partie visible d'un calcul ; ce qui le fait mentir, ce

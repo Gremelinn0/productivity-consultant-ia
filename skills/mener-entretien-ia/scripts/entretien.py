@@ -7,15 +7,19 @@ Usage :
   python entretien.py base [--sujet support-client]
   python entretien.py preparer --base support-client --objectif "…" --role "dirigeante" [--entreprise "…"]
                                [--garder SC02,SC05,…] --sortie mission/sources/questionnaire-<objet>-<date>.md
+  python entretien.py ajouter --sujet support-client --partie 4 --question "…" --decide "…" [--dabord "la personne"]
+  python entretien.py creer-sujet --sujet facturation --prefixe FA --titre "la facturation" --quand "…" --partie "…"
+  python entretien.py verifier
   python entretien.py schema
   python entretien.py note --compte-rendu cr.json [--questionnaire …] [--transcription messages.json] --sortie mission/sources
 
-Les questions ne sont écrites qu'à un endroit : `decouvrir-cas-usage/references/guides-entretien.md` (direction,
-équipes, version courte), l'étape 3 de `cadrer-besoin` (besoin) et l'étape 9 d'`auditer-processus` (processus).
-Ce script les lit là ; il n'en garde aucune copie. La base de questions par sujet vit dans
-`references/base-questions/<sujet>.md` : `preparer` en tire le brouillon d'un questionnaire. Un questionnaire préparé pour un objectif (guide `prepare`) est
-un fichier de la mission, au modèle de `references/questionnaire-prepare.md`, validé avant l'entretien. `note`
-refuse un compte rendu qui enfreint les règles du pack (statuts, données personnelles) et rend 1.
+Les questions ne sont écrites qu'à un endroit, la base de questions : `references/base-questions/<sujet>.md`, un
+fichier par sujet, indexé par `references/base-questions/README.md`. Les guides fixes (direction, équipes, version
+courte, besoin, processus) en sont des blocs : ce script les lit là et n'en garde aucune copie. `preparer` tire de
+la base le brouillon d'un questionnaire ; `ajouter` y range une question nouvelle, `creer-sujet` un sujet qui
+manque ; `verifier` contrôle la base et rend 1 au moindre écart. Un questionnaire préparé pour un objectif (guide
+`prepare`) est un fichier de la mission, au modèle de `references/questionnaire-prepare.md`, validé avant
+l'entretien. `note` refuse un compte rendu qui enfreint les règles du pack (statuts, données personnelles) et rend 1.
 """
 import argparse
 import json
@@ -29,19 +33,28 @@ COMPETENCE = ICI.parent
 SKILLS = COMPETENCE.parent
 CONSIGNE = COMPETENCE / "references" / "consigne-intervieweur.md"
 SCHEMA = COMPETENCE / "references" / "compte-rendu.schema.json"
-GUIDES = SKILLS / "decouvrir-cas-usage" / "references" / "guides-entretien.md"
-CADRER = SKILLS / "cadrer-besoin" / "SKILL.md"
-AUDITER = SKILLS / "auditer-processus" / "SKILL.md"
 BASE = COMPETENCE / "references" / "base-questions"
 
 GUIDES_CONNUS = ("direction", "equipes", "besoin", "processus", "court", "prepare")
 PREFIXES = {"direction": "D", "equipes": "E", "besoin": "B", "processus": "P", "court": "C", "prepare": "Q"}
 DUREES = {"direction": 30, "equipes": 35, "besoin": 20, "processus": 25, "court": 10}
+# Les guides fixes sont des blocs de la base : (sujet, numéros gardés dans l'ordre ; le thème de chaque question
+# est-il le titre de sa partie ?). Un sujet qui s'enrichit ne rallonge pas son guide : le guide garde ses numéros.
+# La version courte de guides-entretien.md : « la semaine type, la tâche qu'on voudrait ne plus faire, les
+# informations recopiées d'un outil à l'autre ».
+GUIDES_BASE = {
+    "direction": ("decouverte-direction", tuple(f"DI{i:02d}" for i in range(1, 11)), True),
+    "equipes": ("decouverte-equipes", tuple(f"EQ{i:02d}" for i in range(1, 12)), True),
+    "court": ("decouverte-equipes", ("EQ01", "EQ10", "EQ05"), True),
+    "besoin": ("cadrage", tuple(f"CA0{i}" for i in range(1, 9)), False),
+    "processus": ("processus", tuple(f"AP0{i}" for i in range(1, 9)), False),
+}
 # Un questionnaire préparé reste un entretien court : au-delà, la personne abandonne, et le reste attend l'audit.
 MAX_PREPARE = 12
-# La version courte de guides-entretien.md : « la semaine type, la tâche qu'on voudrait ne plus faire, les
-# informations recopiées d'un outil à l'autre », soit les thèmes 1, 10 et 5 du guide équipes.
-COURT = (1, 10, 5)
+# Où chercher la réponse avant de poser la question : l'outil se lit, un document se demande, la personne répond.
+DABORD = ("l'outil", "un document", "la personne")
+NUMERO = re.compile(r"([A-Z]{2,4})(\d{2,3})")
+TITRE_SUJET = "# Base de questions : "
 
 
 class Erreur(Exception):
@@ -54,54 +67,19 @@ def _lire(chemin):
     return chemin.read_text(encoding="utf-8")
 
 
-def _tableau(texte, titre):
-    """Les lignes `| n | Thème | Question | … |` de la section dont le titre commence par `titre`."""
-    m = re.search(r"^## " + re.escape(titre) + r".*?$(.*?)(?=^## |\Z)", texte, re.M | re.S)
-    if not m:
-        raise Erreur(f"section absente de guides-entretien.md : « {titre} »")
-    lignes = []
-    for ligne in m.group(1).splitlines():
-        cellules = [c.strip() for c in ligne.strip().strip("|").split("|")]
-        if len(cellules) >= 4 and cellules[0].isdigit():
-            lignes.append({"numero": int(cellules[0]), "theme": cellules[1], "question": cellules[2],
-                           "alimente": cellules[3]})
-    if not lignes:
-        raise Erreur(f"aucune question lue dans « {titre} »")
-    return lignes
+def sujets(dossier=None):
+    """Les sujets de la base de questions : un fichier par sujet dans `references/base-questions/` (le README est
+    l'index, pas un sujet)."""
+    dossier = pathlib.Path(dossier or BASE)
+    return sorted(p.stem for p in pathlib.Path(dossier).glob("*.md") if re.fullmatch(r"[a-z0-9-]+", p.stem))
 
 
-def _besoin():
-    texte = _lire(CADRER)
-    m = re.search(r"Le socle tient en\s+huit questions.*?:\n(.*?)\n\n", texte, re.S)
-    if not m:
-        raise Erreur("cadrer-besoin : la liste des huit questions (étape 3) est introuvable")
-    lignes = []
-    for brut in re.findall(r"^\s+- (.+?)\s*\((?:rubriques? )?([\d, ]+)\)\s*$", m.group(1), re.M):
-        lignes.append({"numero": len(lignes) + 1, "theme": "", "question": brut[0],
-                       "alimente": "10-besoin, rubriques " + brut[1].strip()})
-    return lignes
-
-
-def _processus():
-    texte = _lire(AUDITER)
-    m = re.search(r"Poser les huit questions d'automatisation.*?\n(.*?)\n\s*Une réponse manquante", texte, re.S)
-    if not m:
-        raise Erreur("auditer-processus : la liste des huit questions (étape 9) est introuvable")
-    lignes = [{"numero": int(n), "theme": "", "question": q.strip(), "alimente": "20-diagnostic §8"}
-              for n, q in re.findall(r"^\s+(\d)\. (.+)$", m.group(1), re.M)]
-    return lignes
-
-
-def sujets():
-    """Les sujets de la base de questions : un fichier par sujet dans `references/base-questions/`."""
-    return sorted(p.stem for p in BASE.glob("*.md"))
-
-
-def base(sujet):
+def base(sujet, dossier=None):
     """Les questions d'un sujet de la base, dans l'ordre du fichier : [{id, partie, question, decide, dabord}]."""
-    chemin = BASE / f"{sujet}.md"
-    if not chemin.exists():
-        raise Erreur(f"sujet absent de la base : {sujet} (connus : {', '.join(sujets()) or 'aucun'})")
+    dossier = pathlib.Path(dossier or BASE)
+    chemin = pathlib.Path(dossier) / f"{sujet}.md"
+    if not re.fullmatch(r"[a-z0-9-]+", sujet or "") or not chemin.exists():
+        raise Erreur(f"sujet absent de la base : {sujet} (connus : {', '.join(sujets(dossier)) or 'aucun'})")
     partie, sortie = "", []
     for ligne in _lire(chemin).splitlines():
         t = re.match(r"^## \d+\.\s*(.+?)\s*$", ligne)
@@ -109,7 +87,7 @@ def base(sujet):
             partie = t.group(1)
             continue
         c = [x.strip() for x in ligne.strip().strip("|").split("|")]
-        if len(c) >= 4 and re.fullmatch(r"[A-Z]{2,4}\d{2,3}", c[0]):
+        if len(c) >= 4 and NUMERO.fullmatch(c[0]):
             sortie.append({"id": c[0], "partie": partie, "question": c[1], "decide": c[2], "dabord": c[3]})
     if not sortie:
         raise Erreur(f"{chemin.name} : aucune question lue (lignes « | SC01 | question | décision | d'abord | »)")
@@ -118,6 +96,189 @@ def base(sujet):
     if doubles:
         raise Erreur(f"{chemin.name} : numéro en double ({', '.join(doubles)})")
     return sortie
+
+
+def _empreinte(question):
+    """Une question sans accents, casse ni ponctuation : deux questions de même empreinte sont un doublon."""
+    t = unicodedata.normalize("NFKD", question).encode("ascii", "ignore").decode().lower()
+    return " ".join(re.findall(r"[a-z0-9]+", t))
+
+
+def _index(dossier=None):
+    """Le tableau des sujets du README : {sujet: (préfixe, nom)}, et les compétences qui partent de la base."""
+    dossier = pathlib.Path(dossier or BASE)
+    chemin = pathlib.Path(dossier) / "README.md"
+    if not chemin.exists():
+        raise Erreur("README.md absent de la base de questions : il en est l'index")
+    texte = _lire(chemin)
+    index = {m.group(2): (m.group(3), m.group(1)) for m in
+             re.finditer(r"^\| \[([^\]]+)\]\(([a-z0-9-]+)\.md\) \| ([A-Z]{2,4}) \|", texte, re.M)}
+    m = re.search(r"^## Qui part de la base.*?$(.*?)(?=^## |\Z)", texte, re.M | re.S)
+    lecteurs = re.findall(r"^- `([a-z0-9-]+)`", m.group(1), re.M) if m else []
+    return index, lecteurs
+
+
+def _nom(texte):
+    """Le nom d'un sujet : le titre de son fichier sans « Base de questions : », la première lettre en capitale."""
+    t = texte.splitlines()[0][len(TITRE_SUJET):].strip() if texte.startswith(TITRE_SUJET) else ""
+    return t[:1].upper() + t[1:]
+
+
+def verifier_base(dossier=None, skills=None):
+    """Les écarts de la base de questions ; une liste vide veut dire qu'elle est saine. Contrôle : chaque sujet se
+    lit, un préfixe par sujet et un sujet par préfixe, chaque ligne a sa question, sa décision et un « D'abord »
+    connu, aucun tiret cadratin, aucune question en double dans toute la base, le README liste exactement les
+    sujets, et chaque compétence qu'il cite comme lectrice renvoie à la base en tête de son SKILL.md."""
+    dossier = pathlib.Path(dossier or BASE)
+    skills = pathlib.Path(skills or SKILLS)
+    ecarts, vus, prefixes = [], {}, {}
+    try:
+        index, lecteurs = _index(dossier)
+    except Erreur as e:
+        return [str(e)]
+    presents = sujets(dossier)
+    for s in sorted(set(presents) - set(index)):
+        ecarts.append(f"{s}.md : absent du tableau des sujets du README")
+    for s in sorted(set(index) - set(presents)):
+        ecarts.append(f"README : le sujet {s} n'a pas de fichier")
+    for s in presents:
+        texte = _lire(pathlib.Path(dossier) / f"{s}.md")
+        if not texte.startswith(TITRE_SUJET):
+            ecarts.append(f"{s}.md : le titre « {TITRE_SUJET.strip('# ')}… » manque en première ligne")
+        elif s in index and index[s][1] != _nom(texte):
+            ecarts.append(f"README : le sujet {s} s'appelle « {index[s][1]} », son fichier « {_nom(texte)} »")
+        if "—" in texte:
+            ecarts.append(f"{s}.md : tiret cadratin, à remplacer par une virgule, deux-points ou parenthèses")
+        try:
+            questions = base(s, dossier)
+        except Erreur as e:
+            ecarts.append(str(e))
+            continue
+        lettres = sorted({NUMERO.fullmatch(q["id"]).group(1) for q in questions})
+        if len(lettres) != 1:
+            ecarts.append(f"{s}.md : un seul préfixe par sujet, trouvé {', '.join(lettres)}")
+        elif s in index and index[s][0] != lettres[0]:
+            ecarts.append(f"{s}.md : préfixe {lettres[0]}, le README annonce {index[s][0]}")
+        for p in lettres:
+            if p in prefixes and prefixes[p] != s:
+                ecarts.append(f"préfixe {p} pris par deux sujets : {prefixes[p]} et {s}")
+            prefixes.setdefault(p, s)
+        for q in questions:
+            if not q["question"].rstrip().endswith("?"):
+                ecarts.append(f"{q['id']} : une question finit par « ? »")
+            if not q["decide"]:
+                ecarts.append(f"{q['id']} : « Ce qu'elle décide » est vide ; une question sans décision ne se pose pas")
+            if q["dabord"] not in DABORD:
+                ecarts.append(f"{q['id']} : « D'abord » vaut {q['dabord']!r}, attendu {', '.join(DABORD)}")
+            e = _empreinte(q["question"])
+            if e in vus:
+                ecarts.append(f"{q['id']} : même question que {vus[e]}")
+            vus.setdefault(e, q["id"])
+    for nom in lecteurs:
+        chemin = pathlib.Path(skills) / nom / "SKILL.md"
+        if not chemin.exists():
+            ecarts.append(f"README : la compétence {nom} n'existe pas dans le pack")
+        elif "base-questions" not in "\n".join(_lire(chemin).splitlines()[:40]):
+            ecarts.append(f"{nom} : son SKILL.md ne renvoie pas à la base de questions en tête (40 premières lignes)")
+    return ecarts
+
+
+ENTETE_TABLEAU = ["| # | Question | Ce qu'elle décide | D'abord |", "|---|---|---|---|"]
+
+
+def _ligne(numero, question, decide, dabord):
+    return f"| {numero} | {question} | {decide} | {dabord} |"
+
+
+def _question_neuve(question, decide, dabord, dossier):
+    """La question et sa décision, nettoyées ; refuse ce qui n'entre pas dans la base, doublon compris."""
+    question, decide = " ".join(question.split()), " ".join(decide.split())
+    if not question.endswith("?"):
+        raise Erreur("une question finit par « ? »")
+    if not decide:
+        raise Erreur("« Ce qu'elle décide » est obligatoire : une question sans décision ne se pose pas")
+    if dabord not in DABORD:
+        raise Erreur(f"« D'abord » : {', '.join(DABORD)}")
+    if "—" in question + decide or "|" in question + decide:
+        raise Erreur("ni tiret cadratin ni barre verticale dans une question")
+    e = _empreinte(question)
+    for s in sujets(dossier):
+        for q in base(s, dossier):
+            if _empreinte(q["question"]) == e:
+                raise Erreur(f"déjà dans la base : {q['id']} ({s}) ; la reformuler là, ne pas l'ajouter")
+    return question, decide
+
+
+def ajouter(sujet, partie, question, decide, dabord="la personne", creer_partie=False, dossier=None):
+    """Range une question nouvelle à la fin d'une partie du sujet (son numéro ou son titre), avec le numéro suivant
+    du sujet ; rend ce numéro. Refuse une question déjà présente dans toute la base (accents, casse et ponctuation
+    mis à part), une décision vide, un « D'abord » inconnu, un tiret cadratin. Avec `creer_partie`, une partie
+    absente s'ouvre après la dernière."""
+    dossier = pathlib.Path(dossier or BASE)
+    questions = base(sujet, dossier)
+    question, decide = _question_neuve(question, decide, dabord, dossier)
+    lettres = NUMERO.fullmatch(questions[0]["id"]).group(1)
+    numero = f"{lettres}{max(int(NUMERO.fullmatch(q['id']).group(2)) for q in questions) + 1:02d}"
+    chemin = pathlib.Path(dossier) / f"{sujet}.md"
+    lignes = _lire(chemin).splitlines()
+    titres = [(i, m.group(1), m.group(2)) for i, l in enumerate(lignes)
+              for m in [re.match(r"^## (\d+)\.\s*(.+?)\s*$", l)] if m]
+    cible = [t for t in titres if str(partie).strip() == t[1] or _empreinte(str(partie)) == _empreinte(t[2])]
+    ligne = _ligne(numero, question, decide, dabord)
+    if cible:
+        debut = cible[0][0]
+        fin = next((i for i in range(debut + 1, len(lignes)) if lignes[i].startswith("## ")), len(lignes))
+        rangs = [i for i in range(debut + 1, fin) if lignes[i].startswith("|")]
+        if not rangs:
+            raise Erreur(f"la partie {partie} de {sujet} n'a pas de tableau")
+        lignes.insert(rangs[-1] + 1, ligne)
+    elif creer_partie:
+        if "—" in str(partie):
+            raise Erreur("pas de tiret cadratin")
+        fin = next((i for i in range(titres[-1][0] + 1, len(lignes)) if re.match(r"^## (?!\d+\.)", lignes[i])),
+                   len(lignes))
+        while fin > 0 and not lignes[fin - 1].strip():
+            fin -= 1
+        bloc = ["", f"## {int(titres[-1][1]) + 1}. {str(partie).strip()}", ""] + ENTETE_TABLEAU + [ligne]
+        lignes[fin:fin] = bloc + ([""] if fin < len(lignes) and lignes[fin].strip() else [])
+    else:
+        raise Erreur(f"partie absente de {sujet} : {partie} (parties : "
+                     + ", ".join(f"{t[1]}. {t[2]}" for t in titres) + ") ; --creer-partie pour l'ouvrir")
+    chemin.write_text("\n".join(lignes).rstrip() + "\n", encoding="utf-8")
+    return numero
+
+
+def creer_sujet(sujet, prefixe, titre, quand, partie, question, decide, dabord="la personne", intro="",
+                dossier=None):
+    """Ouvre un sujet qui manque, avec la question qui le fait naître : son fichier, sa première partie, et sa ligne
+    dans le tableau des sujets du README. Les questions suivantes s'y rangent avec `ajouter`."""
+    dossier = pathlib.Path(dossier or BASE)
+    if not re.fullmatch(r"[a-z0-9-]+", sujet):
+        raise Erreur("le sujet s'écrit en minuscules, chiffres et tirets : facturation, ressources-humaines")
+    if not re.fullmatch(r"[A-Z]{2,4}", prefixe):
+        raise Erreur("le préfixe tient en deux à quatre capitales : FA")
+    chemin = pathlib.Path(dossier) / f"{sujet}.md"
+    index, _ = _index(dossier)
+    if chemin.exists() or sujet in index:
+        raise Erreur(f"le sujet {sujet} existe déjà")
+    if prefixe in {p for p, _ in index.values()}:
+        raise Erreur(f"le préfixe {prefixe} est pris par {next(s for s, (p, _) in index.items() if p == prefixe)}")
+    if "—" in titre + quand + partie + intro or "|" in quand:
+        raise Erreur("pas de tiret cadratin, ni de barre verticale dans « quand »")
+    question, decide = _question_neuve(question, decide, dabord, dossier)
+    texte = [f"{TITRE_SUJET}{titre}", "", (intro.strip() or f"Quand l'objectif touche à {titre}.") +
+             " Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, douze au "
+             "plus, et n'adapte que ce qui change pour l'entreprise.", "", f"## 1. {partie.strip()}", ""] \
+        + ENTETE_TABLEAU + [_ligne(f"{prefixe}01", question, decide, dabord)]
+    readme = pathlib.Path(dossier) / "README.md"
+    lignes = _lire(readme).splitlines()
+    rangs = [i for i, l in enumerate(lignes) if re.match(r"^\| \[[^\]]+\]\([a-z0-9-]+\.md\) \|", l)]
+    if not rangs:
+        raise Erreur("README : le tableau des sujets est introuvable")
+    lignes.insert(rangs[-1] + 1, f"| [{_nom(TITRE_SUJET + titre)}]({sujet}.md) | {prefixe} | {quand.strip()} |")
+    chemin.write_text("\n".join(texte) + "\n", encoding="utf-8")
+    readme.write_text("\n".join(lignes) + "\n", encoding="utf-8")
+    return chemin
 
 
 def preparer(sujet, objectif, role, entreprise="", garder=None, date=None):
@@ -195,24 +356,18 @@ def questionnaire(guide, fichier=None):
         if not fichier:
             raise Erreur("guide prepare : donner le questionnaire préparé (--questionnaire <fichier>)")
         return _prepare(fichier)
-    if guide == "direction":
-        lignes, source = _tableau(_lire(GUIDES), "Guide direction"), "decouvrir-cas-usage/references/guides-entretien.md"
-    elif guide == "equipes":
-        lignes, source = _tableau(_lire(GUIDES), "Guide équipes"), "decouvrir-cas-usage/references/guides-entretien.md"
-    elif guide == "court":
-        equipes = {l["numero"]: l for l in _tableau(_lire(GUIDES), "Guide équipes")}
-        lignes = [dict(equipes[n], numero=i + 1) for i, n in enumerate(COURT)]
-        source = "decouvrir-cas-usage/references/guides-entretien.md (version courte)"
-    elif guide == "besoin":
-        lignes, source = _besoin(), "cadrer-besoin/SKILL.md, étape 3"
-    else:
-        lignes, source = _processus(), "auditer-processus/SKILL.md, étape 9"
-    attendu = {"besoin": 8, "processus": 8, "court": 3}.get(guide)
-    if attendu and len(lignes) != attendu:
-        raise Erreur(f"guide {guide} : {len(lignes)} questions lues, {attendu} attendues ({source})")
-    questions = [{"id": f"{PREFIXES[guide]}{l['numero']}", "theme": l["theme"], "question": l["question"],
-                  "alimente": l["alimente"]} for l in lignes]
-    return {"guide": guide, "source": source, "duree_minutes": DUREES[guide], "questions": questions}
+    sujet, garder, avec_theme = GUIDES_BASE[guide]
+    lignes = base(sujet)
+    if garder:
+        connues = {q["id"]: q for q in lignes}
+        manque = [g for g in garder if g not in connues]
+        if manque:
+            raise Erreur(f"guide {guide} : {', '.join(manque)} absent(s) de la base {sujet}")
+        lignes = [connues[g] for g in garder]
+    source = f"mener-entretien-ia/references/base-questions/{sujet}.md" + (" (version courte)" if guide == "court" else "")
+    questions = [{"id": f"{PREFIXES[guide]}{i}", "base": l["id"], "theme": l["partie"] if avec_theme else "",
+                  "question": l["question"], "alimente": l["decide"]} for i, l in enumerate(lignes, 1)]
+    return {"guide": guide, "source": source, "base": sujet, "duree_minutes": DUREES[guide], "questions": questions}
 
 
 def _minuscule(phrase):
@@ -469,6 +624,24 @@ def main(argv):
     a.add_argument("--entreprise", default="")
     a.add_argument("--garder", help="numéros de la base à garder, dans l'ordre : SC02,SC05,…")
     a.add_argument("--sortie", required=True, help="le fichier du questionnaire, jamais écrasé")
+    a = sp.add_parser("ajouter", help="ranger une question nouvelle dans la base")
+    a.add_argument("--sujet", required=True)
+    a.add_argument("--partie", required=True, help="le numéro de la partie, ou son titre")
+    a.add_argument("--question", required=True)
+    a.add_argument("--decide", required=True, help="ce que la réponse décide")
+    a.add_argument("--dabord", default="la personne", choices=DABORD)
+    a.add_argument("--creer-partie", action="store_true", help="ouvrir la partie si elle n'existe pas")
+    a = sp.add_parser("creer-sujet", help="ouvrir un sujet qui manque, avec sa première question")
+    a.add_argument("--sujet", required=True)
+    a.add_argument("--prefixe", required=True)
+    a.add_argument("--titre", required=True, help="après « Base de questions : », en minuscule : la facturation")
+    a.add_argument("--quand", required=True, help="quand ouvrir ce sujet, pour le tableau du README")
+    a.add_argument("--partie", required=True, help="le titre de la première partie")
+    a.add_argument("--question", required=True)
+    a.add_argument("--decide", required=True)
+    a.add_argument("--dabord", default="la personne", choices=DABORD)
+    a.add_argument("--intro", default="")
+    sp.add_parser("verifier", help="contrôler la base de questions (rend 1 au moindre écart)")
     sp.add_parser("schema")
     a = sp.add_parser("note")
     a.add_argument("--compte-rendu", required=True)
@@ -497,6 +670,19 @@ def main(argv):
             sortie.parent.mkdir(parents=True, exist_ok=True)
             sortie.write_text(preparer(args.base, args.objectif, args.role, args.entreprise, garder), encoding="utf-8")
             print(sortie)
+        elif args.commande == "ajouter":
+            print(ajouter(args.sujet, args.partie, args.question, args.decide, args.dabord, args.creer_partie))
+        elif args.commande == "creer-sujet":
+            print(creer_sujet(args.sujet, args.prefixe, args.titre, args.quand, args.partie, args.question,
+                              args.decide, args.dabord, args.intro))
+        elif args.commande == "verifier":
+            ecarts = verifier_base()
+            for e in ecarts:
+                print(f"  ✗ {e}")
+            n = sum(len(base(s)) for s in sujets()) if not ecarts else None
+            print(f"base de questions : {len(sujets())} sujets, {n} questions, aucun écart" if not ecarts
+                  else f"base de questions : {len(ecarts)} écart(s)")
+            return 1 if ecarts else 0
         elif args.commande == "schema":
             print(json.dumps(schema(), ensure_ascii=False, indent=2))
         else:
