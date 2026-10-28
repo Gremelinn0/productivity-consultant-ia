@@ -1,0 +1,54 @@
+{
+  "$comment": "Compte rendu que l'agent d'entretien en ligne rend à sa fin. Source unique : l'hôte le donne tel quel comme schéma de l'outil terminer_entretien (scripts/entretien.py consigne-en-ligne le range dans la ligne de l'agent, avec les sujets de la base du jour) ; scripts/entretien.py note le transforme en note mission/sources/entretien-<rôle>-<date>.md. L'hôte ajoute après coup ce que le modèle ne sait pas : date (AAAA-MM-JJ), duree_minutes, guide (en-ligne) et, s'il les connaît, role et langue. Les réponses restent mot pour mot dans la langue de la personne, le reste est en français. Méthode : references/agent-en-ligne.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["demande", "contexte", "sujet", "reponses", "pistes", "questions_ouvertes", "prochaine_etape"],
+  "properties": {
+    "demande": { "type": "string", "minLength": 1, "description": "Ce que la personne est venue chercher, mot pour mot, dans sa langue, tel qu'elle l'a écrit ou cliqué (page de départ comprise). Aucun nom, adresse ni numéro." },
+    "contexte": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taille", "metier", "outils"],
+      "description": "Ce qu'on sait de son entreprise, en français, d'après la page et la conversation. Une chaîne vide ou une liste vide quand elle ne l'a pas dit.",
+      "properties": {
+        "taille": { "type": "string", "description": "Le nombre de personnes, ou l'ordre de grandeur : « 8 personnes », « une trentaine »." },
+        "metier": { "type": "string", "description": "Le métier ou le secteur : « boutique en ligne », « cabinet comptable »." },
+        "outils": { "type": "array", "items": { "type": "string" }, "description": "Les outils qu'elle a cités, par catégorie ou par nom : « boîte mail », « tableur »." }
+      }
+    },
+    "sujet": { "type": "string", "description": "Le sujet principal de l'entretien : le nom du fichier d'un sujet de la base de questions, sans .md (support-client, prospection, processus…)." },
+    "reponses": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "description": "Une entrée par question posée, dans l'ordre, douze au plus, jamais deux fois la même. Seulement des questions de la base : leur numéro est la preuve.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "question", "reponse"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]{2,4}[0-9]{2,3}$", "description": "Le numéro de la question dans la base (SC02, PE08, AP05…), rien d'autre." },
+          "question": { "type": "string", "minLength": 1, "description": "La question telle qu'elle a été posée, avec les mots adaptés à la personne." },
+          "reponse": { "type": "string", "minLength": 1, "description": "La réponse mot pour mot, dans la langue de la personne ; le texte du choix quand elle a cliqué. [retiré] à la place d'un nom, d'une adresse ou d'un numéro." }
+        }
+      }
+    },
+    "pistes": {
+      "type": "array",
+      "description": "Là où une automatisation ou un agent aiderait. Sans prix, sans volume, sans délai, sans nom d'outil.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["constat", "piste"],
+        "properties": {
+          "constat": { "type": "string", "minLength": 1, "description": "Ce que la personne a dit, sans l'interpréter, en français." },
+          "piste": { "type": "string", "minLength": 1, "description": "La direction possible, au conditionnel, en français." }
+        }
+      }
+    },
+    "questions_ouvertes": { "type": "array", "items": { "type": "string" }, "description": "Ce qui reste à demander, et ce que la personne a demandé au consultant (prix, délai, solution), noté pour lui." },
+    "prochaine_etape": { "type": "string", "minLength": 1, "description": "Ce que la plateforme propose à la personne pour la suite, ou « à définir avec le consultant »." },
+    "pour_la_base": { "type": "array", "items": { "type": "string" }, "description": "Ce que la personne a soulevé et qu'aucune question de la base ne couvrait, formulé en question générale, sans nom : le consultant décide de l'ajouter à la base." },
+    "noms_a_retirer": { "type": "array", "items": { "type": "string" }, "description": "Les noms de personnes ou d'entreprises que la personne a écrits, tels qu'écrits, pour les retirer de la transcription. Jamais recopiés ailleurs dans le compte rendu." }
+  }
+}

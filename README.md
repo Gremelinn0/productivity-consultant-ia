@@ -104,6 +104,22 @@ l'entreprise mène l'entretien elle-même, après avoir lu ses dossiers et ses o
 Seul change ce que l'agent a pu lire ; les données lues restent chez l'entreprise. Le contrôle refuse une note dont un nombre dit de mémoire passerait pour un fait,
 et la transcription sort adresses et numéros retirés. Le consultant relit la note avant de s'en servir.
 
+Devant un visiteur que personne n'a rencontré, il n'y a ni consultant ni questionnaire préparé : **l'agent d'entretien en
+ligne** choisit lui-même ses questions, mais seulement dans la base de questions, douze au plus, jamais en dehors. La
+page commence par quelques questions à cliquer ; l'agent mène ensuite l'audit (ce qui prend du temps, ce qui coince, ce
+qui casserait si le volume doublait, ou le sujet de la page de cas d'usage), propose des réponses à cliquer, affiche son
+plan de 3 à 7 étapes à côté de la conversation, fait valider un récapitulatif, puis rend un compte rendu avec ses pistes.
+Il ne promet ni prix, ni volume, ni délai, ne conseille pas avant la fin, et ne demande ni mot de passe ni clé :
+
+```bash
+python skills/mener-entretien-ia/scripts/entretien.py consigne-en-ligne --sortie ligne.json
+python skills/mener-entretien-ia/scripts/entretien.py note --compte-rendu cr.json --transcription messages.json --sortie mission/sources
+```
+
+`ligne.json` est ce que l'hôte garde : la consigne (la méthode, l'index des sujets, toutes les questions de la base),
+le schéma du compte rendu et les sujets. La note reprend la structure des autres, avec en plus ses « Pistes » et une
+section « Pour la base de questions ». La méthode est `skills/mener-entretien-ia/references/agent-en-ligne.md`.
+
 Le dossier `skills/` porte aussi `router-consulting-strategy`, le cerveau des décisions : les étapes qui
 décident (portefeuille, choix de l'option, recommandation, priorités, continuer ou arrêter) l'appellent
 pour arbitrer, et gardent leur propre livrable.

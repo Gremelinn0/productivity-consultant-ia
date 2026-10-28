@@ -11,13 +11,17 @@ description: >-
   `mission/sources/entretien-<rôle>-<date>.md` aux statuts [F]/[H]/[E], contrôlée. Tient aussi la base de
   questions par sujet (une mission de bout en bout, du premier échange au bilan, et chaque objectif, du
   support client à la prospection) : toute question à poser à une entreprise en part, et ce qui manquait y est rangé.
+  Porte aussi l'agent d'entretien en ligne : devant un visiteur, sans consultant avant l'entretien, il choisit ses
+  questions dans la base (douze au plus, jamais en dehors), affiche un plan et des réponses à cliquer, et rend un
+  compte rendu à son propre schéma (pistes comprises).
   Outil du pack consultant-ia, appelé par decouvrir-cas-usage, cadrer-besoin et auditer-processus ; ne possède
   aucune étape. Triggers : « entretien guidé par IA », « entretien asynchrone », « questionnaire envoyé au
   client », « prépare les questions pour son objectif », « fais-moi les questions pour », « quelles questions
-  poser à », « base de questions », « range cette question », « interview bot », « AI-led interview ».
+  poser à », « base de questions », « range cette question », « interview bot », « AI-led interview »,
+  « agent d'entretien en ligne », « consigne en ligne », « audit en ligne d'un visiteur ».
 metadata:
-  scope: "un entretien du pack mené par écrit par une IA, sans le consultant, et sa note dans mission/sources/ ; la base de questions par sujet"
-  owns: "la base de questions (references/base-questions/, un fichier par sujet, guides fixes compris), la consigne de l'intervieweur, le schéma du compte rendu, le choix et la préparation du questionnaire, le contrôle et le rendu de la note et de sa transcription"
+  scope: "un entretien du pack mené par écrit par une IA, sans le consultant, et sa note dans mission/sources/ ; la base de questions par sujet ; l'agent d'entretien en ligne d'un visiteur, qui choisit ses questions dans la base"
+  owns: "la base de questions (references/base-questions/, un fichier par sujet, guides fixes compris), la consigne de l'intervieweur, le schéma du compte rendu, le choix et la préparation du questionnaire, le contrôle et le rendu de la note et de sa transcription ; l'agent en ligne (sa méthode, sa consigne, le schéma de son compte rendu, sa note)"
   consumes: "ce que le consultant ou la session de l'entreprise a pu lire ; la conversation menée ; les règles d'entretien de decouvrir-cas-usage/references/guides-entretien.md"
 ---
 
@@ -32,12 +36,19 @@ metadata:
 > confirme, `[E]` avec son calcul, aucune adresse ni numéro) ; la transcription sort adresses et numéros retirés.
 > Un questionnaire préparé sans objectif écrit, sans validation, ou de plus de douze questions est refusé.
 > La base de questions : `entretien.py verifier` refuse un doublon dans toute la base, un préfixe pris deux fois,
-> une ligne sans décision ou sans « D'abord », un index périmé, une compétence lectrice sans son rappel en tête.
+> une ligne sans décision ou sans « D'abord », un index périmé, une compétence lectrice sans son rappel en tête, une
+> consigne en ligne de plus de 60 000 caractères. L'agent en ligne : `entretien.py consigne-en-ligne` écrit sa ligne
+> (consigne, schéma, sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`) et
+> refuse une question absente de la base, plus de douze réponses, une adresse ou un numéro, un prix dans une piste.
 > Essais : `python -m unittest discover -s skills/mener-entretien-ia/tests`. **Boucle** : aucune.
 
 > ❓ **Une question pour l'entreprise sort de la base de questions** (`references/base-questions/`, un fichier par
 > sujet, index `README.md`) : lire d'abord le bloc du sujet, ne poser que ce qui manque, puis y ranger ce qui
 > manquait (`entretien.py ajouter` ; un sujet absent : `entretien.py creer-sujet`).
+
+> 🌐 **Devant un visiteur en ligne, sans consultant avant l'entretien, l'agent choisit ses questions dans la base,
+> jamais en dehors** : douze au plus, d'abord celles qui se posent à la personne, jamais ce que la page a déjà demandé.
+> Avec un client du consultant, c'est un questionnaire préparé et validé. Méthode : `references/agent-en-ligne.md`.
 
 ## Ce que cette compétence résout
 
@@ -61,7 +72,8 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    ligne, l'agent n'a lu que les sources du consultant et le site ; en local, la session de l'entreprise lit
    aussi ses dossiers et ses outils. Même questionnaire, même consigne, même note.
 3. **L'IA recueille, elle ne conseille pas.** Pas de prix, d'outil, de délai ni de promesse ; une question posée au
-   consultant est notée pour lui. C'est la règle « Ne rien promettre » des guides, tenue sans lui.
+   consultant est notée pour lui. C'est la règle « Ne rien promettre » des guides, tenue sans lui. L'agent en ligne
+   n'avance des pistes qu'après la validation du récapitulatif, au conditionnel, sans prix, délai ni outil.
 4. **Relancer comme le consultant, deux fois au plus.** Une réponse sans occurrence réelle, sans ordre de grandeur
    ni exemple est relancée ; au-delà de deux relances, on demande qui saurait, et on passe. L'entretien reste court.
 5. **Le statut se décide par une règle, pas par l'IA.** À l'écrit, presque tout est dit de mémoire : `[H]` avec qui
@@ -79,6 +91,8 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    (découverte), `court` quand le temps manque (trois questions, de quoi repérer des candidats, pas de quoi
    mesurer). Les guides `besoin` (le socle du cadrage, CA01 à CA08) et `processus` (les huit questions
    d'automatisation, AP01 à AP08) servent quand rien n'a pu être lu avant. Un questionnaire par entretien et par rôle.
+   Un visiteur en ligne, sans consultant avant l'entretien, n'a pas de questionnaire : voir la variante de l'agent en
+   ligne, après l'étape 8.
 2. **Préparer le questionnaire de l'objectif** : c'est ce qui fait la valeur de l'entretien. Lire tout ce qui est
    accessible (la demande, `mission/sources/`, le site, et en local les dossiers et outils de l'entreprise), en
    commençant par les traces de l'outil du processus quand un accès en lecture existe (`auditer-processus`,
@@ -114,6 +128,21 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
 8. **Relire la note** comme le consultant relirait la sienne : ce qui est `[H]` reste à confirmer, les questions
    ouvertes partent dans le message de suite, et la note alimente l'étape qui l'a demandée.
 
+### Variante : l'agent en ligne (un visiteur, sans consultant avant l'entretien)
+
+Personne ne peut préparer ni valider le questionnaire d'un visiteur : l'agent choisit ses questions dans la base, douze
+au plus, jamais en dehors. La méthode (le sujet, les douze questions, les réponses à cliquer, le plan, la fin, les
+interdits) est `references/agent-en-ligne.md`.
+
+1. `python …/entretien.py consigne-en-ligne --sortie ligne.json` écrit la ligne que l'hôte garde : `titre`, `guide`
+   (`en-ligne`), `consigne` (la méthode condensée de `references/consigne-en-ligne.md`, l'index des sujets et toutes les
+   questions de la base), `schema_compte_rendu` (`references/compte-rendu-en-ligne.schema.json`) et `questionnaire`. La
+   taille de la consigne s'affiche.
+2. L'hôte ajoute son contexte (la porte d'entrée, le sujet, les réponses de la page, les liens), définit les outils
+   `afficher` et `terminer_entretien`, et mène la conversation.
+3. `python …/entretien.py note --compte-rendu cr.json --transcription messages.json --sortie mission/sources` écrit la
+   note, de même structure que les autres, avec en plus « Pistes » et « Pour la base de questions ». Rien n'y est `[F]`.
+
 ## Le livrable
 
 `mission/sources/entretien-<rôle>-<date>.md`, au modèle de note de `decouvrir-cas-usage/references/guides-entretien.md` :
@@ -133,7 +162,8 @@ les nombres avec leur statut, les citations mot pour mot, le nombre de relances.
 ```
 
 Le compte rendu qui la produit suit `references/compte-rendu.schema.json` ; la consigne de l'intervieweur est
-`references/consigne-intervieweur.md`.
+`references/consigne-intervieweur.md`. Celui de l'agent en ligne suit `references/compte-rendu-en-ligne.schema.json` :
+la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine étape) et « Pour la base de questions ».
 
 ## Décisions et rejets
 
@@ -146,7 +176,8 @@ Le compte rendu qui la produit suit `references/compte-rendu.schema.json` ; la c
 | Adresses et numéros retirés de la transcription | les guides : on retire noms et données personnelles avant de déposer | garder la transcription brute | jamais ; la conversation brute reste chez l'hôte, comme un enregistrement chez l'entreprise |
 | La consigne en français, l'entretien dans la langue de la personne | une seule consigne à tenir ; la note du pack est en français | une consigne par langue | un modèle traduit mal une langue donnée : écrire la consigne dans cette langue |
 | Un questionnaire préparé pour l'objectif, pas le cadrage générique | le 28/10, une dirigeante qui voulait un agent pour son service client a reçu les huit questions du cadrage : rien sur ses messages, ses réponses types ni ses commandes | un questionnaire unique pour tous | l'objectif n'est pas encore nommé : c'est une découverte, un guide du pack |
-| Préparé, validé, puis seulement ouvert | ce que l'agent croit savoir lui est lu ; une erreur dans « Déjà su » se dit à la personne | laisser l'IA choisir ses questions en direct | jamais |
+| Avec un client du consultant : un questionnaire préparé et validé, puis seulement ouvert | ce que l'agent croit savoir lui est lu ; une erreur dans « Déjà su » se dit à la personne | laisser l'IA choisir ses questions en direct | jamais, pour un client |
+| En ligne, devant un visiteur : l'agent choisit ses questions dans la base, jamais en dehors | aucun consultant avant l'entretien, donc personne pour préparer ni valider un questionnaire ; la base est déjà relue et chaque question porte sa décision ; douze au plus, jamais ce que la page a demandé | un questionnaire préparé par visiteur (aucun relecteur) ; des questions inventées en direct | une question hors base a servi : elle y entre, relue par le consultant, puis l'agent peut la choisir |
 | Douze questions au plus | un entretien écrit long s'abandonne ; le reste a sa place dans la séance d'observation ou l'audit | tout le module | une seule personne détient tout et le demande : deux entretiens, pas un long |
 | Une méthode, deux modes (en ligne, local) | seul l'accès aux données change ; deux méthodes divergeraient | un agent local à part | jamais |
 | Une base de questions par sujet, guides fixes compris | une question vit à un seul endroit ; chaque entretien, audit ou rendez-vous enrichit la même base au lieu de réinventer ses questions | une liste dans chaque compétence (guides, cadrage, modules par objectif, jusqu'au 28/10/2026) | jamais |
@@ -173,3 +204,7 @@ Le compte rendu qui la produit suit `references/compte-rendu.schema.json` ; la c
 - Questionnaire préparé : contrôles éprouvés par les essais (objectif, validation, douze au plus, numérotation,
   compte rendu sans son questionnaire). Le mode local reste à éprouver sur un dossier d'entreprise fictif : ce
   que la session lit, ce qu'elle ne redemande pas.
+- Agent en ligne : la consigne, le schéma, le contrôle du compte rendu et la note sont éprouvés par les essais du script,
+  sur un compte rendu fictif. NON MESURÉ sur un vrai visiteur : si douze questions sont trop, si les réponses à cliquer
+  orientent, si le plan se lit à côté de la conversation, combien vont jusqu'au récapitulatif. La consigne reprend toute
+  la base : elle grossit avec elle, et `verifier` s'arrête à 60 000 caractères (au-delà, charger les sujets à la demande).

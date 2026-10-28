@@ -491,5 +491,401 @@ class UneSeuleMaison(unittest.TestCase):
         self.assertEqual(entretien.rangement(self.base)[1][1][-1], ("Facturer", ["facturation"]))
 
 
+CR_EN_LIGNE = json.loads((ICI / "compte-rendu-en-ligne-fictif.json").read_text(encoding="utf-8"))
+SECTIONS_EN_LIGNE = SECTIONS + ["## Pistes", "## Pour la base de questions"]
+LIGNE_DE_L_HOTE = {"base": "premier-echange", "mode": "en-ligne", "sujets": ["support-client"]}  # son `questionnaire`
+
+
+def sujets_dans_l_ordre_de_l_index():
+    """Les sujets dans l'ordre du README, lus par `rangement`, sans passer par les fonctions de l'agent en ligne."""
+    return [s for _, groupes in entretien.rangement() for _, sujets in groupes for s in sujets]
+
+
+def rangees_de_l_index():
+    """{sujet: (préfixe, nom, quand l'ouvrir)}, lu ligne à ligne dans le tableau du README."""
+    sortie = {}
+    for ligne in (entretien.BASE / "README.md").read_text(encoding="utf-8").splitlines():
+        m = re.match(r"^\| \[([^\]]+)\]\(([a-z0-9-]+)\.md\) \| ([A-Z]{2,4}) \| (.+) \|$", ligne)
+        if m:
+            sortie[m.group(2)] = (m.group(3), m.group(1), m.group(4))
+    return sortie
+
+
+def lancer(*arguments):
+    """La ligne de commande : (code, sortie standard, sortie d'erreur)."""
+    sortie, erreur = io.StringIO(), io.StringIO()
+    with contextlib.redirect_stdout(sortie), contextlib.redirect_stderr(erreur):
+        code = entretien.main(list(arguments))
+    return code, sortie.getvalue(), erreur.getvalue()
+
+
+def taille_affichee(texte):
+    m = re.search(r"consigne en ligne : ([\d ]+) caractères", texte)
+    return int(m.group(1).replace(" ", "")) if m else None
+
+
+class AgentEnLigne(unittest.TestCase):
+    """L'agent d'entretien en ligne : un visiteur, sans consultant avant l'entretien. Il choisit ses questions dans la
+    base, jamais en dehors. La ligne que l'hôte garde porte sa consigne, le schéma de son compte rendu et ses sujets."""
+
+    def test_la_commande_ecrit_la_ligne_que_l_hote_garde(self):
+        with tempfile.TemporaryDirectory() as d:
+            fichier = pathlib.Path(d) / "dossier" / "ligne.json"
+            code, sortie, erreur = lancer("consigne-en-ligne", "--sortie", str(fichier))
+            ligne = json.loads(fichier.read_text(encoding="utf-8"))
+            self.assertEqual([f.name for f in fichier.parent.iterdir()], ["ligne.json"])  # aucun fichier provisoire
+        self.assertEqual((code, erreur), (0, ""))
+        self.assertEqual(list(ligne), ["titre", "guide", "consigne", "schema_compte_rendu", "questionnaire"])
+        self.assertEqual(ligne["guide"], "en-ligne")
+        self.assertEqual(ligne["questionnaire"], {"base": "premier-echange", "mode": "en-ligne",
+                                                  "sujets": sujets_dans_l_ordre_de_l_index()})
+        self.assertEqual(sorted(ligne["questionnaire"]["sujets"]), entretien.sujets())
+        self.assertEqual(ligne["consigne"], entretien.consigne_en_ligne())
+        self.assertEqual(ligne["schema_compte_rendu"], entretien.schema_en_ligne())
+        self.assertIn(str(fichier), sortie)
+        self.assertEqual(taille_affichee(sortie), len(ligne["consigne"]))
+
+    def test_la_ligne_s_ecrit_avec_des_fins_de_ligne_unix_et_une_ecriture_manquee_se_dit(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = pathlib.Path(d)
+            fichier, dossier = d / "ligne.json", d / "cible"
+            self.assertEqual(lancer("consigne-en-ligne", "--sortie", str(fichier))[0], 0)
+            self.assertNotIn(b"\r\n", fichier.read_bytes())
+            dossier.mkdir()
+            code, _, erreur = lancer("consigne-en-ligne", "--sortie", str(dossier))  # un dossier : on ne l'écrase pas
+            restes = sorted(p.name for p in d.iterdir())
+        self.assertEqual(code, 1)
+        self.assertIn("écriture impossible", erreur)
+        self.assertEqual(restes, ["cible", "ligne.json"])  # aucun fichier provisoire resté
+
+    def test_sans_sortie_le_json_seul_va_sur_la_sortie_standard_et_la_taille_sur_l_autre(self):
+        code, sortie, erreur = lancer("consigne-en-ligne")
+        ligne = json.loads(sortie)
+        self.assertEqual(code, 0)
+        self.assertEqual(ligne["guide"], "en-ligne")
+        self.assertEqual(taille_affichee(erreur), len(ligne["consigne"]))
+        self.assertIn("visé : moins de 60 000", erreur)
+
+    def test_la_consigne_porte_la_methode_les_outils_l_index_et_toutes_les_questions(self):
+        consigne = entretien.consigne_en_ligne()
+        self.assertNotIn("{{", consigne)
+        for outil in ("`afficher`", "`terminer_entretien`"):
+            self.assertIn(outil, consigne)
+        rangees = rangees_de_l_index()
+        self.assertEqual(sorted(rangees), entretien.sujets())
+        for sujet, (prefixe, nom, quand) in rangees.items():
+            self.assertIn(f"- {sujet} ({prefixe}) | {nom} | {quand}\n", consigne)
+        for sujet in entretien.sujets():
+            for q in entretien.base(sujet):
+                self.assertIn(f"{q['id']} {q['question']} → {q['decide']}", consigne, q["id"])
+
+    def test_une_question_qui_se_cherche_ailleurs_que_chez_la_personne_est_marquee(self):
+        lignes = entretien.consigne_en_ligne().splitlines()
+        vus = set()
+        for sujet in entretien.sujets():
+            for q in entretien.base(sujet):
+                ligne = next(l for l in lignes if l.startswith(q["id"] + " "))
+                vus.add(q["dabord"])
+                marque = {"l'outil": " [outil]", "un document": " [document]"}.get(q["dabord"])
+                if marque:
+                    self.assertTrue(ligne.endswith(marque), ligne)
+                else:
+                    self.assertFalse(ligne.endswith(("]", "[outil]", "[document]")), ligne)
+        self.assertEqual(vus, {"la personne", "l'outil", "un document"})  # la base les contient tous : l'essai mord
+
+    def test_la_consigne_dit_la_methode_et_les_interdits(self):
+        consigne = " ".join(entretien.consigne_en_ligne().split())  # une phrase coupée par un retour à la ligne se lit entière
+        for attendu in (
+                "Tu ne poses que des questions de la base",  # jamais une question absente
+                "12 au plus",  # douze questions
+                "ce que la page a déjà demandé",  # jamais ce que la page a posé
+                "2 à 6 textes de 60 caractères au plus",  # les réponses suggérées
+                "Je ne sais pas",
+                "de 3 à 7 étapes",  # le plan de l'audit
+                "ni prix, ni volume, ni gain, ni délai",  # rien promettre
+                "Conseiller avant la fin",
+                "un mot de passe, une clé",
+                "[retiré]",
+                "Est-ce juste ? Voulez-vous ajouter ou corriger quelque chose ?",  # le récapitulatif validé
+                "Aucun mot de passe ni clé"):
+            self.assertIn(attendu, consigne)
+
+    def test_la_consigne_tient_sous_la_limite_et_ne_nomme_personne(self):
+        consigne = entretien.consigne_en_ligne()
+        self.assertLess(len(consigne), 60000)
+        self.assertEqual(entretien.LIMITE_CONSIGNE_EN_LIGNE, 60000)
+        for fichier in ("agent-en-ligne.md", "consigne-en-ligne.md", "compte-rendu-en-ligne.schema.json"):
+            texte = (entretien.COMPETENCE / "references" / fichier).read_text(encoding="utf-8")
+            for interdit in ("—", "–", "@", "http", "Florent", "ZEROGRAVITY", "Gremelinn0", "Pilotage"):
+                self.assertNotIn(interdit, texte, fichier)
+                self.assertNotIn(interdit, consigne)
+
+    def test_le_schema_du_compte_rendu_en_ligne(self):
+        s = entretien.schema_en_ligne()
+        self.assertEqual(s["required"], ["demande", "contexte", "sujet", "reponses", "pistes", "questions_ouvertes",
+                                         "prochaine_etape"])
+        p = s["properties"]
+        self.assertEqual(set(p), set(s["required"]) | {"pour_la_base", "noms_a_retirer"})
+        self.assertEqual(p["contexte"]["required"], ["taille", "metier", "outils"])
+        self.assertEqual(p["contexte"]["properties"]["outils"]["type"], "array")
+        self.assertEqual(p["reponses"]["items"]["required"], ["id", "question", "reponse"])
+        self.assertEqual((p["reponses"]["minItems"], p["reponses"]["maxItems"]), (1, 12))
+        self.assertEqual(p["pistes"]["items"]["required"], ["constat", "piste"])
+        self.assertEqual(p["sujet"]["enum"], sujets_dans_l_ordre_de_l_index())
+        code, sortie, _ = lancer("schema", "--guide", "en-ligne")
+        self.assertEqual((code, json.loads(sortie)), (0, s))
+        self.assertEqual(json.loads(lancer("schema")[1])["required"][0], "role")  # sans guide : l'autre schéma
+
+    def test_la_methode_et_la_consigne_disent_les_memes_limites_que_le_code(self):
+        self.assertEqual((entretien.CHOIX_EN_LIGNE, entretien.CHOIX_LONGUEUR, entretien.PLAN_EN_LIGNE,
+                          entretien.MAX_EN_LIGNE), ((2, 6), 60, (3, 7), 12))
+        doc = (entretien.COMPETENCE / "references" / "agent-en-ligne.md").read_text(encoding="utf-8")
+        bloc = next(b for b in re.findall(r"```json\n(.*?)\n```", doc, re.S) if '"suggestions"' in b)
+        afficher = json.loads(bloc)["properties"]
+        choix = afficher["suggestions"]["properties"]["choix"]
+        self.assertEqual((choix["minItems"], choix["maxItems"], choix["items"]["maxLength"]), (2, 6, 60))
+        self.assertEqual((afficher["plan"]["minItems"], afficher["plan"]["maxItems"]), (3, 7))
+        self.assertEqual(afficher["plan"]["items"]["properties"]["etat"]["enum"], ["fait", "en_cours", "a_venir"])
+        consigne = entretien.consigne_en_ligne()
+        for fragment in ("2 à 6 textes de 60 caractères", "de 3 à 7 étapes", "12 au plus",
+                         "`etat` vaut `fait`, `en_cours` ou `a_venir`"):
+            self.assertIn(fragment, consigne)
+
+    def test_la_competence_porte_la_nouvelle_regle_et_cite_la_methode(self):
+        skill = (entretien.COMPETENCE / "SKILL.md").read_text(encoding="utf-8")
+        for fichier in ("agent-en-ligne.md", "consigne-en-ligne.md", "compte-rendu-en-ligne.schema.json"):
+            self.assertIn(fichier, skill)
+            self.assertTrue((entretien.COMPETENCE / "references" / fichier).exists(), fichier)
+        self.assertIn("l'agent choisit ses questions dans la base, jamais en dehors", skill)
+        self.assertNotIn("| laisser l'IA choisir ses questions en direct | jamais |", skill)  # l'ancien rejet sans réserve
+
+    def test_verifier_affiche_la_taille_de_la_consigne(self):
+        code, sortie, _ = lancer("verifier")
+        self.assertEqual(code, 0, sortie)
+        self.assertRegex(sortie, r"aucun écart \(consigne en ligne : [\d ]+ caractères sur 60 000\)")
+
+
+class AgentEnLigneSurUneCopie(unittest.TestCase):
+    """Les contrôles de la consigne, prouvés par un sabotage sur une copie de la base."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.base = pathlib.Path(self._tmp.name) / "base"
+        shutil.copytree(entretien.BASE, self.base)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def barrer(self, fichier, numero, jusque_dans_le_numero=False):
+        """Retire une question de la base à la manière du pack : elle garde son numéro, et se lit barrée."""
+        f = self.base / fichier
+        lignes = f.read_text(encoding="utf-8").splitlines()
+        for i, ligne in enumerate(lignes):
+            if ligne.startswith(f"| {numero} |"):
+                c = [x.strip() for x in ligne.strip().strip("|").split("|")]
+                c[1], c[2] = f"~~{c[1]}~~", f"~~{c[2]}~~"
+                if jusque_dans_le_numero:
+                    c[0] = f"~~{c[0]}~~"
+                lignes[i] = "| " + " | ".join(c) + " |"
+                break
+        else:
+            self.fail(f"{numero} absent de {fichier}")
+        f.write_text("\n".join(lignes) + "\n", encoding="utf-8")
+
+    def test_une_question_barree_n_est_pas_dans_la_consigne(self):
+        q1, q2, q3 = entretien.base("crm", self.base)[:3]
+        self.assertIn(q1["question"], entretien.consigne_en_ligne(self.base))
+        self.barrer("crm.md", q1["id"])
+        self.barrer("crm.md", q2["id"], jusque_dans_le_numero=True)
+        consigne = entretien.consigne_en_ligne(self.base)
+        for q in (q1, q2):
+            self.assertNotIn(q["question"], consigne, q["id"])
+            self.assertNotIn(q["id"] + " ", consigne, q["id"])
+            self.assertNotIn(q["id"], entretien.questions_en_ligne(self.base))
+        self.assertIn(f"{q3['id']} {q3['question']} → {q3['decide']}", consigne)
+
+    def test_une_question_retiree_ne_se_repond_pas(self):
+        pris = {r["id"] for r in CR_EN_LIGNE["reponses"]}
+        q = next(q for q in entretien.base("support-client", self.base) if q["id"] not in pris)
+        cr = copy.deepcopy(CR_EN_LIGNE)
+        cr["reponses"][2]["id"] = q["id"]
+        self.assertEqual(entretien.controler_en_ligne(cr, dossier=self.base), [])
+        self.barrer("support-client.md", q["id"])
+        ecarts = entretien.controler_en_ligne(cr, dossier=self.base)
+        self.assertTrue(any("n'est pas une question de la base" in e for e in ecarts), ecarts)
+
+    def test_un_index_qui_ne_concorde_pas_avec_les_fichiers_est_refuse(self):
+        f = self.base / "README.md"
+        f.write_text(f.read_text(encoding="utf-8").replace(
+            "| [Le contenu](contenu.md) | CO | Produire du contenu avec l'IA |\n", ""), encoding="utf-8")
+        with self.assertRaises(entretien.Erreur) as e:
+            entretien.consigne_en_ligne(self.base)
+        self.assertIn("ne concordent pas", str(e.exception))
+
+    def test_verifier_refuse_une_consigne_trop_longue(self):
+        self.assertEqual(entretien.verifier_base(self.base), [])
+        limite = entretien.LIMITE_CONSIGNE_EN_LIGNE
+        entretien.LIMITE_CONSIGNE_EN_LIGNE = 1000
+        try:
+            ecarts = entretien.verifier_base(self.base)
+        finally:
+            entretien.LIMITE_CONSIGNE_EN_LIGNE = limite
+        self.assertTrue(any(e.startswith("consigne en ligne : ") and "plus que les 1 000" in e for e in ecarts), ecarts)
+
+
+class NoteDeLAgentEnLigne(unittest.TestCase):
+    """Le compte rendu de l'agent en ligne donne une note de même structure que les autres, avec ses pistes ; le contrôle
+    refuse ce qui enfreint la méthode : une question hors base, trop de réponses, une adresse, un prix."""
+
+    def cr(self):
+        return copy.deepcopy(CR_EN_LIGNE)
+
+    def ecrire(self, cr, messages=None, ligne=None):
+        with tempfile.TemporaryDirectory() as d:
+            fichiers = entretien.ecrire_note(cr, d, messages, ligne)
+            return [f.name for f in fichiers], [f.read_text(encoding="utf-8") for f in fichiers]
+
+    def test_un_compte_rendu_en_ligne_donne_une_note_de_meme_structure(self):
+        self.assertEqual(entretien.controler(self.cr()), [])
+        messages = [{"role": "assistant", "texte": "Hello"}, {"role": "user", "texte": "Hi"}]
+        noms, textes = self.ecrire(self.cr(), messages, LIGNE_DE_L_HOTE)  # comme l'hôte : la ligne en 4e argument
+        self.assertRegex(noms[0], r"^entretien-visiteur-[0-9a-f]{6}-2026-10-28\.md$")
+        self.assertEqual(noms[1], noms[0].replace(".md", ".transcription.md"))
+        note = textes[0]
+        self.assertRegex(note.splitlines()[0], r"^# Entretien — visiteur [0-9a-f]{6}, boutique en ligne · 2026-10-28 · 13 min$")
+        positions = [note.index(s) for s in SECTIONS_EN_LIGNE]
+        self.assertEqual(positions, sorted(positions))
+        partie = next(q["partie"] for q in entretien.base("support-client") if q["id"] == "SC05")
+        self.assertIn(f"### SC05 · {partie}", note)
+        self.assertIn("*Roughly how many customer messages do you get per week, and through which channels?*", note)
+        self.assertIn("> « About 80 a week, mostly email, a few on Instagram. »", note)
+        self.assertIn("> « I want an agent that answers my customers, I spend my evenings on emails. »", note)
+        self.assertIn("Contexte : métier : boutique en ligne ; taille : 8 personnes ; outils : boîte de réception, "
+                      "tableur, outil de boutique en ligne.", note)
+        self.assertIn("→ piste : Un agent pourrait préparer les réponses de suivi de commande", note)
+        self.assertIn("Prochaine étape : À définir avec le consultant.", note)
+        self.assertIn("- Combien coûterait un agent", note)
+        self.assertIn("- Les clients professionnels ont-ils un interlocuteur à part ?", note)
+        self.assertIn("À relire par le consultant avant de l'ajouter à `references/base-questions/support-client.md`.", note)
+        self.assertIn(f"Transcription intégrale : `{noms[1]}`", note)
+        self.assertIn("5 questions choisies dans la base (sujet : support-client)", note)
+        self.assertNotIn("`[F]`", note)  # rien n'est un fait : tout est dit de mémoire
+
+    def test_sans_pour_la_base_la_section_reste(self):
+        cr = self.cr()
+        cr.pop("pour_la_base")
+        cr["pistes"] = []
+        note = self.ecrire(cr)[1][0]
+        self.assertIn("## Pour la base de questions\n\nRien à ajouter.", note)
+        self.assertIn("## Pistes\n\nAucune piste relevée.", note)
+
+    def test_la_commande_note_accepte_un_compte_rendu_en_ligne(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = pathlib.Path(d)
+            (d / "cr.json").write_text(json.dumps(self.cr()), encoding="utf-8")
+            (d / "messages.json").write_text(json.dumps([{"role": "user", "texte": "write to jane@example.com"}]),
+                                             encoding="utf-8")
+            code, sortie, erreur = lancer("note", "--compte-rendu", str(d / "cr.json"), "--transcription",
+                                          str(d / "messages.json"), "--sortie", str(d / "mission"))
+            self.assertEqual(code, 0, erreur)
+            self.assertEqual(len(sortie.split()), 2)
+            self.assertEqual(len(list((d / "mission").iterdir())), 2)
+            transcription = next((d / "mission").glob("*.transcription.md")).read_text(encoding="utf-8")
+        self.assertNotIn("jane@example.com", transcription)
+        self.assertIn("[retiré]", transcription)
+
+    def test_la_duree_la_langue_et_le_role_de_l_hote_sont_facultatifs(self):
+        cr = self.cr()
+        cr.pop("duree_minutes")
+        cr.pop("langue")
+        note = self.ecrire(cr)[1][0]
+        self.assertRegex(note.splitlines()[0], r"boutique en ligne · 2026-10-28$")
+        self.assertIn("Langue : non précisée", note)
+        cr["role"] = "gérante"
+        self.assertEqual(self.ecrire(cr)[0][0], "entretien-gerante-2026-10-28.md")
+
+    def test_deux_visiteurs_le_meme_jour_ne_s_ecrasent_pas(self):
+        autre = self.cr()
+        autre["reponses"][1]["reponse"] = "About 200 a week."
+        premier = self.ecrire(self.cr())[0][0]
+        self.assertNotEqual(premier, self.ecrire(autre)[0][0])
+        self.assertEqual(premier, self.ecrire(self.cr())[0][0])  # la même note garde son nom
+
+    def test_un_nom_ecrit_est_retire_de_la_transcription_et_refuse_ailleurs(self):
+        cr = self.cr()
+        cr["noms_a_retirer"] = ["Sophie"]
+        texte = entretien.rendre_transcription(cr, [{"role": "user", "texte": "Sophie answers the emails."}])
+        self.assertNotIn("Sophie", texte)
+        self.assertIn("[retiré] answers", texte)
+        self.assertEqual(entretien.controler(cr), [])
+        cr["reponses"][0]["reponse"] += " Sophie helps."
+        self.assertTrue(any("noms_a_retirer" in e for e in entretien.controler(cr)))
+
+    def test_le_questionnaire_de_la_ligne_doit_etre_celui_de_l_agent_en_ligne(self):
+        self.assertEqual(entretien.controler(self.cr(), q=LIGNE_DE_L_HOTE), [])
+        self.assertTrue(any("le compte rendu suit le guide en-ligne" in e
+                            for e in entretien.controler(self.cr(), q={"guide": "prepare"})))
+
+    # Sabotages : chaque règle de la méthode, cassée une fois, doit faire refuser la note, et rien n'est écrit.
+    def refuse(self, modifier, attendu):
+        cr = self.cr()
+        modifier(cr)
+        ecarts = entretien.controler(cr)
+        self.assertTrue(any(attendu in e for e in ecarts), ecarts)
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(entretien.Erreur):
+                entretien.ecrire_note(cr, d)
+            self.assertEqual(list(pathlib.Path(d).iterdir()), [])
+
+    def test_une_question_absente_de_la_base_est_refusee(self):
+        self.refuse(lambda cr: cr["reponses"][1].update(id="ZZ99"), "reponses[2] : 'ZZ99' n'est pas une question de la base")
+
+    def test_douze_reponses_au_plus(self):
+        ids = [q["id"] for q in entretien.base("support-client")][:13]
+
+        def reponses(n):
+            return [{"id": i, "question": "Une question ?", "reponse": "Une réponse."} for i in ids[:n]]
+        cr = self.cr()
+        cr["reponses"] = reponses(12)
+        self.assertEqual(entretien.controler(cr), [])
+        self.refuse(lambda cr: cr.update(reponses=reponses(13)), "13 réponses, 12 au plus")
+
+    def test_la_meme_question_deux_fois_est_refusee(self):
+        self.refuse(lambda cr: cr["reponses"][2].update(id="SC01"), "la question SC01 est déjà dans les réponses")
+
+    def test_le_sujet_est_un_sujet_de_la_base(self):
+        self.refuse(lambda cr: cr.update(sujet="sujet-qui-n-existe-pas"), "n'est pas un sujet de la base")
+
+    def test_aucune_adresse_ni_numero_dans_le_compte_rendu(self):
+        self.refuse(lambda cr: cr["reponses"][0].update(reponse="Write me at jane@example.com"),
+                    "reponses[1].reponse : une adresse ou un numéro")
+        self.refuse(lambda cr: cr["reponses"][0].update(reponse="Call +1 212 555 0100"),
+                    "reponses[1].reponse : une adresse ou un numéro")
+        self.refuse(lambda cr: cr.update(demande="Mail me: jane@example.com"), "demande : une adresse ou un numéro")
+        self.refuse(lambda cr: cr["questions_ouvertes"].append("Rappeler le 06 12 34 56 78"),
+                    "questions_ouvertes : une adresse ou un numéro")
+
+    def test_un_prix_n_est_pas_une_piste(self):
+        self.refuse(lambda cr: cr["pistes"][0].update(piste="Un agent à 990 € par mois."), "pistes[1].piste : un prix")
+        self.refuse(lambda cr: cr["pistes"][1].update(piste="Cela coûterait 5 000 euros."), "pistes[2].piste : un prix")
+        self.refuse(lambda cr: cr.update(prochaine_etape="Un audit à 500 euros HT."), "prochaine_etape : un prix")
+        cr = self.cr()  # un montant dit par la personne, dans un constat, n'est pas un prix donné par l'agent
+        cr["pistes"][0]["constat"] = "Elle dit payer 300 € par mois un prestataire."
+        self.assertEqual(entretien.controler(cr), [])
+
+    def test_un_champ_manquant_ou_un_texte_vide_est_refuse(self):
+        self.refuse(lambda cr: cr.pop("pistes"), "champ manquant : pistes")
+        self.refuse(lambda cr: cr["reponses"][0].update(reponse="  "), "reponses[1].reponse : un texte est attendu")
+        self.refuse(lambda cr: cr.update(reponses=[]), "reponses : au moins une réponse")
+        self.refuse(lambda cr: cr.update(reponses={"id": "SC01"}), "reponses : au moins une réponse")  # pas de plantage
+        self.refuse(lambda cr: cr["contexte"].pop("taille"), "contexte.taille")
+        self.refuse(lambda cr: cr.update(prochaine_etape=""), "prochaine_etape : un texte est attendu")
+
+    def test_la_date_est_posee_par_l_hote(self):
+        self.refuse(lambda cr: cr.pop("date"), "champ manquant : date (l'hôte la pose)")
+        self.refuse(lambda cr: cr.update(date="28/10/2026"), "date : AAAA-MM-JJ attendu")
+        self.refuse(lambda cr: cr.update(duree_minutes="treize"), "duree_minutes")
+
+
 if __name__ == "__main__":
     unittest.main()

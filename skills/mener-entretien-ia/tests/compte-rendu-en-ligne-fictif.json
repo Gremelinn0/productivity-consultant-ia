@@ -1,0 +1,37 @@
+{
+  "demande": "I want an agent that answers my customers, I spend my evenings on emails.",
+  "contexte": {
+    "taille": "8 personnes",
+    "metier": "boutique en ligne",
+    "outils": ["boîte de réception", "tableur", "outil de boutique en ligne"]
+  },
+  "sujet": "support-client",
+  "reponses": [
+    {"id": "SC01", "question": "What makes this urgent for you right now?",
+     "reponse": "I spend my evenings answering emails, and the holiday rush is coming."},
+    {"id": "SC05", "question": "Roughly how many customer messages do you get per week, and through which channels?",
+     "reponse": "About 80 a week, mostly email, a few on Instagram."},
+    {"id": "SC11", "question": "How many minutes does a typical request take you?",
+     "reponse": "5 to 10 minutes. Order tracking is the worst."},
+    {"id": "SC09", "question": "Who answers today, and which tools do you have open?",
+     "reponse": "Only me, with my inbox and the shop back office."},
+    {"id": "SC03", "question": "What would count as a failure: a wrong answer, a cold tone, a promise made by mistake?",
+     "reponse": "A wrong delivery date. That already happened once."}
+  ],
+  "pistes": [
+    {"constat": "Elle répond seule, le soir, à des messages de suivi de commande qui prennent 5 à 10 minutes chacun.",
+     "piste": "Un agent pourrait préparer les réponses de suivi de commande, qu'elle relirait avant l'envoi."},
+    {"constat": "Une date de livraison fausse a déjà été donnée une fois.",
+     "piste": "Les réponses sur les délais pourraient venir de l'état réel de la commande, jamais d'une estimation."}
+  ],
+  "questions_ouvertes": [
+    "Combien coûterait un agent, et en combien de temps serait-il prêt ? (question de la personne pour le consultant)"
+  ],
+  "prochaine_etape": "À définir avec le consultant.",
+  "pour_la_base": ["Les clients professionnels ont-ils un interlocuteur à part ?"],
+  "noms_a_retirer": [],
+  "date": "2026-10-28",
+  "duree_minutes": 13,
+  "guide": "en-ligne",
+  "langue": "en"
+}

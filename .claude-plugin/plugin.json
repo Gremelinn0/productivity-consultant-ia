@@ -1,7 +1,7 @@
 {
   "name": "consultant-ia",
-  "description": "Le pack du consultant IA et automatisation, de l'idée à la solution mesurée : douze compétences, plus un routeur de stratégie et un entretien guidé par IA (l'IA mène l'entretien par écrit quand le consultant n'est pas là, et rend la note au format du pack), et deux portes d'entrée. On part d'un besoin, et le pack enchaîne cadrage, audit du processus, exigences, solutions comparées, rentabilité, spécification, plan, puis construction et recette en environnement d'essai, mise en service action par action et mesure du gain réel. Ou l'on part d'aucun besoin : il cartographie les tâches de l'entreprise, les trie et rend un portefeuille de cas d'usage chiffrés. Chaque nombre porte son statut, l'humain tranche à chaque étape, et rien ne touche un outil réel sans la validation de l'action précise.",
-  "version": "0.7.1",
+  "description": "Le pack du consultant IA et automatisation, de l'idée à la solution mesurée : douze compétences, plus un routeur de stratégie et un entretien guidé par IA (l'IA mène l'entretien par écrit quand le consultant n'est pas là, y compris en ligne devant un visiteur, et rend la note au format du pack), et deux portes d'entrée. On part d'un besoin, et le pack enchaîne cadrage, audit du processus, exigences, solutions comparées, rentabilité, spécification, plan, puis construction et recette en environnement d'essai, mise en service action par action et mesure du gain réel. Ou l'on part d'aucun besoin : il cartographie les tâches de l'entreprise, les trie et rend un portefeuille de cas d'usage chiffrés. Chaque nombre porte son statut, l'humain tranche à chaque étape, et rien ne touche un outil réel sans la validation de l'action précise.",
+  "version": "0.8.0",
   "author": {
     "name": "Florent Maisoncelle"
   },

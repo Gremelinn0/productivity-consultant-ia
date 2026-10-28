@@ -91,7 +91,9 @@ Aucune compétence ne refait le travail d'une autre ligne. Si une responsabilit�
 ci-dessus, on l'appelle. Le dossier `skills/` contient en plus `router-consulting-strategy`, qui arbitre
 sans posséder d'étape (voir la section suivante), et `mener-entretien-ia`, l'outil qui fait mener un entretien
 du pack par écrit par une IA quand le consultant n'est pas là : il lit les questions chez leurs propriétaires
-(guides de `decouvrir-cas-usage`, `cadrer-besoin`, `auditer-processus`) et rend une note `mission/sources/`.
+(guides de `decouvrir-cas-usage`, `cadrer-besoin`, `auditer-processus`) et rend une note `mission/sources/`. Devant un
+visiteur sans consultant avant l'entretien, son agent en ligne choisit ses questions dans la base de questions, jamais
+en dehors.
 
 ## Le cerveau des décisions
 

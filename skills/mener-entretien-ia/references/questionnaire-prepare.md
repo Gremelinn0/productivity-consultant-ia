@@ -80,3 +80,5 @@ attend encore sa réponse.
 - Rien dans « Déjà su » qu'on ne dirait pas à la personne elle-même : l'IA le lui lit.
 - Une question qui a changé le cadrage, le coût ou la réussite d'une mission rejoint son sujet dans la base,
   réécrite sans le nom du client (`base-questions/README.md`, « Enrichir la base » ; `entretien.py ajouter`).
+- Ce questionnaire est celui d'un client du consultant. Un visiteur en ligne n'en a pas : personne ne peut le préparer
+  ni le valider, et l'agent choisit ses questions dans la base, jamais en dehors (`agent-en-ligne.md`).

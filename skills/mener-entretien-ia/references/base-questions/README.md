@@ -145,7 +145,8 @@ tant qu'aucune question n'y a servi ; le cadrage et l'automatisation d'un proces
 Les compétences du pack qui posent ou préparent des questions lisent d'abord le bloc de leur sujet, puis rangent
 ici ce qu'elles ajoutent ; chacune le rappelle en tête de son `SKILL.md`.
 
-- `mener-entretien-ia` : le questionnaire préparé, les guides fixes, la note qui propose ce qui manquait.
+- `mener-entretien-ia` : le questionnaire préparé, les guides fixes, la note qui propose ce qui manquait, et l'agent en
+  ligne, qui y choisit ses questions (douze au plus, jamais en dehors) devant un visiteur sans consultant avant l'entretien.
 - `cadrer-besoin` : le cadrage (`cadrage`) et le bloc du sujet de l'objectif.
 - `decouvrir-cas-usage` : les entretiens de découverte (`decouverte-direction`, `decouverte-equipes`).
 - `auditer-processus` : les questions d'automatisation (`processus`) et celles de l'objectif.

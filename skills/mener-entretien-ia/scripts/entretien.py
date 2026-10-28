@@ -11,7 +11,8 @@ Usage :
   python entretien.py creer-sujet --sujet facturation --prefixe FA --titre "la facturation" --quand "…" --partie "…"
                                   --question "…" --decide "…" [--groupe "Servir ses clients" [--creer-groupe]]
   python entretien.py verifier
-  python entretien.py schema
+  python entretien.py consigne-en-ligne [--sortie ligne.json]
+  python entretien.py schema [--guide en-ligne]
   python entretien.py note --compte-rendu cr.json [--questionnaire …] [--transcription messages.json] --sortie mission/sources
 
 Les questions ne sont écrites qu'à un endroit, la base de questions : `references/base-questions/<sujet>.md`, un
@@ -22,9 +23,16 @@ nouvelle, `creer-sujet` un sujet qui manque, au groupe voulu de l'index ; `verif
 moindre écart. Un questionnaire préparé pour un objectif (guide
 `prepare`) est un fichier de la mission, au modèle de `references/questionnaire-prepare.md`, validé avant
 l'entretien. `note` refuse un compte rendu qui enfreint les règles du pack (statuts, données personnelles) et rend 1.
+
+L'agent en ligne (un visiteur, sans consultant avant l'entretien) choisit ses questions dans la base, douze au plus,
+jamais en dehors : `consigne-en-ligne` écrit la ligne que l'hôte garde (la consigne, le schéma du compte rendu, les
+sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`) et refuse une question
+absente de la base. Méthode : `references/agent-en-ligne.md`.
 """
 import argparse
+import hashlib
 import json
+import os
 import pathlib
 import re
 import sys
@@ -57,6 +65,22 @@ MAX_PREPARE = 12
 DABORD = ("l'outil", "un document", "la personne")
 NUMERO = re.compile(r"([A-Z]{2,4})(\d{2,3})")
 TITRE_SUJET = "# Base de questions : "
+
+# L'agent d'entretien en ligne : un visiteur, sans consultant avant l'entretien. Il choisit ses questions dans la base,
+# jamais en dehors (references/agent-en-ligne.md). Les limites des outils `afficher` et `terminer_entretien` sont dites
+# au modèle par la consigne : une seule définition ici.
+GUIDE_EN_LIGNE = "en-ligne"
+SCHEMA_EN_LIGNE = COMPETENCE / "references" / "compte-rendu-en-ligne.schema.json"
+CONSIGNE_EN_LIGNE = COMPETENCE / "references" / "consigne-en-ligne.md"
+TITRE_EN_LIGNE = "Entretien en ligne"
+BASE_EN_LIGNE = "premier-echange"   # le sujet de départ d'un visiteur, porté par la ligne de l'agent
+MAX_EN_LIGNE = MAX_PREPARE   # douze questions au plus, comme un questionnaire préparé
+CHOIX_EN_LIGNE = (2, 6)   # les réponses suggérées : de 2 à 6 choix
+CHOIX_LONGUEUR = 60   # de 60 caractères au plus chacun
+PLAN_EN_LIGNE = (3, 7)   # le plan de l'audit : de 3 à 7 étapes
+LIMITE_CONSIGNE_EN_LIGNE = 60000   # le modèle relit la consigne à chaque tour : la base ne la fait pas grossir au-delà
+# Où chercher la réponse d'une question qu'un visiteur ne peut pas lire lui-même : la consigne la marque.
+MARQUES_DABORD = {"l'outil": " [outil]", "un document": " [document]"}
 
 
 class Erreur(Exception):
@@ -117,8 +141,8 @@ ENTETE_INDEX = ["| Sujet | Préfixe | Quand l'ouvrir |", "|---|---|---|"]
 def _plan(lignes):
     """Où sont rangés les sujets dans le README (la liste de ses lignes). Rend {"familles", "groupes", "sujets"} : une
     famille {titre, rang, groupes}, un groupe {titre, famille, rang, sujets, dernier} (`dernier` : le rang de sa
-    dernière ligne de sujet, None s'il n'en a pas), un sujet {sujet, prefixe, nom, rang, famille, groupe} (famille et
-    groupe valent None pour une ligne posée hors de l'index). `rang` : le numéro de la ligne, depuis 0."""
+    dernière ligne de sujet, None s'il n'en a pas), un sujet {sujet, prefixe, nom, quand, rang, famille, groupe}
+    (famille et groupe valent None pour une ligne posée hors de l'index). `rang` : le numéro de la ligne, depuis 0."""
     familles, groupes, sujets = [], [], []
     famille = groupe = None
     dans = False
@@ -138,8 +162,9 @@ def _plan(lignes):
         else:
             m = RANGEE_SUJET.match(t)
             if m:
+                cellules = [x.strip() for x in t.strip("|").split("|")]
                 s = {"sujet": m.group(2), "prefixe": m.group(3), "nom": m.group(1), "rang": rang,
-                     "famille": famille, "groupe": groupe}
+                     "famille": famille, "groupe": groupe, "quand": cellules[2] if len(cellules) > 2 else ""}
                 sujets.append(s)
                 if groupe:
                     groupe["sujets"].append(s)
@@ -207,8 +232,9 @@ def verifier_base(dossier=None, skills=None):
     """Les écarts de la base de questions ; une liste vide veut dire qu'elle est saine. Contrôle : chaque sujet se
     lit, un préfixe par sujet et un sujet par préfixe, chaque ligne a sa question, sa décision et un « D'abord »
     connu, aucun tiret cadratin, aucune question en double dans toute la base, le README liste exactement les
-    sujets, chacun une fois dans un groupe d'une famille, et chaque compétence qu'il cite comme lectrice renvoie à la
-    base en tête de son SKILL.md."""
+    sujets, chacun une fois dans un groupe d'une famille, chaque compétence qu'il cite comme lectrice renvoie à la
+    base en tête de son SKILL.md, et la consigne de l'agent en ligne, qui reprend toutes les questions, reste sous
+    `LIMITE_CONSIGNE_EN_LIGNE` caractères."""
     dossier = pathlib.Path(dossier or BASE)
     skills = pathlib.Path(skills or SKILLS)
     ecarts, vus, prefixes = [], {}, {}
@@ -262,6 +288,16 @@ def verifier_base(dossier=None, skills=None):
             ecarts.append(f"README : la compétence {nom} n'existe pas dans le pack")
         elif "base-questions" not in "\n".join(_lire(chemin).splitlines()[:40]):
             ecarts.append(f"{nom} : son SKILL.md ne renvoie pas à la base de questions en tête (40 premières lignes)")
+    if not ecarts:   # la consigne en ligne se bâtit sur une base saine
+        try:
+            taille = len(consigne_en_ligne(dossier))
+        except Erreur as e:
+            ecarts.append(f"consigne en ligne : {e}")
+        else:
+            if taille > LIMITE_CONSIGNE_EN_LIGNE:
+                ecarts.append(f"consigne en ligne : {_milliers(taille)} caractères, plus que les "
+                              f"{_milliers(LIMITE_CONSIGNE_EN_LIGNE)} visés ; le modèle la relit à chaque tour : "
+                              "resserrer des questions de la base")
     return ecarts
 
 
@@ -540,7 +576,10 @@ DONNEE_PERSO = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+|(?:\+?\d[\s.-]?){9,}")
 
 def controler(cr, guide_attendu=None, q=None):
     """Les écarts aux règles du pack ; une liste vide veut dire que la note peut s'écrire. `q` : le questionnaire
-    préparé de l'entretien (guide `prepare`), lu dans son fichier ou gardé par l'hôte."""
+    préparé de l'entretien (guide `prepare`), lu dans son fichier ou gardé par l'hôte. Un compte rendu de l'agent en
+    ligne (guide `en-ligne`) a son propre contrôle : il n'a pas de questionnaire, l'agent choisit dans la base."""
+    if isinstance(cr, dict) and cr.get("guide") == GUIDE_EN_LIGNE:
+        return controler_en_ligne(cr, q)
     ecarts = []
     s = schema()
     for cle in s["required"]:
@@ -617,6 +656,17 @@ def slug(texte):
     return re.sub(r"[^a-z0-9]+", "-", t).strip("-")[:40] or "personne"
 
 
+def _role(cr):
+    """Le rôle qui nomme la note. Un compte rendu en ligne n'en a pas toujours (l'hôte peut le poser) : la note
+    s'appelle alors « visiteur » et une empreinte courte du compte rendu, pour que deux visiteurs le même jour ne
+    s'écrasent pas."""
+    if cr.get("role") or cr.get("guide") != GUIDE_EN_LIGNE:
+        return cr["role"]
+    contenu = json.dumps({"demande": cr.get("demande"), "reponses": cr.get("reponses")}, sort_keys=True,
+                         ensure_ascii=False)
+    return "visiteur " + hashlib.sha1(contenu.encode("utf-8")).hexdigest()[:6]
+
+
 def _statut(c):
     st = c["statut"]
     if st == "H":
@@ -632,6 +682,8 @@ NOMS_GUIDES = {"direction": "direction", "equipes": "équipes", "besoin": "besoi
 
 
 def rendre_note(cr, nom_transcription=None, questionnaire_prepare=None):
+    if cr.get("guide") == GUIDE_EN_LIGNE:
+        return rendre_note_en_ligne(cr, nom_transcription)
     complet = questionnaire_prepare or questionnaire(cr["guide"])
     q = {x["id"]: x for x in complet["questions"]}
     nom_guide = NOMS_GUIDES.get(cr["guide"]) or (
@@ -690,7 +742,7 @@ def rendre_note(cr, nom_transcription=None, questionnaire_prepare=None):
 
 
 def rendre_transcription(cr, messages):
-    l = [f"# Transcription — entretien {cr['role']} · {cr['date']}", "",
+    l = [f"# Transcription — entretien {_role(cr)} · {cr['date']}", "",
          "Entretien écrit guidé par IA. « Assistant » est l'IA ; « Personne » est la personne interrogée. "
          "Texte tel qu'échangé, dans la langue de l'échange ; adresses, numéros et noms cités remplacés par [retiré].", ""]
     noms = _noms(cr)
@@ -708,7 +760,7 @@ def ecrire_note(cr, sortie, messages=None, questionnaire_prepare=None):
         raise Erreur("compte rendu refusé :\n  - " + "\n  - ".join(ecarts))
     sortie = pathlib.Path(sortie)
     sortie.mkdir(parents=True, exist_ok=True)
-    base = f"entretien-{slug(cr['role'])}-{cr['date']}"
+    base = f"entretien-{slug(_role(cr))}-{cr['date']}"
     nom_t = f"{base}.transcription.md" if messages else None
     note = sortie / f"{base}.md"
     note.write_text(rendre_note(cr, nom_t, questionnaire_prepare), encoding="utf-8")
@@ -717,6 +769,264 @@ def ecrire_note(cr, sortie, messages=None, questionnaire_prepare=None):
         (sortie / nom_t).write_text(rendre_transcription(cr, messages), encoding="utf-8")
         fichiers.append(sortie / nom_t)
     return fichiers
+
+
+# ----------------------------------------------------------------------------------- l'agent d'entretien en ligne
+# Un visiteur, sans consultant avant l'entretien : personne ne prépare ni ne valide son questionnaire. L'agent choisit
+# ses questions dans la base, douze au plus, jamais en dehors (references/agent-en-ligne.md).
+
+
+def _barree(q):
+    """Une question retirée de la base garde son numéro et s'y lit barrée (~~…~~) : l'agent ne la pose pas."""
+    return "~~" in q["id"] + q["question"] + q["decide"]
+
+
+def questions_en_ligne(dossier=None):
+    """Les questions que l'agent en ligne peut poser : toute la base, sauf les questions barrées. {numéro: question}."""
+    dossier = pathlib.Path(dossier or BASE)
+    return {q["id"]: q for s in sujets(dossier) for q in base(s, dossier) if not _barree(q)}
+
+
+def index_des_sujets(dossier=None):
+    """Les sujets de la base dans l'ordre de l'index du README : [{sujet, prefixe, nom, quand}]. Refuse un index qui ne
+    concorde pas avec les fichiers de la base (`verifier` dit lesquels)."""
+    plan, _ = _readme(dossier)
+    if sorted(s["sujet"] for s in plan["sujets"]) != sujets(dossier):
+        raise Erreur("l'index du README et les fichiers de la base ne concordent pas (entretien.py verifier)")
+    return [{cle: s[cle] for cle in ("sujet", "prefixe", "nom", "quand")} for s in plan["sujets"]]
+
+
+def _milliers(n):
+    return f"{n:,}".replace(",", " ")
+
+
+def _bloc_questions_en_ligne(index, dossier):
+    """Toutes les questions de la base, par sujet, une ligne chacune : « numéro question → ce qu'elle décide », marquée
+    [outil] ou [document] quand sa réponse se cherche d'abord ailleurs que chez la personne. Les parties d'un sujet
+    ne sont pas reprises : la décision de chaque question suffit, et la consigne reste courte."""
+    lignes = []
+    for s in index:
+        questions = [q for q in base(s["sujet"], dossier) if not _barree(q)]
+        if not questions:
+            continue
+        lignes.append(f"### {s['sujet']}")
+        lignes += [f"{q['id']} {q['question']} → {q['decide']}{MARQUES_DABORD.get(q['dabord'], '')}" for q in questions]
+        lignes.append("")
+    return "\n".join(lignes).rstrip()
+
+
+def consigne_en_ligne(dossier=None):
+    """La consigne de l'agent en ligne : la méthode condensée (`consigne-en-ligne.md`), l'index des sujets de la base et,
+    sous forme compacte, toutes ses questions (numéro, question, ce qu'elle décide), sauf les questions barrées."""
+    dossier = pathlib.Path(dossier or BASE)
+    gabarit = _lire(CONSIGNE_EN_LIGNE).split("\n---\n", 1)
+    if len(gabarit) != 2:
+        raise Erreur("consigne-en-ligne.md : la ligne --- qui ouvre la consigne est absente")
+    index = index_des_sujets(dossier)
+    champs = {"MAX": MAX_EN_LIGNE, "CHOIX_MIN": CHOIX_EN_LIGNE[0], "CHOIX_MAX": CHOIX_EN_LIGNE[1],
+              "CHOIX_LONGUEUR": CHOIX_LONGUEUR, "PLAN_MIN": PLAN_EN_LIGNE[0], "PLAN_MAX": PLAN_EN_LIGNE[1],
+              "INDEX": "\n".join(f"- {s['sujet']} ({s['prefixe']}) | {s['nom']} | {s['quand']}" for s in index),
+              "QUESTIONS": _bloc_questions_en_ligne(index, dossier)}
+    texte = gabarit[1].strip() + "\n"
+    for cle, valeur in champs.items():
+        texte = texte.replace("{{" + cle + "}}", str(valeur))
+    reste = re.findall(r"\{\{[A-Z_]+\}\}", texte)
+    if reste:
+        raise Erreur(f"champs non remplis dans la consigne en ligne : {', '.join(sorted(set(reste)))}")
+    return texte
+
+
+def schema_en_ligne(dossier=None):
+    """Le schéma du compte rendu de l'agent en ligne, avec les sujets de la base du jour : `sujet` n'en prend qu'un."""
+    s = json.loads(_lire(SCHEMA_EN_LIGNE))
+    s["properties"]["sujet"]["enum"] = [x["sujet"] for x in index_des_sujets(dossier)]
+    return s
+
+
+def ligne_en_ligne(dossier=None):
+    """Ce que l'hôte garde pour l'agent en ligne : {titre, guide, consigne, schema_compte_rendu, questionnaire}. Le
+    `questionnaire` n'est pas une liste de questions (l'agent les choisit) : il dit le sujet de départ, le mode et les
+    sujets de la base que la consigne porte."""
+    return {"titre": TITRE_EN_LIGNE, "guide": GUIDE_EN_LIGNE, "consigne": consigne_en_ligne(dossier),
+            "schema_compte_rendu": schema_en_ligne(dossier),
+            "questionnaire": {"base": BASE_EN_LIGNE, "mode": GUIDE_EN_LIGNE,
+                              "sujets": [s["sujet"] for s in index_des_sujets(dossier)]}}
+
+
+def mesure_consigne_en_ligne(ligne, dossier=None):
+    """La taille de la consigne, à afficher : le modèle la relit à chaque tour, la base ne doit pas la faire grossir
+    sans qu'on le voie."""
+    n = len(ligne["consigne"])
+    return (f"consigne en ligne : {_milliers(n)} caractères (visé : moins de {_milliers(LIMITE_CONSIGNE_EN_LIGNE)}), "
+            f"{len(ligne['questionnaire']['sujets'])} sujets, {len(questions_en_ligne(dossier))} questions"
+            + ("" if n <= LIMITE_CONSIGNE_EN_LIGNE else " : TROP LONGUE, resserrer la base"))
+
+
+def ecrire_atomique(chemin, texte):
+    """Le fichier est écrit en entier ou pas du tout : un arrêt en route ne laisse pas une ligne tronquée à l'hôte."""
+    chemin = pathlib.Path(chemin)
+    provisoire = chemin.with_name(chemin.name + ".tmp")
+    try:
+        chemin.parent.mkdir(parents=True, exist_ok=True)
+        with open(provisoire, "w", encoding="utf-8", newline="\n") as f:   # les mêmes fins de ligne sur tout poste
+            f.write(texte)
+        os.replace(provisoire, chemin)
+    except OSError as e:
+        if provisoire.exists():
+            provisoire.unlink()
+        raise Erreur(f"écriture impossible : {chemin} ({e})") from None
+
+
+# Un prix : un montant avec sa devise, ou une devise suivie d'un montant, ou un « HT » / « TTC ». Une piste n'en porte pas.
+PRIX = re.compile(r"\d[\d\s.,]*k?\s?(?:€|\$|£|euros?\b|eur\b|usd\b|dollars?\b|gbp\b)|[€$£]\s?\d"
+                  r"|\b(?:eur|euros?|usd|dollars?|gbp)\s?\d|\b(?:HT|TTC)\b", re.I)
+
+
+def controler_en_ligne(cr, q=None, dossier=None):
+    """Les écarts d'un compte rendu de l'agent en ligne ; une liste vide veut dire que la note peut s'écrire. `q` : le
+    `questionnaire` de la ligne de l'agent (`consigne-en-ligne`), que l'hôte garde ; il ne sert qu'à vérifier le guide.
+    Une question qui n'est pas dans la base, plus de douze réponses, une adresse ou un numéro, un prix dans une piste :
+    la note est refusée."""
+    ecarts = []
+    for cle in json.loads(_lire(SCHEMA_EN_LIGNE))["required"] + ["date"]:
+        if cle not in cr:
+            ecarts.append(f"champ manquant : {cle}" + (" (l'hôte la pose)" if cle == "date" else ""))
+    if ecarts:
+        return ecarts
+    if isinstance(q, dict) and q.get("guide", GUIDE_EN_LIGNE) != GUIDE_EN_LIGNE:
+        ecarts.append(f"le compte rendu suit le guide {GUIDE_EN_LIGNE}, le questionnaire donné est {q.get('guide')}")
+    if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(cr["date"])):
+        ecarts.append("date : AAAA-MM-JJ attendu")
+    duree = cr.get("duree_minutes")
+    if duree is not None and (not isinstance(duree, int) or isinstance(duree, bool) or duree < 0):
+        ecarts.append("duree_minutes : un nombre entier de minutes attendu")
+    textes = []   # (où, texte) : ce qui est lu pour les adresses, les numéros et les noms
+
+    def texte(valeur, ou):
+        if not isinstance(valeur, str) or not valeur.strip():
+            ecarts.append(f"{ou} : un texte est attendu")
+            return ""
+        textes.append((ou, valeur))
+        return valeur
+
+    def liste(valeur, ou):
+        if not isinstance(valeur, list) or not all(isinstance(x, str) for x in valeur):
+            ecarts.append(f"{ou} : une liste de textes est attendue")
+            return []
+        textes.extend((ou, x) for x in valeur)
+        return valeur
+
+    texte(cr["demande"], "demande")
+    contexte = cr["contexte"]
+    if not isinstance(contexte, dict):
+        ecarts.append("contexte : taille, metier et outils attendus")
+    else:
+        for cle in ("taille", "metier"):
+            if not isinstance(contexte.get(cle), str):
+                ecarts.append(f"contexte.{cle} : un texte est attendu (vide si la personne ne l'a pas dit)")
+            else:
+                textes.append((f"contexte.{cle}", contexte[cle]))
+        liste(contexte.get("outils"), "contexte.outils")
+    connus = sujets(dossier)
+    if cr["sujet"] not in connus:
+        ecarts.append(f"sujet : {cr['sujet']!r} n'est pas un sujet de la base (connus : {', '.join(connus)})")
+    reponses = cr["reponses"]
+    if not isinstance(reponses, list) or not reponses:
+        ecarts.append("reponses : au moins une réponse est attendue")
+        reponses = []
+    if len(reponses) > MAX_EN_LIGNE:
+        ecarts.append(f"reponses : {len(reponses)} réponses, {MAX_EN_LIGNE} au plus (l'entretien en ligne reste court)")
+    actives = questions_en_ligne(dossier)
+    vus = set()
+    for i, r in enumerate(reponses, 1):
+        ou = f"reponses[{i}]"
+        if not isinstance(r, dict):
+            ecarts.append(f"{ou} : id, question et reponse attendus")
+            continue
+        ident = r.get("id")
+        if not isinstance(ident, str):
+            ecarts.append(f"{ou}.id : le numéro de la question dans la base est attendu")
+        else:
+            if ident in vus:
+                ecarts.append(f"{ou} : la question {ident} est déjà dans les réponses")
+            vus.add(ident)
+            if ident not in actives:
+                ecarts.append(f"{ou} : {ident!r} n'est pas une question de la base (inventée, retirée ou mal recopiée) ; "
+                              "l'agent en ligne ne pose que des questions de la base")
+        texte(r.get("question"), f"{ou}.question")
+        texte(r.get("reponse"), f"{ou}.reponse")
+    pistes = cr["pistes"]
+    if not isinstance(pistes, list):
+        ecarts.append("pistes : une liste est attendue")
+        pistes = []
+    for i, p in enumerate(pistes, 1):
+        if not isinstance(p, dict):
+            ecarts.append(f"pistes[{i}] : constat et piste attendus")
+            continue
+        texte(p.get("constat"), f"pistes[{i}].constat")
+        if PRIX.search(texte(p.get("piste"), f"pistes[{i}].piste") or ""):
+            ecarts.append(f"pistes[{i}].piste : un prix ; l'agent en ligne n'en donne pas, il est pour le consultant")
+    liste(cr["questions_ouvertes"], "questions_ouvertes")
+    if PRIX.search(texte(cr["prochaine_etape"], "prochaine_etape") or ""):
+        ecarts.append("prochaine_etape : un prix ; l'agent en ligne n'en donne pas, il est pour le consultant")
+    if "pour_la_base" in cr:
+        liste(cr["pour_la_base"], "pour_la_base")
+    if "noms_a_retirer" in cr and not isinstance(cr["noms_a_retirer"], list):
+        ecarts.append("noms_a_retirer : une liste de textes est attendue")
+    for ou, t in textes:
+        if DONNEE_PERSO.search(t):
+            ecarts.append(f"{ou} : une adresse ou un numéro reste dans le texte, à remplacer par [retiré]")
+    noms = _noms(cr) if isinstance(cr.get("noms_a_retirer"), list) else None
+    if noms and any(noms.search(t) for _, t in textes):
+        ecarts.append("un nom écrit pendant l'entretien (noms_a_retirer) reste dans le compte rendu, à retirer")
+    return ecarts
+
+
+def _citation(texte):
+    """Le texte d'une personne en citation, sur autant de lignes qu'elle en a écrit."""
+    return "> « " + texte.strip().replace("\n", "\n> ") + " »"
+
+
+def _section(titre, items, vide):
+    return [f"## {titre}", ""] + ([f"- {x}" for x in items] or [vide]) + [""]
+
+
+def rendre_note_en_ligne(cr, nom_transcription=None, dossier=None):
+    """La note d'un entretien en ligne, de même structure que celle des autres guides, avec en plus ses pistes et ce qui
+    peut entrer dans la base de questions."""
+    contexte = cr["contexte"]
+    role = _role(cr)
+    entete = f"# Entretien — {role}" + (f", {contexte['metier']}" if contexte["metier"] else "")
+    entete += f" · {cr['date']}" + (f" · {cr['duree_minutes']} min" if cr.get("duree_minutes") is not None else "")
+    nom_guide = f"agent en ligne, {len(cr['reponses'])} questions choisies dans la base (sujet : {cr['sujet']})"
+    l = [entete, "",
+         "Mené par : entretien guidé par IA (consultant-ia, `mener-entretien-ia`), en ligne, sans le consultant · Guide "
+         f"utilisé : {nom_guide} · Personnes présentes (rôles) : {', '.join(cr.get('personnes') or [role])} · Langue : "
+         f"{cr.get('langue') or 'non précisée'}", ""]
+    if nom_transcription:
+        l += [f"Transcription intégrale : `{nom_transcription}` (même dossier).", ""]
+    ctx = [f"{nom} : {valeur}" for nom, valeur in (("métier", contexte["metier"]), ("taille", contexte["taille"]),
+                                                   ("outils", ", ".join(contexte["outils"]))) if valeur]
+    l += ["## Ce qui a été dit", "",
+          "L'agent a choisi ses questions dans la base de questions, jamais en dehors. La personne a répondu de mémoire, "
+          "en ligne, sans remettre de pièce : tout nombre ci-dessous est un `[H]`, à confirmer par elle.", "",
+          "La demande, mot pour mot :", "", _citation(cr["demande"]), "",
+          "Contexte : " + (" ; ".join(ctx) if ctx else "non précisé") + ".", ""]
+    parties = {ident: q["partie"] for ident, q in questions_en_ligne(dossier).items()}
+    for r in cr["reponses"]:
+        l += [f"### {r['id']}" + (f" · {parties[r['id']]}" if r["id"] in parties else ""), "",
+              f"*{' '.join(r['question'].split())}*", "", _citation(r["reponse"]), ""]
+    l += ["## Tâches citées (à reporter dans 01)", "",
+          "Non relevées par l'agent en ligne : à tirer des réponses ci-dessus.", ""]
+    l += _section("Pièces remises", ["Aucune : l'agent en ligne ne reçoit pas de pièce."], "")
+    l += _section("Écarts avec d'autres sources", [], "Aucun relevé.")
+    l += _section("Documents ou accès promis", [], "Aucun relevé ici : voir les questions restées ouvertes.")
+    l += _section("Questions restées ouvertes", cr["questions_ouvertes"], "Aucune.")
+    l += ["## Pistes", ""] + ([f"- {p['constat'].strip()} → piste : {p['piste'].strip()}" for p in cr["pistes"]]
+                              or ["Aucune piste relevée."]) + ["", f"Prochaine étape : {cr['prochaine_etape'].strip()}", ""]
+    l += _section("Pour la base de questions", cr.get("pour_la_base") or [], "Rien à ajouter.")
+    l += [f"À relire par le consultant avant de l'ajouter à `references/base-questions/{cr['sujet']}.md`.", ""]
+    return "\n".join(l).rstrip() + "\n"
 
 
 def main(argv):
@@ -765,7 +1075,11 @@ def main(argv):
     a.add_argument("--creer-groupe", action="store_true",
                    help="ouvrir le groupe nommé s'il n'existe pas, à la fin de « Ce que veut le client »")
     sp.add_parser("verifier", help="contrôler la base de questions (rend 1 au moindre écart)")
-    sp.add_parser("schema")
+    a = sp.add_parser("consigne-en-ligne", help="la ligne de l'agent d'entretien en ligne : consigne, schéma, sujets (JSON)")
+    a.add_argument("--sortie", help="le fichier JSON à écrire ; sans lui, le JSON va sur la sortie standard")
+    a = sp.add_parser("schema")
+    a.add_argument("--guide", choices=(GUIDE_EN_LIGNE,),
+                   help="le schéma du compte rendu de l'agent en ligne ; sans guide, celui des autres guides")
     a = sp.add_parser("note")
     a.add_argument("--compte-rendu", required=True)
     a.add_argument("--questionnaire", help="le questionnaire préparé de l'entretien (guide prepare)")
@@ -803,12 +1117,27 @@ def main(argv):
             ecarts = verifier_base()
             for e in ecarts:
                 print(f"  ✗ {e}")
-            n = sum(len(base(s)) for s in sujets()) if not ecarts else None
-            print(f"base de questions : {len(sujets())} sujets, {n} questions, aucun écart" if not ecarts
-                  else f"base de questions : {len(ecarts)} écart(s)")
+            if ecarts:
+                print(f"base de questions : {len(ecarts)} écart(s)")
+            else:
+                n = sum(len(base(s)) for s in sujets())
+                print(f"base de questions : {len(sujets())} sujets, {n} questions, aucun écart "
+                      f"(consigne en ligne : {_milliers(len(consigne_en_ligne()))} caractères sur "
+                      f"{_milliers(LIMITE_CONSIGNE_EN_LIGNE)})")
             return 1 if ecarts else 0
+        elif args.commande == "consigne-en-ligne":
+            ligne = ligne_en_ligne()
+            donnees = json.dumps(ligne, ensure_ascii=False, indent=2) + "\n"
+            if args.sortie:
+                ecrire_atomique(args.sortie, donnees)
+                print(args.sortie)
+                print(mesure_consigne_en_ligne(ligne))
+            else:   # le JSON seul sur la sortie standard, la mesure sur l'autre
+                sys.stdout.write(donnees)
+                print(mesure_consigne_en_ligne(ligne), file=sys.stderr)
         elif args.commande == "schema":
-            print(json.dumps(schema(), ensure_ascii=False, indent=2))
+            print(json.dumps(schema_en_ligne() if args.guide == GUIDE_EN_LIGNE else schema(), ensure_ascii=False,
+                             indent=2))
         else:
             cr = json.loads(pathlib.Path(args.compte_rendu).read_text(encoding="utf-8"))
             messages = json.loads(pathlib.Path(args.transcription).read_text(encoding="utf-8")) if args.transcription else None
