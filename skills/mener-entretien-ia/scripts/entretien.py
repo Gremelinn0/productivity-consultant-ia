@@ -4,12 +4,16 @@ Usage :
   python entretien.py questionnaire (--guide besoin | --questionnaire mission/sources/questionnaire-<objet>-<date>.md)
   python entretien.py consigne (--guide besoin | --questionnaire …) --role "dirigeante" --entreprise "Société Exemple"
                                [--langue en] [--contexte contexte.md] [--consultant "le consultant"]
+  python entretien.py base [--sujet support-client]
+  python entretien.py preparer --base support-client --objectif "…" --role "dirigeante" [--entreprise "…"]
+                               [--garder SC02,SC05,…] --sortie mission/sources/questionnaire-<objet>-<date>.md
   python entretien.py schema
   python entretien.py note --compte-rendu cr.json [--questionnaire …] [--transcription messages.json] --sortie mission/sources
 
 Les questions ne sont écrites qu'à un endroit : `decouvrir-cas-usage/references/guides-entretien.md` (direction,
 équipes, version courte), l'étape 3 de `cadrer-besoin` (besoin) et l'étape 9 d'`auditer-processus` (processus).
-Ce script les lit là ; il n'en garde aucune copie. Un questionnaire préparé pour un objectif (guide `prepare`) est
+Ce script les lit là ; il n'en garde aucune copie. La base de questions par sujet vit dans
+`references/base-questions/<sujet>.md` : `preparer` en tire le brouillon d'un questionnaire. Un questionnaire préparé pour un objectif (guide `prepare`) est
 un fichier de la mission, au modèle de `references/questionnaire-prepare.md`, validé avant l'entretien. `note`
 refuse un compte rendu qui enfreint les règles du pack (statuts, données personnelles) et rend 1.
 """
@@ -28,6 +32,7 @@ SCHEMA = COMPETENCE / "references" / "compte-rendu.schema.json"
 GUIDES = SKILLS / "decouvrir-cas-usage" / "references" / "guides-entretien.md"
 CADRER = SKILLS / "cadrer-besoin" / "SKILL.md"
 AUDITER = SKILLS / "auditer-processus" / "SKILL.md"
+BASE = COMPETENCE / "references" / "base-questions"
 
 GUIDES_CONNUS = ("direction", "equipes", "besoin", "processus", "court", "prepare")
 PREFIXES = {"direction": "D", "equipes": "E", "besoin": "B", "processus": "P", "court": "C", "prepare": "Q"}
@@ -87,6 +92,63 @@ def _processus():
     return lignes
 
 
+def sujets():
+    """Les sujets de la base de questions : un fichier par sujet dans `references/base-questions/`."""
+    return sorted(p.stem for p in BASE.glob("*.md"))
+
+
+def base(sujet):
+    """Les questions d'un sujet de la base, dans l'ordre du fichier : [{id, partie, question, decide, dabord}]."""
+    chemin = BASE / f"{sujet}.md"
+    if not chemin.exists():
+        raise Erreur(f"sujet absent de la base : {sujet} (connus : {', '.join(sujets()) or 'aucun'})")
+    partie, sortie = "", []
+    for ligne in _lire(chemin).splitlines():
+        t = re.match(r"^## \d+\.\s*(.+?)\s*$", ligne)
+        if t:
+            partie = t.group(1)
+            continue
+        c = [x.strip() for x in ligne.strip().strip("|").split("|")]
+        if len(c) >= 4 and re.fullmatch(r"[A-Z]{2,4}\d{2,3}", c[0]):
+            sortie.append({"id": c[0], "partie": partie, "question": c[1], "decide": c[2], "dabord": c[3]})
+    if not sortie:
+        raise Erreur(f"{chemin.name} : aucune question lue (lignes « | SC01 | question | décision | d'abord | »)")
+    ids = [q["id"] for q in sortie]
+    doubles = sorted({i for i in ids if ids.count(i) > 1})
+    if doubles:
+        raise Erreur(f"{chemin.name} : numéro en double ({', '.join(doubles)})")
+    return sortie
+
+
+def preparer(sujet, objectif, role, entreprise="", garder=None, date=None):
+    """Le brouillon d'un questionnaire préparé, tiré de la base du sujet : les questions gardées (toutes, sans `garder`),
+    chacune avec son numéro de base et la décision qu'elle sert dans « Alimente ». « Validé par » reste vide : le script
+    refuse de l'ouvrir tant qu'on n'a pas gardé douze questions au plus, adapté leurs mots et validé."""
+    questions = base(sujet)
+    if garder:
+        connues = {q["id"]: q for q in questions}
+        inconnues = [g for g in garder if g not in connues]
+        if inconnues:
+            raise Erreur(f"absentes de la base {sujet} : {', '.join(inconnues)}")
+        questions = [connues[g] for g in garder]
+    import datetime
+    jour = date or datetime.date.today().isoformat()
+    l = [f"# Questionnaire préparé · {objectif}" + (f" · {entreprise}" if entreprise else ""), "",
+         f"Objectif : {objectif}",
+         f"Personne interrogée : {role} · Préparé le {jour} par le consultant, depuis la base {sujet}",
+         "Validé par :",
+         "Lu pour le préparer :",
+         f"Base : {sujet} ({', '.join(q['id'] for q in questions)})", "",
+         "## Déjà établi (on ne le redemande pas)", "",
+         "## Questions", "",
+         "| # | Thème | Question | Déjà su (à faire confirmer) | Alimente |",
+         "|---|---|---|---|---|"]
+    for i, q in enumerate(questions, 1):
+        l.append(f"| {i} | {q['partie']} | {q['question']} | | {q['id']} · {q['decide']} |")
+    l += ["", "## Pas dans cet entretien", ""]
+    return "\n".join(l) + "\n"
+
+
 def _prepare(fichier):
     """Le questionnaire préparé pour un objectif : `references/questionnaire-prepare.md` en donne le modèle."""
     chemin = pathlib.Path(fichier)
@@ -119,8 +181,9 @@ def _prepare(fichier):
         raise Erreur(f"{chemin.name} : question vide (ligne {', '.join(vides)})")
     etabli = re.search(r"^## Déjà établi.*?$(.*?)(?=^## |\Z)", texte, re.M | re.S)
     deja = re.findall(r"^\s*- (.+?)\s*$", etabli.group(1), re.M) if etabli else []
+    depuis = re.search(r"^Base\s*:\s*([a-z0-9-]+)", texte, re.M)
     return {"guide": "prepare", "source": chemin.name, "objectif": objectif.group(1), "valide_par": valide.group(1),
-            "deja_etabli": deja, "duree_minutes": max(5, round(2.5 * len(lignes))),
+            "base": depuis.group(1) if depuis else None, "deja_etabli": deja, "duree_minutes": max(5, round(2.5 * len(lignes))),
             "questions": [{"id": f"Q{l['numero']}", "theme": l["theme"], "question": l["question"],
                            "deja_su": l["deja_su"], "alimente": l["alimente"]} for l in lignes]}
 
@@ -251,7 +314,28 @@ def controler(cr, guide_attendu=None, q=None):
                 ecarts.append(f"{r.get('id')} : une adresse ou un numéro reste dans le texte, à retirer")
     for t in cr["taches"]:
         chiffre({"valeur": t.get("tache"), **t}, "tâche")
+    for texte in cr.get("pour_la_base", []):
+        if DONNEE_PERSO.search(texte or ""):
+            ecarts.append("pour la base : une adresse ou un numéro reste dans le texte, à retirer")
+    noms = _noms(cr)
+    if noms:
+        textes = [cr.get("equipe", "")] + cr["ecarts"] + cr["promis"] + cr["questions_ouvertes"] + cr.get("pour_la_base", [])
+        for r in cr["reponses"]:
+            textes += [r.get("synthese", ""), r.get("exemple_reel", "")] + list(r.get("citations", []))
+        textes += [" ".join(str(v) for v in t.values()) for t in cr["taches"]]
+        textes += [" ".join(str(v) for v in p.values()) for p in cr["pieces"]]
+        if any(noms.search(x or "") for x in textes):
+            ecarts.append("un nom écrit pendant l'entretien (noms_a_retirer) reste dans le compte rendu, à retirer")
     return ecarts
+
+
+def _noms(cr):
+    """Les noms que la personne a écrits (`noms_a_retirer`), en une expression ; None s'il n'y en a pas."""
+    noms = sorted({n.strip() for n in cr.get("noms_a_retirer") or [] if isinstance(n, str) and len(n.strip()) >= 2},
+                  key=len, reverse=True)
+    if not noms:
+        return None
+    return re.compile(r"(?<!\w)(?:" + "|".join(re.escape(n) for n in noms) + r")(?!\w)", re.I)
 
 
 def slug(texte):
@@ -277,7 +361,8 @@ def rendre_note(cr, nom_transcription=None, questionnaire_prepare=None):
     complet = questionnaire_prepare or questionnaire(cr["guide"])
     q = {x["id"]: x for x in complet["questions"]}
     nom_guide = NOMS_GUIDES.get(cr["guide"]) or (
-        f"questionnaire préparé pour : {complet['objectif']} (`{complet['source']}`, {len(q)} questions)")
+        f"questionnaire préparé pour : {complet['objectif']} (`{complet['source']}`, {len(q)} questions"
+        + (f", depuis la base {complet['base']}" if complet.get("base") else "") + ")")
     entete = f"# Entretien — {cr['role']}" + (f", {cr['equipe']}" if cr.get("equipe") else "")
     entete += f" · {cr['date']} · {cr['duree_minutes']} min"
     presents = ", ".join(cr.get("personnes") or [cr["role"]])
@@ -308,7 +393,7 @@ def rendre_note(cr, nom_transcription=None, questionnaire_prepare=None):
           "| Tâche | Fréquence | Durée | Volume | Outils | Statut, et qui confirme |",
           "|---|---|---|---|---|---|"]
     for t in cr["taches"]:
-        statut = f"[{t['statut']}]" + (f", {t['confirme_par']}" if t.get("confirme_par") else "")
+        statut = _statut(t).replace("`", "")
         l.append("| " + " | ".join([t["tache"], t.get("frequence", ""), t.get("duree", ""), t.get("volume", ""),
                                     t.get("outils", ""), statut]) + " |")
     if not cr["taches"]:
@@ -323,16 +408,22 @@ def rendre_note(cr, nom_transcription=None, questionnaire_prepare=None):
     l += liste("Écarts avec d'autres sources", cr["ecarts"], "Aucun relevé.")
     l += liste("Documents ou accès promis", cr["promis"], "Aucun.")
     l += liste("Questions restées ouvertes", cr["questions_ouvertes"], "Aucune.")
+    if cr.get("pour_la_base") or complet.get("base"):
+        sujet = complet.get("base") or "du sujet"
+        l += liste("Pour la base de questions", cr.get("pour_la_base", []),
+                   "Rien à ajouter.") + [f"À relire par le consultant avant de l'ajouter à `references/base-questions/{sujet}.md`.", ""]
     return "\n".join(l).rstrip() + "\n"
 
 
 def rendre_transcription(cr, messages):
     l = [f"# Transcription — entretien {cr['role']} · {cr['date']}", "",
          "Entretien écrit guidé par IA. « Assistant » est l'IA ; « Personne » est la personne interrogée. "
-         "Texte tel qu'échangé, dans la langue de l'échange ; adresses et numéros remplacés par [retiré].", ""]
+         "Texte tel qu'échangé, dans la langue de l'échange ; adresses, numéros et noms cités remplacés par [retiré].", ""]
+    noms = _noms(cr)
     for m in messages:
         qui = "Assistant" if m.get("role") == "assistant" else "Personne"
         texte = DONNEE_PERSO.sub("[retiré]", str(m.get("texte", "")).strip())  # guides-entretien : données personnelles retirées
+        texte = noms.sub("[retiré]", texte) if noms else texte
         l += [f"**{qui}**" + (f" · {m['le']}" if m.get("le") else ""), "", texte, ""]
     return "\n".join(l).rstrip() + "\n"
 
@@ -367,8 +458,17 @@ def main(argv):
     a.add_argument("--entreprise", required=True)
     a.add_argument("--langue")
     a.add_argument("--contexte", help="fichier texte : ce que le consultant sait déjà")
-    a.add_argument("--consultant", default="le consultant")
+    a.add_argument("--consultant", default="le consultant", help="nom affiché, par exemple « Florent »")
     a.add_argument("--objet")
+    a = sp.add_parser("base")
+    a.add_argument("--sujet", help="sans sujet : la liste des sujets de la base")
+    a = sp.add_parser("preparer")
+    a.add_argument("--base", required=True, help="le sujet de la base : support-client…")
+    a.add_argument("--objectif", required=True)
+    a.add_argument("--role", required=True)
+    a.add_argument("--entreprise", default="")
+    a.add_argument("--garder", help="numéros de la base à garder, dans l'ordre : SC02,SC05,…")
+    a.add_argument("--sortie", required=True, help="le fichier du questionnaire, jamais écrasé")
     sp.add_parser("schema")
     a = sp.add_parser("note")
     a.add_argument("--compte-rendu", required=True)
@@ -387,6 +487,16 @@ def main(argv):
             contexte = pathlib.Path(args.contexte).read_text(encoding="utf-8") if args.contexte else ""
             print(consigne(guide, args.role, args.entreprise, args.langue, contexte, args.consultant, args.objet,
                            args.questionnaire))
+        elif args.commande == "base":
+            print(json.dumps(base(args.sujet) if args.sujet else sujets(), ensure_ascii=False, indent=2))
+        elif args.commande == "preparer":
+            sortie = pathlib.Path(args.sortie)
+            if sortie.exists():
+                raise Erreur(f"{sortie} existe déjà : on ne l'écrase pas")
+            garder = [g.strip() for g in args.garder.split(",") if g.strip()] if args.garder else None
+            sortie.parent.mkdir(parents=True, exist_ok=True)
+            sortie.write_text(preparer(args.base, args.objectif, args.role, args.entreprise, garder), encoding="utf-8")
+            print(sortie)
         elif args.commande == "schema":
             print(json.dumps(schema(), ensure_ascii=False, indent=2))
         else:

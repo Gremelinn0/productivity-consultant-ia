@@ -9,7 +9,7 @@ personne** se pose.
 
 Rassemble : les huit questions du cadrage (`cadrer-besoin`, étape 3), les mesures et les huit questions
 d'automatisation d'`auditer-processus` (étapes 4 et 9), les règles des guides d'entretien
-(`decouvrir-cas-usage/references/guides-entretien.md`) et un premier cas réel (boutique en ligne, 28/10/2026).
+(`decouvrir-cas-usage/references/guides-entretien.md`) un premier cas réel (boutique en ligne, 28/10/2026) et les dossiers de nos clients précédents.
 
 ## 1. L'objectif et la réussite
 
@@ -52,6 +52,7 @@ d'automatisation d'`auditer-processus` (étapes 4 et 9), les règles des guides 
 | SC15 | Avez-vous des réponses écrites pour ces demandes ? Où sont-elles, et qui les a écrites ? | Ce que l'agent sait déjà, ou ce qu'il faut écrire | un document |
 | SC16 | Quel ton, quelle signature, vouvoiement ou tutoiement ? | La consigne de ton de l'agent | un document |
 | SC17 | Dans quelles langues vos clients écrivent-ils ? | Les langues que l'agent doit tenir | l'outil |
+| SC35 | Quelles ressources l'agent peut-il citer (fiches produit, guides, liens), et qui les tient à jour ? | Ce que l'agent sait au-delà des réponses types | un document |
 
 ## 6. Les informations à aller chercher
 
@@ -61,6 +62,7 @@ d'automatisation d'`auditer-processus` (étapes 4 et 9), les règles des guides 
 | SC19 | Qui administre la boutique, et peut-on avoir un accès en lecture seule, limité aux commandes ? | Le branchement et qui le fait | la personne |
 | SC20 | Le numéro de suivi est-il dans la commande ? Quels transporteurs ? | Si l'agent répond seul à « où est mon colis » | l'outil |
 | SC21 | Quelles autres informations faut-il chercher : facture, stock, compte client ? | Le périmètre des accès | la personne |
+| SC36 | Que faut-il vérifier avant de donner le statut d'une commande à la personne qui écrit ? | La vérification d'identité de l'agent | la personne |
 
 Retour d'expérience : [Dust, support](https://dust.tt/blog/how-dust-runs-support-on-dust).
 
@@ -70,6 +72,7 @@ Retour d'expérience : [Dust, support](https://dust.tt/blog/how-dust-runs-suppor
 |---|---|---|---|
 | SC22 | Livraison, retours, remboursements, produit abîmé ou manquant, annulation : est-ce écrit, et où ? | Ce que l'agent peut affirmer ; sinon, écrire les règles d'abord | un document |
 | SC23 | Y a-t-il des cas à part : clients professionnels, commandes personnalisées, livraison à l'étranger ? | Les exceptions à transférer | la personne |
+| SC34 | Si deux documents donnent deux réponses différentes, lequel fait foi ? | La source que l'agent cite | la personne |
 
 ## 8. Passer la main et relire
 
@@ -78,6 +81,9 @@ Retour d'expérience : [Dust, support](https://dust.tt/blog/how-dust-runs-suppor
 | SC24 | Dans quels cas une personne doit-elle reprendre (remboursement, litige, colis perdu, gros client), qui, sous quel délai ? | La règle de transfert de l'agent | la personne |
 | SC25 | Quelles réponses ne doivent jamais partir sans être relues ? | Ce qui reste en brouillon, validé par une personne | la personne |
 | SC26 | Qu'est-ce que l'agent ne doit jamais faire seul ? | Les interdits de l'agent | la personne |
+| SC33 | Combien de demandes par semaine votre équipe peut-elle reprendre sans que les délais dérapent ? | Le plafond de transfert | la personne |
+| SC37 | Quels gestes l'agent peut-il faire seul sur une commande (adresse, annulation, avoir), et jusqu'à quel montant ? | Ce que l'agent a le droit de modifier | la personne |
+| SC38 | Combien de réponses justes faut-il voir avant de laisser partir une réponse sans relecture ? | Quand la relecture peut s'arrêter | la personne |
 
 Retour d'expérience : [Fin, politique d'escalade](https://fin.ai/blog/blueprint/how-to-set-your-escalation-policy).
 
@@ -91,6 +97,7 @@ Retour d'expérience : [Fin, politique d'escalade](https://fin.ai/blog/blueprint
 | SC30 | Des messages anonymisés peuvent-ils passer par un fournisseur d'IA pendant le test ? Quelles règles de confidentialité s'imposent ? | La conformité et les outils possibles | la personne |
 | SC31 | Quels accès pouvez-vous ouvrir, et qui les ouvre ? | Le calendrier du branchement | la personne |
 | SC32 | Qui tiendra à jour les réponses types et les règles de l'agent après la mise en service ? | La maintenance | la personne |
+| SC39 | Qui a accès à la boîte, à la boutique et au CRM, et qui retire ces accès quand une personne part ? | Les droits d'accès et leur retrait | la personne |
 
 ## Pièces à demander
 

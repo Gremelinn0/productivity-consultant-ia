@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Mener une mission de conseil IA et automatisation, du premier besoin à la solution mesurée.",
-    "version": "0.5.2"
+    "version": "0.6.0"
   },
   "plugins": [
     {

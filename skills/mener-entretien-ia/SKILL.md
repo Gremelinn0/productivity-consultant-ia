@@ -98,7 +98,9 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
 6. **Tirer la note** :
    `python …/entretien.py note --compte-rendu cr.json [--questionnaire mission/sources/questionnaire-….md] --transcription messages.json --sortie mission/sources`.
    Un refus liste chaque écart ; on corrige le compte rendu (ou on le fait refaire), jamais la règle.
-7. **Relire la note** comme le consultant relirait la sienne : ce qui est `[H]` reste à confirmer, les questions
+7. **Enrichir la base** : la section « Pour la base de questions » de la note propose ce qui manquait ; le
+   consultant l'ajoute à `references/base-questions/<sujet>.md`, avec la décision que la question sert, ou l'écarte.
+8. **Relire la note** comme le consultant relirait la sienne : ce qui est `[H]` reste à confirmer, les questions
    ouvertes partent dans le message de suite, et la note alimente l'étape qui l'a demandée.
 
 ## Le livrable

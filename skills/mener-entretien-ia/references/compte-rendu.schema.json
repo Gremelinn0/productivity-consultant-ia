@@ -63,7 +63,9 @@
           "volume": { "type": "string" },
           "outils": { "type": "string" },
           "statut": { "type": "string", "enum": ["F", "H", "E"] },
-          "confirme_par": { "type": "string" }
+          "fondement": { "type": "string", "enum": ["regle-enoncee", "piece-remise"], "description": "Obligatoire pour F." },
+          "confirme_par": { "type": "string", "description": "Obligatoire pour H : le rôle qui peut confirmer." },
+          "calcul": { "type": "string", "description": "Obligatoire pour E : le calcul montré." }
         }
       }
     },
@@ -74,6 +76,8 @@
     },
     "ecarts": { "type": "array", "items": { "type": "string" }, "description": "Ce qui contredit une autre réponse, le contexte fourni ou un document cité." },
     "promis": { "type": "array", "items": { "type": "string" }, "description": "Documents, exports ou accès que la personne a promis d'envoyer." },
-    "questions_ouvertes": { "type": "array", "items": { "type": "string" }, "description": "Ce qui reste à demander, et les questions que la personne a posées au consultant (prix, délai, solution), notées pour lui." }
+    "questions_ouvertes": { "type": "array", "items": { "type": "string" }, "description": "Ce qui reste à demander, et les questions que la personne a posées au consultant (prix, délai, solution), notées pour lui." },
+    "pour_la_base": { "type": "array", "items": { "type": "string" }, "description": "Ce qu'aucune question ne couvrait et qui a compté, formulé en question générale, sans nom : le consultant décide de l'ajouter à la base de questions du sujet." },
+    "noms_a_retirer": { "type": "array", "items": { "type": "string" }, "description": "Les noms de personnes ou de clients que la personne a écrits, tels qu'écrits, pour les retirer de la transcription. Jamais recopiés ailleurs dans le compte rendu." }
   }
 }

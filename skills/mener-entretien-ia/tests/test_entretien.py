@@ -154,5 +154,81 @@ class QuestionnairePrepare(unittest.TestCase):
             entretien.ecrire_note(cr_prepare(), d)
 
 
+class BaseDeQuestions(unittest.TestCase):
+    def test_le_sujet_support_client_se_lit_avec_sa_decision(self):
+        self.assertIn("support-client", entretien.sujets())
+        q = entretien.base("support-client")
+        self.assertEqual(len(q), 39)
+        self.assertEqual(len({x["id"] for x in q}), 39)
+        self.assertTrue(all(x["question"] and x["decide"] and x["partie"] for x in q))
+        self.assertTrue(all(x["dabord"] in ("l'outil", "un document", "la personne") for x in q))
+
+    def test_le_questionnaire_reprend_la_base_au_lieu_de_la_reecrire(self):
+        brouillon = entretien.preparer("support-client", "Mettre en place un agent qui réponde aux clients",
+                                       "dirigeante", "Exemple", ["SC02", "SC06", "SC24"], date="2026-10-28")
+        base = {x["id"]: x for x in entretien.base("support-client")}
+        with tempfile.TemporaryDirectory() as d:
+            chemin = pathlib.Path(d) / "questionnaire-agent.md"
+            chemin.write_text(brouillon, encoding="utf-8")
+            with self.assertRaises(entretien.Erreur):  # pas encore validé : il ne s'ouvre pas
+                entretien.questionnaire("prepare", chemin)
+            chemin.write_text(brouillon.replace("Validé par :", "Validé par : consultant, le 2026-10-28"), encoding="utf-8")
+            q = entretien.questionnaire("prepare", chemin)
+        self.assertEqual(q["base"], "support-client")
+        self.assertEqual([x["question"] for x in q["questions"]], [base[i]["question"] for i in ("SC02", "SC06", "SC24")])
+        self.assertTrue(q["questions"][2]["alimente"].startswith("SC24 · "))
+
+    def test_toute_la_base_depasse_douze_questions_et_se_reduit_avant_l_entretien(self):
+        brouillon = entretien.preparer("support-client", "Un agent", "dirigeante").replace("Validé par :", "Validé par : c, le 2026-10-28")
+        with tempfile.TemporaryDirectory() as d:
+            chemin = pathlib.Path(d) / "q.md"
+            chemin.write_text(brouillon, encoding="utf-8")
+            with self.assertRaises(entretien.Erreur) as e:
+                entretien.questionnaire("prepare", chemin)
+        self.assertIn("12 au plus", str(e.exception))
+
+    def test_un_numero_inconnu_est_refuse(self):
+        with self.assertRaises(entretien.Erreur):
+            entretien.preparer("support-client", "Un agent", "dirigeante", garder=["SC99"])
+        with self.assertRaises(entretien.Erreur):
+            entretien.base("sujet-qui-n-existe-pas")
+
+    def test_la_note_propose_ce_qui_manquait_a_la_base(self):
+        cr = cr_prepare()
+        cr["pour_la_base"] = ["Les clients professionnels ont-ils un interlocuteur à part ?"]
+        q = dict(entretien.questionnaire("prepare", PREPARE), base="support-client")
+        with tempfile.TemporaryDirectory() as d:
+            note = entretien.ecrire_note(cr, d, None, q)[0].read_text(encoding="utf-8")
+        self.assertIn("## Pour la base de questions", note)
+        self.assertIn("interlocuteur à part", note)
+        self.assertIn("base-questions/support-client.md", note)
+        self.assertIn("depuis la base support-client", note)
+
+
+class DefautsDuTestLocal(unittest.TestCase):
+    def test_une_tache_peut_etre_un_fait_avec_son_fondement(self):
+        cr = copy.deepcopy(EXEMPLE)
+        cr["pieces"] = [{"piece": "export"}]
+        cr["taches"] = [{"tache": "Répondre aux emails", "statut": "F", "fondement": "piece-remise"}]
+        self.assertEqual(entretien.controler(cr), [])
+        self.assertIn("required", entretien.schema()["properties"]["taches"]["items"])
+        self.assertIn("fondement", entretien.schema()["properties"]["taches"]["items"]["properties"])
+
+    def test_un_nom_ecrit_est_retire_de_la_transcription_et_refuse_ailleurs(self):
+        cr = copy.deepcopy(EXEMPLE)
+        cr["noms_a_retirer"] = ["Kaitlyn"]
+        texte = entretien.rendre_transcription(cr, [{"role": "user", "texte": "Kaitlyn répond aux emails."}])
+        self.assertNotIn("Kaitlyn", texte)
+        self.assertIn("[retiré] répond", texte)
+        self.assertEqual(entretien.controler(cr), [])
+        cr["reponses"][0]["synthese"] += " Kaitlyn s'en occupe."
+        self.assertTrue(any("noms_a_retirer" in e for e in entretien.controler(cr)))
+
+    def test_la_consigne_se_lit_avec_le_consultant_par_defaut(self):
+        texte = entretien.consigne("besoin", "dirigeante", "Exemple")
+        self.assertNotIn("de le consultant", texte)
+        self.assertIn("pour le consultant", texte)
+
+
 if __name__ == "__main__":
     unittest.main()

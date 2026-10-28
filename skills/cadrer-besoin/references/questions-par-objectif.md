@@ -22,7 +22,7 @@ l'étape 9 d'`auditer-processus`. Ce fichier ajoute ce qui dépend du domaine.
 
 ## Service client et demandes entrantes
 
-Ce module vit désormais dans la base de questions, un fichier par sujet : `mener-entretien-ia/references/base-questions/support-client.md` (32 questions en neuf parties, chacune avec la décision qu'elle sert et l'endroit où chercher sa réponse d'abord).
+Ce module vit désormais dans la base de questions, un fichier par sujet : `mener-entretien-ia/references/base-questions/support-client.md` (39 questions en neuf parties, chacune avec la décision qu'elle sert et l'endroit où chercher sa réponse d'abord).
 
 ## Prospection et acquisition
 

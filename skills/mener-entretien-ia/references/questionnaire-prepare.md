@@ -15,19 +15,25 @@ modèle.
    le back-office), relever d'abord ses traces comme le fait `auditer-processus` (étape 2) : volume, canaux,
    types, réponses, et ce qui n'arrive pas dans l'outil. Ce relevé passe en « Déjà établi » ; les questions ne
    portent plus que sur ce qu'il ne montre pas. Noter ce qu'on a lu.
-3. **Prendre les questions candidates** : les huit de `cadrer-besoin` (étape 3), puis le module de l'objectif
-   dans `cadrer-besoin/references/questions-par-objectif.md`, puis, si le processus est déjà nommé, les huit
-   d'`auditer-processus` (étape 9).
+3. **Partir de la base de questions du sujet** (`references/base-questions/<sujet>.md`, un fichier par sujet) :
+   `python skills/mener-entretien-ia/scripts/entretien.py preparer --base support-client --objectif "…" --role "…" --sortie mission/sources/questionnaire-<objet>-<date>.md`
+   écrit le brouillon avec toutes les questions du sujet (ou celles de `--garder SC02,SC05,…`), chacune avec son
+   numéro de base et la décision qu'elle sert. On ne réécrit rien : on garde, on adapte les mots, on tranche
+   (étape 4). Sans fichier pour le sujet : les huit de `cadrer-besoin` (étape 3), le module de
+   `cadrer-besoin/references/questions-par-objectif.md` et les huit d'`auditer-processus` (étape 9) ; le sujet
+   reçoit ensuite son fichier.
 4. **Trancher chaque candidate avec ce qu'on a lu** :
    - la réponse est sûre (une pièce, une règle dite par son détenteur) → la question ne se pose pas ; le fait
-     va dans « Déjà établi », avec sa source ;
+     va dans « Déjà établi », avec sa source. Une pièce prouve ce qu'elle contient, pas qu'il n'y a rien d'autre :
+     un export de la boîte ne dit rien d'un canal qui n'y arrive pas ;
    - la réponse existe mais reste incertaine (dite de mémoire, ancienne, de seconde main, tirée du site) → la
      question se pose avec « Déjà su » : l'IA dit ce qu'on a noté et la personne confirme ou corrige ;
    - rien → la question se pose, réécrite pour cette personne : ses clients, ses outils, ses mots ; jamais
      le jargon du pack.
 5. **Douze questions au plus**, les plus décisives d'abord : celles qui changent le périmètre, le coût ou les
    conditions de réussite. Le reste attend la séance d'observation ou l'audit, et se dit dans « Pas dans cet
-   entretien ».
+   entretien ». Quand plusieurs questions relèvent d'une autre personne (celle qui répond aux clients, celle qui
+   tient la boutique), elles forment le questionnaire d'un second entretien, pour ce rôle.
 6. **Faire valider** le questionnaire avant de l'ouvrir : le consultant ; en local sans consultant, la personne
    qui lance l'entretien. La ligne « Validé par » porte son rôle et la date ; sans elle, le script refuse.
 
@@ -46,6 +52,7 @@ Objectif : <une phrase à l'infinitif, dans les mots du client>
 Personne interrogée : <rôle> · Préparé le <date> par <rôle>
 Validé par : <rôle>, le <date>
 Lu pour le préparer : <la demande, les notes, le site, les exports… avec leur date>
+Base : <sujet de la base> (<numéros gardés>)
 
 ## Déjà établi (on ne le redemande pas)
 
