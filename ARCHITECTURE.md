@@ -89,7 +89,9 @@ de chaque étape sont dans `router-mission-ia`.
 
 Aucune compétence ne refait le travail d'une autre ligne. Si une responsabilité a un propriétaire
 ci-dessus, on l'appelle. Le dossier `skills/` contient en plus `router-consulting-strategy`, qui arbitre
-sans posséder d'étape : voir la section suivante.
+sans posséder d'étape (voir la section suivante), et `mener-entretien-ia`, l'outil qui fait mener un entretien
+du pack par écrit par une IA quand le consultant n'est pas là : il lit les questions chez leurs propriétaires
+(guides de `decouvrir-cas-usage`, `cadrer-besoin`, `auditer-processus`) et rend une note `mission/sources/`.
 
 ## Le cerveau des décisions
 
@@ -218,7 +220,8 @@ Sources lues, dans cet ordre, et toujours nommées dans le livrable :
    transcription d'une vidéo où quelqu'un fait la tâche, et, après la mise en service, les relevés de
    mesure que le client dépose) ;
 2. les outils déjà connectés à la session (documents, messagerie, CRM…), en lecture seule ;
-3. les entretiens : la compétence prépare le guide, la personne répond, la synthèse cite la source ;
+3. les entretiens : la compétence prépare le guide, la personne répond (au consultant, ou par écrit à une IA :
+   `mener-entretien-ia`), la synthèse cite la source ;
 4. ce qui manque est écrit comme manquant, jamais supposé.
 
 ## Ce que le pack ne fait pas
@@ -226,7 +229,9 @@ Sources lues, dans cet ordre, et toujours nommées dans le livrable :
 - Toucher un outil réel sans la validation de l'action précise. Il construit et teste dans un
   environnement d'essai ; l'import en production, l'écriture dans un logiciel de l'entreprise, l'envoi
   et la publication sont des actions du client, proposées une à une avec leur retour arrière.
-- Remplacer les entretiens : il les prépare et les synthétise.
+- Remplacer les entretiens : il les prépare et les synthétise. Quand le consultant ne peut pas les mener,
+  `mener-entretien-ia` les fait mener par écrit par une IA ; la note qui en sort reste une source que le
+  consultant relit, avec ses `[H]` à confirmer.
 - Décider à la place du client : il recommande, avec ce qui ferait changer la recommandation.
 - Relever à la place du client : la mesure se lit sur les relevés que l'entreprise fournit. Le pack ne
   pose aucun compteur et ne lit ni ne pose aucun secret.

@@ -101,6 +101,12 @@ rien lui-même ; le consultant et l'entreprise organisent la séance, la session
    typique tant qu'on n'a pas plusieurs occurrences (`ARCHITECTURE.md`).
 3. Noter ce qu'on n'a pas vu (fin de mois, cas rares, exceptions, suppléante) et le demander en entretien.
 
+## Sans le consultant : l'entretien guidé par IA
+
+Quand la personne ne peut pas donner le temps d'un entretien en direct, `mener-entretien-ia` fait poser ces mêmes
+questions par écrit par une IA, avec les règles ci-dessus (une question à la fois, l'occurrence réelle, rien de
+promis) ; sa note suit le modèle ci-dessous. Une question corrigée ici l'est aussi là-bas : le script la lit ici.
+
 ## Modèle de note d'entretien
 
 Fichier `mission/sources/entretien-<rôle>-<date>.md` :

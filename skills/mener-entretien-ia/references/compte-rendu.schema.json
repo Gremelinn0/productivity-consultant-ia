@@ -1,0 +1,79 @@
+{
+  "$comment": "Compte rendu qu'un entretien guidé par IA rend à sa fin. Source unique : un hôte (session Claude, page web) le donne tel quel comme schéma de l'outil terminer_entretien ; scripts/entretien.py note le transforme en note mission/sources/entretien-<rôle>-<date>.md. Synthèses en français, citations mot pour mot dans la langue de la personne.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["role", "date", "guide", "langue", "duree_minutes", "ouverture_dite", "reponses", "taches", "pieces", "ecarts", "promis", "questions_ouvertes"],
+  "properties": {
+    "role": { "type": "string", "description": "Le rôle de la personne interrogée (jamais son nom), par exemple « dirigeante » ou « responsable du service client »." },
+    "equipe": { "type": "string", "description": "L'équipe ou le service, s'il est connu." },
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Date de fin de l'entretien, AAAA-MM-JJ." },
+    "duree_minutes": { "type": "integer", "minimum": 0, "description": "Durée approximative, en minutes, du premier au dernier message." },
+    "guide": { "type": "string", "enum": ["direction", "equipes", "besoin", "processus", "court"] },
+    "langue": { "type": "string", "description": "Langue dans laquelle la personne a répondu (code court : fr, en, es…)." },
+    "personnes": { "type": "array", "items": { "type": "string" }, "description": "Rôles présents, si plusieurs personnes ont répondu ensemble." },
+    "ouverture_dite": { "type": "boolean", "description": "L'objet de l'entretien et l'accord pour l'enregistrer ont été dits en ouverture." },
+    "reponses": {
+      "type": "array",
+      "description": "Une entrée par question du questionnaire, dans l'ordre, y compris celles restées sans réponse.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "theme", "synthese", "citations", "chiffres", "relances", "repondue"],
+        "properties": {
+          "id": { "type": "string", "description": "L'identifiant de la question dans le questionnaire (D1, E3, B2, P5, C1…)." },
+          "theme": { "type": "string" },
+          "repondue": { "type": "boolean", "description": "false si la personne n'a pas su ou pas voulu répondre." },
+          "synthese": { "type": "string", "description": "Ce qui a été répondu, en français, en quelques phrases, sans aucun nom de personne. Les nombres vont dans chiffres." },
+          "citations": {
+            "type": "array",
+            "description": "Les phrases utiles mot pour mot, dans la langue de la personne, données personnelles retirées.",
+            "items": { "type": "string" }
+          },
+          "exemple_reel": { "type": "string", "description": "La dernière occurrence réelle racontée, si la personne en a donné une." },
+          "chiffres": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["valeur", "statut"],
+              "properties": {
+                "valeur": { "type": "string", "description": "Le nombre avec son unité : « 15 messages par jour », « 6 minutes par réponse »." },
+                "statut": { "type": "string", "enum": ["F", "H", "E"], "description": "F : règle ou contrainte énoncée par son détenteur, ou appuyée par une pièce remise ; H : dit de mémoire ; E : calculé." },
+                "fondement": { "type": "string", "enum": ["regle-enoncee", "piece-remise"], "description": "Obligatoire pour F." },
+                "confirme_par": { "type": "string", "description": "Obligatoire pour H : le rôle qui peut confirmer." },
+                "calcul": { "type": "string", "description": "Obligatoire pour E : le calcul montré." }
+              }
+            }
+          },
+          "relances": { "type": "integer", "minimum": 0, "description": "Nombre de relances posées sur cette question." }
+        }
+      }
+    },
+    "taches": {
+      "type": "array",
+      "description": "Les tâches citées, à reporter dans 01-cartographie-taches.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tache", "statut"],
+        "properties": {
+          "tache": { "type": "string" },
+          "frequence": { "type": "string" },
+          "duree": { "type": "string" },
+          "volume": { "type": "string" },
+          "outils": { "type": "string" },
+          "statut": { "type": "string", "enum": ["F", "H", "E"] },
+          "confirme_par": { "type": "string" }
+        }
+      }
+    },
+    "pieces": {
+      "type": "array",
+      "description": "Les pièces réellement remises pendant l'entretien (fichier joint, export). Une pièce seulement promise va dans promis.",
+      "items": { "type": "object", "additionalProperties": false, "required": ["piece"], "properties": { "piece": { "type": "string" }, "rend_f": { "type": "string", "description": "Le nombre que la pièce rend [F]." } } }
+    },
+    "ecarts": { "type": "array", "items": { "type": "string" }, "description": "Ce qui contredit une autre réponse, le contexte fourni ou un document cité." },
+    "promis": { "type": "array", "items": { "type": "string" }, "description": "Documents, exports ou accès que la personne a promis d'envoyer." },
+    "questions_ouvertes": { "type": "array", "items": { "type": "string" }, "description": "Ce qui reste à demander, et les questions que la personne a posées au consultant (prix, délai, solution), notées pour lui." }
+  }
+}

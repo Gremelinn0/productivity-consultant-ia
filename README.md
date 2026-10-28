@@ -1,7 +1,7 @@
 # consultant-ia
 
 **Le pack du consultant IA et automatisation, de l'idée à la solution mesurée** — douze compétences
-(plus un routeur de stratégie embarqué) pour Claude Code et Cowork qui mènent une mission de bout en
+(plus un routeur de stratégie embarqué et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
 bout : comprendre le travail réel, trouver ce qui mérite d'être automatisé, comparer les solutions,
 chiffrer, spécifier et planifier, puis construire et tester dans un environnement d'essai, mettre en
 service action par action et mesurer ce que la solution rapporte vraiment.
@@ -78,6 +78,25 @@ flowchart TB
 | `tester-solution` | la recette critère par critère, l'évaluation de l'IA à part, les défauts et un verdict : prêt, prêt avec réserves, pas prêt |
 | `piloter-mise-en-service` | chaque action sur un outil réel proposée avec son retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant |
 | `mesurer-gains` | la lecture des relevés réels, le gain observé, les coûts réels, et la décision : continuer, corriger, étendre ou arrêter |
+
+## L'entretien guidé par IA
+
+Quand la personne à interroger n'a pas une heure à donner au consultant, ou vit à six fuseaux horaires,
+`mener-entretien-ia` fait mener l'entretien par écrit par une IA, au rythme de la personne : les mêmes questions
+que le consultant (guides direction et équipes, version courte, les huit questions de `cadrer-besoin` ou celles
+d'`auditer-processus`), une seule à la fois, dans sa langue, avec une relance quand la réponse est vague (« la
+dernière fois, que s'est-il passé ? », « à peu près combien par semaine ? »). L'IA ne promet rien, ne donne ni prix
+ni outil, et ne garde aucun nom. À la fin, elle fait valider un récapitulatif, puis rend un compte rendu que le
+script transforme en note `mission/sources/entretien-<rôle>-<date>.md`, au format des autres notes :
+
+```bash
+python skills/mener-entretien-ia/scripts/entretien.py consigne --guide besoin --role "dirigeante" --entreprise "Société Exemple"
+python skills/mener-entretien-ia/scripts/entretien.py note --compte-rendu cr.json --transcription messages.json --sortie mission/sources
+```
+
+La consigne se donne à n'importe quel hôte qui accepte une consigne système et un outil (un projet Claude, une
+page web derrière connexion). Le contrôle refuse une note dont un nombre dit de mémoire passerait pour un fait,
+et la transcription sort adresses et numéros retirés. Le consultant relit la note avant de s'en servir.
 
 Le dossier `skills/` embarque aussi `router-consulting-strategy`, le cerveau des décisions : les étapes qui
 décident (portefeuille, choix de l'option, recommandation, priorités, continuer ou arrêter) l'appellent
