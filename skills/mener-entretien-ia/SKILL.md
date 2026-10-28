@@ -74,7 +74,7 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    accessible (la demande, `mission/sources/`, le site, et en local les dossiers et outils de l'entreprise), en
    commençant par les traces de l'outil du processus quand un accès en lecture existe (`auditer-processus`,
    étape 2) : l'entretien confirme ce qu'elles montrent et cherche le reste, il ne fait pas ressaisir ce qu'on
-   peut lire. Prendre les huit questions du cadrage et le module de l'objectif (`cadrer-besoin/references/questions-par-objectif.md`),
+   peut lire. Prendre les huit questions du cadrage et le bloc du sujet dans la base de questions (`references/base-questions/<sujet>.md`, sinon le module de `cadrer-besoin/references/questions-par-objectif.md`),
    puis trancher chacune : réponse sûre → elle ne se pose pas (« Déjà établi ») ; incertaine → elle se fait
    confirmer (« Déjà su ») ; absente → elle se pose, dans les mots de la personne. Douze au plus. Le fichier
    `mission/sources/questionnaire-<objet>-<date>.md` suit `references/questionnaire-prepare.md` et se fait

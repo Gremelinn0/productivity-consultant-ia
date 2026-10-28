@@ -22,25 +22,7 @@ l'étape 9 d'`auditer-processus`. Ce fichier ajoute ce qui dépend du domaine.
 
 ## Service client et demandes entrantes
 
-- Combien de demandes arrivent par semaine, et par où : email, formulaire du site, chat, téléphone, réseaux
-  sociaux ? Quels jours, quelles heures, quels pics ?
-- Dans quel outil les lit-on, qui y répond aujourd'hui, et combien de temps un client attend-il sa réponse ?
-- Quelles sont les dix questions qui reviennent le plus, et combien de fois chacune par semaine environ ?
-  (Si la boîte ou le CRM est lisible, les relever avant l'entretien, `auditer-processus` étape 2 : ces trois
-  premières questions ne portent plus que sur ce qui n'arrive pas dans l'outil. Sinon, en direct : ouvrir la
-  boîte et passer les quinze derniers messages, type par type.)
-- Des réponses types existent-elles ? Où sont-elles, qui les a écrites, quel ton, quelle signature ?
-- Pour répondre à une demande courante, quelles informations faut-il aller chercher, et dans quels outils
-  (commandes, transporteur, facturation) ? Retour d'expérience : [Dust, support](https://dust.tt/blog/how-dust-runs-support-on-dust).
-- Les règles de livraison, de retour, de remboursement et d'annulation sont-elles écrites ? Où ?
-- Dans quels cas précis faut-il passer la main à une personne, à qui, sous quel délai et avec quelles
-  informations déjà réunies ? Retour d'expérience : [Fin, politique d'escalade](https://fin.ai/blog/blueprint/how-to-set-your-escalation-policy).
-- Quelles réponses ne doivent jamais partir sans qu'une personne les relise ?
-- Dans quelles langues les clients écrivent-ils ?
-- Qu'est-ce qui serait un échec : une information fausse, un ton froid, une promesse faite par erreur ?
-
-Pièces à demander, pour ce que la lecture n'a pas couvert : 50 à 100 messages récents avec les réponses données ; les réponses types ; les règles
-écrites ; un accès en lecture aux commandes, ou quelques commandes de test.
+Ce module vit désormais dans la base de questions, un fichier par sujet : `mener-entretien-ia/references/base-questions/support-client.md` (32 questions en neuf parties, chacune avec la décision qu'elle sert et l'endroit où chercher sa réponse d'abord).
 
 ## Prospection et acquisition
 
