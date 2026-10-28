@@ -88,7 +88,8 @@ Chaque ligne se calcule à la lecture :
 - « à lancer » = les cas que la validation de `02-portefeuille.md` retient (« on creuse : … ») et qui n'ont
   pas encore de dossier `cas-<slug>/` ; un cas mis en attente ou écarté n'y figure pas ;
 - « entretiens » = chaque questionnaire préparé de `mission/sources/` (`questionnaire-<objet>-<date>.md`), suivi
-  de « note reçue » quand une note `entretien-…` le cite, sinon « en attente ». Un questionnaire en attente
+  de « note reçue » quand une note `entretien-…` le cite, sinon « en attente » ; sans questionnaire préparé, la ligne
+  n'apparaît pas. Un questionnaire en attente
   pour un cas sans `10-besoin.md` fait de l'étape suivante « recevoir l'entretien, puis cadrer-besoin » ;
 - « questions ouvertes » = le nombre de `Q-xx` du cas (les identifiants cités dans ses livrables, de 10 à 95 ;
   ceux de la découverte, s'il n'y a pas de cas) sans réponse inscrite au journal : une `Q-xx` est répondue
