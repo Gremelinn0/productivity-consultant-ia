@@ -12,16 +12,17 @@ description: >-
   questions par sujet (une mission de bout en bout, du premier échange au bilan, et chaque objectif, du
   support client à la prospection) : toute question à poser à une entreprise en part, et ce qui manquait y est rangé.
   Porte aussi l'agent d'entretien en ligne : devant un visiteur, sans consultant avant l'entretien, il choisit ses
-  questions dans la base (douze au plus, jamais en dehors), affiche un plan et des réponses à cliquer, et rend un
-  compte rendu à son propre schéma (pistes comprises).
+  questions dans la base (douze au plus, jamais en dehors), affiche un plan et des réponses à cliquer, rend un
+  compte rendu à son propre schéma (pistes comprises) et, pour le visiteur, un bilan écrit dans sa langue que la page
+  affiche et envoie par e-mail à qui le demande.
   Outil du pack consultant-ia, appelé par decouvrir-cas-usage, cadrer-besoin et auditer-processus ; ne possède
   aucune étape. Triggers : « entretien guidé par IA », « entretien asynchrone », « questionnaire envoyé au
   client », « prépare les questions pour son objectif », « fais-moi les questions pour », « quelles questions
   poser à », « base de questions », « range cette question », « interview bot », « AI-led interview »,
   « agent d'entretien en ligne », « consigne en ligne », « audit en ligne d'un visiteur ».
 metadata:
-  scope: "un entretien du pack mené par écrit par une IA, sans le consultant, et sa note dans mission/sources/ ; la base de questions par sujet ; l'agent d'entretien en ligne d'un visiteur, qui choisit ses questions dans la base"
-  owns: "la base de questions (references/base-questions/, un fichier par sujet, guides fixes compris), la consigne de l'intervieweur, le schéma du compte rendu, le choix et la préparation du questionnaire, le contrôle et le rendu de la note et de sa transcription ; l'agent en ligne (sa méthode, sa consigne, le schéma de son compte rendu, sa note)"
+  scope: "un entretien du pack mené par écrit par une IA, sans le consultant, et sa note dans mission/sources/ ; la base de questions par sujet ; l'agent d'entretien en ligne d'un visiteur, qui choisit ses questions dans la base et lui rend son bilan"
+  owns: "la base de questions (references/base-questions/, un fichier par sujet, guides fixes compris), la consigne de l'intervieweur, le schéma du compte rendu, le choix et la préparation du questionnaire, le contrôle et le rendu de la note et de sa transcription ; l'agent en ligne (sa méthode, sa consigne, le schéma de son compte rendu, le bilan du visiteur, sa note)"
   consumes: "ce que le consultant ou la session de l'entreprise a pu lire ; la conversation menée ; les règles d'entretien de decouvrir-cas-usage/references/guides-entretien.md"
 ---
 
@@ -39,11 +40,13 @@ metadata:
 > une ligne sans décision ou sans « D'abord », un index périmé, une compétence lectrice sans son rappel en tête, une
 > consigne en ligne de plus de 60 000 caractères. L'agent en ligne : `entretien.py consigne-en-ligne` écrit sa ligne
 > (consigne, schéma, sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`),
-> fusionne les entrées d'un même numéro de question, et refuse une question absente de la base, plus de douze questions
-> différentes, une adresse ou un numéro, un prix dans une piste. Les cinq règles qu'a demandées le premier essai en ligne
+> fusionne les entrées d'un même numéro de question, y recopie le bilan du visiteur (section « Bilan remis à la
+> personne »), et refuse une question absente de la base, plus de douze questions différentes, une adresse ou un numéro,
+> un prix dans une piste, un `bilan_visiteur` absent ou vide. Les cinq règles qu'a demandées le premier essai en ligne
 > (douze questions, la question d'ouverture comprise ; un plan qui ne se récrit pas ; deux réponses d'un audit ; une
-> seule chose par message ; une fin sans les moyens) sont écrites dans la méthode et dans la consigne, et des essais
-> rougissent quand l'une manque.
+> seule chose par message ; une fin sans les moyens) et les deux du bilan (un message final court qui renvoie au bilan ;
+> un bilan écrit pour la personne) sont écrites dans la méthode et dans la consigne, et des essais rougissent quand
+> l'une manque.
 > Essais : `python -m unittest discover -s skills/mener-entretien-ia/tests`. **Boucle** : aucune.
 
 > ❓ **Une question pour l'entreprise sort de la base de questions** (`references/base-questions/`, un fichier par
@@ -77,7 +80,8 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    aussi ses dossiers et ses outils. Même questionnaire, même consigne, même note.
 3. **L'IA recueille, elle ne conseille pas.** Pas de prix, d'outil, de délai ni de promesse ; une question posée au
    consultant est notée pour lui. C'est la règle « Ne rien promettre » des guides, tenue sans lui. L'agent en ligne
-   n'avance des pistes qu'après la validation du récapitulatif, au conditionnel, sans prix, délai ni outil.
+   n'avance des pistes qu'après la validation du récapitulatif, dans le bilan qu'il remet au visiteur, au conditionnel,
+   sans prix, délai ni outil.
 4. **Relancer comme le consultant, deux fois au plus.** Une réponse sans occurrence réelle, sans ordre de grandeur
    ni exemple est relancée ; au-delà de deux relances, on demande qui saurait, et on passe. L'entretien reste court.
 5. **Le statut se décide par une règle, pas par l'IA.** À l'écrit, presque tout est dit de mémoire : `[H]` avec qui
@@ -144,10 +148,12 @@ interdits) est `references/agent-en-ligne.md`.
    taille de la consigne s'affiche.
 2. L'hôte ajoute son contexte (la porte d'entrée, le sujet, les réponses de la page, les liens), définit les outils
    `afficher` (son `message` est obligatoire : tout ce que la personne lit passe par lui) et `terminer_entretien`, et
-   mène la conversation.
+   mène la conversation. À la fin, il affiche le `bilan_visiteur` du compte rendu sous le dernier message et l'envoie par
+   e-mail à qui le demande.
 3. `python …/entretien.py note --compte-rendu cr.json --transcription messages.json --sortie mission/sources` écrit la
-   note, de même structure que les autres, avec en plus « Pistes » et « Pour la base de questions ». Rien n'y est `[F]`.
-   Les entrées d'un même numéro de question s'y fusionnent, dans l'ordre.
+   note, de même structure que les autres, avec en plus « Pistes », « Bilan remis à la personne » (le bilan recopié tel
+   quel, dans la langue de la personne) et « Pour la base de questions ». Rien n'y est `[F]`. Les entrées d'un même
+   numéro de question s'y fusionnent, dans l'ordre.
 
 ## Le livrable
 
@@ -169,7 +175,8 @@ les nombres avec leur statut, les citations mot pour mot, le nombre de relances.
 
 Le compte rendu qui la produit suit `references/compte-rendu.schema.json` ; la consigne de l'intervieweur est
 `references/consigne-intervieweur.md`. Celui de l'agent en ligne suit `references/compte-rendu-en-ligne.schema.json` :
-la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine étape) et « Pour la base de questions ».
+la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine étape), « Bilan remis à la personne » et
+« Pour la base de questions ».
 
 ## Décisions et rejets
 
@@ -191,6 +198,7 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
 | En ligne, un plan affiché ne se récrit plus : seules les étapes « à venir » bougent, et « fait » veut dire demandé | le premier essai a laissé une étape « en cours » disparaître sans passer à « fait », en a renommé une trois fois et a fini sur un plan tout vert dont une étape n'avait jamais été demandée | un plan que l'agent ajuste librement à chaque tour (la règle d'avant) | jamais pour une étape en cours ou faite |
 | En ligne, un audit demande toujours ce qui casserait si le volume doublait (EQ14) et l'objectif (DI01), avant les questions moins décisives | le premier essai n'a demandé ni l'un ni l'autre : le visiteur a ajouté l'objectif lui-même au récapitulatif, et la base n'avait aucune question sur le volume | les laisser au choix de l'agent parmi douze | la personne les a déjà données, ou la page les a demandées |
 | En ligne, un message demande une seule chose, et les pistes de la fin disent un résultat, jamais le moyen | deux messages du premier essai demandaient deux choses, et les réponses à cliquer n'en couvraient qu'une ; la fin parlait d'« une automatisation ou un agent » : au visiteur, on parle du résultat | des messages à double question ; des pistes qui nomment l'agent, l'automatisation ou la plateforme | jamais pour le visiteur : le consultant choisit le moyen |
+| En ligne, le visiteur repart avec un bilan écrit pour lui, dans sa langue (`bilan_visiteur`, champ obligatoire) ; le message final reste court | un visiteur qui a répondu pendant dix minutes repart avec quelque chose à garder : son récapitulatif validé et de une à trois pistes dites comme des résultats, sans compte ni prix ; la page l'affiche sous le message et l'envoie par e-mail à qui le demande | dire les pistes dans le message final (elles se perdent dans la conversation) ; un bilan en français pour tous ; refuser la note d'un visiteur dont le bilan dépasse les limites d'affichage (le consultant perdrait son compte rendu) | un hôte sans écran ni e-mail pour le bilan, ou un visiteur qui n'en veut pas |
 | Une méthode, deux modes (en ligne, local) | seul l'accès aux données change ; deux méthodes divergeraient | un agent local à part | jamais |
 | Une base de questions par sujet, guides fixes compris | une question vit à un seul endroit ; chaque entretien, audit ou rendez-vous enrichit la même base au lieu de réinventer ses questions | une liste dans chaque compétence (guides, cadrage, modules par objectif, jusqu'au 28/10/2026) | jamais |
 
@@ -225,6 +233,10 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
   choses demandées dans un message ; une fin qui parle d'automatisation et d'agent). La version 0.8.2 y répond par cinq
   règles écrites dans la méthode et dans la consigne, gardées par des essais. NON MESURÉ après correction : un second essai
   dira si le modèle tient le compte, le plan et la fin.
+- Bilan du visiteur (version 0.8.3) : le schéma, la consigne, le contrôle et la note sont éprouvés par les essais du
+  script, sur un compte rendu fictif en anglais ; retirer la phrase du message final de la consigne fait rougir l'essai
+  qui la garde. NON MESURÉ avec le modèle : s'il écrit le bilan dans la langue de la personne, sans moyen ni prix, dans
+  les limites d'affichage (1 200 et 300 caractères, trois pistes), et s'il garde le message final court.
 - Le `message` obligatoire de `afficher` et la fusion d'une question reprise sont éprouvés par les essais du script ; un
   entretien réel les a motivés (un texte perdu hors de l'outil, SC05 revenu deux fois), aucun second entretien ne les a
   encore mesurés.

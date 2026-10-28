@@ -109,9 +109,10 @@ ligne** choisit lui-même ses questions, mais seulement dans la base de question
 comprise), jamais en dehors. La page commence par quelques questions à cliquer ; l'agent mène ensuite l'audit (ce qui
 prend du temps, ce qui coince, ce qui casserait si le volume doublait, l'objectif, ou le sujet de la page de cas
 d'usage), propose des réponses à cliquer, affiche son plan de 3 à 7 étapes à côté de la conversation (un plan qui ne se
-récrit pas une fois affiché), fait valider un récapitulatif, puis rend un compte rendu avec ses pistes, dites comme un
-résultat pour la personne et jamais comme un moyen. Il ne promet ni prix, ni volume, ni délai, ne conseille pas avant la
-fin, et ne demande ni mot de passe ni clé :
+récrit pas une fois affiché), fait valider un récapitulatif, puis rend deux choses : un compte rendu pour le consultant,
+avec ses pistes, et un bilan écrit pour la personne, dans sa langue, qu'elle lit à l'écran et peut recevoir par e-mail
+(son récapitulatif validé et de une à trois pistes, dites comme un résultat pour elle et jamais comme un moyen). Il ne
+promet ni prix, ni volume, ni délai, ne conseille pas avant la fin, et ne demande ni mot de passe ni clé :
 
 ```bash
 python skills/mener-entretien-ia/scripts/entretien.py consigne-en-ligne --sortie ligne.json
@@ -121,8 +122,9 @@ python skills/mener-entretien-ia/scripts/entretien.py note --compte-rendu cr.jso
 `ligne.json` est ce que l'hôte garde : la consigne (la méthode, l'index des sujets, toutes les questions de la base),
 le schéma du compte rendu et les sujets. L'hôte définit deux outils : `afficher`, le seul moyen de parler à la personne
 (un `message` obligatoire, des réponses à cliquer, le plan), et `terminer_entretien`. La note reprend la structure des
-autres, avec en plus ses « Pistes » et une section « Pour la base de questions » ; une question reprise sous le même
-numéro s'y fusionne au lieu de faire refuser la note. La méthode est
+autres, avec en plus ses « Pistes », le « Bilan remis à la personne » (le `bilan_visiteur`, obligatoire, recopié tel
+quel) et une section « Pour la base de questions » ; une question reprise sous le même numéro s'y fusionne au lieu de
+faire refuser la note. La méthode est
 `skills/mener-entretien-ia/references/agent-en-ligne.md`.
 
 Le dossier `skills/` porte aussi `router-consulting-strategy`, le cerveau des décisions : les étapes qui

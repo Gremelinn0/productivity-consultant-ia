@@ -24,6 +24,13 @@
     {"constat": "Une date de livraison fausse a déjà été donnée une fois.",
      "piste": "Les réponses sur les délais pourraient venir de l'état réel de la commande, jamais d'une estimation."}
   ],
+  "bilan_visiteur": {
+    "recapitulatif": "You run an online shop with 8 people, and you spend your evenings answering customer emails: about 80 messages a week, mostly by email, a few on Instagram. Order tracking is the heaviest, 5 to 10 minutes each. You are the only one who answers, and the holiday rush is coming. A wrong delivery date has already been given once, and that is what you would count as a failure.",
+    "pistes": [
+      "Replies about order tracking could be waiting for you in the morning, ready to read and send, instead of taking your evenings.",
+      "Answers about delivery dates could come from the real status of the order, never from an estimate."
+    ]
+  },
   "questions_ouvertes": [
     "Combien coûterait un agent, et en combien de temps serait-il prêt ? (question de la personne pour le consultant)"
   ],

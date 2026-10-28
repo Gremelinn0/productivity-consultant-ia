@@ -492,7 +492,7 @@ class UneSeuleMaison(unittest.TestCase):
 
 
 CR_EN_LIGNE = json.loads((ICI / "compte-rendu-en-ligne-fictif.json").read_text(encoding="utf-8"))
-SECTIONS_EN_LIGNE = SECTIONS + ["## Pistes", "## Pour la base de questions"]
+SECTIONS_EN_LIGNE = SECTIONS + ["## Pistes", "## Bilan remis à la personne", "## Pour la base de questions"]
 LIGNE_DE_L_HOTE = {"base": "premier-echange", "mode": "en-ligne", "sujets": ["support-client"]}  # son `questionnaire`
 
 
@@ -622,8 +622,8 @@ class AgentEnLigne(unittest.TestCase):
 
     def test_le_schema_du_compte_rendu_en_ligne(self):
         s = entretien.schema_en_ligne()
-        self.assertEqual(s["required"], ["demande", "contexte", "sujet", "reponses", "pistes", "questions_ouvertes",
-                                         "prochaine_etape"])
+        self.assertEqual(s["required"], ["demande", "contexte", "sujet", "reponses", "pistes", "bilan_visiteur",
+                                         "questions_ouvertes", "prochaine_etape"])
         p = s["properties"]
         self.assertEqual(set(p), set(s["required"]) | {"pour_la_base", "noms_a_retirer"})
         self.assertEqual(p["contexte"]["required"], ["taille", "metier", "outils"])
@@ -631,6 +631,7 @@ class AgentEnLigne(unittest.TestCase):
         self.assertEqual(p["reponses"]["items"]["required"], ["id", "question", "reponse"])
         self.assertEqual((p["reponses"]["minItems"], p["reponses"]["maxItems"]), (1, 12))
         self.assertEqual(p["pistes"]["items"]["required"], ["constat", "piste"])
+        self.assertEqual(p["bilan_visiteur"]["required"], ["recapitulatif", "pistes"])
         self.assertEqual(p["sujet"]["enum"], sujets_dans_l_ordre_de_l_index())
         code, sortie, _ = lancer("schema", "--guide", "en-ligne")
         self.assertEqual((code, json.loads(sortie)), (0, s))
@@ -792,8 +793,9 @@ _UNE_CHOSE = ["un seul point d'interrogation", "répondent à cette question-là
               "combien de temps s'écoule-t-il, et qui intervient ?"]
 _AUDIT = [AUDIT.split(" : ")[1], "EQ14", "DI01", "chiffré si possible", "d'ici quand",
           "passent avant les questions moins décisives"]
-_FIN = ["les pistes disent le résultat pour la personne", "ce qui serait trouvé, fait ou épargné pour elle",
-        "jamais le moyen", "la prochaine étape que la page propose"] + [f"« {mot} »" for mot in MOTS_DE_MOYEN]
+_FIN = ["le bilan et les pistes disent le résultat pour la personne", "ce qui serait trouvé, fait ou épargné pour elle",
+        "jamais le moyen"] + [f"« {mot} »" for mot in MOTS_DE_MOYEN]
+PHRASE_DU_BILAN = "Votre bilan s'affiche ci-dessous ; vous pouvez aussi le recevoir par e-mail."
 # règle -> (ce que la méthode écrit, ce que la consigne écrit une fois remplie), lus sans casse ni retour à la ligne.
 # La méthode dit « douze », la consigne « 12 » : un fragment commun ne porte pas le nombre.
 REGLES_DE_L_ESSAI = {
@@ -807,6 +809,18 @@ REGLES_DE_L_ESSAI = {
     "une seule chose par message": (_UNE_CHOSE, _UNE_CHOSE),
     "une fin sans les moyens": (_FIN, _FIN),
 }
+# Le bilan du visiteur (28/10/2026) : ce que la personne lit à la fin, écrit pour elle ; le message final reste court.
+REGLES_DU_BILAN = {
+    "un message final court qui renvoie au bilan": (
+        [PHRASE_DU_BILAN, "le message ne répète ni le bilan ni les pistes"],
+        [PHRASE_DU_BILAN, "Ne répète ni le bilan ni les pistes"]),
+    "un bilan écrit pour la personne": (
+        ["`bilan_visiteur`", "écrit pour la personne, pas pour le consultant", "dans sa langue",
+         "la note le recopie tel quel"],
+        ["son `bilan_visiteur` compris", "`bilan_visiteur` : ce que la personne lit", "écrit pour elle, dans sa langue",
+         "de trois à six phrases", "de une à trois phrases au conditionnel"]),
+}
+TOUTES_LES_REGLES = {**REGLES_DE_L_ESSAI, **REGLES_DU_BILAN}
 
 
 def texte_normalise(chemin):
@@ -820,9 +834,9 @@ def instructions_en_ligne():
 
 
 def regles_manquantes(methode, consigne):
-    """Les règles de l'essai du 28/10 dont un fragment manque dans la méthode ou dans la consigne."""
+    """Les règles de l'essai du 28/10 et du bilan du visiteur dont un fragment manque dans la méthode ou dans la consigne."""
     manquantes = []
-    for regle, (dans_methode, dans_consigne) in REGLES_DE_L_ESSAI.items():
+    for regle, (dans_methode, dans_consigne) in TOUTES_LES_REGLES.items():
         if (any(f.lower() not in methode.lower() for f in dans_methode)
                 or any(f.lower() not in consigne.lower() for f in dans_consigne)):
             manquantes.append(regle)
@@ -849,6 +863,7 @@ class ConsigneApresLEssaiEnLigne(unittest.TestCase):
 
     def test_aucune_regle_ne_manque_ni_dans_la_methode_ni_dans_la_consigne(self):
         self.assertEqual(len(REGLES_DE_L_ESSAI), 5)   # une règle par défaut relevé
+        self.assertEqual(len(REGLES_DU_BILAN), 2)   # le message final court, le bilan écrit pour la personne
         self.assertEqual(regles_manquantes(self.methode(), instructions_en_ligne()), [])
 
     def test_sabotage_une_regle_retiree_de_la_consigne_fait_rougir_son_essai(self):
@@ -859,7 +874,7 @@ class ConsigneApresLEssaiEnLigne(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             copie = pathlib.Path(d) / "consigne-en-ligne.md"
             try:
-                for regle, (_, dans_consigne) in REGLES_DE_L_ESSAI.items():
+                for regle, (_, dans_consigne) in TOUTES_LES_REGLES.items():
                     texte = gabarit
                     for fragment in dans_consigne:
                         texte = re.sub(r"\s+".join(map(re.escape, fragment.split())), "", texte, flags=re.I)
@@ -895,7 +910,11 @@ class ConsigneApresLEssaiEnLigne(unittest.TestCase):
                        "où une automatisation ou un agent pourrait aider", "toutes les étapes du plan à `fait`",
                        "ajoute, retire ou renomme une étape quand la conversation",
                        "en renomme quand la conversation prend un autre chemin",
-                       "Là où une automatisation ou un agent aiderait"):
+                       "Là où une automatisation ou un agent aiderait",
+                       # avant le bilan du visiteur, le message final annonçait la page de l'e-mail et du rendez-vous
+                       "la prochaine étape que la page propose", "demande l'adresse e-mail", "propose le rendez-vous",
+                       "avec son lien s'il y en a un", "les pistes en deux phrases",
+                       "tu peux dire en deux phrases ce que la personne y gagnerait"):
             for nom, texte in textes:
                 self.assertNotIn(ancien.lower(), texte.lower(), f"{nom} : {ancien}")
 
@@ -926,11 +945,89 @@ class ConsigneApresLEssaiEnLigne(unittest.TestCase):
         for p in CR_EN_LIGNE["pistes"]:
             for mot in MOTS_DE_MOYEN:
                 self.assertIsNone(re.search(rf"\b{mot}s?\b", p["piste"], re.I), p["piste"])
+        # le bilan du visiteur de l'exemple est en anglais, la langue de la personne : les mêmes mots, dits en anglais
+        for piste in CR_EN_LIGNE["bilan_visiteur"]["pistes"]:
+            self.assertIsNone(re.search(r"\b(?:agent|automat\w*|AI|tool|software|platform)s?\b", piste, re.I), piste)
+            self.assertRegex(piste, r"\b(?:could|would)\b")   # au conditionnel
+
+
+class BilanDuVisiteur(unittest.TestCase):
+    """Le visiteur repart avec son bilan (28/10/2026) : le compte rendu gagne un champ obligatoire, `bilan_visiteur`, que la
+    page affiche et envoie par e-mail à qui le demande ; le message final de l'agent devient court. Le schéma, la consigne
+    et la méthode le disent pareil ; la note le recopie (voir NoteDeLAgentEnLigne)."""
+
+    METHODE = entretien.COMPETENCE / "references" / "agent-en-ligne.md"
+
+    def test_le_schema_exige_le_bilan_et_porte_ses_regles(self):
+        s = entretien.schema_en_ligne()
+        self.assertIn("bilan_visiteur", s["required"])
+        b = s["properties"]["bilan_visiteur"]
+        self.assertEqual((b["type"], b["required"], b["additionalProperties"]),
+                         ("object", ["recapitulatif", "pistes"], False))
+        self.assertEqual(list(b["properties"]), ["recapitulatif", "pistes"])
+        recap, pistes = b["properties"]["recapitulatif"], b["properties"]["pistes"]
+        self.assertEqual((recap["type"], recap["minLength"], recap["maxLength"]), ("string", 1, 1200))
+        self.assertEqual((pistes["type"], pistes["minItems"], pistes["maxItems"]), ("array", 1, 3))
+        piste = pistes["items"]
+        self.assertEqual((piste["type"], piste["minLength"], piste["maxLength"]), ("string", 1, 300))
+        # les règles du contrat sont dites au modèle, dans les descriptions que lit son outil
+        decrit = " ".join(" ".join(x["description"].split()) for x in (b, recap, pistes, piste)).lower()
+        for regle in ("pas pour le consultant", "dans sa langue", "jamais en français si elle écrit autrement",
+                      "aucun nom, adresse ni numéro", "aucune promesse", "de trois à six phrases", "1 200 caractères",
+                      "au conditionnel", "jamais le moyen", "aucun prix", "aucun délai", "aucun nom d'outil",
+                      "de une à trois pistes", "300 caractères"):
+            self.assertIn(regle, decrit)
+        for mot in MOTS_DE_MOYEN:
+            self.assertIn(f"« {mot} »", pistes["description"], mot)
+        self.assertIn("pour le consultant", s["properties"]["pistes"]["description"].lower())   # elles ne se confondent pas
+
+    def test_le_message_final_est_court_et_renvoie_au_bilan(self):
+        for nom, brut in (("méthode", self.METHODE.read_text(encoding="utf-8")),
+                          ("consigne", entretien.consigne_en_ligne())):
+            fin = " ".join(section(brut, "La fin").split())
+            self.assertIn(PHRASE_DU_BILAN, fin, nom)   # le remerciement, puis cette phrase, dans la langue de la personne
+            self.assertIn("bilan_visiteur", " ".join(brut.split()), nom)
+        consigne = instructions_en_ligne()
+        for attendu in ("dans `message`, un remerciement d'une ou deux phrases puis, dans sa langue :",
+                        "Ne répète ni le bilan ni les pistes : la page montre le bilan sous ton message"):
+            self.assertIn(attendu, consigne)
+
+    def test_la_methode_dit_les_limites_du_bilan_comme_le_schema(self):
+        methode = texte_normalise(self.METHODE)
+        for attendu in ("un récapitulatif de 1 200 caractères au plus, de une à trois pistes de 300 caractères au plus",
+                        "il ne montre aucun bilan et garde le compte rendu",
+                        "à l'adresse qu'elle a saisie et à nulle autre",
+                        "Le contrôle ne compte ni les caractères ni les pistes du bilan",
+                        "Une note n'est jamais refusée pour cela"):
+            self.assertIn(attendu, methode)
+
+    def test_la_competence_porte_le_bilan(self):
+        skill = (entretien.COMPETENCE / "SKILL.md").read_text(encoding="utf-8")
+        for attendu in ("bilan_visiteur", "Bilan remis à la personne", "0.8.3"):
+            self.assertIn(attendu, skill)
+
+    def test_sabotage_la_phrase_du_bilan_retiree_de_la_consigne_fait_rougir_la_fin(self):
+        vrai = entretien.CONSIGNE_EN_LIGNE
+        texte = vrai.read_text(encoding="utf-8")
+        self.assertIn(PHRASE_DU_BILAN, " ".join(texte.split()))
+        phrase = r"\s+".join(map(re.escape, PHRASE_DU_BILAN.split()))   # la phrase est coupée par un retour à la ligne
+        with tempfile.TemporaryDirectory() as d:
+            copie = pathlib.Path(d) / "consigne-en-ligne.md"
+            copie.write_text(re.sub(phrase, "Votre bilan arrive.", texte), encoding="utf-8")
+            entretien.CONSIGNE_EN_LIGNE = copie
+            try:
+                self.assertNotIn(PHRASE_DU_BILAN, " ".join(entretien.consigne_en_ligne().split()))
+                self.assertIn("un message final court qui renvoie au bilan",
+                              regles_manquantes(texte_normalise(self.METHODE), instructions_en_ligne()))
+            finally:
+                entretien.CONSIGNE_EN_LIGNE = vrai
+        self.assertEqual(regles_manquantes(texte_normalise(self.METHODE), instructions_en_ligne()), [])
 
 
 class NoteDeLAgentEnLigne(unittest.TestCase):
-    """Le compte rendu de l'agent en ligne donne une note de même structure que les autres, avec ses pistes ; le contrôle
-    refuse ce qui enfreint la méthode : une question hors base, trop de réponses, une adresse, un prix."""
+    """Le compte rendu de l'agent en ligne donne une note de même structure que les autres, avec ses pistes et le bilan
+    remis à la personne ; le contrôle refuse ce qui enfreint la méthode : une question hors base, trop de réponses, une
+    adresse, un prix, un bilan absent."""
 
     def cr(self):
         return copy.deepcopy(CR_EN_LIGNE)
@@ -973,6 +1070,87 @@ class NoteDeLAgentEnLigne(unittest.TestCase):
         note = self.ecrire(cr)[1][0]
         self.assertIn("## Pour la base de questions\n\nRien à ajouter.", note)
         self.assertIn("## Pistes\n\nAucune piste relevée.", note)
+
+    def test_la_note_recopie_le_bilan_tel_quel_dans_la_langue_de_la_personne(self):
+        cr = self.cr()
+        bilan = cr["bilan_visiteur"]
+        self.assertEqual(entretien.controler(cr), [])
+        note = self.ecrire(cr)[1][0]
+        debut, fin = note.index("## Bilan remis à la personne"), note.index("## Pour la base de questions")
+        self.assertGreater(debut, note.index("## Pistes"))   # après les pistes du consultant, avant la base de questions
+        bloc = note[debut:fin]
+        self.assertIn("recopié tel quel, dans sa langue", bloc)
+        self.assertIn("Ce qu'elle a décrit :\n\n> " + bilan["recapitulatif"] + "\n\nLes pistes :\n\n", bloc)   # en anglais
+        for piste in bilan["pistes"]:
+            self.assertIn("\n- " + piste + "\n", bloc)
+        self.assertEqual(bloc.count("\n- "), len(bilan["pistes"]))
+        self.assertNotIn("Replies about order tracking", note[:debut])   # ni traduit ni mêlé aux pistes du consultant
+
+    def test_un_bilan_sur_plusieurs_lignes_reste_dans_sa_section(self):
+        cr = self.cr()
+        cr["bilan_visiteur"]["recapitulatif"] = "First line.\n\n## Questions restées ouvertes\nSecond line."
+        cr["bilan_visiteur"]["pistes"][0] = "An idea\non two lines could help."
+        note = self.ecrire(cr)[1][0]
+        self.assertEqual(note.count("\n## Questions restées ouvertes"), 1)   # le bilan n'ouvre aucune section de la note
+        self.assertIn("> First line.\n> \n> ## Questions restées ouvertes\n> Second line.", note)
+        self.assertIn("\n- An idea on two lines could help.\n", note)
+
+    def test_sans_bilan_la_note_est_refusee_et_rien_n_est_ecrit(self):
+        self.refuse(lambda cr: cr.pop("bilan_visiteur"), "champ manquant : bilan_visiteur")
+
+    def test_la_commande_note_refuse_un_compte_rendu_sans_bilan(self):
+        cr = self.cr()
+        cr.pop("bilan_visiteur")
+        with tempfile.TemporaryDirectory() as d:
+            d = pathlib.Path(d)
+            (d / "cr.json").write_text(json.dumps(cr), encoding="utf-8")
+            code, sortie, erreur = lancer("note", "--compte-rendu", str(d / "cr.json"), "--sortie", str(d / "mission"))
+            ecrit = (d / "mission").exists()
+        self.assertEqual((code, sortie, ecrit), (1, "", False))
+        self.assertIn("champ manquant : bilan_visiteur", erreur)
+
+    def test_un_bilan_mal_forme_est_refuse(self):
+        self.refuse(lambda cr: cr.update(bilan_visiteur="Your summary"),
+                    "bilan_visiteur : recapitulatif et pistes attendus")
+        self.refuse(lambda cr: cr["bilan_visiteur"].update(recapitulatif="  "),
+                    "bilan_visiteur.recapitulatif : un texte est attendu")
+        self.refuse(lambda cr: cr["bilan_visiteur"].pop("recapitulatif"),
+                    "bilan_visiteur.recapitulatif : un texte est attendu")
+        self.refuse(lambda cr: cr["bilan_visiteur"].update(pistes=[]), "bilan_visiteur.pistes : au moins une piste")
+        self.refuse(lambda cr: cr["bilan_visiteur"].pop("pistes"), "bilan_visiteur.pistes : au moins une piste")
+        self.refuse(lambda cr: cr["bilan_visiteur"].update(pistes="One idea"), "bilan_visiteur.pistes : au moins une piste")
+        self.refuse(lambda cr: cr["bilan_visiteur"].update(pistes=["Fine.", ""]),
+                    "bilan_visiteur.pistes[2] : un texte est attendu")
+        self.refuse(lambda cr: cr["bilan_visiteur"].update(pistes=[{"piste": "x"}]),
+                    "bilan_visiteur.pistes[1] : un texte est attendu")
+
+    def test_un_prix_n_est_pas_une_piste_du_bilan(self):
+        self.refuse(lambda cr: cr["bilan_visiteur"]["pistes"].append("It would cost 990 € a month."),
+                    "bilan_visiteur.pistes[3] : un prix")
+        self.refuse(lambda cr: cr["bilan_visiteur"]["pistes"].__setitem__(0, "Starting at $500 per audit."),
+                    "bilan_visiteur.pistes[1] : un prix")
+        cr = self.cr()   # un montant dit par la personne, dans le récapitulatif, n'est pas un prix donné par l'agent
+        cr["bilan_visiteur"]["recapitulatif"] += " You pay a contractor 300 € a month."
+        self.assertEqual(entretien.controler(cr), [])
+
+    def test_aucune_donnee_personnelle_dans_le_bilan(self):
+        self.refuse(lambda cr: cr["bilan_visiteur"].update(recapitulatif="Write to jane@example.com"),
+                    "bilan_visiteur.recapitulatif : une adresse ou un numéro")
+        self.refuse(lambda cr: cr["bilan_visiteur"]["pistes"].append("Call +1 212 555 0100"),
+                    "bilan_visiteur.pistes[3] : une adresse ou un numéro")
+        cr = self.cr()
+        cr["noms_a_retirer"] = ["Sophie"]
+        self.assertEqual(entretien.controler(cr), [])
+        cr["bilan_visiteur"]["recapitulatif"] += " Sophie helps you."
+        self.assertTrue(any("noms_a_retirer" in e for e in entretien.controler(cr)))
+
+    def test_les_limites_d_affichage_du_bilan_ne_font_pas_refuser_la_note(self):
+        cr = self.cr()   # l'hôte n'affiche alors aucun bilan, mais le consultant garde le compte rendu
+        cr["bilan_visiteur"]["recapitulatif"] = "A sentence of the summary. " * 60   # plus de 1 200 caractères
+        cr["bilan_visiteur"]["pistes"] = [("A long idea. " * 30).strip()] + ["Two.", "Three.", "Four could help."]
+        self.assertGreater(len(cr["bilan_visiteur"]["recapitulatif"]), 1200)
+        self.assertEqual(entretien.controler(cr), [])
+        self.assertIn("## Bilan remis à la personne", self.ecrire(cr)[1][0])
 
     def test_la_commande_note_accepte_un_compte_rendu_en_ligne(self):
         with tempfile.TemporaryDirectory() as d:

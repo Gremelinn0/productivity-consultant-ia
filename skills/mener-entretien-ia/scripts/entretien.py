@@ -26,8 +26,8 @@ l'entretien. `note` refuse un compte rendu qui enfreint les règles du pack (sta
 
 L'agent en ligne (un visiteur, sans consultant avant l'entretien) choisit ses questions dans la base, douze au plus,
 jamais en dehors : `consigne-en-ligne` écrit la ligne que l'hôte garde (la consigne, le schéma du compte rendu, les
-sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`) et refuse une question
-absente de la base. Méthode : `references/agent-en-ligne.md`.
+sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`), y recopie le bilan remis
+au visiteur (`bilan_visiteur`, obligatoire) et refuse une question absente de la base. Méthode : `references/agent-en-ligne.md`.
 """
 import argparse
 import hashlib
@@ -886,7 +886,9 @@ def controler_en_ligne(cr, q=None, dossier=None):
     """Les écarts d'un compte rendu de l'agent en ligne ; une liste vide veut dire que la note peut s'écrire. `q` : le
     `questionnaire` de la ligne de l'agent (`consigne-en-ligne`), que l'hôte garde ; il ne sert qu'à vérifier le guide.
     Une question qui n'est pas dans la base, plus de douze questions différentes, une adresse ou un numéro, un prix dans
-    une piste : la note est refusée. Deux entrées du même numéro ne le sont pas : la note les fusionne."""
+    une piste, un bilan du visiteur absent ou vide : la note est refusée. Deux entrées du même numéro ne le sont pas : la
+    note les fusionne. Les limites d'affichage du bilan (caractères, nombre de pistes) sont celles de l'hôte : il n'affiche
+    alors aucun bilan, mais la note est écrite."""
     ecarts = []
     for cle in json.loads(_lire(SCHEMA_EN_LIGNE))["required"] + ["date"]:
         if cle not in cr:
@@ -965,6 +967,19 @@ def controler_en_ligne(cr, q=None, dossier=None):
         texte(p.get("constat"), f"pistes[{i}].constat")
         if PRIX.search(texte(p.get("piste"), f"pistes[{i}].piste") or ""):
             ecarts.append(f"pistes[{i}].piste : un prix ; l'agent en ligne n'en donne pas, il est pour le consultant")
+    bilan = cr["bilan_visiteur"]   # ce que la personne lit : un récapitulatif et au moins une piste, sans prix ni donnée
+    if not isinstance(bilan, dict):
+        ecarts.append("bilan_visiteur : recapitulatif et pistes attendus")
+    else:
+        texte(bilan.get("recapitulatif"), "bilan_visiteur.recapitulatif")
+        pistes_du_bilan = bilan.get("pistes")
+        if not isinstance(pistes_du_bilan, list) or not pistes_du_bilan:
+            ecarts.append("bilan_visiteur.pistes : au moins une piste est attendue (une liste de textes)")
+        else:
+            for i, p in enumerate(pistes_du_bilan, 1):
+                if PRIX.search(texte(p, f"bilan_visiteur.pistes[{i}]") or ""):
+                    ecarts.append(f"bilan_visiteur.pistes[{i}] : un prix ; l'agent en ligne n'en donne pas, il est pour "
+                                  "le consultant")
     liste(cr["questions_ouvertes"], "questions_ouvertes")
     if PRIX.search(texte(cr["prochaine_etape"], "prochaine_etape") or ""):
         ecarts.append("prochaine_etape : un prix ; l'agent en ligne n'en donne pas, il est pour le consultant")
@@ -986,6 +1001,11 @@ def _citation(texte):
     return "> « " + texte.strip().replace("\n", "\n> ") + " »"
 
 
+def _bloc(texte):
+    """Un texte recopié tel quel, en bloc cité : aucune de ses lignes ne peut ouvrir une section de la note."""
+    return "\n".join("> " + ligne for ligne in texte.strip().splitlines())
+
+
 def _section(titre, items, vide):
     return [f"## {titre}", ""] + ([f"- {x}" for x in items] or [vide]) + [""]
 
@@ -1005,8 +1025,8 @@ def reponses_fusionnees(cr):
 
 
 def rendre_note_en_ligne(cr, nom_transcription=None, dossier=None):
-    """La note d'un entretien en ligne, de même structure que celle des autres guides, avec en plus ses pistes et ce qui
-    peut entrer dans la base de questions."""
+    """La note d'un entretien en ligne, de même structure que celle des autres guides, avec en plus ses pistes, le bilan
+    remis à la personne (tel quel, dans sa langue) et ce qui peut entrer dans la base de questions."""
     contexte = cr["contexte"]
     role = _role(cr)
     entete = f"# Entretien — {role}" + (f", {contexte['metier']}" if contexte["metier"] else "")
@@ -1043,6 +1063,11 @@ def rendre_note_en_ligne(cr, nom_transcription=None, dossier=None):
     l += _section("Questions restées ouvertes", cr["questions_ouvertes"], "Aucune.")
     l += ["## Pistes", ""] + ([f"- {p['constat'].strip()} → piste : {p['piste'].strip()}" for p in cr["pistes"]]
                               or ["Aucune piste relevée."]) + ["", f"Prochaine étape : {cr['prochaine_etape'].strip()}", ""]
+    bilan = cr["bilan_visiteur"]
+    l += ["## Bilan remis à la personne", "",
+          "Le bilan remis à la personne à la fin de l'entretien, recopié tel quel, dans sa langue.", "",
+          "Ce qu'elle a décrit :", "", _bloc(bilan["recapitulatif"]), "", "Les pistes :", ""]
+    l += [f"- {' '.join(p.split())}" for p in bilan["pistes"]] + [""]
     l += _section("Pour la base de questions", cr.get("pour_la_base") or [], "Rien à ajouter.")
     l += [f"À relire par le consultant avant de l'ajouter à `references/base-questions/{cr['sujet']}.md`.", ""]
     return "\n".join(l).rstrip() + "\n"

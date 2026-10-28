@@ -1,8 +1,8 @@
 {
-  "$comment": "Compte rendu que l'agent d'entretien en ligne rend à sa fin. Source unique : l'hôte le donne tel quel comme schéma de l'outil terminer_entretien (scripts/entretien.py consigne-en-ligne le range dans la ligne de l'agent, avec les sujets de la base du jour) ; scripts/entretien.py note le transforme en note mission/sources/entretien-<rôle>-<date>.md. L'hôte ajoute après coup ce que le modèle ne sait pas : date (AAAA-MM-JJ), duree_minutes, guide (en-ligne) et, s'il les connaît, role et langue. Les réponses restent mot pour mot dans la langue de la personne, le reste est en français. Méthode : references/agent-en-ligne.md.",
+  "$comment": "Compte rendu que l'agent d'entretien en ligne rend à sa fin. Source unique : l'hôte le donne tel quel comme schéma de l'outil terminer_entretien (scripts/entretien.py consigne-en-ligne le range dans la ligne de l'agent, avec les sujets de la base du jour) ; scripts/entretien.py note le transforme en note mission/sources/entretien-<rôle>-<date>.md. L'hôte ajoute après coup ce que le modèle ne sait pas : date (AAAA-MM-JJ), duree_minutes, guide (en-ligne) et, s'il les connaît, role et langue. Les réponses restent mot pour mot dans la langue de la personne et bilan_visiteur, qu'elle lit, est écrit dans sa langue ; le reste est en français. Méthode : references/agent-en-ligne.md.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["demande", "contexte", "sujet", "reponses", "pistes", "questions_ouvertes", "prochaine_etape"],
+  "required": ["demande", "contexte", "sujet", "reponses", "pistes", "bilan_visiteur", "questions_ouvertes", "prochaine_etape"],
   "properties": {
     "demande": { "type": "string", "minLength": 1, "description": "Ce que la personne est venue chercher, mot pour mot, dans sa langue, tel qu'elle l'a écrit ou cliqué (page de départ comprise). Aucun nom, adresse ni numéro." },
     "contexte": {
@@ -35,7 +35,7 @@
     },
     "pistes": {
       "type": "array",
-      "description": "Ce que la personne y gagnerait, dit comme un résultat pour elle (ce qui serait trouvé, fait ou épargné), jamais le moyen : aucun des mots « agent », « automatisation », « IA », « outil », « logiciel », « plateforme ». Sans prix, sans volume, sans délai, sans nom d'outil.",
+      "description": "Pour le consultant, en français : ce que la personne y gagnerait, dit comme un résultat pour elle (ce qui serait trouvé, fait ou épargné), jamais le moyen : aucun des mots « agent », « automatisation », « IA », « outil », « logiciel », « plateforme ». Sans prix, sans volume, sans délai, sans nom d'outil.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -43,6 +43,22 @@
         "properties": {
           "constat": { "type": "string", "minLength": 1, "description": "Ce que la personne a dit, sans l'interpréter, en français." },
           "piste": { "type": "string", "minLength": 1, "description": "Le résultat possible pour la personne, au conditionnel, en français." }
+        }
+      }
+    },
+    "bilan_visiteur": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recapitulatif", "pistes"],
+      "description": "Le bilan que la personne lit à l'écran à la fin de l'entretien et peut recevoir par e-mail. Écrit pour elle et adressé à elle (vouvoiement), pas pour le consultant, entièrement dans sa langue, jamais en français si elle écrit autrement. Aucun nom, adresse ni numéro, aucune promesse. À ne pas confondre avec `pistes`, qui est pour le consultant.",
+      "properties": {
+        "recapitulatif": { "type": "string", "minLength": 1, "maxLength": 1200, "description": "De trois à six phrases, 1 200 caractères au plus : ce que la personne a décrit et validé au récapitulatif, corrections comprises. Texte simple, sans liste ni tiret long." },
+        "pistes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "description": "De une à trois pistes. Chacune dit le résultat pour la personne, au conditionnel : ce qui serait trouvé, fait ou épargné pour elle, jamais le moyen. Aucun prix, aucun délai, aucun nom d'outil, aucun des mots « agent », « automatisation », « IA », « outil », « logiciel », « plateforme » ni leurs formes voisines.",
+          "items": { "type": "string", "minLength": 1, "maxLength": 300, "description": "Une phrase, 300 caractères au plus." }
         }
       }
     },
