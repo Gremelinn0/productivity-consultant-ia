@@ -1,16 +1,17 @@
 """Entretien guidé par IA : questionnaire, consigne de l'intervieweur, note d'entretien.
 
 Usage :
-  python entretien.py questionnaire --guide besoin
-  python entretien.py consigne --guide besoin --role "dirigeante" --entreprise "Société Exemple"
+  python entretien.py questionnaire (--guide besoin | --questionnaire mission/sources/questionnaire-<objet>-<date>.md)
+  python entretien.py consigne (--guide besoin | --questionnaire …) --role "dirigeante" --entreprise "Société Exemple"
                                [--langue en] [--contexte contexte.md] [--consultant "le consultant"]
   python entretien.py schema
-  python entretien.py note --compte-rendu cr.json [--transcription messages.json] --sortie mission/sources
+  python entretien.py note --compte-rendu cr.json [--questionnaire …] [--transcription messages.json] --sortie mission/sources
 
 Les questions ne sont écrites qu'à un endroit : `decouvrir-cas-usage/references/guides-entretien.md` (direction,
 équipes, version courte), l'étape 3 de `cadrer-besoin` (besoin) et l'étape 9 d'`auditer-processus` (processus).
-Ce script les lit là ; il n'en garde aucune copie. `note` refuse un compte rendu qui enfreint les règles du pack
-(statuts, données personnelles) et rend 1.
+Ce script les lit là ; il n'en garde aucune copie. Un questionnaire préparé pour un objectif (guide `prepare`) est
+un fichier de la mission, au modèle de `references/questionnaire-prepare.md`, validé avant l'entretien. `note`
+refuse un compte rendu qui enfreint les règles du pack (statuts, données personnelles) et rend 1.
 """
 import argparse
 import json
@@ -28,9 +29,11 @@ GUIDES = SKILLS / "decouvrir-cas-usage" / "references" / "guides-entretien.md"
 CADRER = SKILLS / "cadrer-besoin" / "SKILL.md"
 AUDITER = SKILLS / "auditer-processus" / "SKILL.md"
 
-GUIDES_CONNUS = ("direction", "equipes", "besoin", "processus", "court")
-PREFIXES = {"direction": "D", "equipes": "E", "besoin": "B", "processus": "P", "court": "C"}
+GUIDES_CONNUS = ("direction", "equipes", "besoin", "processus", "court", "prepare")
+PREFIXES = {"direction": "D", "equipes": "E", "besoin": "B", "processus": "P", "court": "C", "prepare": "Q"}
 DUREES = {"direction": 30, "equipes": 35, "besoin": 20, "processus": 25, "court": 10}
+# Un questionnaire préparé reste un entretien court : au-delà, la personne abandonne, et le reste attend l'audit.
+MAX_PREPARE = 12
 # La version courte de guides-entretien.md : « la semaine type, la tâche qu'on voudrait ne plus faire, les
 # informations recopiées d'un outil à l'autre », soit les thèmes 1, 10 et 5 du guide équipes.
 COURT = (1, 10, 5)
@@ -84,9 +87,51 @@ def _processus():
     return lignes
 
 
-def questionnaire(guide):
+def _prepare(fichier):
+    """Le questionnaire préparé pour un objectif : `references/questionnaire-prepare.md` en donne le modèle."""
+    chemin = pathlib.Path(fichier)
+    texte = _lire(chemin)
+    objectif = re.search(r"^Objectif\s*:\s*(.+?)\s*$", texte, re.M)
+    if not objectif:
+        raise Erreur(f"{chemin.name} : la ligne « Objectif : » manque ; les questions visent un objectif écrit")
+    valide = re.search(r"^Validé par\s*:[ \t]*(.*?)\s*$", texte, re.M)
+    if not valide or not valide.group(1) or "<" in valide.group(1):
+        raise Erreur(f"{chemin.name} : questionnaire non validé ; la ligne « Validé par : » attend le rôle de qui "
+                     "l'a relu, et la date")
+    m = re.search(r"^## Questions.*?$(.*?)(?=^## |\Z)", texte, re.M | re.S)
+    if not m:
+        raise Erreur(f"{chemin.name} : la section « ## Questions » manque")
+    lignes = []
+    for ligne in m.group(1).splitlines():
+        c = [x.strip() for x in ligne.strip().strip("|").split("|")]
+        if len(c) >= 5 and c[0].isdigit():
+            lignes.append({"numero": int(c[0]), "theme": c[1], "question": c[2], "deja_su": c[3],
+                           "alimente": c[4]})
+    if not lignes:
+        raise Erreur(f"{chemin.name} : aucune question lue dans « ## Questions »")
+    if [l["numero"] for l in lignes] != list(range(1, len(lignes) + 1)):
+        raise Erreur(f"{chemin.name} : questions à numéroter de 1 à {len(lignes)}, dans l'ordre")
+    if len(lignes) > MAX_PREPARE:
+        raise Erreur(f"{chemin.name} : {len(lignes)} questions ; {MAX_PREPARE} au plus, les plus décisives d'abord "
+                     "(le reste attend la séance d'observation ou l'audit)")
+    vides = [str(l["numero"]) for l in lignes if not l["question"]]
+    if vides:
+        raise Erreur(f"{chemin.name} : question vide (ligne {', '.join(vides)})")
+    etabli = re.search(r"^## Déjà établi.*?$(.*?)(?=^## |\Z)", texte, re.M | re.S)
+    deja = re.findall(r"^\s*- (.+?)\s*$", etabli.group(1), re.M) if etabli else []
+    return {"guide": "prepare", "source": chemin.name, "objectif": objectif.group(1), "valide_par": valide.group(1),
+            "deja_etabli": deja, "duree_minutes": max(5, round(2.5 * len(lignes))),
+            "questions": [{"id": f"Q{l['numero']}", "theme": l["theme"], "question": l["question"],
+                           "deja_su": l["deja_su"], "alimente": l["alimente"]} for l in lignes]}
+
+
+def questionnaire(guide, fichier=None):
     if guide not in GUIDES_CONNUS:
         raise Erreur(f"guide inconnu : {guide} (connus : {', '.join(GUIDES_CONNUS)})")
+    if guide == "prepare":
+        if not fichier:
+            raise Erreur("guide prepare : donner le questionnaire préparé (--questionnaire <fichier>)")
+        return _prepare(fichier)
     if guide == "direction":
         lignes, source = _tableau(_lire(GUIDES), "Guide direction"), "decouvrir-cas-usage/references/guides-entretien.md"
     elif guide == "equipes":
@@ -107,19 +152,32 @@ def questionnaire(guide):
     return {"guide": guide, "source": source, "duree_minutes": DUREES[guide], "questions": questions}
 
 
-def consigne(guide, role, entreprise, langue=None, contexte="", consultant="le consultant", objet=None):
-    q = questionnaire(guide)
+def _minuscule(phrase):
+    return phrase[0].lower() + phrase[1:] if len(phrase) > 1 and phrase[0].isupper() and phrase[1].islower() else phrase
+
+
+def consigne(guide, role, entreprise, langue=None, contexte="", consultant="le consultant", objet=None,
+             fichier=None):
+    q = questionnaire(guide, fichier)
     gabarit = _lire(CONSIGNE).split("\n---\n", 1)
     if len(gabarit) != 2:
         raise Erreur("consigne-intervieweur.md : la ligne --- qui ouvre la consigne est absente")
     bloc = "\n".join(
-        f"{x['id']}. " + (f"[{x['theme']}] " if x["theme"] else "") + x["question"] for x in q["questions"])
+        f"{x['id']}. " + (f"[{x['theme']}] " if x["theme"] else "") + x["question"]
+        + (f" (Déjà su : {x['deja_su']})" if x.get("deja_su") else "") for x in q["questions"])
+    if q.get("deja_etabli"):
+        contexte = (contexte.strip() + "\n\n" if contexte.strip() else "") + "Déjà établi, à ne pas redemander :\n" \
+            + "\n".join(f"- {x}" for x in q["deja_etabli"])
+    objet_par_defaut = ("comprendre comment le travail se passe aujourd'hui, pour voir ce qui pourrait être "
+                        "simplifié ; rien n'est décidé, et personne n'est jugé.")
+    if q.get("objectif"):
+        objet_par_defaut = (f"comprendre ce qu'il faut savoir pour {_minuscule(q['objectif']).rstrip('.')} ; rien "
+                            "n'est décidé, et personne n'est jugé.")
     champs = {
         "CONSULTANT": consultant,
         "ENTREPRISE": entreprise,
         "ROLE": role,
-        "OBJET": objet or ("comprendre comment le travail se passe aujourd'hui, pour voir ce qui pourrait être "
-                           "simplifié ; rien n'est décidé, et personne n'est jugé."),
+        "OBJET": objet or objet_par_defaut,
         "LANGUE": (f"Mène l'entretien dans cette langue : {langue}." if langue else
                    "Mène l'entretien dans la langue de la personne ; avant sa première réponse, écris en français."),
         "DUREE": str(q["duree_minutes"]),
@@ -143,8 +201,9 @@ def schema():
 DONNEE_PERSO = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+|(?:\+?\d[\s.-]?){9,}")
 
 
-def controler(cr, guide_attendu=None):
-    """Les écarts aux règles du pack ; une liste vide veut dire que la note peut s'écrire."""
+def controler(cr, guide_attendu=None, q=None):
+    """Les écarts aux règles du pack ; une liste vide veut dire que la note peut s'écrire. `q` : le questionnaire
+    préparé de l'entretien (guide `prepare`), lu dans son fichier ou gardé par l'hôte."""
     ecarts = []
     s = schema()
     for cle in s["required"]:
@@ -159,7 +218,13 @@ def controler(cr, guide_attendu=None):
         ecarts.append("date : AAAA-MM-JJ attendu")
     if not cr["ouverture_dite"]:
         ecarts.append("l'objet de l'entretien n'a pas été dit en ouverture (guides-entretien, règles communes)")
-    ids = [q["id"] for q in questionnaire(guide_attendu or cr["guide"])["questions"]]
+    if cr["guide"] == "prepare" and q is None:
+        ecarts.append("guide prepare : le questionnaire préparé de l'entretien est requis (--questionnaire)")
+        return ecarts
+    if q is not None and q.get("guide") != cr["guide"]:
+        ecarts.append(f"le compte rendu suit le guide {cr['guide']}, le questionnaire donné est {q.get('guide')}")
+        return ecarts
+    ids = [x["id"] for x in (q or questionnaire(guide_attendu or cr["guide"]))["questions"]]
     vus = [r.get("id") for r in cr["reponses"]]
     if vus != ids:
         ecarts.append(f"réponses : une par question dans l'ordre {ids}, reçu {vus}")
@@ -208,14 +273,17 @@ NOMS_GUIDES = {"direction": "direction", "equipes": "équipes", "besoin": "besoi
                "processus": "processus (auditer-processus, 8 questions)", "court": "version courte"}
 
 
-def rendre_note(cr, nom_transcription=None):
-    q = {x["id"]: x for x in questionnaire(cr["guide"])["questions"]}
+def rendre_note(cr, nom_transcription=None, questionnaire_prepare=None):
+    complet = questionnaire_prepare or questionnaire(cr["guide"])
+    q = {x["id"]: x for x in complet["questions"]}
+    nom_guide = NOMS_GUIDES.get(cr["guide"]) or (
+        f"questionnaire préparé pour : {complet['objectif']} (`{complet['source']}`, {len(q)} questions)")
     entete = f"# Entretien — {cr['role']}" + (f", {cr['equipe']}" if cr.get("equipe") else "")
     entete += f" · {cr['date']} · {cr['duree_minutes']} min"
     presents = ", ".join(cr.get("personnes") or [cr["role"]])
     l = [entete, "",
          f"Mené par : entretien guidé par IA (consultant-ia, `mener-entretien-ia`), sans le consultant · Guide utilisé : "
-         f"{NOMS_GUIDES[cr['guide']]} · Personnes présentes (rôles) : {presents} · Langue : {cr['langue']}",
+         f"{nom_guide} · Personnes présentes (rôles) : {presents} · Langue : {cr['langue']}",
          ""]
     if nom_transcription:
         l += [f"Transcription intégrale : `{nom_transcription}` (même dossier).", ""]
@@ -269,8 +337,8 @@ def rendre_transcription(cr, messages):
     return "\n".join(l).rstrip() + "\n"
 
 
-def ecrire_note(cr, sortie, messages=None):
-    ecarts = controler(cr)
+def ecrire_note(cr, sortie, messages=None, questionnaire_prepare=None):
+    ecarts = controler(cr, q=questionnaire_prepare)
     if ecarts:
         raise Erreur("compte rendu refusé :\n  - " + "\n  - ".join(ecarts))
     sortie = pathlib.Path(sortie)
@@ -278,7 +346,7 @@ def ecrire_note(cr, sortie, messages=None):
     base = f"entretien-{slug(cr['role'])}-{cr['date']}"
     nom_t = f"{base}.transcription.md" if messages else None
     note = sortie / f"{base}.md"
-    note.write_text(rendre_note(cr, nom_t), encoding="utf-8")
+    note.write_text(rendre_note(cr, nom_t, questionnaire_prepare), encoding="utf-8")
     fichiers = [note]
     if messages:
         (sortie / nom_t).write_text(rendre_transcription(cr, messages), encoding="utf-8")
@@ -290,9 +358,11 @@ def main(argv):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sp = p.add_subparsers(dest="commande", required=True)
     a = sp.add_parser("questionnaire")
-    a.add_argument("--guide", required=True, choices=GUIDES_CONNUS)
+    a.add_argument("--guide", choices=GUIDES_CONNUS)
+    a.add_argument("--questionnaire", help="questionnaire préparé pour un objectif (guide prepare)")
     a = sp.add_parser("consigne")
-    a.add_argument("--guide", required=True, choices=GUIDES_CONNUS)
+    a.add_argument("--guide", choices=GUIDES_CONNUS)
+    a.add_argument("--questionnaire", help="questionnaire préparé pour un objectif (guide prepare)")
     a.add_argument("--role", required=True)
     a.add_argument("--entreprise", required=True)
     a.add_argument("--langue")
@@ -302,21 +372,28 @@ def main(argv):
     sp.add_parser("schema")
     a = sp.add_parser("note")
     a.add_argument("--compte-rendu", required=True)
+    a.add_argument("--questionnaire", help="le questionnaire préparé de l'entretien (guide prepare)")
     a.add_argument("--transcription", help="fichier JSON : liste de {role, texte, le}")
     a.add_argument("--sortie", required=True)
     args = p.parse_args(argv)
     try:
+        if args.commande in ("questionnaire", "consigne"):
+            guide = "prepare" if args.questionnaire else args.guide
+            if not guide:
+                raise Erreur("donner --guide, ou --questionnaire pour un questionnaire préparé")
         if args.commande == "questionnaire":
-            print(json.dumps(questionnaire(args.guide), ensure_ascii=False, indent=2))
+            print(json.dumps(questionnaire(guide, args.questionnaire), ensure_ascii=False, indent=2))
         elif args.commande == "consigne":
             contexte = pathlib.Path(args.contexte).read_text(encoding="utf-8") if args.contexte else ""
-            print(consigne(args.guide, args.role, args.entreprise, args.langue, contexte, args.consultant, args.objet))
+            print(consigne(guide, args.role, args.entreprise, args.langue, contexte, args.consultant, args.objet,
+                           args.questionnaire))
         elif args.commande == "schema":
             print(json.dumps(schema(), ensure_ascii=False, indent=2))
         else:
             cr = json.loads(pathlib.Path(args.compte_rendu).read_text(encoding="utf-8"))
             messages = json.loads(pathlib.Path(args.transcription).read_text(encoding="utf-8")) if args.transcription else None
-            for f in ecrire_note(cr, args.sortie, messages):
+            prepare = _prepare(args.questionnaire) if args.questionnaire else None
+            for f in ecrire_note(cr, args.sortie, messages, prepare):
                 print(f)
     except Erreur as e:
         print(f"✗ {e}", file=sys.stderr)

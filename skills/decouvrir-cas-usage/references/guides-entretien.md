@@ -56,7 +56,7 @@ versions sont gardées, la suppléante est notée « non observée » et une sé
 
 | # | Thème | Question | Colonne de `01` alimentée |
 |---|---|---|---|
-| 1 | Semaine type | Racontez-moi votre dernière semaine, jour par jour : qu'avez-vous fait ? | Tâche, Déclencheur |
+| 1 | Semaine type | Racontez-moi votre dernière semaine, jour par jour : qu'avez-vous fait ? Quelles sont les trois activités qui vous ont pris le plus de temps au total, petites actions répétées comprises ? | Tâche, Déclencheur |
 | 2 | Répétitif | Qu'avez-vous fait plusieurs fois cette semaine à peu près de la même façon ? | Fréquence ; les candidats à l'automatisation |
 | 3 | Temps et volume | La dernière fois, combien de temps cela a-t-il pris pour une unité (une relance, un ticket) ? Combien d'unités par mois ? À quelle fréquence ? Pouvez-vous me montrer un exemple récent ? | Durée par occurrence (par unité), Volume (par mois), Fréquence, avec leur statut |
 | 4 | Outils et données | Quels outils ouvrez-vous pour cette tâche, dans quel ordre, et que cherchez-vous dans chacun ? | Outils, Données |
@@ -65,7 +65,7 @@ versions sont gardées, la suppléante est notée « non observée » et une sé
 | 7 | Erreurs et reprises | Que se passe-t-il quand cela se passe mal ? Qu'est-ce qu'il faut refaire, et à quelle fréquence ? | Erreurs / reprises |
 | 8 | Exceptions | Dans quels cas la tâche ne se passe-t-elle pas comme d'habitude ? Qui décide alors, et comment ? | Stabilité des règles ; l'issue « Garder » |
 | 9 | Règles | Les règles sont-elles écrites quelque part ? Un collègue qui fait la même tâche la fait-il de la même façon ? | Stabilité des règles ; l'issue « Simplifier d'abord » |
-| 10 | Ne plus faire | Si vous pouviez ne plus jamais faire une seule chose, laquelle ? Que feriez-vous avec du temps en plus ? | l'issue « Éliminer », la valeur, l'adoption |
+| 10 | Ne plus faire | Si vous pouviez ne plus jamais faire une seule chose, laquelle ? Qu'est-ce que vous devriez faire davantage ou mieux, et que vous ne faites pas faute de temps ? | l'issue « Éliminer », la valeur, l'adoption |
 | 11 | Clôture | Qui d'autre pourrait m'en parler ? Qu'est-ce que je n'ai pas demandé ? | d'autres sources, les questions ouvertes |
 
 ## Séance d'enregistrement du travail réel
@@ -106,6 +106,8 @@ rien lui-même ; le consultant et l'entreprise organisent la séance, la session
 Quand la personne ne peut pas donner le temps d'un entretien en direct, `mener-entretien-ia` fait poser ces mêmes
 questions par écrit par une IA, avec les règles ci-dessus (une question à la fois, l'occurrence réelle, rien de
 promis) ; sa note suit le modèle ci-dessous. Une question corrigée ici l'est aussi là-bas : le script la lit ici.
+Quand l'objectif est déjà nommé, ce ne sont plus ces guides mais un questionnaire préparé pour lui
+(`cadrer-besoin/references/questions-par-objectif.md`).
 
 ## Modèle de note d'entretien
 

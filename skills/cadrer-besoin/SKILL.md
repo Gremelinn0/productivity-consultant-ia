@@ -78,6 +78,12 @@ quelle décision la suite de la mission doit permettre.
    venu de la porte découverte ne reçoit aucune question reposée** : les réponses sont dans
    `02-portefeuille.md` et `mission/sources/`, et une rubrique sans réponse prend un `?`. Les questions
    posées et les réponses reçues se déposent dans `mission/sources/` (note d'échange datée) ; la fiche les cite.
+
+   **L'entretien de l'objectif.** Quand l'objectif relève d'un domaine (service client, prospection, CRM,
+   données, reporting, contenu, transmission), on prépare l'entretien avec les questions qui manquent du module
+   de `references/questions-par-objectif.md`, un seul module, réécrites dans les mots de la personne. Mené par
+   écrit par une IA, en ligne ou dans la session de l'entreprise, c'est `mener-entretien-ia` (questionnaire
+   préparé) ; sa note entre dans `mission/sources/` comme celle d'un entretien en direct.
 4. **Si une réponse manque**, écrire l'hypothèse provisoire, la marquer `[H]` avec la personne qui
    peut la confirmer, et continuer. On ne bloque que si la décision dépend entièrement de cette
    inconnue. Une valeur que le rédacteur propose (une cible, un seuil) reste `[H]` jusqu'à la validation ;

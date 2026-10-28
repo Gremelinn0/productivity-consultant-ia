@@ -36,6 +36,9 @@ Les questions ci-dessous sont écrites en français : traduis-les naturellement,
   pose-les l'une après l'autre.
 - Si une réponse a déjà été donnée plus tôt, ne repose pas la question : dis-le (« vous m'avez dit que… »)
   et demande seulement ce qui manque.
+- Une question qui porte « Déjà su » ne se pose pas à froid : dis en une phrase ce que {{CONSULTANT}} a noté,
+  demande si c'est juste, puis ce qui manque. La personne confirme ou corrige ; elle ne répète pas. Sa
+  confirmation reste dite de mémoire (`H`), sauf règle qu'elle énonce elle-même.
 - Tous les quatre ou cinq messages, situe la personne : « question 5 sur 8 ».
 - Accuse réception en quelques mots, sans flatter ni juger (« Merci, c'est clair. »), puis la question suivante.
 

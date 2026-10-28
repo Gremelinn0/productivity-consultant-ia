@@ -68,6 +68,7 @@ cas-relances-factures  10 ✓  20 ✓  30 —  40 —  50 —  60 —  70 —  8
 À lancer          Tri des tickets entrants · Statut de commande
 Dernière décision 2026-10-14 · cas-relances-factures · 20-diagnostic validé
 Questions ouvertes  2 Q-xx sans réponse inscrite au journal
+Entretiens        questionnaire-relances-factures-2026-10-12 · note reçue
 Étape suivante    rediger-cahier-des-charges (exigences) pour cas-relances-factures
 ```
 
@@ -86,6 +87,9 @@ Chaque ligne se calcule à la lecture :
   du pilote, bascule, transmission, revue de mesure) ;
 - « à lancer » = les cas que la validation de `02-portefeuille.md` retient (« on creuse : … ») et qui n'ont
   pas encore de dossier `cas-<slug>/` ; un cas mis en attente ou écarté n'y figure pas ;
+- « entretiens » = chaque questionnaire préparé de `mission/sources/` (`questionnaire-<objet>-<date>.md`), suivi
+  de « note reçue » quand une note `entretien-…` le cite, sinon « en attente ». Un questionnaire en attente
+  pour un cas sans `10-besoin.md` fait de l'étape suivante « recevoir l'entretien, puis cadrer-besoin » ;
 - « questions ouvertes » = le nombre de `Q-xx` du cas (les identifiants cités dans ses livrables, de 10 à 95 ;
   ceux de la découverte, s'il n'y a pas de cas) sans réponse inscrite au journal : une `Q-xx` est répondue
   quand une ligne du journal la cite avec « répondue ». Le compte ne demande aucun jugement ; ni légende ni
@@ -111,7 +115,10 @@ d'état :
 ### 2. Choisir la porte
 
 - `/mission-besoin <besoin>` ou une demande qui nomme un processus → porte 1, à partir de
-  `cadrer-besoin`, qui fixe le slug et ouvre `mission/cas-<slug>/`.
+  `cadrer-besoin`, qui fixe le slug et ouvre `mission/cas-<slug>/`. L'objectif nommé, l'entretien qui le
+  précise se prépare avant la fiche : les questions qui manquent pour cet objectif, après lecture de tout ce qui
+  est accessible (`cadrer-besoin`, étape 3). Le consultant le mène en direct, ou une IA par écrit, en ligne ou
+  dans la session de l'entreprise (`mener-entretien-ia`) ; sa note entre dans `mission/sources/`.
 - `/mission-decouverte` ou « où l'IA peut-elle nous aider ? » → porte 2, à partir de
   `decouvrir-cas-usage`.
 - Une mission qui reprend → l'étape suivante affichée, sans reposer la question. Un cas « à lancer »
@@ -125,7 +132,8 @@ d'état :
 | | `chiffrer-rentabilite` (ordre de grandeur) | 03-chiffrage |
 | | `planifier-deploiement` (feuille de route) | 04-feuille-de-route |
 | | chaque cas retenu → porte 1 | `cas-<slug>/` |
-| 1 — besoin connu | `cadrer-besoin` | 10-besoin |
+| 1 — besoin connu | l'entretien de l'objectif (`cadrer-besoin` étape 3 ; `mener-entretien-ia` s'il est écrit) | sources : questionnaire, note d'entretien |
+| | `cadrer-besoin` | 10-besoin |
 | | `auditer-processus` | 20-diagnostic |
 | | `rediger-cahier-des-charges` (exigences) | 30-exigences |
 | | `concevoir-solution` | 40-solutions |

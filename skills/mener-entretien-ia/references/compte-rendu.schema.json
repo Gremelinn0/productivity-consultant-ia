@@ -8,7 +8,7 @@
     "equipe": { "type": "string", "description": "L'équipe ou le service, s'il est connu." },
     "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Date de fin de l'entretien, AAAA-MM-JJ." },
     "duree_minutes": { "type": "integer", "minimum": 0, "description": "Durée approximative, en minutes, du premier au dernier message." },
-    "guide": { "type": "string", "enum": ["direction", "equipes", "besoin", "processus", "court"] },
+    "guide": { "type": "string", "enum": ["direction", "equipes", "besoin", "processus", "court", "prepare"] },
     "langue": { "type": "string", "description": "Langue dans laquelle la personne a répondu (code court : fr, en, es…)." },
     "personnes": { "type": "array", "items": { "type": "string" }, "description": "Rôles présents, si plusieurs personnes ont répondu ensemble." },
     "ouverture_dite": { "type": "boolean", "description": "L'objet de l'entretien et l'accord pour l'enregistrer ont été dits en ouverture." },
@@ -20,7 +20,7 @@
         "additionalProperties": false,
         "required": ["id", "theme", "synthese", "citations", "chiffres", "relances", "repondue"],
         "properties": {
-          "id": { "type": "string", "description": "L'identifiant de la question dans le questionnaire (D1, E3, B2, P5, C1…)." },
+          "id": { "type": "string", "description": "L'identifiant de la question dans le questionnaire (D1, E3, B2, P5, C1, Q4…)." },
           "theme": { "type": "string" },
           "repondue": { "type": "boolean", "description": "false si la personne n'a pas su ou pas voulu répondre." },
           "synthese": { "type": "string", "description": "Ce qui a été répondu, en français, en quelques phrases, sans aucun nom de personne. Les nombres vont dans chiffres." },

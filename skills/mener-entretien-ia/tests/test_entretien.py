@@ -18,7 +18,7 @@ SECTIONS = ["## Ce qui a été dit", "## Tâches citées (à reporter dans 01)",
 class Questionnaires(unittest.TestCase):
     def test_chaque_guide_se_lit_dans_le_pack(self):
         attendus = {"direction": 10, "equipes": 11, "besoin": 8, "processus": 8, "court": 3}
-        for guide, n in attendus.items():
+        for guide, n in attendus.items():  # le guide prepare a ses essais plus bas
             q = entretien.questionnaire(guide)
             self.assertEqual(len(q["questions"]), n, guide)
             self.assertTrue(all(x["question"].rstrip().endswith("?") for x in q["questions"]
@@ -91,6 +91,67 @@ class Note(unittest.TestCase):
 
     def test_l_objet_dit_en_ouverture(self):
         self._refuse(lambda cr: cr.update(ouverture_dite=False), "ouverture")
+
+
+PREPARE = ICI / "questionnaire-fictif.md"
+
+
+def cr_prepare():
+    """Le compte rendu fictif, ramené aux quatre questions du questionnaire préparé."""
+    cr = copy.deepcopy(EXEMPLE)
+    cr["guide"] = "prepare"
+    cr["reponses"] = [dict(r, id=f"Q{i + 1}") for i, r in enumerate(cr["reponses"][:4])]
+    return cr
+
+
+class QuestionnairePrepare(unittest.TestCase):
+    def test_il_se_lit_avec_ce_qui_est_deja_su(self):
+        q = entretien.questionnaire("prepare", PREPARE)
+        self.assertEqual([x["id"] for x in q["questions"]], ["Q1", "Q2", "Q3", "Q4"])
+        self.assertIn("où est ma commande", q["questions"][1]["deja_su"])
+        self.assertEqual(len(q["deja_etabli"]), 1)
+        texte = entretien.consigne("prepare", "dirigeante", "Exemple", "en", fichier=PREPARE)
+        self.assertNotIn("{{", texte)
+        self.assertIn("Q4.", texte)
+        self.assertIn("(Déjà su : Surtout", texte)
+        self.assertIn("Déjà établi, à ne pas redemander :", texte)
+        self.assertIn("savoir pour mettre en place un agent", texte)
+
+    def test_la_note_cite_son_questionnaire(self):
+        q = entretien.questionnaire("prepare", PREPARE)
+        self.assertEqual(entretien.controler(cr_prepare(), q=q), [])
+        with tempfile.TemporaryDirectory() as d:
+            note = entretien.ecrire_note(cr_prepare(), d, None, q)[0].read_text(encoding="utf-8")
+        self.assertIn("questionnaire préparé pour : Mettre en place un agent", note)
+        self.assertIn("`questionnaire-fictif.md`", note)
+
+    def _questionnaire_refuse(self, modifier, attendu):
+        texte = modifier(PREPARE.read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as d:
+            chemin = pathlib.Path(d) / "questionnaire-sabote.md"
+            chemin.write_text(texte, encoding="utf-8")
+            with self.assertRaises(entretien.Erreur) as e:
+                entretien.consigne("prepare", "dirigeante", "Exemple", fichier=chemin)
+        self.assertIn(attendu, str(e.exception))
+
+    # Sabotages : le questionnaire préparé, cassé une fois, doit être refusé avant l'entretien.
+    def test_un_questionnaire_non_valide_ne_s_ouvre_pas(self):
+        self._questionnaire_refuse(lambda t: t.replace("Validé par : consultant, le 2026-10-28", "Validé par :"),
+                                   "non validé")
+
+    def test_les_questions_visent_un_objectif_ecrit(self):
+        self._questionnaire_refuse(lambda t: t.replace("Objectif :", "But :"), "Objectif")
+
+    def test_douze_questions_au_plus(self):
+        def f(t):
+            lignes = "".join(f"| {n} | Thème | Question {n} ? | | 01 |\n" for n in range(5, 14))
+            return t.replace("\n## Pas dans cet entretien", lignes + "\n## Pas dans cet entretien")
+        self._questionnaire_refuse(f, "12 au plus")
+
+    def test_le_compte_rendu_ne_se_controle_pas_sans_son_questionnaire(self):
+        self.assertTrue(any("questionnaire préparé" in e for e in entretien.controler(cr_prepare())))
+        with tempfile.TemporaryDirectory() as d, self.assertRaises(entretien.Erreur):
+            entretien.ecrire_note(cr_prepare(), d)
 
 
 if __name__ == "__main__":
