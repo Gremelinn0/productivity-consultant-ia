@@ -885,8 +885,8 @@ PRIX = re.compile(r"\d[\d\s.,]*k?\s?(?:€|\$|£|euros?\b|eur\b|usd\b|dollars?\b
 def controler_en_ligne(cr, q=None, dossier=None):
     """Les écarts d'un compte rendu de l'agent en ligne ; une liste vide veut dire que la note peut s'écrire. `q` : le
     `questionnaire` de la ligne de l'agent (`consigne-en-ligne`), que l'hôte garde ; il ne sert qu'à vérifier le guide.
-    Une question qui n'est pas dans la base, plus de douze réponses, une adresse ou un numéro, un prix dans une piste :
-    la note est refusée."""
+    Une question qui n'est pas dans la base, plus de douze questions différentes, une adresse ou un numéro, un prix dans
+    une piste : la note est refusée. Deux entrées du même numéro ne le sont pas : la note les fusionne."""
     ecarts = []
     for cle in json.loads(_lire(SCHEMA_EN_LIGNE))["required"] + ["date"]:
         if cle not in cr:
@@ -934,10 +934,8 @@ def controler_en_ligne(cr, q=None, dossier=None):
     if not isinstance(reponses, list) or not reponses:
         ecarts.append("reponses : au moins une réponse est attendue")
         reponses = []
-    if len(reponses) > MAX_EN_LIGNE:
-        ecarts.append(f"reponses : {len(reponses)} réponses, {MAX_EN_LIGNE} au plus (l'entretien en ligne reste court)")
     actives = questions_en_ligne(dossier)
-    vus = set()
+    vus = set()   # les numéros posés : une question reprise ou relancée donne deux entrées, que la note fusionne
     for i, r in enumerate(reponses, 1):
         ou = f"reponses[{i}]"
         if not isinstance(r, dict):
@@ -947,14 +945,15 @@ def controler_en_ligne(cr, q=None, dossier=None):
         if not isinstance(ident, str):
             ecarts.append(f"{ou}.id : le numéro de la question dans la base est attendu")
         else:
-            if ident in vus:
-                ecarts.append(f"{ou} : la question {ident} est déjà dans les réponses")
             vus.add(ident)
             if ident not in actives:
                 ecarts.append(f"{ou} : {ident!r} n'est pas une question de la base (inventée, retirée ou mal recopiée) ; "
                               "l'agent en ligne ne pose que des questions de la base")
         texte(r.get("question"), f"{ou}.question")
         texte(r.get("reponse"), f"{ou}.reponse")
+    if len(vus) > MAX_EN_LIGNE:
+        ecarts.append(f"reponses : {len(vus)} questions différentes, {MAX_EN_LIGNE} au plus (l'entretien en ligne reste "
+                      "court ; une question reprise compte pour une)")
     pistes = cr["pistes"]
     if not isinstance(pistes, list):
         ecarts.append("pistes : une liste est attendue")
@@ -991,6 +990,20 @@ def _section(titre, items, vide):
     return [f"## {titre}", ""] + ([f"- {x}" for x in items] or [vide]) + [""]
 
 
+def reponses_fusionnees(cr):
+    """Les réponses de l'agent en ligne, une fois par numéro de question : [(numéro, [(question, réponse), …]), …]. Les
+    entrées du même numéro (une question reprise ou relancée) se fusionnent sous la première, dans l'ordre où elles ont été
+    données ; deux entrées identiques n'en font qu'une. La consigne n'en demande qu'une par numéro, la note n'en refuse
+    aucune."""
+    groupes = {}
+    for r in cr["reponses"]:
+        paire = (" ".join(r["question"].split()), r["reponse"].strip())
+        paires = groupes.setdefault(r["id"], [])
+        if paire not in paires:
+            paires.append(paire)
+    return list(groupes.items())
+
+
 def rendre_note_en_ligne(cr, nom_transcription=None, dossier=None):
     """La note d'un entretien en ligne, de même structure que celle des autres guides, avec en plus ses pistes et ce qui
     peut entrer dans la base de questions."""
@@ -998,7 +1011,8 @@ def rendre_note_en_ligne(cr, nom_transcription=None, dossier=None):
     role = _role(cr)
     entete = f"# Entretien — {role}" + (f", {contexte['metier']}" if contexte["metier"] else "")
     entete += f" · {cr['date']}" + (f" · {cr['duree_minutes']} min" if cr.get("duree_minutes") is not None else "")
-    nom_guide = f"agent en ligne, {len(cr['reponses'])} questions choisies dans la base (sujet : {cr['sujet']})"
+    groupes = reponses_fusionnees(cr)
+    nom_guide = f"agent en ligne, {len(groupes)} questions choisies dans la base (sujet : {cr['sujet']})"
     l = [entete, "",
          "Mené par : entretien guidé par IA (consultant-ia, `mener-entretien-ia`), en ligne, sans le consultant · Guide "
          f"utilisé : {nom_guide} · Personnes présentes (rôles) : {', '.join(cr.get('personnes') or [role])} · Langue : "
@@ -1013,9 +1027,14 @@ def rendre_note_en_ligne(cr, nom_transcription=None, dossier=None):
           "La demande, mot pour mot :", "", _citation(cr["demande"]), "",
           "Contexte : " + (" ; ".join(ctx) if ctx else "non précisé") + ".", ""]
     parties = {ident: q["partie"] for ident, q in questions_en_ligne(dossier).items()}
-    for r in cr["reponses"]:
-        l += [f"### {r['id']}" + (f" · {parties[r['id']]}" if r["id"] in parties else ""), "",
-              f"*{' '.join(r['question'].split())}*", "", _citation(r["reponse"]), ""]
+    for ident, paires in groupes:
+        l += [f"### {ident}" + (f" · {parties[ident]}" if ident in parties else ""), ""]
+        precedente = None
+        for question, reponse in paires:
+            if question != precedente:   # la même question relancée avec les mêmes mots ne se répète pas
+                l += [f"*{question}*", ""]
+            l += [_citation(reponse), ""]
+            precedente = question
     l += ["## Tâches citées (à reporter dans 01)", "",
           "Non relevées par l'agent en ligne : à tirer des réponses ci-dessus.", ""]
     l += _section("Pièces remises", ["Aucune : l'agent en ligne ne reçoit pas de pièce."], "")

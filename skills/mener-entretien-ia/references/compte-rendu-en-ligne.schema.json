@@ -21,15 +21,15 @@
       "type": "array",
       "minItems": 1,
       "maxItems": 12,
-      "description": "Une entrée par question posée, dans l'ordre, douze au plus, jamais deux fois la même. Seulement des questions de la base : leur numéro est la preuve.",
+      "description": "Une seule entrée par numéro de question, dans l'ordre, douze au plus. Une question posée en plusieurs tours (relance, sous-question) reste une entrée : sa reponse réunit ce que la personne a dit, dans l'ordre. Seulement des questions de la base : leur numéro est la preuve.",
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["id", "question", "reponse"],
         "properties": {
           "id": { "type": "string", "pattern": "^[A-Z]{2,4}[0-9]{2,3}$", "description": "Le numéro de la question dans la base (SC02, PE08, AP05…), rien d'autre." },
-          "question": { "type": "string", "minLength": 1, "description": "La question telle qu'elle a été posée, avec les mots adaptés à la personne." },
-          "reponse": { "type": "string", "minLength": 1, "description": "La réponse mot pour mot, dans la langue de la personne ; le texte du choix quand elle a cliqué. [retiré] à la place d'un nom, d'une adresse ou d'un numéro." }
+          "question": { "type": "string", "minLength": 1, "description": "La question telle qu'elle a été posée la première fois, avec les mots adaptés à la personne." },
+          "reponse": { "type": "string", "minLength": 1, "description": "La réponse mot pour mot, dans la langue de la personne ; le texte du choix quand elle a cliqué ; si la question a pris plusieurs tours, ce que la personne a dit à chacun, dans l'ordre. [retiré] à la place d'un nom, d'une adresse ou d'un numéro." }
         }
       }
     },

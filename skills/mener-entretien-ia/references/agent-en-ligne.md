@@ -58,19 +58,29 @@ guide d'entretien lu à voix haute.
 6. **S'arrêter** quand les décisions du sujet sont couvertes, ou à douze. Huit réponses concrètes valent mieux que douze
    vagues. Ce qui reste à demander va dans `questions_ouvertes`.
 
-Une question par message. Une question de la base qui en contient plusieurs se pose en plusieurs messages, en ne gardant
+Une question par tour. Une question de la base qui en contient plusieurs se pose en plusieurs tours, en ne gardant
 que ce que la décision exige. Les questions barrées de la base (retirées, leur numéro gardé) n'entrent pas dans la
 consigne.
+
+## Ce que la personne lit : l'outil `afficher`
+
+L'agent ne parle à la personne que par l'outil `afficher`, à chaque tour, le dernier compris. Son `message` est
+obligatoire : le texte écrit hors d'un appel d'outil, avant lui par exemple, est rangé par le modèle en bloc de réflexion
+et se perd, la personne ne le lit jamais. Tout ce qui doit être lu passe donc par `afficher.message` : l'accusé de
+réception puis la question, le récapitulatif, le remerciement final. Autour du `message`, `suggestions` (les réponses à
+cliquer) et `plan` sont facultatifs. Le `message` est du texte simple, dans la langue de la personne : ni gras, ni titres,
+ni puces, la page l'affiche tel quel.
 
 ## Les réponses suggérées
 
 Quand la question s'y prête (une fréquence, une taille, un outil parmi les usuels, oui / en partie / non), la page montre
 de 2 à 6 choix courts, 60 caractères au plus chacun, que la personne clique. Ils couvrent tout l'espace des réponses, des
 fourchettes qui se suivent plutôt qu'un chiffre qui oriente ; « Je ne sais pas » en fait partie quand la personne peut
-l'ignorer ; plusieurs choix peuvent s'appliquer quand la question le permet. Une question qui demande un récit ou un
-exemple (« la dernière fois… ») n'a pas de suggestions. La personne peut toujours écrire avec ses mots au lieu de
-cliquer, et l'agent le lui dit une fois. Un choix ne porte jamais un prix, un outil à acheter, un délai ni un conseil. Ce
-qui est cliqué ou écrit est la réponse, telle quelle, et reste dit de mémoire.
+l'ignorer. `plusieurs` ne vaut vrai que lorsque plusieurs choix peuvent s'appliquer ensemble (plusieurs outils, plusieurs
+canaux) ; il ne vaut jamais vrai pour une question à choix unique (une fréquence, une taille, oui / en partie / non). Une
+question qui demande un récit ou un exemple (« la dernière fois… ») n'a pas de suggestions. La personne peut toujours
+écrire avec ses mots au lieu de cliquer, et l'agent le lui dit une fois. Un choix ne porte jamais un prix, un outil à
+acheter, un délai ni un conseil. Ce qui est cliqué ou écrit est la réponse, telle quelle, et reste dit de mémoire.
 
 ## Le plan de l'audit
 
@@ -79,14 +89,15 @@ personne : ce qui prend du temps, comment ça se passe aujourd'hui, ce qui coinc
 récapitulatif. Une seule étape est en cours à la fois. L'agent renvoie le plan complet à chaque tour : l'étape qui se
 termine passe à fait, la suivante à en cours ; il en ajoute, en retire ou en renomme quand la conversation prend un autre
 chemin, sans sortir de 3 à 7. La dernière étape est toujours le récapitulatif. Le plan dit où en est la personne, donc
-l'agent ne le répète pas dans ses messages.
+l'agent ne le répète pas dans son `message`.
 
 ## La fin
 
 Quand les questions retenues sont passées, ou si la personne doit s'arrêter pour de bon : un récapitulatif de trois à six
-lignes dans sa langue, qu'elle valide ou corrige (« Est-ce juste ? Voulez-vous ajouter ou corriger quelque chose ? »).
-Puis le compte rendu, et dans le même message un remerciement, la prochaine étape que la plateforme propose et, si elles
-servent, les pistes en deux phrases, au conditionnel. Une personne qui dit « je reprends plus tard » ne déclenche pas le
+lignes dans sa langue, qu'elle valide ou corrige (« Est-ce juste ? Voulez-vous ajouter ou corriger quelque chose ? »),
+avec deux réponses à cliquer, « C'est juste » et « Je veux ajouter ou corriger ». Puis le compte rendu, et dans le
+`message` du dernier tour un remerciement, la prochaine étape que la plateforme propose et, si elles servent, les pistes
+en deux phrases, au conditionnel. Une personne qui dit « je reprends plus tard » ne déclenche pas le
 compte rendu : tout est gardé.
 
 ## Ce qu'il ne fait jamais
@@ -107,31 +118,37 @@ compte rendu : tout est gardé.
 ## Le compte rendu
 
 Le schéma est `compte-rendu-en-ligne.schema.json`. Sept champs sont obligatoires : `demande` (mot pour mot), `contexte`
-(`taille`, `metier`, `outils`), `sujet` (le nom de fichier d'un sujet de la base), `reponses` (`id`, `question`, `reponse`,
-douze au plus), `pistes` (`constat`, `piste`), `questions_ouvertes`, `prochaine_etape`. Deux sont facultatifs et reprennent
-l'autre schéma : `pour_la_base` et `noms_a_retirer`. Les réponses sont mot pour mot, dans la langue de la personne ; tout
-le reste est en français. Aucun chiffre n'y porte de statut : tout est dit de mémoire, donc `[H]` dans la note, à confirmer
-par la personne.
+(`taille`, `metier`, `outils`), `sujet` (le nom de fichier d'un sujet de la base), `reponses` (`id`, `question`,
+`reponse` ; une seule entrée par numéro, douze au plus), `pistes` (`constat`, `piste`), `questions_ouvertes`,
+`prochaine_etape`. Deux sont facultatifs et reprennent l'autre schéma : `pour_la_base` et `noms_a_retirer`. Une question
+posée en plusieurs tours (une relance, une sous-question) reste une seule entrée, dont `reponse` réunit ce que la personne
+a dit, dans l'ordre. Les réponses sont mot pour mot, dans la langue de la personne ; tout le reste est en français. Aucun
+chiffre n'y porte de statut : tout est dit de mémoire, donc `[H]` dans la note, à confirmer par la personne.
 
 ## Ce que l'hôte fait
 
 - Il garde la ligne que `entretien.py consigne-en-ligne --sortie ligne.json` écrit : `titre`, `guide` (`en-ligne`),
   `consigne`, `schema_compte_rendu` et `questionnaire` (`base`, `mode`, `sujets`). Il ajoute son contexte après la
   consigne : la porte, le sujet éventuel, les réponses de la page, les liens.
-- Il définit les deux outils. `terminer_entretien` a pour entrée le schéma du compte rendu. `afficher` a pour entrée :
+- Il définit les deux outils. `terminer_entretien` a pour entrée le schéma du compte rendu. `afficher` est le seul moyen de
+  parler à la personne, et son `message` est obligatoire : sans lui, le texte du tour se perd. Description à lui donner :
+  « Écrire à la personne : son message, des réponses à cliquer, le plan de l'audit. C'est le seul moyen de lui parler : un
+  texte écrit hors de cet outil est perdu. » Entrée :
 
 ```json
 {
   "type": "object",
   "additionalProperties": false,
+  "required": ["message"],
   "properties": {
+    "message": { "type": "string", "minLength": 1, "description": "Ce que la personne lit, dans sa langue : l'accusé de réception puis la question ; au dernier tour, le remerciement. Tout ce qui doit être lu passe ici." },
     "suggestions": {
       "type": "object",
       "additionalProperties": false,
       "required": ["choix"],
       "properties": {
         "choix": { "type": "array", "minItems": 2, "maxItems": 6, "items": { "type": "string", "minLength": 1, "maxLength": 60 } },
-        "plusieurs": { "type": "boolean" }
+        "plusieurs": { "type": "boolean", "description": "true seulement quand plusieurs choix peuvent s'appliquer ensemble ; jamais pour une question à choix unique." }
       }
     },
     "plan": {
@@ -165,10 +182,15 @@ section « Pistes » et une section « Pour la base de questions ». Le contrôl
 méthode :
 
 - un `sujet` ou un numéro de question absent de la base (une question inventée), un numéro barré ;
-- plus de douze réponses, ou deux fois le même numéro ;
+- plus de douze questions différentes ;
 - une adresse, un numéro de téléphone ou un nom à retirer qui reste dans le texte ;
 - un prix dans une piste ou dans la prochaine étape ;
 - une date illisible, un champ manquant, un texte vide.
+
+Deux entrées du même numéro (une question reprise ou relancée, SC05 par exemple) ne sont pas refusées : la note les
+fusionne sous le titre de la première, dans l'ordre, avec chaque question et chaque réponse ; deux entrées identiques
+n'en font qu'une. La consigne demande pourtant une seule entrée par numéro. Les autres guides gardent leur contrôle :
+une réponse par question, dans l'ordre.
 
 `entretien.py verifier` contrôle aussi que la consigne reste sous 60 000 caractères : la base grossit, et le modèle relit
 la consigne à chaque tour.

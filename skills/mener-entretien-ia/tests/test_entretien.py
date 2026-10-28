@@ -651,6 +651,54 @@ class AgentEnLigne(unittest.TestCase):
                          "`etat` vaut `fait`, `en_cours` ou `a_venir`"):
             self.assertIn(fragment, consigne)
 
+    def bloc_afficher(self):
+        doc = (entretien.COMPETENCE / "references" / "agent-en-ligne.md").read_text(encoding="utf-8")
+        bloc = next(b for b in re.findall(r"```json\n(.*?)\n```", doc, re.S) if '"suggestions"' in b)
+        return " ".join(doc.split()), json.loads(bloc)
+
+    def test_le_message_de_la_personne_passe_par_afficher(self):
+        doc, afficher = self.bloc_afficher()
+        self.assertEqual(afficher["required"], ["message"])  # obligatoire : sans lui le texte du tour se perd
+        self.assertEqual((afficher["properties"]["message"]["type"], afficher["properties"]["message"]["minLength"]),
+                         ("string", 1))
+        self.assertEqual(list(afficher["properties"]), ["message", "suggestions", "plan"])
+        for attendu in ("`afficher.message`", "bloc de réflexion", "`message` est obligatoire",
+                        "un texte écrit hors de cet outil est perdu"):
+            self.assertIn(attendu, doc)
+        consigne = " ".join(entretien.consigne_en_ligne().split())
+        for attendu in ("Tu ne parles à la personne que par l'outil `afficher`",
+                        "Tout texte écrit en dehors d'un appel d'outil, avant lui par exemple, est perdu",
+                        "`message` (obligatoire) : ce que la personne lit",
+                        "dans `message`, un remerciement", "Tout passe par `afficher.message`"):
+            self.assertIn(attendu, consigne)
+        self.assertNotIn("en même temps que ton message", consigne)  # l'ancienne consigne parlait à côté de l'outil
+
+    def test_plusieurs_ne_vaut_jamais_vrai_pour_une_question_a_choix_unique(self):
+        doc, afficher = self.bloc_afficher()
+        plusieurs = afficher["properties"]["suggestions"]["properties"]["plusieurs"]
+        self.assertIn("jamais pour une question à choix unique", plusieurs["description"])
+        self.assertIn("il ne vaut jamais vrai pour une question à choix unique", doc)
+        consigne = " ".join(entretien.consigne_en_ligne().split())
+        self.assertIn("seulement quand plusieurs choix peuvent s'appliquer ensemble", consigne)
+        self.assertIn("jamais pour une question à choix unique", consigne)
+        self.assertIn("n'a jamais `plusieurs`", consigne)
+
+    def test_la_consigne_demande_une_seule_entree_par_numero(self):
+        consigne = " ".join(entretien.consigne_en_ligne().split())
+        self.assertIn("une seule entrée par numéro de question", consigne)
+        self.assertIn("reste une seule entrée, dont `reponse` réunit ce que la personne a dit, dans l'ordre", consigne)
+        self.assertIn("une seule entrée par numéro, douze au plus", self.bloc_afficher()[0])  # la liste des champs
+        self.assertIn("Une seule entrée par numéro", entretien.schema_en_ligne()["properties"]["reponses"]["description"])
+
+    def test_la_methode_dit_que_la_note_fusionne_les_entrees_du_meme_numero(self):
+        doc = self.bloc_afficher()[0]
+        for attendu in ("plus de douze questions différentes",
+                        "ne sont pas refusées : la note les fusionne sous le titre de la première, dans l'ordre",
+                        "deux entrées identiques n'en font qu'une",
+                        "Les autres guides gardent leur contrôle"):
+            self.assertIn(attendu, doc)
+        self.assertNotIn("ou deux fois le même numéro", doc)  # l'ancien refus
+
     def test_la_competence_porte_la_nouvelle_regle_et_cite_la_methode(self):
         skill = (entretien.COMPETENCE / "SKILL.md").read_text(encoding="utf-8")
         for fichier in ("agent-en-ligne.md", "consigne-en-ligne.md", "compte-rendu-en-ligne.schema.json"):
@@ -840,7 +888,7 @@ class NoteDeLAgentEnLigne(unittest.TestCase):
     def test_une_question_absente_de_la_base_est_refusee(self):
         self.refuse(lambda cr: cr["reponses"][1].update(id="ZZ99"), "reponses[2] : 'ZZ99' n'est pas une question de la base")
 
-    def test_douze_reponses_au_plus(self):
+    def test_douze_questions_differentes_au_plus(self):
         ids = [q["id"] for q in entretien.base("support-client")][:13]
 
         def reponses(n):
@@ -848,10 +896,54 @@ class NoteDeLAgentEnLigne(unittest.TestCase):
         cr = self.cr()
         cr["reponses"] = reponses(12)
         self.assertEqual(entretien.controler(cr), [])
-        self.refuse(lambda cr: cr.update(reponses=reponses(13)), "13 réponses, 12 au plus")
+        cr["reponses"].append(dict(cr["reponses"][4], reponse="Et une suite."))  # une 13e entrée, d'un numéro déjà posé
+        self.assertEqual(entretien.controler(cr), [])  # les douze se comptent sans les doublons
+        self.refuse(lambda cr: cr.update(reponses=reponses(13)), "13 questions différentes, 12 au plus")
 
-    def test_la_meme_question_deux_fois_est_refusee(self):
-        self.refuse(lambda cr: cr["reponses"][2].update(id="SC01"), "la question SC01 est déjà dans les réponses")
+    def test_deux_entrees_du_meme_numero_se_fusionnent_dans_l_ordre_sans_refus(self):
+        cr = self.cr()  # le cas réel : un même numéro (SC05) revient, la note était refusée
+        cr["reponses"] += [
+            {"id": "SC05", "question": "And how many of them ask where their order is?", "reponse": "About 30 of them."},
+            {"id": "SC05", "question": "Which days are the busiest?", "reponse": "Mondays and the week before holidays."}]
+        self.assertEqual(entretien.controler(cr), [])
+        note = self.ecrire(cr)[1][0]
+        self.assertEqual(note.count("### SC05"), 1)  # un seul titre
+        self.assertIn("5 questions choisies dans la base", note)  # cinq numéros, pas sept entrées
+        titres = [note.index(f"### {i}") for i in ("SC01", "SC05", "SC11", "SC09", "SC03")]
+        self.assertEqual(titres, sorted(titres))  # SC05 reste à la place de sa première entrée
+        suite = [note.index(t) for t in (
+            "*Roughly how many customer messages", "> « About 80 a week", "*And how many of them ask where their order is?*",
+            "> « About 30 of them. »", "*Which days are the busiest?*", "> « Mondays and the week before holidays. »")]
+        self.assertEqual(suite, sorted(suite))  # chaque question, puis sa réponse, dans l'ordre où elles ont été données
+        self.assertTrue(titres[1] < suite[0] and suite[-1] < titres[2])  # toutes sous le titre de SC05
+        besoin = copy.deepcopy(EXEMPLE)  # les autres guides gardent leur contrôle : une réponse par question
+        besoin["reponses"].append(dict(besoin["reponses"][1]))
+        self.assertTrue(any("une par question dans l'ordre" in e for e in entretien.controler(besoin)))
+
+    def test_deux_entrees_identiques_n_en_font_qu_une(self):
+        cr = self.cr()
+        cr["reponses"].append(dict(cr["reponses"][1]))  # la même question, la même réponse
+        note = self.ecrire(cr)[1][0]
+        self.assertEqual(note.count("### SC05"), 1)
+        self.assertEqual(note.count("> « About 80 a week, mostly email, a few on Instagram. »"), 1)
+
+    def test_une_question_relancee_avec_les_memes_mots_ne_se_repete_pas(self):
+        cr = self.cr()
+        cr["reponses"].append(dict(cr["reponses"][1], reponse="About 30 of them ask where the order is."))
+        note = self.ecrire(cr)[1][0]
+        question = "*Roughly how many customer messages do you get per week, and through which channels?*"
+        self.assertEqual(note.count(question), 1)  # la question une fois, ses deux réponses dessous, dans l'ordre
+        premiere = note.index("> « About 80 a week")
+        seconde = note.index("> « About 30 of them ask where the order is. »")
+        self.assertTrue(note.index(question) < premiere < seconde < note.index("### SC11"))
+
+    def test_les_reponses_fusionnees_suivent_l_ordre_du_premier_passage(self):
+        cr = {"reponses": [{"id": "SC01", "question": "Q1 ?", "reponse": "r1"},
+                           {"id": "SC05", "question": "Q5 ?", "reponse": "r5"},
+                           {"id": "SC01", "question": "Q1  bis ?", "reponse": " r1 bis "},
+                           {"id": "SC05", "question": "Q5 ?", "reponse": "r5"}]}
+        self.assertEqual(entretien.reponses_fusionnees(cr), [("SC01", [("Q1 ?", "r1"), ("Q1 bis ?", "r1 bis")]),
+                                                              ("SC05", [("Q5 ?", "r5")])])
 
     def test_le_sujet_est_un_sujet_de_la_base(self):
         self.refuse(lambda cr: cr.update(sujet="sujet-qui-n-existe-pas"), "n'est pas un sujet de la base")

@@ -38,8 +38,9 @@ metadata:
 > La base de questions : `entretien.py verifier` refuse un doublon dans toute la base, un préfixe pris deux fois,
 > une ligne sans décision ou sans « D'abord », un index périmé, une compétence lectrice sans son rappel en tête, une
 > consigne en ligne de plus de 60 000 caractères. L'agent en ligne : `entretien.py consigne-en-ligne` écrit sa ligne
-> (consigne, schéma, sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`) et
-> refuse une question absente de la base, plus de douze réponses, une adresse ou un numéro, un prix dans une piste.
+> (consigne, schéma, sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`),
+> fusionne les entrées d'un même numéro de question, et refuse une question absente de la base, plus de douze questions
+> différentes, une adresse ou un numéro, un prix dans une piste.
 > Essais : `python -m unittest discover -s skills/mener-entretien-ia/tests`. **Boucle** : aucune.
 
 > ❓ **Une question pour l'entreprise sort de la base de questions** (`references/base-questions/`, un fichier par
@@ -139,9 +140,11 @@ interdits) est `references/agent-en-ligne.md`.
    questions de la base), `schema_compte_rendu` (`references/compte-rendu-en-ligne.schema.json`) et `questionnaire`. La
    taille de la consigne s'affiche.
 2. L'hôte ajoute son contexte (la porte d'entrée, le sujet, les réponses de la page, les liens), définit les outils
-   `afficher` et `terminer_entretien`, et mène la conversation.
+   `afficher` (son `message` est obligatoire : tout ce que la personne lit passe par lui) et `terminer_entretien`, et
+   mène la conversation.
 3. `python …/entretien.py note --compte-rendu cr.json --transcription messages.json --sortie mission/sources` écrit la
    note, de même structure que les autres, avec en plus « Pistes » et « Pour la base de questions ». Rien n'y est `[F]`.
+   Les entrées d'un même numéro de question s'y fusionnent, dans l'ordre.
 
 ## Le livrable
 
@@ -179,6 +182,8 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
 | Avec un client du consultant : un questionnaire préparé et validé, puis seulement ouvert | ce que l'agent croit savoir lui est lu ; une erreur dans « Déjà su » se dit à la personne | laisser l'IA choisir ses questions en direct | jamais, pour un client |
 | En ligne, devant un visiteur : l'agent choisit ses questions dans la base, jamais en dehors | aucun consultant avant l'entretien, donc personne pour préparer ni valider un questionnaire ; la base est déjà relue et chaque question porte sa décision ; douze au plus, jamais ce que la page a demandé | un questionnaire préparé par visiteur (aucun relecteur) ; des questions inventées en direct | une question hors base a servi : elle y entre, relue par le consultant, puis l'agent peut la choisir |
 | Douze questions au plus | un entretien écrit long s'abandonne ; le reste a sa place dans la séance d'observation ou l'audit | tout le module | une seule personne détient tout et le demande : deux entretiens, pas un long |
+| En ligne, tout ce que la personne lit passe par `afficher.message` | le modèle range en bloc de réflexion vide le texte écrit avant un appel d'outil : un message écrit à côté de l'outil n'atteint pas la personne | un texte libre avant l'appel d'outil | un hôte qui montre aussi le texte écrit hors d'un appel d'outil |
+| La note fusionne les entrées d'un même numéro de question, sans refuser le compte rendu | un entretien réel a rendu SC05 deux fois (une question reprise) : refuser la note privait le consultant du compte rendu du visiteur ; la consigne demande pourtant une seule entrée par numéro, et le plafond de douze compte les numéros différents | refuser le doublon (le contrôle d'avant) | deux réponses qui se contredisent sous un même numéro : la fusion cacherait un compte rendu faux |
 | Une méthode, deux modes (en ligne, local) | seul l'accès aux données change ; deux méthodes divergeraient | un agent local à part | jamais |
 | Une base de questions par sujet, guides fixes compris | une question vit à un seul endroit ; chaque entretien, audit ou rendez-vous enrichit la même base au lieu de réinventer ses questions | une liste dans chaque compétence (guides, cadrage, modules par objectif, jusqu'au 28/10/2026) | jamais |
 
@@ -208,3 +213,6 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
   sur un compte rendu fictif. NON MESURÉ sur un vrai visiteur : si douze questions sont trop, si les réponses à cliquer
   orientent, si le plan se lit à côté de la conversation, combien vont jusqu'au récapitulatif. La consigne reprend toute
   la base : elle grossit avec elle, et `verifier` s'arrête à 60 000 caractères (au-delà, charger les sujets à la demande).
+- Le `message` obligatoire de `afficher` et la fusion d'une question reprise sont éprouvés par les essais du script ; un
+  entretien réel les a motivés (un texte perdu hors de l'outil, SC05 revenu deux fois), aucun second entretien ne les a
+  encore mesurés.

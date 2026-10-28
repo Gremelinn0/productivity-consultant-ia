@@ -117,8 +117,11 @@ python skills/mener-entretien-ia/scripts/entretien.py note --compte-rendu cr.jso
 ```
 
 `ligne.json` est ce que l'hôte garde : la consigne (la méthode, l'index des sujets, toutes les questions de la base),
-le schéma du compte rendu et les sujets. La note reprend la structure des autres, avec en plus ses « Pistes » et une
-section « Pour la base de questions ». La méthode est `skills/mener-entretien-ia/references/agent-en-ligne.md`.
+le schéma du compte rendu et les sujets. L'hôte définit deux outils : `afficher`, le seul moyen de parler à la personne
+(un `message` obligatoire, des réponses à cliquer, le plan), et `terminer_entretien`. La note reprend la structure des
+autres, avec en plus ses « Pistes » et une section « Pour la base de questions » ; une question reprise sous le même
+numéro s'y fusionne au lieu de faire refuser la note. La méthode est
+`skills/mener-entretien-ia/references/agent-en-ligne.md`.
 
 Le dossier `skills/` porte aussi `router-consulting-strategy`, le cerveau des décisions : les étapes qui
 décident (portefeuille, choix de l'option, recommandation, priorités, continuer ou arrêter) l'appellent
