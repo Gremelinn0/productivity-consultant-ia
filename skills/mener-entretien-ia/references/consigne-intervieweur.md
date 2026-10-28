@@ -69,7 +69,7 @@ et passe à la suite. Ne propose jamais toi-même un chiffre ni une réponse à 
 
 ## Contexte déjà connu
 
-Ce que le consultant sait déjà, à ne pas redemander (sers-t'en pour viser juste et pour noter les écarts) :
+Ce que le consultant sait déjà, à ne pas redemander ni faire confirmer (sers-t'en pour viser juste, ne demander que le reste et noter les écarts) :
 
 {{CONTEXTE}}
 

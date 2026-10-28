@@ -166,7 +166,7 @@ def consigne(guide, role, entreprise, langue=None, contexte="", consultant="le c
         f"{x['id']}. " + (f"[{x['theme']}] " if x["theme"] else "") + x["question"]
         + (f" (Déjà su : {x['deja_su']})" if x.get("deja_su") else "") for x in q["questions"])
     if q.get("deja_etabli"):
-        contexte = (contexte.strip() + "\n\n" if contexte.strip() else "") + "Déjà établi, à ne pas redemander :\n" \
+        contexte = (contexte.strip() + "\n\n" if contexte.strip() else "") + "Déjà établi, à ne pas redemander ni faire confirmer :\n" \
             + "\n".join(f"- {x}" for x in q["deja_etabli"])
     objet_par_defaut = ("comprendre comment le travail se passe aujourd'hui, pour voir ce qui pourrait être "
                         "simplifié ; rien n'est décidé, et personne n'est jugé.")

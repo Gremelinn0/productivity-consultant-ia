@@ -92,7 +92,7 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
      l'étape 2, pose à la personne seulement ce qui reste, une question à la fois, selon la même consigne, puis
      écrit le compte rendu au schéma dans un fichier JSON. Ce qu'elle a lu reste chez l'entreprise.
 5. **À la fin, l'IA récapitule et fait valider** le récapitulatif par la personne, puis rend le compte rendu.
-   L'hôte remplace la date et la durée par celles qu'il a mesurées : le modèle ne connaît pas le jour.
+   L'hôte remplace la date, la durée et le guide par ce qu'il sait : le modèle ne connaît pas le jour.
 6. **Tirer la note** :
    `python …/entretien.py note --compte-rendu cr.json [--questionnaire mission/sources/questionnaire-….md] --transcription messages.json --sortie mission/sources`.
    Un refus liste chaque écart ; on corrige le compte rendu (ou on le fait refaire), jamais la règle.
@@ -127,7 +127,7 @@ Le compte rendu qui la produit suit `references/compte-rendu.schema.json` ; la c
 | Une IA qui converse, pas un formulaire | un formulaire rend « ça dépend » ; la relance sur la dernière occurrence est ce qui donne des faits | un questionnaire envoyé en une fois | la personne préfère tout écrire d'un coup : la consigne accepte une longue réponse et relance seulement ce qui manque |
 | Deux relances au plus par question | au-delà, la personne se lasse et abandonne l'entretien | relancer jusqu'à obtenir un chiffre | une question décide seule du cas : l'écrire dans le contexte, l'IA y revient à la fin |
 | `[F]` réservé à la règle énoncée et à la pièce jointe | un nombre écrit de mémoire n'est pas plus sûr qu'un nombre dit | laisser l'IA juger du statut | jamais |
-| Date et durée fixées par l'hôte | le modèle ignore le jour ; un essai l'a daté d'un an trop tôt | les prendre dans le compte rendu | jamais |
+| Date, durée et guide fixés par l'hôte | le modèle ignore le jour ; un essai l'a daté d'un an trop tôt, un autre a rendu « court » pour un questionnaire préparé | les prendre dans le compte rendu | jamais |
 | Adresses et numéros retirés de la transcription | les guides : on retire noms et données personnelles avant de déposer | garder la transcription brute | jamais ; la conversation brute reste chez l'hôte, comme un enregistrement chez l'entreprise |
 | La consigne en français, l'entretien dans la langue de la personne | une seule consigne à tenir ; la note du pack est en français | une consigne par langue | un modèle traduit mal une langue donnée : écrire la consigne dans cette langue |
 | Un questionnaire préparé pour l'objectif, pas le cadrage générique | le 28/10, une dirigeante qui voulait un agent pour son service client a reçu les huit questions du cadrage : rien sur ses messages, ses réponses types ni ses commandes | un questionnaire unique pour tous | l'objectif n'est pas encore nommé : c'est une découverte, un guide du pack |

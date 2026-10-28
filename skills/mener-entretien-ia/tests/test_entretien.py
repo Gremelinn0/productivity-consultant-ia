@@ -114,7 +114,7 @@ class QuestionnairePrepare(unittest.TestCase):
         self.assertNotIn("{{", texte)
         self.assertIn("Q4.", texte)
         self.assertIn("(Déjà su : Surtout", texte)
-        self.assertIn("Déjà établi, à ne pas redemander :", texte)
+        self.assertIn("Déjà établi, à ne pas redemander ni faire confirmer :", texte)
         self.assertIn("savoir pour mettre en place un agent", texte)
 
     def test_la_note_cite_son_questionnaire(self):
