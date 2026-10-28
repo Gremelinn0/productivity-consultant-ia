@@ -5,7 +5,8 @@ description: >-
   MECE structure, hypothesis-led analysis, explicit hypotheses, real strategic options, economics,
   prioritization, scenario stress tests, and answer-first recommendations. Use for ambiguous business
   decisions, market or product strategy, investment choices, prioritization, business cases, or when
-  the user wants the AI to reason more like a strategy consultant.
+  the user wants the AI to reason more like a strategy consultant. Not for a marketing strategy
+  (positioning, channels, campaigns): a marketing-strategy skill owns that.
 metadata:
   scope: "une décision d'affaires ambiguë : marché, offre, produit, investissement, priorités, économie"
   owns: "le raisonnement de conseil en stratégie : cadrage, structure MECE, registre des faits et des hypothèses, options réelles, lentille, contre-cas, recommandation d'abord"
@@ -13,8 +14,6 @@ metadata:
 ---
 
 # Consulting Strategy Router
-
-<!-- Copie embarquée de `router-consulting-strategy`, tenue identique à sa source dans la bibliothèque de l'auteur du pack. Ne pas l'éditer ici : `python scripts/verifier_pack.py --embarquer <source>` la régénère. -->
 
 ## Purpose
 

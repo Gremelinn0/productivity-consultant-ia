@@ -1,0 +1,149 @@
+{
+  "format": "workflow-v1",
+  "slug": "decider-une-strategie",
+  "titre": "Décider d'une stratégie d'affaires, la recommandation d'abord",
+  "resume": "Huit étapes de conseil en stratégie pour une décision d'affaires floue (marché, offre, produit, investissement, priorités) : poser la décision, la structurer, séparer les faits des hypothèses, comparer de vraies options, éprouver le contre-cas, puis recommander d'abord. C'est une discipline de raisonnement : presque toutes les étapes sont menées par le routeur lui-même, et chaque étape sans compétence à appeler le dit.",
+  "commande": "/router-consulting-strategy",
+  "routeur": "router-consulting-strategy",
+  "metiers": [
+    "conseil"
+  ],
+  "moment": "demarrer",
+  "dossier_etat": "",
+  "mis_a_jour": "2026-10-19",
+  "etapes": [
+    {
+      "n": 1,
+      "slug": "nommer-la-decision",
+      "titre": "Nommer la décision",
+      "rend": "La décision écrite : ce qu'on doit trancher, qui tranche, le résultat voulu, les contraintes, l'horizon, ce qui est dans le périmètre et ce qui n'y est pas.",
+      "fichier": "",
+      "competences": [],
+      "manque": "Aucune compétence ne pose la décision : le routeur l'écrit lui-même, depuis la question et ses faits.",
+      "regle": "Si le contexte manque, on pose des hypothèses provisoires (H) et on continue : jamais une réponse faite seulement de questions.",
+      "cas": []
+    },
+    {
+      "n": 2,
+      "slug": "structurer",
+      "titre": "Structurer le problème",
+      "rend": "La plus petite structure sans recouvrement (MECE) qui couvre ce qui peut changer la décision, chaque branche pouvant se tester.",
+      "fichier": "",
+      "competences": [],
+      "manque": "Aucune compétence ne dessine cette structure : le routeur la construit lui-même.",
+      "regle": "Pas d'arbre géant pour une décision simple à deux issues : la structure s'arrête là où elle cesse de changer la décision.",
+      "cas": []
+    },
+    {
+      "n": 3,
+      "slug": "registre-des-preuves",
+      "titre": "Tenir le registre des preuves",
+      "rend": "Chaque affirmation qui porte la décision marquée F (fait), H (hypothèse) ou E (estimation calculée, calcul montré) ; pour chaque hypothèse lourde : son importance, la force de sa preuve, la confiance, le test qui l'invaliderait et l'action si elle tombe.",
+      "fichier": "",
+      "competences": [],
+      "manque": "Aucune compétence ne tient ce registre : le routeur marque lui-même chaque chiffre et chaque jugement.",
+      "regle": "Une valeur proposée par l'analyste puis acceptée par le décideur devient un fait, avec cette décision pour source. Un chiffre donné de mémoire reste une hypothèse, avec qui peut le confirmer. Un accord entre plusieurs modèles n'est pas une preuve.",
+      "cas": [
+        "transformer-des-signaux-documentes-en-arbitrages-strategiques"
+      ]
+    },
+    {
+      "n": 4,
+      "slug": "options",
+      "titre": "Générer de vraies options",
+      "rend": "Un petit nombre de chemins vraiment différents, chacun avec son avantage, son compromis, sa faisabilité, son risque, son économie si elle compte, son adéquation stratégique et ce qui doit être vrai pour qu'il marche.",
+      "fichier": "",
+      "competences": [],
+      "manque": "Aucune compétence ne génère ces options : le routeur les établit lui-même.",
+      "regle": "Les options s'examinent à égalité : l'option préférée ne gagne pas par défaut parce que les autres n'ont pas été regardées. Quand les faits viennent déjà de router-reflexion-profonde, on entre ici : ce routeur ne sert alors qu'aux options, à l'économie, aux priorités et à la recommandation.",
+      "cas": []
+    },
+    {
+      "n": 5,
+      "slug": "lentille",
+      "titre": "Choisir la bonne lentille",
+      "rend": "La lentille que la décision appelle, et seulement elle : état des lieux, audit des hypothèses, options stratégiques, dossier chiffré, priorités, jeu de rôle des concurrents, risques, feuille de route ou note de décision.",
+      "fichier": "",
+      "competences": [],
+      "ecartees": [
+        {
+          "nom": "management-consulting",
+          "raison": "Le pack optionnel de gcamilo (licence MIT) n'est pas installé : le routeur ne dit jamais qu'une compétence a tourné si elle ne l'est pas."
+        },
+        {
+          "nom": "situation-assessment",
+          "raison": "Pour un état actuel flou. Du dépôt aapersh/strategy-skills-for-claude, laissé non installé : il n'a pas de licence."
+        },
+        {
+          "nom": "assumption-audit",
+          "raison": "Pour des croyances fragiles. Même dépôt, sans licence : non installée."
+        },
+        {
+          "nom": "strategic-options",
+          "raison": "Pour choisir un chemin. Même dépôt, sans licence : non installée."
+        },
+        {
+          "nom": "business-case-builder",
+          "raison": "Pour un investissement ou un retour sur investissement. Même dépôt, sans licence : non installée."
+        },
+        {
+          "nom": "initiative-prioritizer",
+          "raison": "Pour trop d'initiatives à la fois. Même dépôt, sans licence : non installée."
+        },
+        {
+          "nom": "war-gaming",
+          "raison": "Pour les réactions des concurrents ou du marché. Même dépôt, sans licence : non installée."
+        },
+        {
+          "nom": "transformation-roadmap",
+          "raison": "Pour passer de la stratégie à l'exécution. Même dépôt, sans licence : non installée."
+        },
+        {
+          "nom": "decision-memo",
+          "raison": "Pour une décision écrite à un dirigeant. Même dépôt, sans licence : non installée."
+        }
+      ],
+      "manque": "Le pack management-consulting et les huit lentilles de strategy-skills-for-claude, que ce routeur sait déléguer, ne sont pas installés : il applique lui-même la lentille choisie. Pour un risque stratégique majeur, la lentille « risques et parades » n'a de toute façon pas de compétence propre.",
+      "regle": "Une seule lentille, celle que le problème choisit. Porter, SWOT, BCG, JTBD, RICE ou un arbre des profits sont des outils, jamais des défauts : une salade de cadres, ou un SWOT à la place de l'analyse, est une erreur.",
+      "cas": []
+    },
+    {
+      "n": 6,
+      "slug": "les-vingt-pour-cent",
+      "titre": "Analyser les 20 % qui peuvent renverser la décision",
+      "rend": "Les hypothèses qui pèsent le plus sur la recommandation, les plus mal prouvées d'entre elles, et les quelques données qui peuvent tuer une option, analysées ; pas le reste.",
+      "fichier": "",
+      "competences": [
+        {
+          "nom": "router-reflexion-profonde",
+          "role": "routeur : une question technique bornée",
+          "pourquoi": "Quand un point technique ou système peut renverser la décision (est-ce faisable, est-ce vrai en production), il prend cette seule question et rend les faits, les contradictions et les inconnues : une cause prouvée plutôt qu'un avis, rapportée ensuite dans la décision d'affaires."
+        }
+      ],
+      "regle": "Une seule question technique bornée à la fois, formulée avant de passer la main, et son résultat revient dans la décision d'affaires. Pas de relais en cascade : un seul routeur tient la phase en cours. Le reste de l'étape est le travail du routeur : on n'analyse pas l'océan.",
+      "cas": []
+    },
+    {
+      "n": 7,
+      "slug": "contre-cas",
+      "titre": "Mettre la recommandation à l'épreuve",
+      "rend": "Le contre-argument le plus fort, l'hypothèse qui renverserait la décision, un scénario défavorable, la réaction probable des concurrents ou des clients, un signal d'alerte, une condition d'arrêt, et l'option de repli testée avec la même rigueur.",
+      "fichier": "",
+      "competences": [],
+      "manque": "Aucune compétence ne tient le contre-cas : le routeur le fait lui-même.",
+      "regle": "Si le contre-cas est plus fort que la recommandation, on change la recommandation.",
+      "cas": []
+    },
+    {
+      "n": 8,
+      "slug": "synthese",
+      "titre": "Rendre la réponse d'abord",
+      "rend": "La synthèse au format réponse d'abord : la décision, la recommandation, au plus trois raisons qui portent, les preuves, les hypothèses critiques, les options et leurs compromis, le contre-cas, les risques et leurs parades, les conditions d'arrêt, les prochains tests.",
+      "fichier": "",
+      "competences": [],
+      "manque": "Aucune compétence ne rédige cette synthèse : le routeur l'écrit lui-même.",
+      "regle": "La recommandation d'abord, puis ce qui la renverserait. Une recommandation sans responsable, sans test ni prochain geste, ou sans condition qui la renverserait, est à refaire.",
+      "cas": []
+    }
+  ]
+}

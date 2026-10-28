@@ -97,9 +97,9 @@ du pack par écrit par une IA quand le consultant n'est pas là : il lit les que
 
 `router-consulting-strategy` apporte la discipline de décision : cadrage, options réelles, contre-cas,
 conditions d'arrêt, recommandation d'abord. Il ne possède aucune étape ni aucun dossier : chaque étape
-garde son livrable et son modèle, l'appelle au moment de décider et n'en recopie pas la méthode. C'est
-une copie embarquée, jamais éditée ici : `python scripts/verifier_pack.py` vérifie qu'elle reste
-identique à sa source.
+garde son livrable et son modèle, l'appelle au moment de décider et n'en recopie pas la méthode. Depuis
+le 28/10/2026, ce pack en est la seule maison : on l'édite ici, et `python scripts/verifier_pack.py`
+signale toute seconde copie sur le poste de l'auteur.
 
 | Étape qui décide | Ce qu'elle lui demande | Lentille (nom dans sa table) |
 |---|---|---|

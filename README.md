@@ -1,7 +1,7 @@
 # consultant-ia
 
 **Le pack du consultant IA et automatisation, de l'idée à la solution mesurée** — douze compétences
-(plus un routeur de stratégie embarqué et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
+(plus un routeur de stratégie et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
 bout : comprendre le travail réel, trouver ce qui mérite d'être automatisé, comparer les solutions,
 chiffrer, spécifier et planifier, puis construire et tester dans un environnement d'essai, mettre en
 service action par action et mesurer ce que la solution rapporte vraiment.
@@ -98,7 +98,7 @@ La consigne se donne à n'importe quel hôte qui accepte une consigne système e
 page web derrière connexion). Le contrôle refuse une note dont un nombre dit de mémoire passerait pour un fait,
 et la transcription sort adresses et numéros retirés. Le consultant relit la note avant de s'en servir.
 
-Le dossier `skills/` embarque aussi `router-consulting-strategy`, le cerveau des décisions : les étapes qui
+Le dossier `skills/` porte aussi `router-consulting-strategy`, le cerveau des décisions : les étapes qui
 décident (portefeuille, choix de l'option, recommandation, priorités, continuer ou arrêter) l'appellent
 pour arbitrer, et gardent leur propre livrable.
 
@@ -260,8 +260,8 @@ auteurs qui vont avec lui sont créditées, avec leur licence, dans [COMPAGNONS.
   structure d'une spécification, priorisation et critères d'acceptation (`write-spec`), comparaison de
   solutions (`vendor-review`), retour arrière, communication et mode opératoire d'exploitation
   (`change-request`, `runbook`), forme de l'entretien (`smb-onboard`) ;
-- [router-consulting-strategy](https://github.com/Gremelinn0/claude-skill-hub) — options réelles,
-  contre-cas, recommandation d'abord (embarqué dans ce pack) ;
+- `router-consulting-strategy` — options réelles, contre-cas, recommandation d'abord (sa maison est ce
+  pack ; une première version publique était parue dans `Gremelinn0/claude-skill-hub`) ;
 - « Performing a Project Premortem » de Gary Klein (Harvard Business Review, 2007) — le pré-mortem.
 
 Si ces outils sont installés dans votre session, les compétences peuvent s'en servir pour aller plus

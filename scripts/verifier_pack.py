@@ -1,14 +1,12 @@
-"""Contrôle du pack consultant-ia : forme des compétences, copie embarquée du routeur de stratégie,
+"""Contrôle du pack consultant-ia : forme des compétences, unicité du routeur de stratégie,
 compétences complémentaires (COMPLEMENTAIRES.md et ses renvois), versions des manifestes, liens publics.
 
 Usage :
-  python scripts/verifier_pack.py                      contrôle tout (0 = aucun écart)
-  python scripts/verifier_pack.py --embarquer <source>  régénère la copie embarquée depuis sa source
-  python scripts/verifier_pack.py --source <source>     contrôle aussi que la copie suit sa source
+  python scripts/verifier_pack.py      contrôle tout (0 = aucun écart)
 
-<source> est le SKILL.md de `router-consulting-strategy` dans la bibliothèque de l'auteur. Par défaut,
-le contrôle le cherche dans ~/.claude/skills/router-consulting-strategy/SKILL.md ; absent, il le dit
-et ne contrôle que la forme de la copie.
+Depuis le 28/10/2026, le pack est la seule maison de `router-consulting-strategy` : aucune copie n'est tenue
+ailleurs. Sur le poste de l'auteur, ~/.claude/skills/router-consulting-strategy doit être un lien (jonction) vers
+le dossier du pack ; un vrai dossier à cet endroit est une seconde copie, et le contrôle la signale.
 """
 import json
 import os
@@ -17,13 +15,8 @@ import re
 import sys
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
-EMBARQUEE = "router-consulting-strategy"
-SOURCE_PAR_DEFAUT = pathlib.Path.home() / ".claude" / "skills" / EMBARQUEE / "SKILL.md"
-ENTETE_COPIE = (
-    "<!-- Copie embarquée de `router-consulting-strategy`, tenue identique à sa source dans la "
-    "bibliothèque de l'auteur du pack. Ne pas l'éditer ici : `python scripts/verifier_pack.py "
-    "--embarquer <source>` la régénère. -->"
-)
+ROUTEUR = "router-consulting-strategy"  # format d'origine (anglais) : exempté des sections du pack
+BIBLIOTHEQUE = pathlib.Path.home() / ".claude" / "skills" / ROUTEUR
 SECTIONS = ["## Ce que cette compétence résout", "## Stratégie", "## Étapes", "## Le livrable",
             "## Décisions et rejets", "## Frontières", "## Preuves restantes"]
 MARQUEURS = ["<!-- capitaliser:squelette-v1 -->", "<!-- dev-qa-link -->"]
@@ -59,13 +52,18 @@ def frontmatter(texte):
     return m.group(1) if m else None
 
 
-def copie_attendue(source_texte):
-    """Frontmatter + titre + corps public (à partir de « ## Purpose »), sans la tête locale."""
-    fm = frontmatter(source_texte)
-    debut = source_texte.find("\n## Purpose")
-    if fm is None or debut == -1:
-        raise ValueError("source illisible : frontmatter ou « ## Purpose » introuvable")
-    return f"---\n{fm}\n---\n\n# Consulting Strategy Router\n\n{ENTETE_COPIE}\n{source_texte[debut:]}"
+def controler_routeur_unique():
+    """Le pack est la seule maison du routeur : à l'adresse de la bibliothèque, un lien vers ce dossier, ou rien."""
+    ici = RACINE / "skills" / ROUTEUR
+    if not (ici / "SKILL.md").exists():
+        ecart(f"routeur absent : skills/{ROUTEUR}/SKILL.md")
+        return
+    if not os.path.lexists(BIBLIOTHEQUE):
+        print(f"{ROUTEUR}: aucune autre adresse sur ce poste")
+    elif os.path.realpath(BIBLIOTHEQUE) == os.path.realpath(ici):
+        print(f"{ROUTEUR}: la bibliothèque pointe vers le pack (lien), aucune copie")
+    else:
+        ecart(f"seconde copie du routeur : {BIBLIOTHEQUE} n'est pas un lien vers {ici}")
 
 
 def controler_competence(dossier, noms):
@@ -82,9 +80,7 @@ def controler_competence(dossier, noms):
         ecart(f"name différent du dossier ({nom.group(1) if nom else 'absent'})")
     if not re.search(r"^description:", fm, re.M):
         ecart("description absente")
-    if dossier.name == EMBARQUEE:
-        if ENTETE_COPIE not in texte:
-            ecart("copie embarquée sans son en-tête")
+    if dossier.name == ROUTEUR:
         return
     for cle in ("scope", "owns", "consumes"):
         if not re.search(rf"^\s+{cle}:", fm, re.M):
@@ -251,32 +247,12 @@ def controler_liens():
 def main(arguments):
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")  # « ✗ » et les accents passent aussi dans un tuyau Windows
-    source = SOURCE_PAR_DEFAUT
-    if "--embarquer" in arguments:
-        source = pathlib.Path(arguments[arguments.index("--embarquer") + 1])
-        cible = RACINE / "skills" / EMBARQUEE / "SKILL.md"
-        cible.parent.mkdir(parents=True, exist_ok=True)
-        cible.write_text(copie_attendue(source.read_text(encoding="utf-8")), encoding="utf-8", newline="\n")
-        print(f"copie embarquée régénérée : {cible.relative_to(RACINE)}")
-    if "--source" in arguments:
-        source = pathlib.Path(arguments[arguments.index("--source") + 1])
-
     dossiers = sorted(d for d in (RACINE / "skills").iterdir() if (d / "SKILL.md").exists())
     noms = {d.name for d in dossiers}
     for dossier in dossiers:
         controler_competence(dossier, noms)
 
-    copie = RACINE / "skills" / EMBARQUEE / "SKILL.md"
-    if not copie.exists():
-        ecart(f"copie embarquée absente : skills/{EMBARQUEE}/SKILL.md")
-    elif source.exists():
-        attendue = copie_attendue(source.read_text(encoding="utf-8"))
-        if copie.read_text(encoding="utf-8") != attendue:
-            ecart(f"la copie embarquée ne suit plus sa source ({source}) : --embarquer la régénère")
-        else:
-            print(f"{EMBARQUEE}: identique à sa source")
-    else:
-        print(f"{EMBARQUEE}: source absente sur ce poste, seule la forme de la copie est contrôlée")
+    controler_routeur_unique()
 
     controler_complementaires(noms)
     controler_versions()
