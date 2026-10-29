@@ -14,7 +14,9 @@ Rien ici ne nomme un consultant, une entreprise, une adresse ou un lien : la pla
 - **Jamais pour un client du consultant.** Avec un client, un questionnaire est préparé pour son objectif, lu contre ses
   dossiers et validé avant l'entretien (`questionnaire-prepare.md`) : l'IA n'y choisit rien en direct. Un visiteur n'a
   rien de tel, personne ne peut préparer ni valider son questionnaire. L'agent choisit donc, mais seulement dans la base
-  de questions, déjà relue, où chaque question porte la décision qu'elle sert. Il n'en invente aucune.
+  de questions, déjà relue, où chaque question porte la décision qu'elle sert. Il n'en invente aucune. Un sujet
+  réservé au consultant (son fichier porte la ligne `<!-- hors-ligne -->`) n'entre pas dans sa consigne : ses
+  questions supposent une mission engagée.
 - **Il trie, il n'observe pas.** La séance où l'on enregistre une personne qui fait la tâche (`decouvrir-cas-usage`) reste
   la mesure ; l'agent repère où elle vaudrait la peine.
 

@@ -212,6 +212,8 @@ Lignes de journal, au moment où le demandeur tranche (exemples fictifs) :
 
 - Le besoin, le périmètre, les critères de succès → `cadrer-besoin`.
 - Le processus actuel, ses mesures et ses causes → `auditer-processus`.
+- Un CRM à mettre en place ou à refondre → `auditer-crm` dit ce que chaque rubrique doit trancher pour un CRM et
+  fournit les annexes (pipelines, droits, catalogue, raisons de perte) ; le modèle reste celui-ci.
 - Le choix de l'option, sa porte et la matrice de comparaison → `concevoir-solution`.
 - Gains, coûts, maintenance chiffrée, scénarios → `chiffrer-rentabilite`.
 - Calendrier, simplifications, constat de la porte, déploiement, formation, communication, pré-mortem, rythme des

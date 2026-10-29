@@ -79,6 +79,19 @@ flowchart TB
 | `piloter-mise-en-service` | chaque action sur un outil réel proposée avec son retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant |
 | `mesurer-gains` | la lecture des relevés réels, le gain observé, les coûts réels, et la décision : continuer, corriger, étendre ou arrêter |
 
+## Le module CRM
+
+Quand le besoin touche au CRM (l'auditer, en choisir un, le mettre en place, le refondre), `auditer-crm` commence par
+relever l'usage réel : volumes, quotas et limites de l'abonnement. Il audite ensuite quatre volets (automatisations et
+intégrations, données, ventes, tableaux de bord) ; chaque constat dit sur quel écran, quel export ou quel entretien il
+repose. Le bilan ne garde que les recommandations, les gains rapides en tête. Pour une mise en place ou une refonte,
+le cahier des charges reste dans le modèle d'exigences du pack, avec ses annexes : pipelines, droits, catalogue,
+raisons de perte.
+
+L'agent `auditeur-crm` mène l'audit en lecture seule et s'arrête avant toute action dans le CRM. Ses questions sont
+dans la base : `crm` pour l'existant, `crm-parametrage` pour le paramétrage, réservé aux questionnaires préparés avec
+le consultant.
+
 ## L'entretien guidé par IA
 
 Quand la personne à interroger n'a pas une heure à donner au consultant, ou vit à six fuseaux horaires,

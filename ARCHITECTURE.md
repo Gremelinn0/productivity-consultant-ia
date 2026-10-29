@@ -93,7 +93,10 @@ sans posséder d'étape (voir la section suivante), et `mener-entretien-ia`, l'o
 du pack par écrit par une IA quand le consultant n'est pas là : il lit les questions chez leurs propriétaires
 (guides de `decouvrir-cas-usage`, `cadrer-besoin`, `auditer-processus`) et rend une note `mission/sources/`. Devant un
 visiteur sans consultant avant l'entretien, son agent en ligne choisit ses questions dans la base de questions, jamais
-en dehors, puis remet au visiteur un bilan écrit pour lui.
+en dehors, puis remet au visiteur un bilan écrit pour lui. `auditer-crm` est le module CRM : il ne possède aucune étape,
+`auditer-processus` et `rediger-cahier-des-charges` l'appellent quand le cas touche au CRM ; il rend l'audit d'un CRM
+et son bilan en annexe de `20-diagnostic`, et les annexes CRM des exigences. Son agent, `agents/auditeur-crm.md`, mène
+l'audit en lecture seule et s'arrête avant toute action dans le CRM réel.
 
 ## Le cerveau des décisions
 

@@ -64,6 +64,7 @@ traverse ; ce que veut le client se choisit selon l'objectif de la demande.
 |---|---|---|
 | [Le CRM et le suivi commercial](crm.md) | CR | Le CRM et le suivi commercial |
 | [L'emailing et les relances automatiques](emailing.md) | EM | Les emails aux contacts et aux clients, les relances après un achat raté |
+| [Le cahier des charges et le paramétrage d'un CRM](crm-parametrage.md) | CP | Un CRM à choisir, à mettre en place ou à refondre : le cahier des charges et chaque réglage, avec le consultant |
 
 #### Servir ses clients
 
@@ -102,6 +103,9 @@ traverse ; ce que veut le client se choisit selon l'objectif de la demande.
    de réussite (`cadrer-besoin`, étape 3). Le reste attend l'entretien.
 6. **Demander l'occurrence réelle et l'ordre de grandeur** (« la dernière fois… », « combien par semaine ? ») :
    règles communes de `decouvrir-cas-usage/references/guides-entretien.md`.
+
+Un sujet dont le fichier porte la ligne `<!-- hors-ligne -->` est réservé au consultant (`crm-parametrage`) : il
+sert aux questionnaires préparés, l'agent en ligne ne le voit pas et sa consigne n'en grossit pas.
 
 Un « Retour d'expérience » sous une partie renvoie au cas publié d'un praticien : le lien est la source de la
 question, pas une preuve de résultat. Les « Pièces à demander » d'un sujet sont les documents et les accès qui
@@ -154,6 +158,7 @@ ici ce qu'elles ajoutent ; chacune le rappelle en tête de son `SKILL.md`.
 - `chiffrer-rentabilite` : la valeur, le temps libéré, le temps donné (`rentabilite`).
 - `planifier-deploiement` : le pré-mortem et le pilote (`essai-et-mise-en-service`), la reprise (`transmission`).
 - `rediger-cahier-des-charges` : ce que le cahier des charges ne sait pas encore (`cadrage`, `processus`).
+- `auditer-crm` : l'audit d'un CRM en place (`crm`) et le cahier des charges d'un CRM (`crm-parametrage`).
 
 `python skills/mener-entretien-ia/scripts/entretien.py verifier` contrôle la base : un préfixe par sujet, aucune
 question en double dans toute la base, une décision et un « D'abord » à chaque ligne, l'index des sujets à jour

@@ -325,9 +325,9 @@ class UneSeuleMaison(unittest.TestCase):
     def test_ajouter_range_a_la_fin_de_la_partie_avec_le_numero_suivant(self):
         n = entretien.ajouter("crm", "2", "Quelles propriétés personnalisées ne sont plus remplies depuis six mois ?",
                               "Les propriétés à archiver", "l'outil", dossier=self.base)
-        self.assertEqual(n, "CR14")
+        self.assertEqual(n, "CR21")
         q = entretien.base("crm", self.base)
-        self.assertEqual([x["id"] for x in q if x["partie"] == "Les données et leurs sources"][-1], "CR14")
+        self.assertEqual([x["id"] for x in q if x["partie"] == "Les données et leurs sources"][-1], "CR21")
         self.assertEqual(self.ecarts(), [])
 
     def test_ajouter_refuse_un_doublon_de_toute_la_base(self):
@@ -375,7 +375,7 @@ class UneSeuleMaison(unittest.TestCase):
         ]),
         ("Ce que veut le client", [
             ("Trouver des clients", ["ciblage", "prospection"]),
-            ("Suivre ses contacts et ses ventes", ["crm", "emailing"]),
+            ("Suivre ses contacts et ses ventes", ["crm", "emailing", "crm-parametrage"]),
             ("Servir ses clients", ["support-client", "accueil-des-clients"]),
             ("Ses données et ses chiffres", ["donnees", "reporting"]),
             ("Produire du contenu", ["contenu"]),
@@ -390,12 +390,12 @@ class UneSeuleMaison(unittest.TestCase):
     def groupes(self, famille):
         return dict(dict(entretien.rangement(self.base))[famille])
 
-    def test_l_index_range_les_dix_neuf_sujets_en_deux_familles_et_dix_groupes(self):
+    def test_l_index_range_les_vingt_sujets_en_deux_familles_et_dix_groupes(self):
         self.assertEqual(entretien.rangement(), self.RANGEMENT)
         self.assertEqual(entretien.rangement(self.base), self.RANGEMENT)
         inscrits = sorted(s for _, groupes in entretien.rangement() for _, sujets in groupes for s in sujets)
         self.assertEqual(inscrits, entretien.sujets())
-        self.assertEqual((len(self.RANGEMENT), sum(len(g) for _, g in self.RANGEMENT), len(inscrits)), (2, 10, 19))
+        self.assertEqual((len(self.RANGEMENT), sum(len(g) for _, g in self.RANGEMENT), len(inscrits)), (2, 10, 20))
 
     def test_sabotage_un_sujet_hors_de_tout_groupe(self):
         self.remplacer("README.md", "#### Premier contact\n\n", "")
@@ -496,9 +496,20 @@ SECTIONS_EN_LIGNE = SECTIONS + ["## Pistes", "## Bilan remis à la personne", "#
 LIGNE_DE_L_HOTE = {"base": "premier-echange", "mode": "en-ligne", "sujets": ["support-client"]}  # son `questionnaire`
 
 
+def reserve_au_consultant(sujet):
+    """Le fichier du sujet porte le marqueur hors-ligne, lu ici sans passer par les fonctions de l'agent en ligne."""
+    return "<!-- hors-ligne -->" in (entretien.BASE / f"{sujet}.md").read_text(encoding="utf-8")
+
+
+def sujets_en_ligne():
+    """Les sujets que l'agent en ligne peut ouvrir, triés : tous, sauf ceux réservés au consultant."""
+    return [s for s in entretien.sujets() if not reserve_au_consultant(s)]
+
+
 def sujets_dans_l_ordre_de_l_index():
-    """Les sujets dans l'ordre du README, lus par `rangement`, sans passer par les fonctions de l'agent en ligne."""
-    return [s for _, groupes in entretien.rangement() for _, sujets in groupes for s in sujets]
+    """Les sujets en ligne dans l'ordre du README, lus par `rangement`, sans passer par les fonctions de l'agent en ligne."""
+    return [s for _, groupes in entretien.rangement() for _, sujets in groupes for s in sujets
+            if not reserve_au_consultant(s)]
 
 
 def rangees_de_l_index():
@@ -539,7 +550,7 @@ class AgentEnLigne(unittest.TestCase):
         self.assertEqual(ligne["guide"], "en-ligne")
         self.assertEqual(ligne["questionnaire"], {"base": "premier-echange", "mode": "en-ligne",
                                                   "sujets": sujets_dans_l_ordre_de_l_index()})
-        self.assertEqual(sorted(ligne["questionnaire"]["sujets"]), entretien.sujets())
+        self.assertEqual(sorted(ligne["questionnaire"]["sujets"]), sujets_en_ligne())
         self.assertEqual(ligne["consigne"], entretien.consigne_en_ligne())
         self.assertEqual(ligne["schema_compte_rendu"], entretien.schema_en_ligne())
         self.assertIn(str(fichier), sortie)
@@ -571,18 +582,18 @@ class AgentEnLigne(unittest.TestCase):
         self.assertNotIn("{{", consigne)
         for outil in ("`afficher`", "`terminer_entretien`"):
             self.assertIn(outil, consigne)
-        rangees = rangees_de_l_index()
-        self.assertEqual(sorted(rangees), entretien.sujets())
+        rangees = {s: r for s, r in rangees_de_l_index().items() if not reserve_au_consultant(s)}
+        self.assertEqual(sorted(rangees), sujets_en_ligne())
         for sujet, (prefixe, nom, quand) in rangees.items():
             self.assertIn(f"- {sujet} ({prefixe}) | {nom} | {quand}\n", consigne)
-        for sujet in entretien.sujets():
+        for sujet in sujets_en_ligne():
             for q in entretien.base(sujet):
                 self.assertIn(f"{q['id']} {q['question']} → {q['decide']}", consigne, q["id"])
 
     def test_une_question_qui_se_cherche_ailleurs_que_chez_la_personne_est_marquee(self):
         lignes = entretien.consigne_en_ligne().splitlines()
         vus = set()
-        for sujet in entretien.sujets():
+        for sujet in sujets_en_ligne():
             for q in entretien.base(sujet):
                 ligne = next(l for l in lignes if l.startswith(q["id"] + " "))
                 vus.add(q["dabord"])
@@ -636,6 +647,27 @@ class AgentEnLigne(unittest.TestCase):
         code, sortie, _ = lancer("schema", "--guide", "en-ligne")
         self.assertEqual((code, json.loads(sortie)), (0, s))
         self.assertEqual(json.loads(lancer("schema")[1])["required"][0], "role")  # sans guide : l'autre schéma
+
+    def test_un_sujet_reserve_au_consultant_reste_hors_de_l_agent_en_ligne(self):
+        reserves = [s for s in entretien.sujets() if reserve_au_consultant(s)]
+        self.assertIn("crm-parametrage", reserves)  # la base en contient un : l'essai mord
+        consigne, actives = entretien.consigne_en_ligne(), entretien.questions_en_ligne()
+        for sujet in reserves:
+            self.assertNotIn(f"### {sujet}\n", consigne)
+            self.assertNotIn(sujet, entretien.schema_en_ligne()["properties"]["sujet"]["enum"])
+            for q in entretien.base(sujet):
+                self.assertNotIn(q["id"], actives)
+                self.assertNotIn(f"{q['id']} ", consigne)
+        self.assertEqual(entretien.base("crm-parametrage")[0]["id"], "CP01")  # il sert au questionnaire préparé
+
+    def test_sabotage_sans_son_marqueur_le_sujet_reserve_revient_dans_la_consigne(self):
+        with tempfile.TemporaryDirectory() as d:
+            base = pathlib.Path(d) / "base"
+            shutil.copytree(entretien.BASE, base)
+            f = base / "crm-parametrage.md"
+            f.write_text(f.read_text(encoding="utf-8").replace("<!-- hors-ligne -->", ""), encoding="utf-8")
+            self.assertIn("CP01", entretien.questions_en_ligne(base))
+            self.assertIn("### crm-parametrage\n", entretien.consigne_en_ligne(base))
 
     def test_la_methode_et_la_consigne_disent_les_memes_limites_que_le_code(self):
         self.assertEqual((entretien.CHOIX_EN_LIGNE, entretien.CHOIX_LONGUEUR, entretien.PLAN_EN_LIGNE,

@@ -55,6 +55,7 @@ metadata:
 
 > 🌐 **Devant un visiteur en ligne, sans consultant avant l'entretien, l'agent choisit ses questions dans la base,
 > jamais en dehors** : douze au plus, d'abord celles qui se posent à la personne, jamais ce que la page a déjà demandé.
+> Un sujet marqué `<!-- hors-ligne -->` (le paramétrage d'un CRM) lui reste fermé : il suppose une mission engagée.
 > Avec un client du consultant, c'est un questionnaire préparé et validé. Méthode : `references/agent-en-ligne.md`.
 
 ## Ce que cette compétence résout

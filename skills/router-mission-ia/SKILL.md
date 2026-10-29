@@ -7,7 +7,7 @@ description: >-
   choisir la porte (besoin connu ou découverte), lancer l'étape suivante du pack consultant-ia, de la
   découverte jusqu'à la mesure du gain, et tenir le journal des décisions. Porte d'entrée du pack.
   Triggers : « mission IA », « audit IA », « on veut automatiser », « par où commencer avec l'IA »,
-  « trouver nos cas d'usage », « stratégie d'automatisation », « où en est la mission », « AI
+  « trouver nos cas d'usage », « stratégie d'automatisation », « audit CRM », « où en est la mission », « AI
   consulting », « automation strategy », « use case discovery », « /mission-besoin »,
   « /mission-decouverte ».
 metadata:
@@ -145,6 +145,10 @@ d'état :
 | | `tester-solution` (recette) | 85-recette |
 | | `piloter-mise-en-service` | 90-mise-en-service |
 | | `mesurer-gains` | 95-mesure |
+
+Un cas qui touche au CRM (audit, mise en place, refonte, choix de l'outil) suit le même ordre ; `auditer-processus`
+et `rediger-cahier-des-charges` y appellent le module `auditer-crm`, dont l'agent `auditeur-crm` mène l'audit en
+lecture seule.
 
 Appeler la compétence de l'étape par son nom, avec le chemin du dossier du cas. Quand la porte 2
 lance un cas, `cadrer-besoin` reçoit la fiche du cas dans `02-portefeuille.md` pour ne pas reposer

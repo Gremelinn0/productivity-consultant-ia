@@ -195,6 +195,8 @@ Ligne de journal, au moment où le demandeur tranche :
 - Les exigences que la solution doit satisfaire → `rediger-cahier-des-charges` (mode exigences), qui reçoit ce
   diagnostic.
 - La décision d'automatiser, la comparaison d'options et le choix d'une plateforme → `concevoir-solution`.
+- Un processus porté par un CRM → `auditer-crm` audite le CRM (usage, automatisations, données, ventes, tableaux de
+  bord) et rend son bilan en annexe de ce diagnostic.
 - Le gain et le coût → `chiffrer-rentabilite` ; le calendrier, dont le plan des simplifications →
   `planifier-deploiement`.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.

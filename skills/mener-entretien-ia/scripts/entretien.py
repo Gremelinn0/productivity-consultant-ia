@@ -81,6 +81,9 @@ PLAN_EN_LIGNE = (3, 7)   # le plan de l'audit : de 3 à 7 étapes
 LIMITE_CONSIGNE_EN_LIGNE = 60000   # le modèle relit la consigne à chaque tour : la base ne la fait pas grossir au-delà
 # Où chercher la réponse d'une question qu'un visiteur ne peut pas lire lui-même : la consigne la marque.
 MARQUES_DABORD = {"l'outil": " [outil]", "un document": " [document]"}
+# Un sujet réservé au consultant (le paramétrage détaillé d'un outil, par exemple) porte ce marqueur dans son fichier :
+# il sert aux questionnaires préparés, jamais à l'agent en ligne, et ne pèse pas sur sa consigne.
+HORS_LIGNE = "<!-- hors-ligne -->"
 
 
 class Erreur(Exception):
@@ -781,10 +784,21 @@ def _barree(q):
     return "~~" in q["id"] + q["question"] + q["decide"]
 
 
+def hors_ligne(sujet, dossier=None):
+    """Le sujet est réservé au consultant : son fichier porte le marqueur HORS_LIGNE."""
+    return HORS_LIGNE in _lire(pathlib.Path(dossier or BASE) / f"{sujet}.md")
+
+
+def sujets_en_ligne(dossier=None):
+    """Les sujets que l'agent en ligne peut ouvrir : tous, sauf ceux réservés au consultant."""
+    return [s for s in sujets(dossier) if not hors_ligne(s, dossier)]
+
+
 def questions_en_ligne(dossier=None):
-    """Les questions que l'agent en ligne peut poser : toute la base, sauf les questions barrées. {numéro: question}."""
+    """Les questions que l'agent en ligne peut poser : toute la base, sauf les questions barrées et les sujets réservés
+    au consultant. {numéro: question}."""
     dossier = pathlib.Path(dossier or BASE)
-    return {q["id"]: q for s in sujets(dossier) for q in base(s, dossier) if not _barree(q)}
+    return {q["id"]: q for s in sujets_en_ligne(dossier) for q in base(s, dossier) if not _barree(q)}
 
 
 def index_des_sujets(dossier=None):
@@ -794,6 +808,11 @@ def index_des_sujets(dossier=None):
     if sorted(s["sujet"] for s in plan["sujets"]) != sujets(dossier):
         raise Erreur("l'index du README et les fichiers de la base ne concordent pas (entretien.py verifier)")
     return [{cle: s[cle] for cle in ("sujet", "prefixe", "nom", "quand")} for s in plan["sujets"]]
+
+
+def index_en_ligne(dossier=None):
+    """L'index des sujets que l'agent en ligne peut ouvrir, dans l'ordre du README."""
+    return [s for s in index_des_sujets(dossier) if not hors_ligne(s["sujet"], dossier)]
 
 
 def _milliers(n):
@@ -822,7 +841,7 @@ def consigne_en_ligne(dossier=None):
     gabarit = _lire(CONSIGNE_EN_LIGNE).split("\n---\n", 1)
     if len(gabarit) != 2:
         raise Erreur("consigne-en-ligne.md : la ligne --- qui ouvre la consigne est absente")
-    index = index_des_sujets(dossier)
+    index = index_en_ligne(dossier)
     champs = {"MAX": MAX_EN_LIGNE, "CHOIX_MIN": CHOIX_EN_LIGNE[0], "CHOIX_MAX": CHOIX_EN_LIGNE[1],
               "CHOIX_LONGUEUR": CHOIX_LONGUEUR, "PLAN_MIN": PLAN_EN_LIGNE[0], "PLAN_MAX": PLAN_EN_LIGNE[1],
               "INDEX": "\n".join(f"- {s['sujet']} ({s['prefixe']}) | {s['nom']} | {s['quand']}" for s in index),
@@ -839,7 +858,7 @@ def consigne_en_ligne(dossier=None):
 def schema_en_ligne(dossier=None):
     """Le schéma du compte rendu de l'agent en ligne, avec les sujets de la base du jour : `sujet` n'en prend qu'un."""
     s = json.loads(_lire(SCHEMA_EN_LIGNE))
-    s["properties"]["sujet"]["enum"] = [x["sujet"] for x in index_des_sujets(dossier)]
+    s["properties"]["sujet"]["enum"] = [x["sujet"] for x in index_en_ligne(dossier)]
     return s
 
 
@@ -850,7 +869,7 @@ def ligne_en_ligne(dossier=None):
     return {"titre": TITRE_EN_LIGNE, "guide": GUIDE_EN_LIGNE, "consigne": consigne_en_ligne(dossier),
             "schema_compte_rendu": schema_en_ligne(dossier),
             "questionnaire": {"base": BASE_EN_LIGNE, "mode": GUIDE_EN_LIGNE,
-                              "sujets": [s["sujet"] for s in index_des_sujets(dossier)]}}
+                              "sujets": [s["sujet"] for s in index_en_ligne(dossier)]}}
 
 
 def mesure_consigne_en_ligne(ligne, dossier=None):
@@ -929,7 +948,7 @@ def controler_en_ligne(cr, q=None, dossier=None):
             else:
                 textes.append((f"contexte.{cle}", contexte[cle]))
         liste(contexte.get("outils"), "contexte.outils")
-    connus = sujets(dossier)
+    connus = sujets_en_ligne(dossier)
     if cr["sujet"] not in connus:
         ecarts.append(f"sujet : {cr['sujet']!r} n'est pas un sujet de la base (connus : {', '.join(connus)})")
     reponses = cr["reponses"]
