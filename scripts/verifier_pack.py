@@ -1,6 +1,7 @@
-"""Contrôle du pack consultant-ia : forme des compétences, unicité du routeur de stratégie,
-compétences complémentaires (COMPLEMENTAIRES.md et ses renvois), versions des manifestes, liens publics,
-base de questions (mener-entretien-ia, `entretien.py verifier`).
+"""Contrôle du pack consultant-ia : forme des compétences, limites de leur frontmatter pour être téléversées comme
+Agent Skill (Skills API d'Anthropic), unicité du routeur de stratégie, compétences complémentaires
+(COMPLEMENTAIRES.md et ses renvois), versions des manifestes, liens publics, base de questions
+(mener-entretien-ia, `entretien.py verifier`).
 
 Usage :
   python scripts/verifier_pack.py      contrôle tout (0 = aucun écart)
@@ -39,6 +40,10 @@ DEPOTS_PUBLICS_AUTEUR = {"productivity-consultant-ia", "claude-skill-hub"}  # le
 NOMS_DEPRECIES = ("bmad-create-architecture",)  # renvoi vers bmad-architecture dans la version stable de BMad, absent de la suivante
 COMMANDE = re.compile(r"`((?:/plugin|npx) [^`]+)`")
 FORME_COMMANDE = re.compile(r"/plugin marketplace add [\w.-]+/[\w.-]+|/plugin install [\w-]+@[\w-]+|npx [\w-]+ install")
+LIMITE_NOM = 64  # Skills API d'Anthropic : name de 64 caractères au plus, en minuscules, chiffres et tirets
+LIMITE_DESCRIPTION = 1024  # ... description non vide, de 1 024 caractères au plus, sans balise de type XML
+FORME_NOM = re.compile(r"[a-z0-9-]+")
+BALISE_XML = re.compile(r"<[^>]*>")  # tout « <...> », comme <rôle> ou <date> : la plateforme les prend pour des balises
 ecarts = 0
 
 
@@ -51,6 +56,71 @@ def ecart(message):
 def frontmatter(texte):
     m = re.match(r"---\n(.*?)\n---\n", texte, re.S)
     return m.group(1) if m else None
+
+
+def lire_bloc(suite, plie, garder):
+    """Le texte d'un bloc YAML : indentation retirée, lignes pliées (`>`, jointes par une espace) ou gardées (`|`).
+
+    Le saut de ligne final suit l'indicateur : `-` aucun, `+` tous ceux du fichier, sinon un seul.
+    """
+    pleines = [ligne for ligne in suite if ligne.strip()]
+    if not pleines:
+        return ""
+    retrait = len(pleines[0]) - len(pleines[0].lstrip(" "))
+    lignes = [ligne[retrait:] if ligne.strip() else "" for ligne in suite]
+    vides_finales = 0
+    while not lignes[-1]:
+        lignes.pop()
+        vides_finales += 1
+    if plie:
+        texte, vides, avant = "", 0, None
+        for ligne in lignes:
+            if not ligne:
+                vides += 1
+                continue
+            if avant is None:
+                texte = "\n" * vides + ligne
+            else:
+                decalee = ligne[0] == " " or avant[0] == " "  # une ligne plus indentée garde son saut de ligne
+                texte += ("\n" * (vides + 1) if decalee else ("\n" * vides or " ")) + ligne
+            avant, vides = ligne, 0
+    else:
+        texte = "\n".join(lignes)
+    return texte + {"-": "", "+": "\n" * (1 + vides_finales)}.get(garder, "\n")
+
+
+def lire_valeur(fm, cle):
+    """La valeur d'une clé du premier niveau du frontmatter, telle que la lit YAML ; None si la clé manque.
+
+    Lit un texte sur une ligne (brut ou entre guillemets) et un bloc `>` ou `|`. Toute autre forme lève ValueError :
+    un contrôle qui mesurerait autre chose que ce que lit la plateforme serait pire que pas de contrôle.
+    """
+    lignes = fm.split("\n")
+    debut = next((i for i, ligne in enumerate(lignes) if re.match(rf"{re.escape(cle)}:(\s|$)", ligne)), None)
+    if debut is None:
+        return None
+    reste = lignes[debut].partition(":")[2].strip()
+    suite = []
+    for ligne in lignes[debut + 1:]:
+        if ligne.strip() and not ligne.startswith((" ", "\t")):
+            break
+        suite.append(ligne)
+    bloc = re.fullmatch(r"([>|])([+-]?)(?:\s+#.*)?", reste)
+    if bloc:
+        return lire_bloc(suite, bloc.group(1) == ">", bloc.group(2))
+    if not any(ligne.strip() for ligne in suite):  # une seule ligne
+        guillemets = re.fullmatch(r'("(?:[^"\\]|\\.)*")\s*(?:#.*)?', reste)
+        apostrophes = re.fullmatch(r"'((?:[^']|'')*)'\s*(?:#.*)?", reste)
+        if guillemets:
+            try:
+                return json.loads(guillemets.group(1), strict=False)
+            except ValueError:
+                pass  # un échappement que YAML connaît et pas JSON : non lu
+        elif apostrophes:
+            return apostrophes.group(1).replace("''", "'")
+        elif reste[:1] not in ('"', "'", "[", "{", "&", "*", "!", "|", ">", "%", "@", "`", "#"):
+            return re.sub(r"\s+#.*$", "", reste)
+    raise ValueError(f"forme de {cle} non lue (« {reste[:20]} »)")
 
 
 def controler_routeur_unique():
@@ -111,6 +181,42 @@ def controler_competence(dossier, noms):
                                                 "-service", "-gains", "-strategy"))
             if semble_competence and cite not in noms and not cite.startswith("cas-"):
                 ecart(f"{nom_fichier} : compétence inconnue `{cite}`")
+
+
+def controler_limites_skills_api(dossiers):
+    """Chaque compétence peut être téléversée comme Agent Skill (Skills API d'Anthropic), sinon la plateforme la refuse.
+
+    Frontmatter : name de 64 caractères au plus, en minuscules, chiffres et tirets ; description non vide, de 1 024
+    caractères au plus, sans balise de type XML (`<rôle>` et `<date>` en sont). On mesure la valeur que lit YAML (les
+    lignes d'un bloc `>-` se rejoignent par une espace), pas les lignes du fichier. Le routeur est contrôlé aussi.
+    """
+    plus_longue = (0, "")
+    for dossier in dossiers:
+        fm = frontmatter(lire(dossier / "SKILL.md"))
+        if fm is None:
+            continue  # « frontmatter absent » est déjà signalé
+        try:
+            nom, description = lire_valeur(fm, "name"), lire_valeur(fm, "description")
+        except ValueError as erreur:
+            ecart(f"{dossier.name} : {erreur}, donc non contrôlé : l'écrire sur une ligne ou en bloc `>-`")
+            continue
+        if nom is not None and (not FORME_NOM.fullmatch(nom) or len(nom) > LIMITE_NOM):
+            ecart(f"{dossier.name} : name « {nom} » refusé par la plateforme "
+                  f"(minuscules, chiffres et tirets, {LIMITE_NOM} caractères au plus)")
+        if description is None:
+            continue  # « description absente » est déjà signalé
+        if not description.strip():
+            ecart(f"{dossier.name} : description vide")
+        if len(description) > LIMITE_DESCRIPTION:
+            ecart(f"{dossier.name} : description de {len(description)} caractères, "
+                  f"la plateforme en admet {LIMITE_DESCRIPTION} au plus")
+        balises = BALISE_XML.findall(description)
+        if balises:
+            ecart(f"{dossier.name} : description avec une balise de type XML ({', '.join(balises)}) : "
+                  "écrire le mot sans chevrons")
+        plus_longue = max(plus_longue, (len(description), dossier.name))
+    print(f"Skills API : {len(dossiers)} compétences, description la plus longue "
+          f"{plus_longue[0]}/{LIMITE_DESCRIPTION} caractères ({plus_longue[1]})")
 
 
 def lire(chemin):
@@ -264,6 +370,7 @@ def main(arguments):
     noms = {d.name for d in dossiers}
     for dossier in dossiers:
         controler_competence(dossier, noms)
+    controler_limites_skills_api(dossiers)
 
     controler_routeur_unique()
 

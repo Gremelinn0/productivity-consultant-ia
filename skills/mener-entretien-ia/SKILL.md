@@ -3,23 +3,13 @@ name: mener-entretien-ia
 description: >-
   Quand un entretien du pack doit se faire sans le consultant (« fais-le répondre seul », « elle répondra quand
   elle aura le temps », « un entretien mené par une IA », « envoie-lui les questions ») → préparer l'entretien
-  écrit qu'une IA mène à sa place, en ligne ou dans la session Claude Code de l'entreprise : le questionnaire
-  préparé pour l'objectif (seulement ce qui manque après lecture de tout ce qui est accessible, ce qui est
-  incertain fait confirmer) ou un guide du pack (direction, équipes, version courte, cadrage, audit), la consigne
-  de l'intervieweur (une question à la fois, relance sur la dernière occurrence réelle et l'ordre de grandeur,
-  aucune promesse, aucun nom, la langue de la personne), puis transformer son compte rendu en note
-  `mission/sources/entretien-<rôle>-<date>.md` aux statuts [F]/[H]/[E], contrôlée. Tient aussi la base de
-  questions par sujet (une mission de bout en bout, du premier échange au bilan, et chaque objectif, du
-  support client à la prospection) : toute question à poser à une entreprise en part, et ce qui manquait y est rangé.
-  Porte aussi l'agent d'entretien en ligne : devant un visiteur, sans consultant avant l'entretien, il choisit ses
-  questions dans la base (douze au plus, jamais en dehors), affiche un plan et des réponses à cliquer, rend un
-  compte rendu à son propre schéma (pistes comprises) et, pour le visiteur, un bilan écrit dans sa langue que la page
-  affiche et envoie par e-mail à qui le demande.
-  Outil du pack consultant-ia, appelé par decouvrir-cas-usage, cadrer-besoin et auditer-processus ; ne possède
-  aucune étape. Triggers : « entretien guidé par IA », « entretien asynchrone », « questionnaire envoyé au
-  client », « prépare les questions pour son objectif », « fais-moi les questions pour », « quelles questions
-  poser à », « base de questions », « range cette question », « interview bot », « AI-led interview »,
-  « agent d'entretien en ligne », « consigne en ligne », « audit en ligne d'un visiteur ».
+  écrit qu'une IA mène à sa place (en ligne ou dans la session Claude Code de l'entreprise), puis transformer son
+  compte rendu en note contrôlée de mission/sources. Tient la base de questions par sujet. Porte l'agent
+  d'entretien en ligne d'un visiteur. Outil du pack consultant-ia, appelé par decouvrir-cas-usage, cadrer-besoin
+  et auditer-processus ; ne possède aucune étape. Triggers : « entretien guidé par IA », « entretien asynchrone »,
+  « questionnaire envoyé au client », « prépare les questions pour son objectif », « fais-moi les questions pour »,
+  « quelles questions poser à », « base de questions », « range cette question », « interview bot »,
+  « AI-led interview », « agent d'entretien en ligne », « consigne en ligne », « audit en ligne d'un visiteur ».
 metadata:
   scope: "un entretien du pack mené par écrit par une IA, sans le consultant, et sa note dans mission/sources/ ; la base de questions par sujet ; l'agent d'entretien en ligne d'un visiteur, qui choisit ses questions dans la base et lui rend son bilan"
   owns: "la base de questions (references/base-questions/, un fichier par sujet, guides fixes compris), la consigne de l'intervieweur, le schéma du compte rendu, le choix et la préparation du questionnaire, le contrôle et le rendu de la note et de sa transcription ; l'agent en ligne (sa méthode, sa consigne, le schéma de son compte rendu, le bilan du visiteur, sa note)"
@@ -68,6 +58,21 @@ réponse est vague, et rend une note au format du pack, que le consultant relit 
 
 Résultat attendu : une note d'entretien que `cadrer-besoin`, `auditer-processus` ou `decouvrir-cas-usage`
 lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nombres dont le statut est juste.
+
+### Quand l'utiliser
+
+- **Un entretien doit se faire sans le consultant** : l'IA le mène par écrit, avec un questionnaire préparé pour
+  l'objectif (seulement ce qui manque après lecture de tout ce qui est accessible ; ce qui est incertain se fait
+  confirmer) ou un guide du pack (direction, équipes, version courte, cadrage, audit). Sa consigne : une question à la
+  fois, relance sur la dernière occurrence réelle et l'ordre de grandeur, aucune promesse, aucun nom, la langue de la
+  personne. Sa note (`mission/sources/entretien-<rôle>-<date>.md`) porte les statuts `[F]`/`[H]`/`[E]` et est
+  contrôlée. Étapes 1 à 8.
+- **Une question est à poser à une entreprise** : la base de questions par sujet (une mission de bout en bout, du premier
+  échange au bilan, et chaque objectif, du support client à la prospection) la tient, et ce qui manquait y est rangé.
+- **Un visiteur répond en ligne, sans consultant avant l'entretien** : l'agent d'entretien en ligne choisit ses questions
+  dans la base (douze au plus, jamais en dehors), affiche un plan et des réponses à cliquer, rend un compte rendu à son
+  propre schéma (pistes comprises) et, pour le visiteur, un bilan écrit dans sa langue que la page affiche et envoie par
+  e-mail à qui le demande. Variante, après l'étape 8.
 
 ## Stratégie
 
