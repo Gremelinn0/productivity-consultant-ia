@@ -2,7 +2,7 @@
 
 Quand l'objectif touche au CRM : le parcours d'un contact jusqu'au client, les données qui font foi, ce que chaque
 rôle doit y voir, et ce qu'on corrige d'abord. Un questionnaire préparé part d'ici et du cadrage (`cadrage`),
-garde les questions utiles, douze au plus, et n'adapte que ce qui change pour l'entreprise.
+garde les questions utiles, et n'adapte que ce qui change pour l'entreprise.
 
 ## 1. Le parcours et le pipeline
 

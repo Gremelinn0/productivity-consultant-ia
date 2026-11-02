@@ -2,7 +2,7 @@
 
 Quand l'objectif dépend de la qualité des données : les sources, les champs indispensables, les règles de
 nettoyage et de segmentation, et qui corrige une donnée fausse. Un questionnaire préparé part d'ici et du cadrage
-(`cadrage`), garde les questions utiles, douze au plus, et n'adapte que ce qui change pour l'entreprise.
+(`cadrage`), garde les questions utiles, et n'adapte que ce qui change pour l'entreprise.
 
 ## 1. Les sources
 

@@ -3,7 +3,7 @@
 Quand l'objectif est de trouver de nouveaux clients : ce que l'entreprise vend, ce qui se fait aujourd'hui, qui
 prospecte et avec quel temps, depuis quels comptes, avec quels messages, et comment on jugera le premier essai.
 Qui viser et comment le repérer a son sujet (`ciblage`) ; les outils et leurs coûts aussi (`outils-et-acces`).
-Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, douze au plus, et
+Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, et
 n'adapte que ce qui change pour l'entreprise.
 
 ## 1. L'offre et la vente

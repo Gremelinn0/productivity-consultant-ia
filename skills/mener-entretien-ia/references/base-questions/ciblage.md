@@ -3,7 +3,7 @@
 Avant toute prospection : à qui l'entreprise vend, ses meilleurs clients et pourquoi ils ont acheté, ce qui se
 passe chez une entreprise juste avant qu'elle ait besoin d'elle, qui décide, qui ne jamais contacter, et sur
 quelle cible faire le premier essai. La prospection elle-même (canaux, comptes, messages) a son sujet
-(`prospection`). Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, douze
+(`prospection`). Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles,
 au plus, et n'adapte que ce qui change pour l'entreprise.
 
 ## 1. Les meilleurs clients

@@ -59,8 +59,8 @@ GUIDES_BASE = {
     "besoin": ("cadrage", tuple(f"CA0{i}" for i in range(1, 9)), False),
     "processus": ("processus", tuple(f"AP0{i}" for i in range(1, 9)), False),
 }
-# Un questionnaire préparé reste un entretien court : au-delà, la personne abandonne, et le reste attend l'audit.
-MAX_PREPARE = 12
+# Plus de plafond pour un questionnaire préparé (Florent, 02/11/2026) : toutes les questions préparées sont posées, et la personne peut en passer
+# (le bouton « Passer » de la page d'entretien). Seul l'agent en ligne du site garde sa promesse de douze questions au visiteur.
 # Où chercher la réponse avant de poser la question : l'outil se lit, un document se demande, la personne répond.
 DABORD = ("l'outil", "un document", "la personne")
 NUMERO = re.compile(r"([A-Z]{2,4})(\d{2,3})")
@@ -74,7 +74,7 @@ SCHEMA_EN_LIGNE = COMPETENCE / "references" / "compte-rendu-en-ligne.schema.json
 CONSIGNE_EN_LIGNE = COMPETENCE / "references" / "consigne-en-ligne.md"
 TITRE_EN_LIGNE = "Entretien en ligne"
 BASE_EN_LIGNE = "premier-echange"   # le sujet de départ d'un visiteur, porté par la ligne de l'agent
-MAX_EN_LIGNE = MAX_PREPARE   # douze questions au plus, comme un questionnaire préparé
+MAX_EN_LIGNE = 12   # douze questions au plus : la promesse faite au visiteur du site
 CHOIX_EN_LIGNE = (2, 6)   # les réponses suggérées : de 2 à 6 choix
 CHOIX_LONGUEUR = 60   # de 60 caractères au plus chacun
 PLAN_EN_LIGNE = (3, 7)   # le plan de l'audit : de 3 à 7 étapes
@@ -442,7 +442,7 @@ def creer_sujet(sujet, prefixe, titre, quand, partie, question, decide, dabord="
 def preparer(sujet, objectif, role, entreprise="", garder=None, date=None):
     """Le brouillon d'un questionnaire préparé, tiré de la base du sujet : les questions gardées (toutes, sans `garder`),
     chacune avec son numéro de base et la décision qu'elle sert dans « Alimente ». « Validé par » reste vide : le script
-    refuse de l'ouvrir tant qu'on n'a pas gardé douze questions au plus, adapté leurs mots et validé."""
+    refuse de l'ouvrir tant qu'on n'a pas gardé les questions utiles, adapté leurs mots et validé."""
     questions = base(sujet)
     if garder:
         connues = {q["id"]: q for q in questions}
@@ -492,9 +492,6 @@ def _prepare(fichier):
         raise Erreur(f"{chemin.name} : aucune question lue dans « ## Questions »")
     if [l["numero"] for l in lignes] != list(range(1, len(lignes) + 1)):
         raise Erreur(f"{chemin.name} : questions à numéroter de 1 à {len(lignes)}, dans l'ordre")
-    if len(lignes) > MAX_PREPARE:
-        raise Erreur(f"{chemin.name} : {len(lignes)} questions ; {MAX_PREPARE} au plus, les plus décisives d'abord "
-                     "(le reste attend la séance d'observation ou l'audit)")
     vides = [str(l["numero"]) for l in lignes if not l["question"]]
     if vides:
         raise Erreur(f"{chemin.name} : question vide (ligne {', '.join(vides)})")

@@ -2,7 +2,7 @@
 
 Quand le dispositif doit vivre sans le consultant : qui le reprend, ce que l'équipe doit savoir faire seule, ce qui
 se transmet, et le soutien prévu ensuite. Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les
-questions utiles, douze au plus, et n'adapte que ce qui change pour l'entreprise.
+questions utiles, et n'adapte que ce qui change pour l'entreprise.
 
 ## 1. Qui reprend
 

@@ -2,7 +2,7 @@
 
 <!-- hors-ligne -->
 
-Le détail qu'un cahier des charges CRM doit trancher avant tout paramétrage : les acteurs du projet, les droits, les objets et leurs identifiants, les pipelines, les produits, la messagerie, les exigences non fonctionnelles. Réservé aux questionnaires préparés avec le consultant (`auditer-crm`) : ces questions supposent une mission engagée, l'agent en ligne ne les pose pas. Le diagnostic d'un CRM en place part de `crm`. Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, douze au plus, et n'adapte que ce qui change pour l'entreprise.
+Le détail qu'un cahier des charges CRM doit trancher avant tout paramétrage : les acteurs du projet, les droits, les objets et leurs identifiants, les pipelines, les produits, la messagerie, les exigences non fonctionnelles. Réservé aux questionnaires préparés avec le consultant (`auditer-crm`) : ces questions supposent une mission engagée, l'agent en ligne ne les pose pas. Le diagnostic d'un CRM en place part de `crm`. Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, et n'adapte que ce qui change pour l'entreprise.
 
 ## 1. Le projet et ses acteurs
 

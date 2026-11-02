@@ -2,7 +2,7 @@
 
 Les questions qu'on pose, une fois pour toutes, quand l'objectif touche au service client : comprendre comment les
 demandes des clients sont traitées, ou préparer un agent qui y répond. Un questionnaire préparé part d'ici
-(`references/questionnaire-prepare.md`) : il garde les questions utiles, douze au plus, et n'adapte que ce qui change
+(`references/questionnaire-prepare.md`) : il garde les questions utiles, et n'adapte que ce qui change
 pour l'entreprise. La colonne « D'abord » dit où chercher la réponse avant de la demander : **l'outil** se lit
 soi-même, en lecture seule, avant l'entretien (`auditer-processus`, étape 2) ; **un document** se demande ; **la
 personne** se pose.

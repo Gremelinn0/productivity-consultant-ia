@@ -25,7 +25,7 @@ metadata:
 > `….transcription.md`. Preuve : `python skills/mener-entretien-ia/scripts/entretien.py note` refuse tout compte
 > rendu qui enfreint les règles (une réponse par question dans l'ordre, ouverture dite, `[F]` fondé, `[H]` avec qui
 > confirme, `[E]` avec son calcul, aucune adresse ni numéro) ; la transcription sort adresses et numéros retirés.
-> Un questionnaire préparé sans objectif écrit, sans validation, ou de plus de douze questions est refusé.
+> Un questionnaire préparé sans objectif écrit, ou sans validation est refusé (plus de plafond : toutes les questions préparées sont posées, la personne peut en passer).
 > La base de questions : `entretien.py verifier` refuse un doublon dans toute la base, un préfixe pris deux fois,
 > une ligne sans décision ou sans « D'abord », un index périmé, une compétence lectrice sans son rappel en tête, une
 > consigne en ligne de plus de 60 000 caractères. L'agent en ligne : `entretien.py consigne-en-ligne` écrit sa ligne
@@ -114,7 +114,7 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    peut lire. Prendre le bloc du sujet dans la base (`references/base-questions/<sujet>.md`, index `README.md`)
    et le cadrage (`cadrage`) quand le sujet ne le pose pas dans ses mots ; un sujet absent s'ouvre dans la base.
    Puis trancher chacune : réponse sûre → elle ne se pose pas (« Déjà établi ») ; incertaine → elle se fait
-   confirmer (« Déjà su ») ; absente → elle se pose, dans les mots de la personne. Douze au plus. Le fichier
+   confirmer (« Déjà su ») ; absente → elle se pose, dans les mots de la personne. Toutes les questions préparées sont posées ; la personne peut en passer. Le fichier
    `mission/sources/questionnaire-<objet>-<date>.md` suit `references/questionnaire-prepare.md` et se fait
    valider avant l'entretien ; le script refuse celui qui n'est pas validé. Pour un guide du pack, écrire
    seulement ce qu'on sait déjà en quelques lignes (`--contexte`), rien qu'on ne dirait pas à la personne.

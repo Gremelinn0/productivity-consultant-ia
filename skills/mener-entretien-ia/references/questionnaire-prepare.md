@@ -30,9 +30,10 @@ modèle.
      question se pose avec « Déjà su » : l'IA dit ce qu'on a noté et la personne confirme ou corrige ;
    - rien → la question se pose, réécrite pour cette personne : ses clients, ses outils, ses mots ; jamais
      le jargon du pack.
-5. **Douze questions au plus**, les plus décisives d'abord : celles qui changent le périmètre, le coût ou les
-   conditions de réussite. Le reste attend la séance d'observation ou l'audit, et se dit dans « Pas dans cet
-   entretien ». Quand plusieurs questions relèvent d'une autre personne (celle qui répond aux clients, celle qui
+5. **Toutes les questions préparées sont posées**, sans plafond de nombre ; la personne peut en passer (bouton
+   « Passer » de la page : l'agent accepte sans insister et passe à la suivante). Les plus décisives d'abord :
+   celles qui changent le périmètre, le coût ou les conditions de réussite. Ce qui ne sert pas cet objectif attend la
+   séance d'observation ou l'audit, et se dit dans « Pas dans cet entretien ». Quand plusieurs questions relèvent d'une autre personne (celle qui répond aux clients, celle qui
    tient la boutique), elles forment le questionnaire d'un second entretien, pour ce rôle.
 6. **Faire valider** le questionnaire avant de l'ouvrir : le consultant ; en local sans consultant, la personne
    qui lance l'entretien. La ligne « Validé par » porte son rôle et la date ; sans elle, le script refuse.

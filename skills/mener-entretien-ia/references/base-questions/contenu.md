@@ -2,7 +2,7 @@
 
 Quand l'objectif est de produire du contenu (articles, posts, pages, newsletters) avec l'aide de l'IA : ce qui reste
 au jugement humain, une fois la recherche et la rédaction confiées à l'agent. Un questionnaire préparé part d'ici
-et du cadrage (`cadrage`), garde les questions utiles, douze au plus, et n'adapte que ce qui change pour
+et du cadrage (`cadrage`), garde les questions utiles, et n'adapte que ce qui change pour
 l'entreprise. Sujet encore mince : il grandit des questions qui auront servi.
 
 ## 1. Le jugement humain

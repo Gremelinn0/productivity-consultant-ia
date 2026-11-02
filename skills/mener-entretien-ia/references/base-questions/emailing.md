@@ -3,7 +3,7 @@
 Quand l'objectif touche aux emails envoyés aux contacts et aux clients : l'état de la base avant d'écrire à plus de
 monde, ce qui fait un contact dormant, les relances après un achat raté, et où mènent les liens de chaque email.
 Le CRM (`crm`) et la qualité des données (`donnees`) ont leur sujet. Un questionnaire préparé part d'ici et du
-cadrage (`cadrage`), garde les questions utiles, douze au plus, et n'adapte que ce qui change pour l'entreprise.
+cadrage (`cadrage`), garde les questions utiles, et n'adapte que ce qui change pour l'entreprise.
 Sujet encore mince : il grandit des questions qui auront servi.
 
 ## 1. La base de contacts

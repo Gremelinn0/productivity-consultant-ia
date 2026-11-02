@@ -98,7 +98,7 @@ traverse ; ce que veut le client se choisit selon l'objectif de la demande.
    lecture seule (`auditer-processus`, étape 2) ; **un document** se demande ; **la personne** se pose. Une
    réponse sûre ne se redemande pas, une réponse incertaine se fait confirmer, une réponse absente se demande.
 4. **Préparer le questionnaire** : `entretien.py preparer --base <sujet> --garder XX01,XX02,…` en tire le
-   brouillon, douze questions au plus, à valider avant l'entretien (`references/questionnaire-prepare.md`).
+   brouillon, toutes les questions utiles, à valider avant l'entretien (`references/questionnaire-prepare.md`).
 5. **Au premier contact, deux questions au plus** : celles qui changent le périmètre, le coût ou les conditions
    de réussite (`cadrer-besoin`, étape 3). Le reste attend l'entretien.
 6. **Demander l'occurrence réelle et l'ordre de grandeur** (« la dernière fois… », « combien par semaine ? ») :

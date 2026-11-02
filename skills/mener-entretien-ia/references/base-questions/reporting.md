@@ -2,7 +2,7 @@
 
 Quand l'objectif est de mesurer et de décider : la décision que sert chaque indicateur, la mesure de départ, le
 travail que coûte le reporting, et les seuils qui déclenchent une action. Un questionnaire préparé part d'ici et
-du cadrage (`cadrage`), garde les questions utiles, douze au plus, et n'adapte que ce qui change pour l'entreprise.
+du cadrage (`cadrage`), garde les questions utiles, et n'adapte que ce qui change pour l'entreprise.
 
 ## 1. Les décisions et les mesures
 
