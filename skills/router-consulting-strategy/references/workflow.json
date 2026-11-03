@@ -45,6 +45,20 @@
       "regle": "Une valeur proposée par l'analyste puis acceptée par le décideur devient un fait, avec cette décision pour source. Un chiffre donné de mémoire reste une hypothèse, avec qui peut le confirmer. Un accord entre plusieurs modèles n'est pas une preuve.",
       "cas": [
         "transformer-des-signaux-documentes-en-arbitrages-strategiques"
+      ],
+      "taches": [
+        {
+          "slug": "garder-le-journal-des-decisions",
+          "titre": "Garder le journal des décisions",
+          "competences": [
+            {
+              "nom": "decision-log",
+              "pourquoi": "Pour noter chaque décision, ses raisons et ses inconvénients acceptés.",
+              "projet": "store"
+            }
+          ],
+          "reserve": []
+        }
       ]
     },
     {
