@@ -133,7 +133,8 @@ de solution choisie, pas de chiffrage fin.
    - **À creuser** : une donnée manquante empêche de classer — écrire laquelle et qui la fournit ;
    - **À écarter** : valeur faible, risque disproportionné ou besoin déjà couvert — écrire la raison.
 10. **Recommander, puis s'arrêter sur la décision.** Recommander trois à cinq cas à faible effort et forte valeur,
-    idéalement un par équipe concernée, et dire ce qui ferait changer cette recommandation. Pour arbitrer,
+    idéalement un par équipe concernée, et dire ce qui ferait changer cette recommandation. En ligne, sans consultant :
+    dix cas classés par rentabilité, trois proposés (`router-mission-ia`, `references/parcours-en-ligne.md`, règle 6). Pour arbitrer,
     appeler `router-consulting-strategy` (lentille priorisation) ; le livrable reste celui de cette étape. À chaque
     validation (`00`, `01`, `02`), ajouter une ligne à `mission/journal.md` ; celle de `02` nomme les cas à creuser. Proposer
     ensuite `chiffrer-rentabilite` (ordre de grandeur des seuls cas à creuser → `03-chiffrage.md`),

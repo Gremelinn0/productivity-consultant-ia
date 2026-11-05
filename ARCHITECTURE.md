@@ -152,6 +152,10 @@ Un besoin traité seul par la porte 1 n'a que `journal.md` et son dossier `cas-<
 
 ## Les règles communes — chaque compétence les applique
 
+> **La vision (05/11/2026).** Une solution est une automatisation, déterministe ou avec IA. Les règles stables d'abord ;
+> l'IA là où il faut comprendre, classer ou rédiger. L'IA augmente l'automatisation et l'humain, pas l'inverse : un geste
+> à risque garde une validation humaine.
+
 1. **Chaque nombre porte son statut** (`[F]`, `[H]` ou `[E]`, définis plus haut).
 2. **Estimé n'est pas mesuré.** Un gain reste « estimé » jusqu'à ce qu'on l'observe après la mise en
    service, et seule `95-mesure` le déclare observé. Aucune statistique de marché sans lien vers sa
