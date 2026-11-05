@@ -1,7 +1,7 @@
 # consultant-ia
 
 **Le pack du consultant IA et automatisation, de l'idée à la solution mesurée** — douze compétences
-(plus un routeur de stratégie et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
+(plus un routeur de stratégie, un module CRM et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
 bout : comprendre le travail réel, trouver ce qui mérite d'être automatisé, comparer les solutions,
 chiffrer, spécifier et planifier, puis construire et tester dans un environnement d'essai, mettre en
 service action par action et mesurer ce que la solution rapporte vraiment.

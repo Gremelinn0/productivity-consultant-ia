@@ -19,7 +19,7 @@ accompagnée ; seules changent la place du consultant et la forme des échanges.
 - Le pré-audit, en lecture seule : la conversation (questions et réponses mot pour mot), le compte rendu, le bilan lu
   par la personne, la porte (découverte ou besoin connu), le sujet, la langue. Son chemin est dans le premier message.
 - Le dossier de mission où écrire. L'hôte le lit pour suivre l'avancement : c'est le seul endroit où l'agent écrit.
-- Le pack, en lecture seule, avec `ARCHITECTURE.md` et `examples/`.
+- Le pack, en lecture seule, avec `ARCHITECTURE.md`, `examples/` et la carte des workflows.
 
 ## Les règles
 
@@ -46,8 +46,9 @@ accompagnée ; seules changent la place du consultant et la forme des échanges.
    `auditer-crm` aux étapes 20 et 30, comme dans la porte. Un saut demandé par la personne s'écrit au journal.
    **La découverte en ligne finit par dix cas et trois propositions.** `02-portefeuille.md` classe dix cas d'usage par
    rentabilité, du plus au moins rentable : ceux que la carte des workflows couvre et ceux qui sont propres à
-   l'entreprise, chacun dit de quel côté il vient. S'il en existe moins de dix de sérieux, l'écrire plutôt que d'en
-   inventer. L'agent propose ensuite les trois meilleurs, et la personne en choisit un ; sa phrase est la validation de
+   l'entreprise, chacun dit de quel côté il vient. La carte est dans le pack, sans internet :
+   `skills/router-mission-ia/references/carte-des-workflows.md`. S'il en existe moins de dix de sérieux, l'écrire plutôt
+   que d'en inventer. L'agent propose ensuite les trois meilleurs, et la personne en choisit un ; sa phrase est la validation de
    `02`. **Le gratuit s'arrête là.** Le cas choisi ne commence que si l'hôte a écrit « [hôte] accès aux spécialistes
    ouvert ». Sans ce message, l'agent dit en une phrase que la suite s'ouvre par un accès donné par le consultant ou par
    un paiement, et il attend ; il ne donne aucun prix. Avec lui, la spécialité continue dans le même chat, un seul agent

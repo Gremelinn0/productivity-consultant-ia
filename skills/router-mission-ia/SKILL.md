@@ -124,9 +124,10 @@ d'état :
   `decouvrir-cas-usage`.
 - Une mission qui reprend → l'étape suivante affichée, sans reposer la question. Un cas « à lancer »
   repart par `cadrer-besoin`, avec sa fiche de `02-portefeuille.md`.
-- Un pré-audit en ligne fini, dont le consultant a débloqué la suite → la même porte, menée par écrit par un
-  agent hébergé, sans consultant dans la conversation : `references/parcours-en-ligne.md` (questions de la base,
-  une validation par étape, `50`, `60` et `70` relus par le consultant avant la personne).
+- Un pré-audit en ligne fini, pour tout compte connecté → la même porte, menée par écrit par un agent hébergé, sans
+  consultant dans la conversation : `references/parcours-en-ligne.md` (questions de la base, une validation par étape,
+  en découverte dix cas et trois propositions, situés grâce à `references/carte-des-workflows.md`, le cas choisi sur
+  accès, `50`, `60` et `70` relus par le consultant avant la personne).
 
 ### 3. Lancer l'étape suivante
 
