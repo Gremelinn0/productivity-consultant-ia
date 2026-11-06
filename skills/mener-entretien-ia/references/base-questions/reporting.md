@@ -12,6 +12,7 @@ du cadrage (`cadrage`), garde les questions utiles, et n'adapte que ce qui chang
 | RE02 | Quelle mesure de départ existe, et sur quelle période est-elle fiable ? | Le point de départ à battre | l'outil |
 | RE03 | Quels indicateurs mesurent l'activité, la qualité, la conversion et le résultat final ? | Le jeu d'indicateurs | la personne |
 | RE04 | Comment attribuer un résultat à une source, une campagne ou une cible sans inventer de lien de cause ? | La règle d'attribution | la personne |
+| RE12 | Sur une échelle de 1 à 10, quelle est l'utilité de votre indicateur hebdomadaire principal ? | Les indicateurs à garder, à refaire ou à retirer | la personne |
 
 ## 2. Le travail du reporting
 
@@ -19,6 +20,7 @@ du cadrage (`cadrage`), garde les questions utiles, et n'adapte que ce qui chang
 |---|---|---|---|
 | RE05 | Dans ce reporting, quelle part relève de la collecte, du recalcul, de la copie, des contrôles et de l'analyse ? | Ce qu'on automatise dans le reporting | la personne |
 | RE06 | À quelle fréquence lire les résultats pour agir sans surinterpréter ? | Le rythme de lecture | la personne |
+| RE11 | Comment calculez-vous vos indicateurs hebdomadaires aujourd'hui : à la main, dans un fichier, par des filtres, par des rapports ? | Ce qu'on automatise dans le calcul des indicateurs | la personne |
 
 Retour d'expérience : [Cribl](https://www.revopscoop.com/webinar-series/automate-executive-reporting-revops).
 

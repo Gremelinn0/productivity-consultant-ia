@@ -7,9 +7,11 @@ description: >-
   données, ventes, tableaux de bord), mesurer usage et qualité des données, rendre un bilan priorisé
   (gains rapides, plan d'action), puis écrire le cahier des charges CRM et ses annexes dans le modèle
   d'exigences du pack. Module CRM du pack consultant-ia, appelé par auditer-processus et
-  rediger-cahier-des-charges ; son agent, l'auditeur CRM, mène tout l'audit en lecture seule. Triggers :
-  « audit CRM », « cahier des charges CRM », « mise en place d'un CRM », « optimiser le CRM », « refonte
-  du CRM », « qualité des données du CRM », « pipeline », « Pipedrive », « HubSpot », « CRM audit ».
+  rediger-cahier-des-charges ; son agent, l'auditeur CRM, mène tout l'audit en lecture seule, et conduit le
+  cadrage de bout en bout avec la personne qui porte le projet. Triggers :
+  « audit CRM », « cahier des charges CRM », « cadrer mon projet CRM », « pose-moi les questions pour mon
+  CRM », « mise en place d'un CRM », « optimiser le CRM », « refonte
+  du CRM », « qualité des données du CRM », « pipeline », « Pipedrive », « HubSpot ».
 metadata:
   scope: "un CRM à auditer, à choisir, à mettre en place ou à optimiser, dans un cas de la porte « besoin connu »"
   owns: "la grille d'audit CRM (quatre volets, contrôles, statuts de constat), le bilan priorisé d'un audit CRM, la trame qui dit ce que chaque rubrique d'un cahier des charges CRM doit trancher, ses annexes (pipelines, droits, catalogue), le cas anonymisé d'un projet CRM planifié puis arrêté"
@@ -74,12 +76,17 @@ des exigences CRM qu'un intégrateur peut chiffrer sans rouvrir l'entretien.
 1. **Brancher l'existant.** Lire `10-besoin.md` et `mission/sources/`. Demander un accès en lecture au CRM et aux
    outils qui l'alimentent (formulaires, automatisation, messagerie, outil de rendez-vous) avec une seule adresse pour
    toutes les invitations ; les accès manquants s'écrivent comme manquants (règle « Brancher le contexte »). Ne
-   jamais lire ni recevoir un mot de passe : un accès se donne par invitation ou par un coffre partagé.
+   jamais lire ni recevoir un mot de passe : un accès se donne par invitation ou par un coffre partagé. Demander tous les
+   accès avant le début, sur une seule adresse : sans eux le projet ne démarre pas. Préférer l'invitation ou le coffre
+   à une clé d'API seule, car une correspondance de champs entre deux outils ne se corrige pas avec une clé.
 2. **Relever la vue d'usage.** Remplir la rubrique 1 de la grille (`references/grille-audit.md`) : volumes, quotas
    et limites de l'abonnement, part utilisée. Un quota proche de sa limite ou un module jamais utilisé est un constat.
 3. **Préparer l'entretien.** Prendre le bloc `crm` de la base (`entretien.py base --sujet crm`), écarter ce que
    l'étape 2 a établi, faire confirmer ce qui est incertain : douze questions au plus, par rôle (direction, ventes,
-   marketing, service client), validées avant l'entretien. Le consultant le mène, ou une IA par écrit
+   marketing, service client), validées avant l'entretien. Compter un à trois représentants par département
+   (produit, marketing, client), une heure chacun, avec des objectifs distincts par département ; la durée et le
+   nombre s'ajustent à ce que l'étape 2 a déjà établi. Le volet « usage réel » de la grille (rubrique 8, questions CP40 à CP52) se pose
+   à chaque pôle. Le consultant le mène, ou une IA par écrit
    (`mener-entretien-ia`) ; sa note entre dans `mission/sources/`.
 4. **Auditer les quatre volets** dans l'ordre de la grille : automatisations, intégrations et outils ; données
    (sources, champs critiques, complétude, valeurs, doublons, enrichissement, segmentation) ; ventes (pipelines,
@@ -88,9 +95,12 @@ des exigences CRM qu'un intégrateur peut chiffrer sans rouvrir l'entretien.
    guidée : une hypothèse écrite avant chaque écran, un constat après, jusqu'à couverture complète.
 5. **Écrire le bilan.** Recommandations seulement, regroupées par volet, gains rapides d'abord ; pour chacune :
    description, plan d'action, impact `[E]` ou `[H]`, faisabilité, et le projet ou la tâche qui la porte quand il
-   existe. Une recommandation sans plan d'action se marque comme telle, jamais ne disparaît. Le bilan se termine par
-   les actions prioritaires et la décision attendue. Prévoir une restitution courte (synthèse d'une page, et une
-   vidéo de présentation si le client la demande).
+   existe. Une recommandation sans plan d'action se marque comme telle, jamais ne disparaît. Chaque action du plan porte une durée estimée en jours, marquée `[H]`. Le bilan se termine par
+   deux ou trois priorités, un responsable nommé par pôle et la décision attendue : un plan exhaustif sans personne
+   référente chez le client ne s'implémente pas, un audit rendu en une fois et jamais repris non plus. Prévoir une restitution courte (synthèse d'une page, et une
+   vidéo de présentation si le client la demande). Livrer aussi, pour chaque pipeline, sa description écrite étape par
+   étape et un diagramme (étapes, actions, points de relance, délais) à partir d'un modèle à remplir : il sert à
+   accueillir les nouveaux et peut s'insérer en note dans le CRM.
 6. **Relire et faire décider.** Relecture de la règle commune 8 (`ARCHITECTURE.md`) : chaque nombre repris d'un
    export se recalcule. Le demandeur valide les causes et les priorités ; la décision s'inscrit au journal. Le
    bilan alimente `20-diagnostic.md` (goulets, causes, simplifications à faire d'abord), que `auditer-processus` écrit.
@@ -98,7 +108,9 @@ des exigences CRM qu'un intégrateur peut chiffrer sans rouvrir l'entretien.
    cas d'usage par cas d'usage (la méthode est dans `references/trame-cahier-des-charges.md`), poser les questions du
    sujet `crm-parametrage` qui restent ouvertes, puis remplir les douze rubriques du modèle d'exigences de
    `rediger-cahier-des-charges` avec ce que la trame demande pour un CRM. Les tableaux longs (pipelines et étapes,
-   droits par rôle, catalogue, raisons de perte, automatisations souhaitées) vont dans les annexes.
+   droits par rôle, catalogue, raisons de perte, automatisations souhaitées) vont dans les annexes. Sans consultant
+   en face, ou pour le servir, l'agent conduit ce travail avec la personne qui porte le projet :
+   `references/cadrage-conduit.md` (les questions, l'aide à la décision, le registre des décisions, la fin).
 8. **Conseiller le choix de l'outil.** Garder le CRM en place, changer d'édition ou changer d'outil se compare dans
    `concevoir-solution`, avec les critères de la grille (rubrique 6) ; l'option « garder et simplifier » se chiffre
    toujours.
@@ -134,7 +146,9 @@ Pour une mise en place ou une refonte : les exigences dans `30-exigences.md`, au
 
 L'auditeur CRM (`agents/auditeur-crm.md` du pack) déroule les étapes 1 à 6, et la 7 quand on la lui demande, dans
 une session qui a accès au CRM en lecture : il lit, mesure, prépare le questionnaire, remplit la grille, écrit
-l'audit et le bilan, et s'arrête avant toute action sur le CRM réel. Devant un visiteur en ligne, sans consultant
+l'audit et le bilan, et s'arrête avant toute action sur le CRM réel. Pour un projet à décider, il passe en cadrage
+conduit : il pose lui-même les questions, éclaire chaque choix sans le faire à la place de la personne, tient le
+registre des décisions et rend le cahier des charges (`references/cadrage-conduit.md`). Devant un visiteur en ligne, sans consultant
 avant l'entretien, c'est l'agent en ligne de `mener-entretien-ia` qui interroge, avec les questions du sujet `crm` ;
 le sujet `crm-parametrage` lui est fermé, il suppose une mission engagée.
 
@@ -142,9 +156,11 @@ le sujet `crm-parametrage` lui est fermé, il suppose une mission engagée.
 
 | Décision | Pourquoi | Option écartée | Se rouvre si |
 |---|---|---|---|
+| Le cadrage conduit vit dans cette compétence, mené par l'auditeur CRM | une seule méthode du cahier des charges ; un agent de plus à côté aurait dérivé de la trame | un agent de cadrage à part ; confier le cadrage à l'intervieweur de `mener-entretien-ia`, qui ne conseille pas | un cadrage demande des outils que l'auditeur ne peut pas avoir |
 | Un module CRM qui alimente 20 et 30, pas une étape de plus | le pipeline du pack reste le même ; un audit CRM est un diagnostic, un cahier des charges CRM est un cahier d'exigences | une étape propre au CRM entre 20 et 30 ; un second format de cahier des charges | un livrable CRM ne trouve sa place dans aucune rubrique |
 | Quatre volets : automatisations et intégrations, données, ventes, tableaux de bord | ce sont les quatre familles de constats des audits repris ; chacune a son propriétaire chez le client | un audit par fonctionnalité de l'éditeur | un cinquième volet revient dans trois audits |
 | Quatre statuts de constat | « config ≠ usage » ne se tient qu'avec un statut qui dit ce qui manque pour conclure | constat vrai ou faux | jamais |
+| Le bilan finit sur deux ou trois priorités et un responsable par pôle | une mission reprise a livré un plan exhaustif, sans personne référente côté client : rien n'a été implémenté | un plan complet remis sans porteur | le client a déjà un chef de projet qui reprend tout le plan |
 | Un bilan fait des seules recommandations, gains rapides d'abord | un audit lu comme illisible et peu priorisé est le premier retour reçu sur ce travail | rendre l'audit complet comme livrable final | le client demande l'analyse détaillée : elle reste dans les volets |
 | Les questions de paramétrage dans un sujet réservé au consultant | elles supposent une mission engagée ; posées à un visiteur, elles l'égarent, et elles pèseraient sur la consigne de l'agent en ligne | les mettre dans `crm`, ouvert à l'agent en ligne | un visiteur arrive avec un cahier des charges à écrire : il faut d'abord une mission |
 | Archiver, jamais supprimer, ce qu'on trouve inutile | un segment sans référence peut être lu par un autre ; un workflow éteint peut être saisonnier | supprimer ce qui semble mort | jamais |

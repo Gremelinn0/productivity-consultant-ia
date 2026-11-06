@@ -32,7 +32,11 @@ comité de direction pour le budget et les risques) suffisent à la plupart des 
 
 1. **Cartographier les utilisateurs** : tous, qualifiés par équipe et par usage. Couvrir tous les cas d'usage, même
    rares. Pour l'échantillon, préférer les extrêmes : un ou deux utilisateurs très à l'aise, un ou deux nouveaux
-   venus, et celui qui préfère ses outils à lui.
+   venus, et celui qui préfère ses outils à lui. Deux colonnes de préparation servent à les choisir : la maîtrise de
+   l'outil et du process actuel, de 1 à 5, et le temps passé chaque semaine sur l'outil.
+
+   | Utilisateur | Titre | Pôle | Équipe | Groupe de visibilité | Droits | Maîtrise 1 à 5 | Heures par semaine sur l'outil |
+   |---|---|---|---|---|---|---|---|
 2. **Observer** : une séance par personne, notée sur cinq entrées (activités, environnement, interactions, objets,
    utilisateurs). Au-delà d'une dizaine de séances, une de plus n'apporte presque rien.
 3. **Interroger**, cas d'usage par cas d'usage, avec les trois questions de la partie 8 de `crm-parametrage` : ce
@@ -40,13 +44,32 @@ comité de direction pour le budget et les risques) suffisent à la plupart des 
    projet, ajouter par cas d'usage un questionnaire court, sur une échelle d'accord en cinq points : la tâche a-t-elle
    abouti, a-t-elle paru facile, a-t-elle pris plus ou moins de temps que prévu ?
 4. **Regrouper** dans une grille cas d'usage × difficultés : compter combien de fois chaque difficulté revient, pour
-   repérer les plus fréquentes et creuser les rares, sans transformer le qualitatif en score.
+   repérer les plus fréquentes et creuser les rares, sans transformer le qualitatif en score. Une ligne par
+   difficulté :
+
+   | Difficulté | Source (observation ou entretien) | Satisfaction actuelle | Friction | Opportunité | Cas d'usage concerné | Nombre de fois citée |
+   |---|---|---|---|---|---|---|
+
 5. **Écrire les cas d'usage définitifs**, puis la grille des besoins fonctionnels, et découper par lots quand le
-   projet est grand.
+   projet est grand. Un tableau, une ligne par cas d'usage ; impact et coût sont des niveaux `[H]` à faire valider,
+   pas des montants :
+
+   | Cas d'usage | Description | Impact (élevé, moyen, faible) | Acteurs | Hypothèses | Besoins non fonctionnels | Problèmes à résoudre | Coût (élevé, moyen, faible) | Variations (facultatif) |
+   |---|---|---|---|---|---|---|---|---|
 
 ## 3. Annexes : gabarit de `30-exigences/annexes-crm.md`
 
 ### A. Pipelines et étapes
+
+**Les pipelines se découpent selon l'organisation réelle de la vente** : vente directe ou indirecte (par des
+partenaires, des importateurs, des revendeurs), puis secteur ou type de clientèle quand le processus change (une
+dégustation, une démonstration, une négociation pure). Les pays et les marchés ne font pas des pipelines : ils sont
+des étiquettes sur l'affaire, sauf si le processus lui-même diffère d'un pays à l'autre. Un pipeline de plus
+se justifie par des étapes différentes, jamais par un territoire de plus.
+
+Chaque pipeline est décrit par écrit, étape par étape, puis dessiné : un diagramme par pipeline (étapes, actions,
+points de relance, délais) à partir d'un modèle à remplir. Ce livrable sert aussi à accueillir les nouveaux
+venus, et peut s'insérer en note dans le CRM.
 
 Un tableau par pipeline, une colonne par étape :
 
@@ -79,6 +102,11 @@ Une liste fermée, à adapter : information manquante ou fausse, pas de produit 
 au rendez-vous, n'a pas compris l'offre, besoin différent découvert en rendez-vous, pas décideur, tarification,
 concurrence, projet reporté, autre. Préciser si une raison libre est permise : elle enrichit, mais ne s'analyse pas.
 
+**Règle de perte à convenir** : une affaire sans réponse après un nombre convenu d'interactions (appels, e-mails,
+messages) passe en perdue avec une raison dédiée et une relance planifiée (par exemple dans six mois) ; le
+responsable est prévenu quand un délai est dépassé. Le nombre d'interactions et le délai de relance sont des
+hypothèses `[H]` à valider avec l'équipe, jamais repris d'un autre client.
+
 ### E. Automatisations souhaitées
 
 | Déclencheur | Condition | Action | Objet | Qui est prévenu | Priorité |
@@ -94,4 +122,6 @@ Les boîtes et les domaines à connecter ; les modèles d'e-mails à reprendre ;
 Reprise et dépersonnalisée, le 29/10/2026, d'une trame de cahier des charges CRM écrite pour un éditeur, de son
 modèle de cadrage commenté, d'un fichier de réponses d'un projet client (cas anonymisé :
 `cas-reseau-immobilier.md`) et d'un assistant conversationnel qui posait ces questions. Les exemples chiffrés
-d'origine (délais, probabilités, budget) ne sont pas repris : ils étaient propres à un client.
+d'origine (délais, probabilités, budget) ne sont pas repris : ils étaient propres à un client. Complétée le 06/11/2026 des
+gabarits de préparation des utilisateurs, de regroupement des difficultés et de cas d'usage définitifs, de la règle de
+découpage des pipelines et de la règle de perte, tirés d'un entretien d'audit chez un client et du modèle de cadrage.
