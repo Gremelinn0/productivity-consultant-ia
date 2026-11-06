@@ -93,7 +93,9 @@ quelle décision la suite de la mission doit permettre.
    une solution plus simple le réglerait-elle (supprimer une étape, configurer un outil déjà en
    place) ? le problème vient-il d'ailleurs (processus, organisation, donnée) ? Écrire la réponse,
    même quand elle conforte la demande.
-7. **Finir par la décision attendue**, puis proposer l'étape suivante : `auditer-processus`. Quand
+7. **Finir par la décision attendue**, puis proposer l'étape suivante : `auditer-processus`. Une équipe à équiper
+   d'un assistant IA général, sans processus nommé : écrire la ligne `Parcours : déploiement d'un assistant` en tête
+   de la fiche, et l'étape suivante est `deployer-assistant-ia`. Quand
    le demandeur valide, ajouter une ligne à `mission/journal.md`, avec les valeurs qu'il accepte.
 
 ## Le livrable

@@ -1,7 +1,7 @@
 # consultant-ia
 
 **Le pack du consultant IA et automatisation, de l'idée à la solution mesurée** — douze compétences
-(plus un routeur de stratégie, un module CRM et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
+(plus un routeur de stratégie, un module CRM, un module de déploiement d'un assistant IA et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
 bout : comprendre le travail réel, trouver ce qui mérite d'être automatisé, comparer les solutions,
 chiffrer, spécifier et planifier, puis construire et tester dans un environnement d'essai, mettre en
 service action par action et mesurer ce que la solution rapporte vraiment.
@@ -91,6 +91,15 @@ raisons de perte.
 L'agent `auditeur-crm` mène l'audit en lecture seule et s'arrête avant toute action dans le CRM. Ses questions sont
 dans la base : `crm` pour l'existant, `crm-parametrage` pour le paramétrage, réservé aux questionnaires préparés avec
 le consultant.
+
+## Le déploiement d'un assistant IA
+
+Quand une entreprise veut équiper une équipe d'un assistant (Claude, ChatGPT, Copilot ou un autre) sans nommer de
+processus à automatiser, le pack prend un parcours court : la fiche besoin, puis `deployer-assistant-ia`, puis la mise en
+service et la mesure. Le module part de l'usage déjà là, compare l'option de ne rien ajouter et deux candidats sur des
+faits relus le jour même aux pages officielles, écrit une charte d'une page, prépare le dossier de conformité sans
+conclure à la place du rôle compétent, liste les réglages, prévoit le pilote, la formation par rôle et le rendez-vous de
+pilotage. Il n'annonce aucun gain : la mesure le dira, sur relevé.
 
 ## L'entretien guidé par IA
 

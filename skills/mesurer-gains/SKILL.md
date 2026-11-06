@@ -75,7 +75,7 @@ et avec le business case ; une décision que le décideur peut renverser.
    méthode, rythme, qui mesure, seuils, attribution), `50-rentabilite.md` (§2 hypothèses, §4 scénarios et point mort), `70-plan.md` (§6 rythme des revues et
    actions aux seuils, §8 pré-mortem), `90-mise-en-service.md` (début de période, versions en service, changements), le journal ; en porte découverte `02`, `03`,
    `04`. Sans `90-mise-en-service.md`, la solution n'est pas en service : proposer `piloter-mise-en-service`. Un seuil absent de 60 §14 est un trou de 60 : le corriger
-   par version datée avant de lire les chiffres. Une lecture du pilote vaut pour son périmètre et sa période, sans extrapolation. Mesure de départ non datée ou postérieure
+   par version datée avant de lire les chiffres. En parcours court d'un assistant IA, la mesure de départ, les `IND-xx` et leurs seuils sont en rubrique 8 de `90-mise-en-service/assistant-ia.md`, sans 20, 50 ni 60 : un trou s'y corrige, et le coût de sa rubrique 4 tient lieu de 50 §2. Une lecture du pilote vaut pour son périmètre et sa période, sans extrapolation. Mesure de départ non datée ou postérieure
    au pilote : dire ce qui reste possible (équipe témoin, période de repli) ; sinon l'écart reste `[H]` ou `[E]`.
 2. **Dresser la demande de données, avant de lire quoi que ce soit.** Pour chaque `IND-xx` et chaque terme de `50-rentabilite.md` §2 : ce qu'on relève, le rôle qui
    relève, la méthode (celle du départ), la période, le dépôt dans `mission/sources/`, la règle d'exclusion écrite d'avance. Neuf familles à couvrir (par un `IND-xx`, un terme

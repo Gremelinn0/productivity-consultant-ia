@@ -86,6 +86,12 @@ traverse ; ce que veut le client se choisit selon l'objectif de la demande.
 |---|---|---|
 | [Le contenu](contenu.md) | CO | Produire du contenu avec l'IA |
 
+#### Équiper ses équipes
+
+| Sujet | Préfixe | Quand l'ouvrir |
+|---|---|---|
+| [Le déploiement d'un assistant IA dans une équipe](assistant-ia.md) | AS | Une équipe à équiper d'un assistant IA, sans processus nommé : l'usage déjà là, le plan, la charte, le pilotage |
+
 ## Se servir de la base
 
 1. **Choisir le sujet de l'objectif** : une demande, un sujet ; deux objectifs, deux entretiens. Sans besoin
@@ -104,7 +110,7 @@ traverse ; ce que veut le client se choisit selon l'objectif de la demande.
 6. **Demander l'occurrence réelle et l'ordre de grandeur** (« la dernière fois… », « combien par semaine ? ») :
    règles communes de `decouvrir-cas-usage/references/guides-entretien.md`.
 
-Un sujet dont le fichier porte la ligne `<!-- hors-ligne -->` est réservé au consultant (`crm-parametrage`) : il
+Un sujet dont le fichier porte la ligne `<!-- hors-ligne -->` est réservé au consultant (`crm-parametrage`, `assistant-ia`) : il
 sert aux questionnaires préparés, l'agent en ligne ne le voit pas et sa consigne n'en grossit pas.
 
 Un « Retour d'expérience » sous une partie renvoie au cas publié d'un praticien : le lien est la source de la
@@ -159,6 +165,7 @@ ici ce qu'elles ajoutent ; chacune le rappelle en tête de son `SKILL.md`.
 - `planifier-deploiement` : le pré-mortem et le pilote (`essai-et-mise-en-service`), la reprise (`transmission`).
 - `rediger-cahier-des-charges` : ce que le cahier des charges ne sait pas encore (`cadrage`, `processus`).
 - `auditer-crm` : l'audit d'un CRM en place (`crm`) et le cahier des charges d'un CRM (`crm-parametrage`).
+- `deployer-assistant-ia` : équiper une équipe d'un assistant IA, sans processus nommé (`assistant-ia`).
 
 `python skills/mener-entretien-ia/scripts/entretien.py verifier` contrôle la base : un préfixe par sujet, aucune
 question en double dans toute la base, une décision et un « D'abord » à chaque ligne, l'index des sujets à jour

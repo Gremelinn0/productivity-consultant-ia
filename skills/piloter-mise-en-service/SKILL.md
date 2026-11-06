@@ -110,6 +110,8 @@ l'équipe utilise, qu'une personne nommée exploite, et dont la mesure (`mesurer
      Une simplification qui ne modifie aucun outil (supprimer une étape, clarifier une règle) est une décision inscrite au journal. Celle qui
      modifie un outil a sa ligne `A-xx` : le registre est ouvert pour elle seule, validée à part avec son retour arrière, sans attendre un verdict
      de recette. Sous une porte, les simplifications du premier lot de 70 se mènent de même avant la construction. L'adoption se mène dans tous les cas.
+   - Parcours court d'un assistant IA : ni 20 à 85, on arrive ici depuis `90-mise-en-service/assistant-ia.md` validé au journal (`deployer-assistant-ia`). Ses
+     rubriques 7 et 8 tiennent lieu de 60 §13, §14 et de 70 ; sa rubrique 6 donne les premières lignes du registre. La bascule est l'ouverture à toute l'équipe.
    - Une échéance du plan déjà passée se redate ici, avec l'ancienne date. Une valeur ou une décision que le terrain
      contredit se corrige dans `70-plan.md` par version datée (`ARCHITECTURE.md`).
 2. **Dresser le registre des actions.** Parcourir droits, secrets, environnements et lots, puis lister chaque action qui

@@ -111,7 +111,9 @@ d'état :
   version par revue de la période de mesure ;
 - option 0 seule, ou simplification qui modifie un outil : un lot fait seulement de simplifications passe de
   `70-plan.md` à `90-mise-en-service.md`, sans 80 ni 85 ; le registre de 90 ne porte alors que les actions
-  sur les outils réels que ces simplifications demandent.
+  sur les outils réels que ces simplifications demandent ;
+- parcours court (ligne `Parcours : déploiement d'un assistant` dans `10-besoin.md`) : 20 à 85 « sans objet » ; suite :
+  `deployer-assistant-ia` tant que `90-mise-en-service/assistant-ia.md` manque, `90` quand il est validé au journal, `95` à la bascule.
 
 ### 2. Choisir la porte
 
@@ -122,6 +124,9 @@ d'état :
   dans la session de l'entreprise (`mener-entretien-ia`) ; sa note entre dans `mission/sources/`.
 - `/mission-decouverte` ou « où l'IA peut-elle nous aider ? » → porte 2, à partir de
   `decouvrir-cas-usage`.
+- Une équipe à équiper d'un assistant IA, sans processus nommé (« on veut Claude pour l'équipe », « quel plan
+  prendre ? ») → porte 1 en parcours court : `cadrer-besoin`, puis `deployer-assistant-ia`, `piloter-mise-en-service`
+  et `mesurer-gains`.
 - Une mission qui reprend → l'étape suivante affichée, sans reposer la question. Un cas « à lancer »
   repart par `cadrer-besoin`, avec sa fiche de `02-portefeuille.md`.
 - Un pré-audit en ligne fini, pour tout compte connecté → la même porte, menée par écrit par un agent hébergé, sans
@@ -152,7 +157,7 @@ d'état :
 
 Un cas qui touche au CRM (audit, mise en place, refonte, choix de l'outil) suit le même ordre ; `auditer-processus`
 et `rediger-cahier-des-charges` y appellent le module `auditer-crm`, dont l'agent `auditeur-crm` mène l'audit en
-lecture seule.
+lecture seule. Un parcours court passe de `10-besoin.md` au module `deployer-assistant-ia`, puis à 90 et 95.
 
 Appeler la compétence de l'étape par son nom, avec le chemin du dossier du cas. Quand la porte 2
 lance un cas, `cadrer-besoin` reçoit la fiche du cas dans `02-portefeuille.md` pour ne pas reposer
@@ -229,7 +234,7 @@ Décisions : … (cinq lignes au plus). Hypothèses lourdes : … Gain observé 
 | Un dossier par cas, nommé une fois | chaque besoin a sa décision, son chiffrage et son plan ; un seul nom évite deux dossiers pour un cas | un document unique pour toute la mission ; un nom choisi par chaque étape | jamais : un rapport de synthèse peut s'ajouter à la fin |
 | Le journal ne porte que des décisions, leurs corrections et la clôture | il doit rester lisible en deux minutes | y consigner aussi le travail fait | jamais |
 | Une correction se trace, elle ne se réécrit pas | on doit pouvoir dire quelle version a servi à quelle décision | corriger le livrable sans le dire | une faute de frappe sans effet sur un nombre ni sur une décision : correction directe |
-| Chaque étape de 80 à 95 s'ouvre sur la décision écrite de la précédente | la recette testerait ce qui n'est pas prêt, la mise en service agirait sur ce qui n'est pas recetté, la mesure lirait ce qui n'est pas en service | tout lancer d'un bloc pour gagner du temps | un lot fait seulement de simplifications : il passe de 70 à 90 |
+| Chaque étape de 80 à 95 s'ouvre sur la décision écrite de la précédente | la recette testerait ce qui n'est pas prêt, la mise en service agirait sur ce qui n'est pas recetté, la mesure lirait ce qui n'est pas en service | tout lancer d'un bloc pour gagner du temps | un lot fait seulement de simplifications : il passe de 70 à 90 ; le parcours court d'un assistant, sans rien à construire : il passe de 10 à 90 par `deployer-assistant-ia` |
 | Le cas se clôt après la mesure ou sur un arrêt écrit | un plan validé n'est pas un résultat : le gain se lit sur relevé | clore à la validation du plan | le client renonce à construire avec le pack : une décision d'arrêt écrite clôt le cas |
 
 ## Frontières

@@ -70,6 +70,10 @@ passe de `70-plan` à `90-mise-en-service` sans 80 ni 85 : le registre de 90 ne 
 actions sur les outils que ces simplifications modifient. L'ordre exact et les conditions d'ouverture
 de chaque étape sont dans `router-mission-ia`.
 
+Une équipe à équiper d'un assistant IA général, sans processus à automatiser, suit le parcours court : `10-besoin` porte la
+ligne `Parcours : déploiement d'un assistant`, le module `deployer-assistant-ia` écrit `90-mise-en-service/assistant-ia.md`
+et la charte, puis `90-mise-en-service` et `95-mesure` s'enchaînent, sans 20 à 85.
+
 ## Les douze compétences
 
 | Rôle | Compétence | Responsabilité unique |
@@ -96,7 +100,9 @@ visiteur sans consultant avant l'entretien, son agent en ligne choisit ses quest
 en dehors, puis remet au visiteur un bilan écrit pour lui. `auditer-crm` est le module CRM : il ne possède aucune étape,
 `auditer-processus` et `rediger-cahier-des-charges` l'appellent quand le cas touche au CRM ; il rend l'audit d'un CRM
 et son bilan en annexe de `20-diagnostic`, et les annexes CRM des exigences. Son agent, `agents/auditeur-crm.md`, mène
-l'audit en lecture seule et s'arrête avant toute action dans le CRM réel.
+l'audit en lecture seule et s'arrête avant toute action dans le CRM réel. `deployer-assistant-ia` est le module du
+parcours court : il ne possède aucune étape non plus ; il prépare le choix de l'assistant et du plan, la charte, le dossier
+de conformité et les indicateurs, que `piloter-mise-en-service` et `mesurer-gains` reprennent.
 
 ## Le cerveau des décisions
 
@@ -145,6 +151,7 @@ mission/
     85-recette.md            preuves, défauts, évaluation de l'IA, verdict pour le pilote
     85-recette/              facultatif : preuves longues et jeu d'évaluation (EV-xx)
     90-mise-en-service.md    registre des actions sur les outils réels, pilote, bascule, adoption, transfert
+    90-mise-en-service/      parcours court d'un assistant IA : assistant-ia.md, charte-usage.md
     95-mesure.md             relevés, gain observé, décision ; une version par revue
 ```
 

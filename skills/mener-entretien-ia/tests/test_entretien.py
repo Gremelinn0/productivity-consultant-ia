@@ -380,6 +380,7 @@ class UneSeuleMaison(unittest.TestCase):
             ("Servir ses clients", ["support-client", "accueil-des-clients"]),
             ("Ses données et ses chiffres", ["donnees", "reporting"]),
             ("Produire du contenu", ["contenu"]),
+            ("Équiper ses équipes", ["assistant-ia"]),
         ]),
     ]
 
@@ -391,12 +392,12 @@ class UneSeuleMaison(unittest.TestCase):
     def groupes(self, famille):
         return dict(dict(entretien.rangement(self.base))[famille])
 
-    def test_l_index_range_les_vingt_sujets_en_deux_familles_et_dix_groupes(self):
+    def test_l_index_range_les_vingt_et_un_sujets_en_deux_familles_et_onze_groupes(self):
         self.assertEqual(entretien.rangement(), self.RANGEMENT)
         self.assertEqual(entretien.rangement(self.base), self.RANGEMENT)
         inscrits = sorted(s for _, groupes in entretien.rangement() for _, sujets in groupes for s in sujets)
         self.assertEqual(inscrits, entretien.sujets())
-        self.assertEqual((len(self.RANGEMENT), sum(len(g) for _, g in self.RANGEMENT), len(inscrits)), (2, 10, 20))
+        self.assertEqual((len(self.RANGEMENT), sum(len(g) for _, g in self.RANGEMENT), len(inscrits)), (2, 11, 21))
 
     def test_sabotage_un_sujet_hors_de_tout_groupe(self):
         self.remplacer("README.md", "#### Premier contact\n\n", "")
@@ -431,7 +432,7 @@ class UneSeuleMaison(unittest.TestCase):
 
     def test_creer_sujet_sans_groupe_va_au_dernier_groupe_de_ce_que_veut_le_client(self):
         self.creer()
-        self.assertEqual(entretien.rangement(self.base)[1][1][-1], ("Produire du contenu", ["contenu", "facturation"]))
+        self.assertEqual(entretien.rangement(self.base)[1][1][-1], ("Équiper ses équipes", ["assistant-ia", "facturation"]))
         self.assertEqual(entretien.rangement(self.base)[0], self.RANGEMENT[0])
         self.assertEqual(self.ecarts(), [])
 
@@ -455,7 +456,7 @@ class UneSeuleMaison(unittest.TestCase):
         self.assertFalse((self.base / "facturation.md").exists())
         self.creer(groupe="Facturer et encaisser", creer_groupe=True)
         self.assertEqual(entretien.rangement(self.base)[1][1][-1], ("Facturer et encaisser", ["facturation"]))
-        self.assertEqual(len(entretien.rangement(self.base)[1][1]), 6)
+        self.assertEqual(len(entretien.rangement(self.base)[1][1]), 7)
         self.assertEqual(entretien.rangement(self.base)[0], self.RANGEMENT[0])
         self.assertEqual(self.ecarts(), [])
 
