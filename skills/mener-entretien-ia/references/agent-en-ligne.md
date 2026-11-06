@@ -44,7 +44,7 @@ question.
 Un second sujet ne sert qu'à compléter le premier. Aucun sujet ne se déroule en entier : un audit en ligne n'est pas un
 guide d'entretien lu à voix haute.
 
-## Retenir douze questions au plus
+## Retenir les questions du sujet
 
 1. **Que des questions de la base.** L'agent peut adapter les mots (le métier de la personne, ses termes, un exemple qui
    lui parle), jamais le sens ni la décision que la question sert. Une question absente de la base ne se pose pas ; ce
@@ -57,24 +57,27 @@ guide d'entretien lu à voix haute.
    faire.
 5. **Les plus décisives d'abord** : celles qui changent le périmètre, le coût ou la réussite. Une question dont la
    réponse rend d'autres sans objet passe avant elles.
-6. **S'arrêter** quand les décisions du sujet sont couvertes, ou à douze. Huit réponses concrètes valent mieux que douze
-   vagues. Ce qui reste à demander va dans `questions_ouvertes`.
+6. **Les poser toutes.** Le sujet choisi donne les questions préparées : l'agent pose toutes celles qu'il a retenues,
+   sans en laisser tomber et sans nombre maximum. Ce qui reste à demander (la personne s'arrête avant la fin, ou la base
+   ne le couvre pas) va dans `questions_ouvertes`.
 
 Les questions barrées de la base (retirées, leur numéro gardé) n'entrent pas dans la consigne.
 
-## Compter : douze questions, la question d'ouverture comprise
+## Poser toutes les questions, une par message
 
-Douze questions au plus, la question d'ouverture comprise. C'est une promesse faite au visiteur, l'ouverture la lui
-annonce : à la douzième au plus tard, le récapitulatif.
+Le sujet choisi donne les questions préparées : l'agent les pose toutes, une par message, sans nombre maximum (décision du
+02/11/2026). L'ouverture n'annonce aucun nombre de questions au visiteur. La personne peut en passer une. Seul le nombre
+total de messages d'un entretien reste borné, par l'hôte, pour le coût : l'agent n'a pas à le compter.
 
-- **Compter comme le visiteur.** Une chose demandée est une question, et celle de l'ouverture est la première. Une
-  question de la base posée en deux tours en compte deux. Une relance redemande la même chose : elle ne compte pas, mais
-  elle ne glisse jamais une chose neuve. Le récapitulatif et sa validation sont annoncés à part et ne comptent pas.
-- **Recompter avant chaque message.** Un compte qu'on ne refait pas se perd. L'agent relit à chaque tour les questions
-  déjà posées dans la conversation, la première comprise.
-- **À la douzième, la fin.** Le tour qui suit sa réponse est le récapitulatif, sans relance ni treizième question, même
-  si la réponse est courte : ce qui manque va dans `questions_ouvertes`. « Dernière question » ne se dit que si le tour
-  suivant est le récapitulatif.
+- **Passer.** Quand la personne passe une question (le bouton « Passer » de la page), l'agent l'accepte sans insister, ne
+  la repose pas, ne la commente pas, et passe à la suivante.
+- **Une relance redemande la même chose** : elle ne glisse jamais une chose neuve. Une question de la base posée en deux
+  tours reste une seule question. Le récapitulatif et sa validation ne sont pas des questions.
+- **Refaire le point avant chaque message.** Un compte qu'on ne refait pas se perd. L'agent relit à chaque tour les
+  questions déjà posées dans la conversation, celle de l'ouverture comprise, et celles qui restent.
+- **Après la dernière, la fin.** Le tour qui suit sa réponse (ou son passage) est le récapitulatif, sans relance ni
+  nouvelle question, même si la réponse est courte : ce qui manque va dans `questions_ouvertes`. « Dernière question » ne
+  se dit que si le tour suivant est le récapitulatif.
 
 ## Un audit : deux réponses qui ne manquent jamais
 
@@ -86,8 +89,8 @@ déjà données ou que la page les a demandées :
 - **L'objectif** (quel résultat, chiffré si possible, d'ici quand) : DI01, de la découverte avec la direction (partie
   « Objectifs »). Sans objectif, aucun gain ne se mesure.
 
-Elles passent avant les questions moins décisives : l'agent leur garde leur place dès le début, dans les douze. Si la
-place vient à manquer, ce sont les autres questions qui sautent, jamais ces deux-là.
+Elles passent avant les questions moins décisives : l'agent leur garde leur place dès le début. Si le nombre de
+messages vient à manquer, ce sont les autres questions qui sautent, jamais ces deux-là.
 
 ## Une seule chose par message
 
@@ -123,7 +126,7 @@ mémoire.
 
 Dès que le sujet est choisi, la page affiche à côté de la conversation un plan de 3 à 7 étapes, dans les mots de la
 personne : ce qui prend du temps, comment ça se passe aujourd'hui, ce qui coince, si le volume doublait, l'objectif, le
-récapitulatif. Chaque étape annonce ce que l'agent va demander dans ses douze questions : il n'annonce rien qu'il
+récapitulatif. Chaque étape annonce ce que l'agent va demander : il n'annonce rien qu'il
 laissera tomber. Une seule étape est en cours à la fois, celle de la question posée dans ce message. L'agent renvoie le
 plan complet à chaque tour : l'étape qui se termine passe à fait, la suivante à en cours.
 
@@ -140,7 +143,7 @@ Le plan dit où en est la personne, donc l'agent ne le répète pas dans son `me
 
 ## La fin
 
-Quand les questions retenues sont passées, ou si la personne doit s'arrêter pour de bon : un récapitulatif de trois à six
+Quand les questions retenues ont toutes été posées ou passées, ou si la personne doit s'arrêter pour de bon : un récapitulatif de trois à six
 lignes dans sa langue (sa demande, ce qui prend du temps, ce qui coince ; pour un audit, aussi ce qui casserait si le
 volume doublait et son objectif), qu'elle valide ou corrige (« Est-ce juste ? Voulez-vous ajouter ou corriger quelque
 chose ? »), avec deux réponses à cliquer, « C'est juste » et « Je veux ajouter ou corriger ». Puis le compte rendu, son
@@ -186,7 +189,7 @@ en français). Le bilan est ce que le visiteur a lu : la note le recopie tel que
 
 Le schéma est `compte-rendu-en-ligne.schema.json`. Huit champs sont obligatoires : `demande` (mot pour mot), `contexte`
 (`taille`, `metier`, `outils`), `sujet` (le nom de fichier d'un sujet de la base), `reponses` (`id`, `question`,
-`reponse` ; une seule entrée par numéro, douze au plus), `pistes` (`constat`, `piste` : le résultat pour la personne,
+`reponse` ; une seule entrée par numéro), `pistes` (`constat`, `piste` : le résultat pour la personne,
 comme à la fin, pour le consultant), `bilan_visiteur` (`recapitulatif`, `pistes` : ce que la personne lit, voir « Le
 bilan du visiteur »), `questions_ouvertes`, `prochaine_etape` (ce que la page propose). Deux sont facultatifs et
 reprennent l'autre schéma : `pour_la_base` et `noms_a_retirer`. Une question posée en plusieurs tours (une relance, une
@@ -255,7 +258,6 @@ section « Pistes », une section « Bilan remis à la personne » (le `bilan_vi
 personne) et une section « Pour la base de questions ». Le contrôle refuse un compte rendu qui enfreint la méthode :
 
 - un `sujet` ou un numéro de question absent de la base (une question inventée), un numéro barré ;
-- plus de douze questions différentes ;
 - une adresse, un numéro de téléphone ou un nom à retirer qui reste dans le texte, bilan compris ;
 - un prix dans une piste, dans une piste du bilan ou dans la prochaine étape ;
 - un `bilan_visiteur` absent ou mal formé : un récapitulatif ou une piste vide, aucune piste ;
@@ -281,10 +283,10 @@ la consigne à chaque tour.
 - Le premier essai, le 28/10, avec un faux visiteur (quinze tours), a relevé cinq défauts : douze questions promises et
   quatorze posées, un plan qui changeait sous les yeux du visiteur et finissait tout vert, un objectif jamais demandé,
   deux messages qui demandaient deux choses, une fin qui parlait d'automatisation et d'agent. Les règles ci-dessus
-  y répondent.
+  y répondent ; le nombre promis a disparu le 02/11/2026.
 - Le bilan du visiteur (0.8.3) : le schéma, la consigne, le contrôle et la note sont éprouvés par les essais du script, sur
   un compte rendu fictif en anglais. NON MESURÉ avec le modèle : s'il écrit le bilan dans la langue de la personne, sans
   moyen ni prix, dans les limites d'affichage, et s'il garde le message final court.
-- NON MESURÉ sur un vrai visiteur : le premier entretien réel dira si douze questions sont trop, si les suggestions
+- NON MESURÉ sur un vrai visiteur : le premier entretien réel dira si poser toutes les questions d'un sujet est trop long, si les suggestions
   orientent les réponses, si le plan se lit bien à côté de la conversation, et combien de visiteurs vont jusqu'au
   récapitulatif. Un second essai dira si le modèle tient le compte, le plan et la fin, ce que seul un essai montre.

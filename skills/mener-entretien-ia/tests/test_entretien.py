@@ -146,11 +146,14 @@ class QuestionnairePrepare(unittest.TestCase):
     def test_les_questions_visent_un_objectif_ecrit(self):
         self._questionnaire_refuse(lambda t: t.replace("Objectif :", "But :"), "Objectif")
 
-    def test_douze_questions_au_plus(self):
-        def f(t):
-            lignes = "".join(f"| {n} | Thème | Question {n} ? | | 01 |\n" for n in range(5, 14))
-            return t.replace("\n## Pas dans cet entretien", lignes + "\n## Pas dans cet entretien")
-        self._questionnaire_refuse(f, "12 au plus")
+    def test_un_questionnaire_de_plus_de_douze_questions_s_ouvre_sans_plafond(self):
+        lignes = "".join(f"| {n} | Thème | Question {n} ? | | 01 |\n" for n in range(5, 14))
+        texte = PREPARE.read_text(encoding="utf-8").replace("\n## Pas dans cet entretien", lignes + "\n## Pas dans cet entretien")
+        with tempfile.TemporaryDirectory() as d:
+            chemin = pathlib.Path(d) / "questionnaire-long.md"
+            chemin.write_text(texte, encoding="utf-8")
+            self.assertEqual(len(entretien.questionnaire("prepare", chemin)["questions"]), 13)
+            self.assertIn("Q13.", entretien.consigne("prepare", "dirigeante", "Exemple", fichier=chemin))
 
     def test_le_compte_rendu_ne_se_controle_pas_sans_son_questionnaire(self):
         self.assertTrue(any("questionnaire préparé" in e for e in entretien.controler(cr_prepare())))
@@ -182,14 +185,12 @@ class BaseDeQuestions(unittest.TestCase):
         self.assertEqual([x["question"] for x in q["questions"]], [base[i]["question"] for i in ("SC02", "SC06", "SC24")])
         self.assertTrue(q["questions"][2]["alimente"].startswith("SC24 · "))
 
-    def test_toute_la_base_depasse_douze_questions_et_se_reduit_avant_l_entretien(self):
+    def test_toute_la_base_d_un_sujet_s_ouvre_sans_plafond_de_questions(self):
         brouillon = entretien.preparer("support-client", "Un agent", "dirigeante").replace("Validé par :", "Validé par : c, le 2026-10-28")
         with tempfile.TemporaryDirectory() as d:
             chemin = pathlib.Path(d) / "q.md"
             chemin.write_text(brouillon, encoding="utf-8")
-            with self.assertRaises(entretien.Erreur) as e:
-                entretien.questionnaire("prepare", chemin)
-        self.assertIn("12 au plus", str(e.exception))
+            self.assertGreater(len(entretien.questionnaire("prepare", chemin)["questions"]), 12)
 
     def test_un_numero_inconnu_est_refuse(self):
         with self.assertRaises(entretien.Erreur):
@@ -608,7 +609,8 @@ class AgentEnLigne(unittest.TestCase):
         consigne = " ".join(entretien.consigne_en_ligne().split())  # une phrase coupée par un retour à la ligne se lit entière
         for attendu in (
                 "Tu ne poses que des questions de la base",  # jamais une question absente
-                "12 au plus",  # douze questions
+                "Poser toutes les questions, une par message",  # aucun plafond, la personne peut passer
+                "sans nombre maximum",
                 "ce que la page a déjà demandé",  # jamais ce que la page a posé
                 "2 à 6 textes de 60 caractères au plus",  # les réponses suggérées
                 "Je ne sais pas",
@@ -640,7 +642,8 @@ class AgentEnLigne(unittest.TestCase):
         self.assertEqual(p["contexte"]["required"], ["taille", "metier", "outils"])
         self.assertEqual(p["contexte"]["properties"]["outils"]["type"], "array")
         self.assertEqual(p["reponses"]["items"]["required"], ["id", "question", "reponse"])
-        self.assertEqual((p["reponses"]["minItems"], p["reponses"]["maxItems"]), (1, 12))
+        self.assertEqual(p["reponses"]["minItems"], 1)
+        self.assertNotIn("maxItems", p["reponses"])  # aucun plafond de questions (02/11/2026)
         self.assertEqual(p["pistes"]["items"]["required"], ["constat", "piste"])
         self.assertEqual(p["bilan_visiteur"]["required"], ["recapitulatif", "pistes"])
         self.assertEqual(p["sujet"]["enum"], sujets_dans_l_ordre_de_l_index())
@@ -670,8 +673,8 @@ class AgentEnLigne(unittest.TestCase):
             self.assertIn("### crm-parametrage\n", entretien.consigne_en_ligne(base))
 
     def test_la_methode_et_la_consigne_disent_les_memes_limites_que_le_code(self):
-        self.assertEqual((entretien.CHOIX_EN_LIGNE, entretien.CHOIX_LONGUEUR, entretien.PLAN_EN_LIGNE,
-                          entretien.MAX_EN_LIGNE), ((2, 6), 60, (3, 7), 12))
+        self.assertEqual((entretien.CHOIX_EN_LIGNE, entretien.CHOIX_LONGUEUR, entretien.PLAN_EN_LIGNE),
+                         ((2, 6), 60, (3, 7)))
         doc = (entretien.COMPETENCE / "references" / "agent-en-ligne.md").read_text(encoding="utf-8")
         bloc = next(b for b in re.findall(r"```json\n(.*?)\n```", doc, re.S) if '"suggestions"' in b)
         afficher = json.loads(bloc)["properties"]
@@ -680,7 +683,7 @@ class AgentEnLigne(unittest.TestCase):
         self.assertEqual((afficher["plan"]["minItems"], afficher["plan"]["maxItems"]), (3, 7))
         self.assertEqual(afficher["plan"]["items"]["properties"]["etat"]["enum"], ["fait", "en_cours", "a_venir"])
         consigne = entretien.consigne_en_ligne()
-        for fragment in ("2 à 6 textes de 60 caractères", "de 3 à 7 étapes", "12 au plus",
+        for fragment in ("2 à 6 textes de 60 caractères", "de 3 à 7 étapes",
                          "`etat` vaut `fait`, `en_cours` ou `a_venir`"):
             self.assertIn(fragment, consigne)
 
@@ -720,13 +723,14 @@ class AgentEnLigne(unittest.TestCase):
         consigne = " ".join(entretien.consigne_en_ligne().split())
         self.assertIn("une seule entrée par numéro de question", consigne)
         self.assertIn("reste une seule entrée, dont `reponse` réunit ce que la personne a dit, dans l'ordre", consigne)
-        self.assertIn("une seule entrée par numéro, douze au plus", self.bloc_afficher()[0])  # la liste des champs
+        self.assertIn("une seule entrée par numéro)", self.bloc_afficher()[0])  # la liste des champs, sans plafond
+        self.assertNotIn("douze au plus", self.bloc_afficher()[0])
         self.assertIn("Une seule entrée par numéro", entretien.schema_en_ligne()["properties"]["reponses"]["description"])
 
     def test_la_methode_dit_que_la_note_fusionne_les_entrees_du_meme_numero(self):
         doc = self.bloc_afficher()[0]
-        for attendu in ("plus de douze questions différentes",
-                        "ne sont pas refusées : la note les fusionne sous le titre de la première, dans l'ordre",
+        self.assertNotIn("plus de douze questions différentes", doc)  # le contrôle ne refuse plus au nombre
+        for attendu in ("ne sont pas refusées : la note les fusionne sous le titre de la première, dans l'ordre",
                         "deux entrées identiques n'en font qu'une",
                         "Les autres guides gardent leur contrôle"):
             self.assertIn(attendu, doc)
@@ -829,13 +833,15 @@ _FIN = ["le bilan et les pistes disent le résultat pour la personne", "ce qui s
         "jamais le moyen"] + [f"« {mot} »" for mot in MOTS_DE_MOYEN]
 PHRASE_DU_BILAN = "Votre bilan s'affiche ci-dessous ; vous pouvez aussi le recevoir par e-mail."
 # règle -> (ce que la méthode écrit, ce que la consigne écrit une fois remplie), lus sans casse ni retour à la ligne.
-# La méthode dit « douze », la consigne « 12 » : un fragment commun ne porte pas le nombre.
+# Aucun plafond de questions depuis le 02/11/2026 : toutes les questions sont posées, la personne peut en passer.
 REGLES_DE_L_ESSAI = {
-    "douze questions, la question d'ouverture comprise": (
-        ["la question d'ouverture comprise", "en deux tours en compte deux", "est le récapitulatif, sans relance ni",
+    "toutes les questions posées, puis la fin au bon moment": (
+        ["l'agent les pose toutes, une par message", "sans nombre maximum", "ne la repose pas",
+         "est le récapitulatif, sans relance ni",
          "« dernière question » ne se dit que si le tour suivant est le récapitulatif"],
-        ["la question d'ouverture comprise", "en deux tours en compte deux", "est le récapitulatif, sans relance ni",
-         "ne dis « dernière question » que si ton tour suivant est le récapitulatif", "la première des 12"]),
+        ["tu les poses toutes, une par message", "sans nombre maximum", "ne la repose pas",
+         "est le récapitulatif, sans relance ni",
+         "ne dis « dernière question » que si ton tour suivant est le récapitulatif"]),
     "un plan qui ne se récrit pas": (_PLAN, _PLAN),
     "deux réponses d'un audit": (_AUDIT, _AUDIT),
     "une seule chose par message": (_UNE_CHOSE, _UNE_CHOSE),
@@ -900,7 +906,7 @@ class ConsigneApresLEssaiEnLigne(unittest.TestCase):
 
     def test_sabotage_une_regle_retiree_de_la_consigne_fait_rougir_son_essai(self):
         gabarit = entretien.CONSIGNE_EN_LIGNE.read_text(encoding="utf-8")
-        for cle, valeur in (("MAX", 12), ("PLAN_MIN", 3), ("PLAN_MAX", 7)):   # les nombres du code, remplis d'avance
+        for cle, valeur in (("PLAN_MIN", 3), ("PLAN_MAX", 7)):   # les nombres du code, remplis d'avance
             gabarit = gabarit.replace("{{" + cle + "}}", str(valeur))
         vrai = entretien.CONSIGNE_EN_LIGNE
         with tempfile.TemporaryDirectory() as d:
@@ -918,11 +924,13 @@ class ConsigneApresLEssaiEnLigne(unittest.TestCase):
                 entretien.CONSIGNE_EN_LIGNE = vrai
         self.assertEqual(regles_manquantes(self.methode(), instructions_en_ligne()), [])
 
-    def test_l_ouverture_promet_douze_questions_puis_un_recapitulatif_et_pose_la_premiere(self):
+    def test_l_ouverture_ne_promet_aucun_nombre_de_questions_puis_un_recapitulatif_et_pose_la_premiere(self):
         consigne = instructions_en_ligne()
-        self.assertIn("12 questions au plus, puis un court récapitulatif à valider", consigne)
-        self.assertIn("la première des 12", consigne)
-        self.assertIn("Compter : 12 questions, la question d'ouverture comprise", consigne)
+        plat = " ".join(consigne.split())
+        self.assertIn("une dizaine de minutes, puis un court récapitulatif à valider), sans promettre de nombre de questions", plat)
+        self.assertIn("puis poser la première question", plat)
+        self.assertNotIn("la première des", consigne)
+        self.assertIn("Poser toutes les questions, une par message", consigne)
 
     def test_la_fin_liste_les_mots_de_moyen_sans_les_employer(self):
         textes = (("méthode", self.METHODE.read_text(encoding="utf-8")), ("consigne", entretien.consigne_en_ligne()))
@@ -1245,17 +1253,16 @@ class NoteDeLAgentEnLigne(unittest.TestCase):
     def test_une_question_absente_de_la_base_est_refusee(self):
         self.refuse(lambda cr: cr["reponses"][1].update(id="ZZ99"), "reponses[2] : 'ZZ99' n'est pas une question de la base")
 
-    def test_douze_questions_differentes_au_plus(self):
+    def test_un_compte_rendu_de_treize_questions_de_la_base_passe(self):
         ids = [q["id"] for q in entretien.base("support-client")][:13]
 
         def reponses(n):
             return [{"id": i, "question": "Une question ?", "reponse": "Une réponse."} for i in ids[:n]]
         cr = self.cr()
-        cr["reponses"] = reponses(12)
-        self.assertEqual(entretien.controler(cr), [])
-        cr["reponses"].append(dict(cr["reponses"][4], reponse="Et une suite."))  # une 13e entrée, d'un numéro déjà posé
-        self.assertEqual(entretien.controler(cr), [])  # les douze se comptent sans les doublons
-        self.refuse(lambda cr: cr.update(reponses=reponses(13)), "13 questions différentes, 12 au plus")
+        cr["reponses"] = reponses(13)
+        self.assertEqual(len({r["id"] for r in cr["reponses"]}), 13)  # treize numéros différents de la base
+        self.assertEqual(entretien.controler(cr), [])  # aucun plafond de questions (02/11/2026)
+        self.assertIn("13 questions choisies dans la base", self.ecrire(cr)[1][0])
 
     def test_deux_entrees_du_meme_numero_se_fusionnent_dans_l_ordre_sans_refus(self):
         cr = self.cr()  # le cas réel : un même numéro (SC05) revient, la note était refusée
