@@ -20,8 +20,7 @@
     "reponses": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 12,
-      "description": "Une seule entrée par numéro de question, dans l'ordre, douze au plus. Une question posée en plusieurs tours (relance, sous-question) reste une entrée : sa reponse réunit ce que la personne a dit, dans l'ordre. Seulement des questions de la base : leur numéro est la preuve.",
+      "description": "Une seule entrée par numéro de question, dans l'ordre. Une question posée en plusieurs tours (relance, sous-question) reste une entrée : sa reponse réunit ce que la personne a dit, dans l'ordre. Seulement des questions de la base : leur numéro est la preuve.",
       "items": {
         "type": "object",
         "additionalProperties": false,

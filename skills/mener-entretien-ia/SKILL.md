@@ -31,9 +31,9 @@ metadata:
 > consigne en ligne de plus de 60 000 caractères. L'agent en ligne : `entretien.py consigne-en-ligne` écrit sa ligne
 > (consigne, schéma, sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`),
 > fusionne les entrées d'un même numéro de question, y recopie le bilan du visiteur (section « Bilan remis à la
-> personne »), et refuse une question absente de la base, plus de douze questions différentes, une adresse ou un numéro,
+> personne »), et refuse une question absente de la base, une adresse ou un numéro,
 > un prix dans une piste, un `bilan_visiteur` absent ou vide. Les cinq règles qu'a demandées le premier essai en ligne
-> (douze questions, la question d'ouverture comprise ; un plan qui ne se récrit pas ; deux réponses d'un audit ; une
+> (toutes les questions posées, puis la fin au bon moment ; un plan qui ne se récrit pas ; deux réponses d'un audit ; une
 > seule chose par message ; une fin sans les moyens) et les deux du bilan (un message final court qui renvoie au bilan ;
 > un bilan écrit pour la personne) sont écrites dans la méthode et dans la consigne, et des essais rougissent quand
 > l'une manque.
@@ -44,7 +44,7 @@ metadata:
 > manquait (`entretien.py ajouter` ; un sujet absent : `entretien.py creer-sujet`).
 
 > 🌐 **Devant un visiteur en ligne, sans consultant avant l'entretien, l'agent choisit ses questions dans la base,
-> jamais en dehors** : douze au plus, d'abord celles qui se posent à la personne, jamais ce que la page a déjà demandé.
+> jamais en dehors** : il les pose toutes, d'abord celles qui se posent à la personne, jamais ce que la page a déjà demandé.
 > Un sujet marqué `<!-- hors-ligne -->` (le paramétrage d'un CRM) lui reste fermé : il suppose une mission engagée.
 > Avec un client du consultant, c'est un questionnaire préparé et validé. Méthode : `references/agent-en-ligne.md`.
 
@@ -70,7 +70,7 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
 - **Une question est à poser à une entreprise** : la base de questions par sujet (une mission de bout en bout, du premier
   échange au bilan, et chaque objectif, du support client à la prospection) la tient, et ce qui manquait y est rangé.
 - **Un visiteur répond en ligne, sans consultant avant l'entretien** : l'agent d'entretien en ligne choisit ses questions
-  dans la base (douze au plus, jamais en dehors), affiche un plan et des réponses à cliquer, rend un compte rendu à son
+  dans la base (jamais en dehors, toutes posées), affiche un plan et des réponses à cliquer, rend un compte rendu à son
   propre schéma (pistes comprises) et, pour le visiteur, un bilan écrit dans sa langue que la page affiche et envoie par
   e-mail à qui le demande. Variante, après l'étape 8.
 
@@ -144,8 +144,8 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
 
 ### Variante : l'agent en ligne (un visiteur, sans consultant avant l'entretien)
 
-Personne ne peut préparer ni valider le questionnaire d'un visiteur : l'agent choisit ses questions dans la base, douze
-au plus, jamais en dehors. La méthode (le sujet, les douze questions, les réponses à cliquer, le plan, la fin, les
+Personne ne peut préparer ni valider le questionnaire d'un visiteur : l'agent choisit ses questions dans la base,
+jamais en dehors, et les pose toutes. La méthode (le sujet, les questions, les réponses à cliquer, le plan, la fin, les
 interdits) est `references/agent-en-ligne.md`.
 
 1. `python …/entretien.py consigne-en-ligne --sortie ligne.json` écrit la ligne que l'hôte garde : `titre`, `guide`
@@ -196,13 +196,13 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
 | La consigne en français, l'entretien dans la langue de la personne | une seule consigne à tenir ; la note du pack est en français | une consigne par langue | un modèle traduit mal une langue donnée : écrire la consigne dans cette langue |
 | Un questionnaire préparé pour l'objectif, pas le cadrage générique | le 28/10, une dirigeante qui voulait un agent pour son service client a reçu les huit questions du cadrage : rien sur ses messages, ses réponses types ni ses commandes | un questionnaire unique pour tous | l'objectif n'est pas encore nommé : c'est une découverte, un guide du pack |
 | Avec un client du consultant : un questionnaire préparé et validé, puis seulement ouvert | ce que l'agent croit savoir lui est lu ; une erreur dans « Déjà su » se dit à la personne | laisser l'IA choisir ses questions en direct | jamais, pour un client |
-| En ligne, devant un visiteur : l'agent choisit ses questions dans la base, jamais en dehors | aucun consultant avant l'entretien, donc personne pour préparer ni valider un questionnaire ; la base est déjà relue et chaque question porte sa décision ; douze au plus, jamais ce que la page a demandé | un questionnaire préparé par visiteur (aucun relecteur) ; des questions inventées en direct | une question hors base a servi : elle y entre, relue par le consultant, puis l'agent peut la choisir |
-| Douze questions au plus | un entretien écrit long s'abandonne ; le reste a sa place dans la séance d'observation ou l'audit | tout le module | une seule personne détient tout et le demande : deux entretiens, pas un long |
+| En ligne, devant un visiteur : l'agent choisit ses questions dans la base, jamais en dehors | aucun consultant avant l'entretien, donc personne pour préparer ni valider un questionnaire ; la base est déjà relue et chaque question porte sa décision ; jamais ce que la page a demandé | un questionnaire préparé par visiteur (aucun relecteur) ; des questions inventées en direct | une question hors base a servi : elle y entre, relue par le consultant, puis l'agent peut la choisir |
+| 02/11/2026 : en ligne, l'agent pose toutes les questions préparées du sujet, sans plafond ; la personne peut en passer une ; seul le nombre de messages reste borné par l'hôte | la personne qui ne veut pas répondre à une question la passe ; le coût se borne par le nombre de messages ; le moteur hébergé l'applique déjà | un maximum de douze questions annoncé au visiteur (la règle d'avant) | le nombre de messages coupe trop d'entretiens avant le récapitulatif |
 | En ligne, tout ce que la personne lit passe par `afficher.message` | le modèle range en bloc de réflexion vide le texte écrit avant un appel d'outil : un message écrit à côté de l'outil n'atteint pas la personne | un texte libre avant l'appel d'outil | un hôte qui montre aussi le texte écrit hors d'un appel d'outil |
-| La note fusionne les entrées d'un même numéro de question, sans refuser le compte rendu | un entretien réel a rendu SC05 deux fois (une question reprise) : refuser la note privait le consultant du compte rendu du visiteur ; la consigne demande pourtant une seule entrée par numéro, et le plafond de douze compte les numéros différents | refuser le doublon (le contrôle d'avant) | deux réponses qui se contredisent sous un même numéro : la fusion cacherait un compte rendu faux |
-| En ligne, les douze questions se comptent comme le visiteur les compte, la question d'ouverture comprise | l'ouverture promet douze questions : le premier essai (28/10) en a posé quatorze et a dit « Dernière question » à la quatorzième | ne compter que les questions de la base venues après l'ouverture ; laisser la fin à l'appréciation de l'agent | un hôte qui affiche le compte à côté du plan |
+| La note fusionne les entrées d'un même numéro de question, sans refuser le compte rendu | un entretien réel a rendu SC05 deux fois (une question reprise) : refuser la note privait le consultant du compte rendu du visiteur ; la consigne demande pourtant une seule entrée par numéro, et le contrôle du compte rendu ne refuse plus rien au nombre de questions | refuser le doublon (le contrôle d'avant) | deux réponses qui se contredisent sous un même numéro : la fusion cacherait un compte rendu faux |
+| En ligne, l'agent refait le point avant chaque message, ouverture comprise, et ne dit « Dernière question » que si le tour suivant est le récapitulatif | le premier essai (28/10) a posé quatorze questions pour douze promises et a dit « Dernière question » à la quatorzième | laisser la fin à l'appréciation de l'agent | un hôte qui affiche le compte à côté du plan |
 | En ligne, un plan affiché ne se récrit plus : seules les étapes « à venir » bougent, et « fait » veut dire demandé | le premier essai a laissé une étape « en cours » disparaître sans passer à « fait », en a renommé une trois fois et a fini sur un plan tout vert dont une étape n'avait jamais été demandée | un plan que l'agent ajuste librement à chaque tour (la règle d'avant) | jamais pour une étape en cours ou faite |
-| En ligne, un audit demande toujours ce qui casserait si le volume doublait (EQ14) et l'objectif (DI01), avant les questions moins décisives | le premier essai n'a demandé ni l'un ni l'autre : le visiteur a ajouté l'objectif lui-même au récapitulatif, et la base n'avait aucune question sur le volume | les laisser au choix de l'agent parmi douze | la personne les a déjà données, ou la page les a demandées |
+| En ligne, un audit demande toujours ce qui casserait si le volume doublait (EQ14) et l'objectif (DI01), avant les questions moins décisives | le premier essai n'a demandé ni l'un ni l'autre : le visiteur a ajouté l'objectif lui-même au récapitulatif, et la base n'avait aucune question sur le volume | les laisser au choix de l'agent parmi les autres | la personne les a déjà données, ou la page les a demandées |
 | En ligne, un message demande une seule chose, et les pistes de la fin disent un résultat, jamais le moyen | deux messages du premier essai demandaient deux choses, et les réponses à cliquer n'en couvraient qu'une ; la fin parlait d'« une automatisation ou un agent » : au visiteur, on parle du résultat | des messages à double question ; des pistes qui nomment l'agent, l'automatisation ou la plateforme | jamais pour le visiteur : le consultant choisit le moyen |
 | En ligne, le visiteur repart avec un bilan écrit pour lui, dans sa langue (`bilan_visiteur`, champ obligatoire) ; le message final reste court | un visiteur qui a répondu pendant dix minutes repart avec quelque chose à garder : son récapitulatif validé et de une à trois pistes dites comme des résultats, sans compte ni prix ; la page l'affiche sous le message et l'envoie par e-mail à qui le demande | dire les pistes dans le message final (elles se perdent dans la conversation) ; un bilan en français pour tous ; refuser la note d'un visiteur dont le bilan dépasse les limites d'affichage (le consultant perdrait son compte rendu) | un hôte sans écran ni e-mail pour le bilan, ou un visiteur qui n'en veut pas |
 | Une méthode, deux modes (en ligne, local) | seul l'accès aux données change ; deux méthodes divergeraient | un agent local à part | jamais |
@@ -227,11 +227,11 @@ la note garde les mêmes sections, plus « Pistes » (constat, piste, prochaine 
   glissements en français, date du compte rendu.
 - NON MESURÉ sur une vraie personne : le premier entretien réel dira si l'ouverture est assez courte, si deux
   relances suffisent, et combien de personnes vont au bout.
-- Questionnaire préparé : contrôles éprouvés par les essais (objectif, validation, douze au plus, numérotation,
+- Questionnaire préparé : contrôles éprouvés par les essais (objectif, validation, numérotation,
   compte rendu sans son questionnaire). Le mode local reste à éprouver sur un dossier d'entreprise fictif : ce
   que la session lit, ce qu'elle ne redemande pas.
 - Agent en ligne : la consigne, le schéma, le contrôle du compte rendu et la note sont éprouvés par les essais du script,
-  sur un compte rendu fictif. NON MESURÉ sur un vrai visiteur : si douze questions sont trop, si les réponses à cliquer
+  sur un compte rendu fictif. NON MESURÉ sur un vrai visiteur : si poser toutes les questions d'un sujet est trop long, si les réponses à cliquer
   orientent, si le plan se lit à côté de la conversation, combien vont jusqu'au récapitulatif. La consigne reprend toute
   la base : elle grossit avec elle, et `verifier` s'arrête à 60 000 caractères (au-delà, charger les sujets à la demande).
 - Premier essai de l'agent en ligne (28/10/2026, un faux visiteur, quinze tours) : cinq défauts relevés (douze questions

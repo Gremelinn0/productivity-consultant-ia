@@ -24,8 +24,8 @@ moindre écart. Un questionnaire préparé pour un objectif (guide
 `prepare`) est un fichier de la mission, au modèle de `references/questionnaire-prepare.md`, validé avant
 l'entretien. `note` refuse un compte rendu qui enfreint les règles du pack (statuts, données personnelles) et rend 1.
 
-L'agent en ligne (un visiteur, sans consultant avant l'entretien) choisit ses questions dans la base, douze au plus,
-jamais en dehors : `consigne-en-ligne` écrit la ligne que l'hôte garde (la consigne, le schéma du compte rendu, les
+L'agent en ligne (un visiteur, sans consultant avant l'entretien) choisit ses questions dans la base, jamais en
+dehors, et les pose toutes : `consigne-en-ligne` écrit la ligne que l'hôte garde (la consigne, le schéma du compte rendu, les
 sujets) et affiche la taille de la consigne ; `note` accepte son compte rendu (guide `en-ligne`), y recopie le bilan remis
 au visiteur (`bilan_visiteur`, obligatoire) et refuse une question absente de la base. Méthode : `references/agent-en-ligne.md`.
 """
@@ -60,7 +60,7 @@ GUIDES_BASE = {
     "processus": ("processus", tuple(f"AP0{i}" for i in range(1, 9)), False),
 }
 # Plus de plafond pour un questionnaire préparé (Florent, 02/11/2026) : toutes les questions préparées sont posées, et la personne peut en passer
-# (le bouton « Passer » de la page d'entretien). Seul l'agent en ligne du site garde sa promesse de douze questions au visiteur.
+# (le bouton « Passer » de la page d'entretien). Il en va de même pour l'agent en ligne du site : aucun nombre de questions n'est promis au visiteur, seul le nombre de messages reste borné par l'hôte, pour le coût.
 # Où chercher la réponse avant de poser la question : l'outil se lit, un document se demande, la personne répond.
 DABORD = ("l'outil", "un document", "la personne")
 NUMERO = re.compile(r"([A-Z]{2,4})(\d{2,3})")
@@ -74,7 +74,6 @@ SCHEMA_EN_LIGNE = COMPETENCE / "references" / "compte-rendu-en-ligne.schema.json
 CONSIGNE_EN_LIGNE = COMPETENCE / "references" / "consigne-en-ligne.md"
 TITRE_EN_LIGNE = "Entretien en ligne"
 BASE_EN_LIGNE = "premier-echange"   # le sujet de départ d'un visiteur, porté par la ligne de l'agent
-MAX_EN_LIGNE = 12   # douze questions au plus : la promesse faite au visiteur du site
 CHOIX_EN_LIGNE = (2, 6)   # les réponses suggérées : de 2 à 6 choix
 CHOIX_LONGUEUR = 60   # de 60 caractères au plus chacun
 PLAN_EN_LIGNE = (3, 7)   # le plan de l'audit : de 3 à 7 étapes
@@ -427,8 +426,8 @@ def creer_sujet(sujet, prefixe, titre, quand, partie, question, decide, dabord="
         raise Erreur("--groupe : le nom du groupe est vide")
     question, decide = _question_neuve(question, decide, dabord, dossier)
     texte = [f"{TITRE_SUJET}{titre}", "", (intro.strip() or f"Quand l'objectif touche à {titre}.") +
-             " Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, douze au "
-             "plus, et n'adapte que ce qui change pour l'entreprise.", "", f"## 1. {partie.strip()}", ""] \
+             " Un questionnaire préparé part d'ici et du cadrage (`cadrage`), garde les questions utiles, et "
+             "n'adapte que ce qui change pour l'entreprise.", "", f"## 1. {partie.strip()}", ""] \
         + ENTETE_TABLEAU + [_ligne(f"{prefixe}01", question, decide, dabord)]
     readme = pathlib.Path(dossier) / "README.md"
     lignes = _lire(readme).splitlines()
@@ -773,7 +772,7 @@ def ecrire_note(cr, sortie, messages=None, questionnaire_prepare=None):
 
 # ----------------------------------------------------------------------------------- l'agent d'entretien en ligne
 # Un visiteur, sans consultant avant l'entretien : personne ne prépare ni ne valide son questionnaire. L'agent choisit
-# ses questions dans la base, douze au plus, jamais en dehors (references/agent-en-ligne.md).
+# ses questions dans la base, jamais en dehors, et les pose toutes (references/agent-en-ligne.md).
 
 
 def _barree(q):
@@ -839,7 +838,7 @@ def consigne_en_ligne(dossier=None):
     if len(gabarit) != 2:
         raise Erreur("consigne-en-ligne.md : la ligne --- qui ouvre la consigne est absente")
     index = index_en_ligne(dossier)
-    champs = {"MAX": MAX_EN_LIGNE, "CHOIX_MIN": CHOIX_EN_LIGNE[0], "CHOIX_MAX": CHOIX_EN_LIGNE[1],
+    champs = {"CHOIX_MIN": CHOIX_EN_LIGNE[0], "CHOIX_MAX": CHOIX_EN_LIGNE[1],
               "CHOIX_LONGUEUR": CHOIX_LONGUEUR, "PLAN_MIN": PLAN_EN_LIGNE[0], "PLAN_MAX": PLAN_EN_LIGNE[1],
               "INDEX": "\n".join(f"- {s['sujet']} ({s['prefixe']}) | {s['nom']} | {s['quand']}" for s in index),
               "QUESTIONS": _bloc_questions_en_ligne(index, dossier)}
@@ -901,7 +900,7 @@ PRIX = re.compile(r"\d[\d\s.,]*k?\s?(?:€|\$|£|euros?\b|eur\b|usd\b|dollars?\b
 def controler_en_ligne(cr, q=None, dossier=None):
     """Les écarts d'un compte rendu de l'agent en ligne ; une liste vide veut dire que la note peut s'écrire. `q` : le
     `questionnaire` de la ligne de l'agent (`consigne-en-ligne`), que l'hôte garde ; il ne sert qu'à vérifier le guide.
-    Une question qui n'est pas dans la base, plus de douze questions différentes, une adresse ou un numéro, un prix dans
+    Une question qui n'est pas dans la base, une adresse ou un numéro, un prix dans
     une piste, un bilan du visiteur absent ou vide : la note est refusée. Deux entrées du même numéro ne le sont pas : la
     note les fusionne. Les limites d'affichage du bilan (caractères, nombre de pistes) sont celles de l'hôte : il n'affiche
     alors aucun bilan, mais la note est écrite."""
@@ -953,8 +952,7 @@ def controler_en_ligne(cr, q=None, dossier=None):
         ecarts.append("reponses : au moins une réponse est attendue")
         reponses = []
     actives = questions_en_ligne(dossier)
-    vus = set()   # les numéros posés : une question reprise ou relancée donne deux entrées, que la note fusionne
-    for i, r in enumerate(reponses, 1):
+    for i, r in enumerate(reponses, 1):   # une question reprise ou relancée donne deux entrées, que la note fusionne
         ou = f"reponses[{i}]"
         if not isinstance(r, dict):
             ecarts.append(f"{ou} : id, question et reponse attendus")
@@ -962,16 +960,11 @@ def controler_en_ligne(cr, q=None, dossier=None):
         ident = r.get("id")
         if not isinstance(ident, str):
             ecarts.append(f"{ou}.id : le numéro de la question dans la base est attendu")
-        else:
-            vus.add(ident)
-            if ident not in actives:
-                ecarts.append(f"{ou} : {ident!r} n'est pas une question de la base (inventée, retirée ou mal recopiée) ; "
-                              "l'agent en ligne ne pose que des questions de la base")
+        elif ident not in actives:
+            ecarts.append(f"{ou} : {ident!r} n'est pas une question de la base (inventée, retirée ou mal recopiée) ; "
+                          "l'agent en ligne ne pose que des questions de la base")
         texte(r.get("question"), f"{ou}.question")
         texte(r.get("reponse"), f"{ou}.reponse")
-    if len(vus) > MAX_EN_LIGNE:
-        ecarts.append(f"reponses : {len(vus)} questions différentes, {MAX_EN_LIGNE} au plus (l'entretien en ligne reste "
-                      "court ; une question reprise compte pour une)")
     pistes = cr["pistes"]
     if not isinstance(pistes, list):
         ecarts.append("pistes : une liste est attendue")
