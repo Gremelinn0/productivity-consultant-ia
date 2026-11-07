@@ -10,6 +10,8 @@ et sa mémoire, quelle que soit la plateforme : `COMPLEMENTAIRES.md`.
 Lecture du 12 octobre 2026 : fichiers lus au commit indiqué, notés sur 100 avec une grille de lecture
 (adéquation, procédure, vérification, maintenance, portabilité, sécurité, contexte, provenance). Ce
 sont des notes de lecture, pas des essais. Avant d'installer un compagnon, relire sa version du jour.
+Relecture du 27 octobre 2026 : `building-pydantic-ai-agents` s'installe au commit cité, car sa version
+suivante envoie suivre un document distant non figé, qu'aucune relecture de commit ne couvre.
 
 | Étape | Compagnon | Éditeur · licence | Ce qu'il apporte | Quand l'appeler |
 |---|---|---|---|---|
