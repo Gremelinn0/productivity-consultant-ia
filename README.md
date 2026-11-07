@@ -323,7 +323,7 @@ auteurs qui vont avec lui sont créditées, avec leur licence, dans [COMPAGNONS.
   solutions (`vendor-review`), retour arrière, communication et mode opératoire d'exploitation
   (`change-request`, `runbook`), forme de l'entretien (`smb-onboard`) ;
 - `router-consulting-strategy` — options réelles, contre-cas, recommandation d'abord (sa maison est ce
-  pack ; une première version publique était parue dans `Gremelinn0/claude-skill-hub`) ;
+  pack) ;
 - « Performing a Project Premortem » de Gary Klein (Harvard Business Review, 2007) — le pré-mortem.
 
 Si ces outils sont installés dans votre session, les compétences peuvent s'en servir pour aller plus

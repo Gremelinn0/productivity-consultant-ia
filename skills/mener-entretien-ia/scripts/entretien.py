@@ -59,7 +59,7 @@ GUIDES_BASE = {
     "besoin": ("cadrage", tuple(f"CA0{i}" for i in range(1, 9)), False),
     "processus": ("processus", tuple(f"AP0{i}" for i in range(1, 9)), False),
 }
-# Plus de plafond pour un questionnaire préparé (Florent, 02/11/2026) : toutes les questions préparées sont posées, et la personne peut en passer
+# Plus de plafond pour un questionnaire préparé : toutes les questions préparées sont posées, et la personne peut en passer
 # (le bouton « Passer » de la page d'entretien). Il en va de même pour l'agent en ligne du site : aucun nombre de questions n'est promis au visiteur, seul le nombre de messages reste borné par l'hôte, pour le coût.
 # Où chercher la réponse avant de poser la question : l'outil se lit, un document se demande, la personne répond.
 DABORD = ("l'outil", "un document", "la personne")
@@ -1095,7 +1095,7 @@ def main(argv):
     a.add_argument("--entreprise", required=True)
     a.add_argument("--langue")
     a.add_argument("--contexte", help="fichier texte : ce que le consultant sait déjà")
-    a.add_argument("--consultant", default="le consultant", help="nom affiché, par exemple « Florent »")
+    a.add_argument("--consultant", default="le consultant", help="nom affiché")
     a.add_argument("--objet")
     a = sp.add_parser("base")
     a.add_argument("--sujet", help="sans sujet : la liste des sujets de la base")
