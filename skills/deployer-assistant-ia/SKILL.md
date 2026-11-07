@@ -187,6 +187,5 @@ l'exploitant s'écrit dans `90-mise-en-service.md`, à sa propre rubrique 8.
   protection des données : quinze frictions relevées (ordre des questions, usage gratuit à fermer, rôle par défaut,
   statut des repères, lecture par petite équipe), corrigées.
 - NON MESURÉ : le module n'a pas encore servi sur une vraie mission.
-- Sources et crédits : la ressource qui a montré le manque est le wiki « Claude : Wiki entreprises » de Tristan Dauer
-  (https://app.notion.com/p/Claude-Wiki-entreprises-35ff64836c3d81bfa29be1b7730c09bb). La méthode est écrite avec nos
-  mots, aucun texte n'en est repris ; ses faits ont été relus aux sources officielles (`references/fiches-assistants.md`).
+- Sources : le manque a été repéré dans un wiki sur le déploiement de Claude en entreprise. La méthode est rédigée ici,
+  aucun texte n'en est repris ; ses faits ont été relus aux sources officielles (`references/fiches-assistants.md`).
