@@ -144,6 +144,10 @@ Prioritize:
 - the weakest evidence among the most important hypotheses;
 - the few data points that could kill an option.
 
+When a single technical or system question can flip the decision (is it feasible, is it true in
+production), hand that one question to the deep reflection router (`/router-reflexion-profonde`, if
+installed) and bring back its facts, contradictions and unknowns into the business decision.
+
 Avoid "boiling the ocean".
 
 ### 7. Stress-test the recommendation
