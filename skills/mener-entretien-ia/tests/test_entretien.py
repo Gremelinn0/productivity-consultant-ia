@@ -646,7 +646,7 @@ class AgentEnLigne(unittest.TestCase):
         self.assertEqual(p["reponses"]["minItems"], 1)
         self.assertNotIn("maxItems", p["reponses"])  # aucun plafond de questions (02/11/2026)
         self.assertEqual(p["pistes"]["items"]["required"], ["constat", "piste"])
-        self.assertEqual(p["bilan_visiteur"]["required"], ["recapitulatif", "pistes"])
+        self.assertEqual(p["bilan_visiteur"]["required"], ["recapitulatif", "pistes", "cas_usage"])
         self.assertEqual(p["sujet"]["enum"], sujets_dans_l_ordre_de_l_index())
         code, sortie, _ = lancer("schema", "--guide", "en-ligne")
         self.assertEqual((code, json.loads(sortie)), (0, s))
@@ -928,7 +928,7 @@ class ConsigneApresLEssaiEnLigne(unittest.TestCase):
     def test_l_ouverture_ne_promet_aucun_nombre_de_questions_puis_un_recapitulatif_et_pose_la_premiere(self):
         consigne = instructions_en_ligne()
         plat = " ".join(consigne.split())
-        self.assertIn("une dizaine de minutes, puis un court récapitulatif à valider), sans promettre de nombre de questions", plat)
+        self.assertIn("puis un court récapitulatif à valider), sans promettre de durée ni de nombre de questions", plat)
         self.assertIn("puis poser la première question", plat)
         self.assertNotIn("la première des", consigne)
         self.assertIn("Poser toutes les questions, une par message", consigne)
@@ -1004,8 +1004,8 @@ class BilanDuVisiteur(unittest.TestCase):
         self.assertIn("bilan_visiteur", s["required"])
         b = s["properties"]["bilan_visiteur"]
         self.assertEqual((b["type"], b["required"], b["additionalProperties"]),
-                         ("object", ["recapitulatif", "pistes"], False))
-        self.assertEqual(list(b["properties"]), ["recapitulatif", "pistes"])
+                         ("object", ["recapitulatif", "pistes", "cas_usage"], False))
+        self.assertEqual(list(b["properties"]), ["recapitulatif", "pistes", "cas_usage"])
         recap, pistes = b["properties"]["recapitulatif"], b["properties"]["pistes"]
         self.assertEqual((recap["type"], recap["minLength"], recap["maxLength"]), ("string", 1, 1200))
         self.assertEqual((pistes["type"], pistes["minItems"], pistes["maxItems"]), ("array", 1, 3))

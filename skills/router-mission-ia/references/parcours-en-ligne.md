@@ -44,11 +44,13 @@ accompagnée ; seules changent la place du consultant et la forme des échanges.
 6. **L'ordre de la porte, sans saut.** Besoin connu : 10, 20, 30, 40, 50, 60, 70. Découverte : 00, 01, 02, puis le cas
    retenu de 10 à 70 ; 03 et 04 seulement si la personne les demande. Un cas qui touche au CRM appelle le module
    `auditer-crm` aux étapes 20 et 30, comme dans la porte. Un saut demandé par la personne s'écrit au journal.
-   **La découverte en ligne finit par dix cas et trois propositions.** `02-portefeuille.md` classe dix cas d'usage par
-   rentabilité, du plus au moins rentable : ceux que la carte des workflows couvre et ceux qui sont propres à
+   **La découverte en ligne finit par tous les cas et trois propositions.** L'agent fait tout le travail du consultant,
+   sans limite de questions : il cerne tous les besoins et fait sortir tous les cas que la personne veut automatiser.
+   `02-portefeuille.md` les classe tous (vingt au plus) par rentabilité, du plus au moins rentable, chacun avec ses
+   chiffres, sa rentabilité et ce qu'il faudra mesurer : ceux que la carte des workflows couvre et ceux qui sont propres à
    l'entreprise, chacun dit de quel côté il vient. La carte est dans le pack, sans internet :
-   `skills/router-mission-ia/references/carte-des-workflows.md`. S'il en existe moins de dix de sérieux, l'écrire plutôt
-   que d'en inventer. L'agent propose ensuite les trois meilleurs, et la personne en choisit un ; sa phrase est la validation de
+   `skills/router-mission-ia/references/carte-des-workflows.md`. N'en invente aucun pour faire nombre.
+   L'agent ne construit rien : le bilan prépare l'heure d'audit et la proposition. L'agent propose ensuite les trois meilleurs, et la personne en choisit un ; sa phrase est la validation de
    `02`. **Le gratuit s'arrête là.** Le cas choisi ne commence que si l'hôte a écrit « [hôte] accès aux spécialistes
    ouvert ». Sans ce message, l'agent dit en une phrase que la suite s'ouvre par un accès donné par le consultant ou par
    un paiement, et il attend ; il ne donne aucun prix. Avec lui, la spécialité continue dans le même chat, un seul agent

@@ -7,6 +7,14 @@ rendu que le consultant relit, dont un bilan écrit pour le visiteur. Ce fichier
 des sujets et de toutes les questions de la base) et le schéma de son compte rendu (`compte-rendu-en-ligne.schema.json`).
 Rien ici ne nomme un consultant, une entreprise, une adresse ou un lien : la plateforme qui héberge la page les ajoute.
 
+## Sa base : le travail du consultant, sans limite de questions
+
+Décision du 09/11/2026 : l'agent pose
+toutes les questions qu'il faut pour cerner tous les besoins, et aucune limite de questions ni de messages ne coupe
+l'entretien (la plateforme peut seulement lui demander de conclure). Il fait sortir chaque tâche que la personne
+voudrait ne plus faire à la main, avec ses chiffres. Le bilan les sort toutes (`cas_usage`, voir « Le bilan du
+visiteur ») : il prépare l'heure d'audit et la proposition. L'agent ne construit rien.
+
 ## Quand il sert
 
 - **Un visiteur, sans consultant avant l'entretien.** Un seul agent, trois portes : la fin d'un diagnostic court (six
@@ -163,7 +171,10 @@ sans compte à créer ni prix à lire. Le compte rendu le porte dans `bilan_visi
 
 - `recapitulatif` : de trois à six phrases, ce que la personne a décrit et validé au récapitulatif, corrections
   comprises ;
-- `pistes` : de une à trois, une phrase chacune, au conditionnel : le résultat pour elle, jamais le moyen.
+- `pistes` : de une à trois, une phrase chacune, au conditionnel : le résultat pour elle, jamais le moyen ;
+- `cas_usage` : toutes les tâches qu'elle veut ne plus faire à la main, de la plus à la moins rentable, chacune avec
+  `chiffres` (ce qu'elle a dit), `heures_par_mois` (tiré de ses chiffres, ou null ; l'hôte calcule les heures par an,
+  jamais le modèle), `rentabilite` (au conditionnel) et `a_mesurer` (le chiffre à relever pour le prouver).
 
 Le bilan est écrit pour la personne, pas pour le consultant : dans sa langue (le reste du compte rendu est en français),
 en la vouvoyant, sans nom, adresse ni numéro. Il ne promet rien : ses pistes ne portent aucun prix, aucun délai, aucun

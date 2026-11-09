@@ -48,7 +48,7 @@
     "bilan_visiteur": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["recapitulatif", "pistes"],
+      "required": ["recapitulatif", "pistes", "cas_usage"],
       "description": "Le bilan que la personne lit à l'écran à la fin de l'entretien et peut recevoir par e-mail. Écrit pour elle et adressé à elle (vouvoiement), pas pour le consultant, entièrement dans sa langue, jamais en français si elle écrit autrement. Aucun nom, adresse ni numéro, aucune promesse. À ne pas confondre avec `pistes`, qui est pour le consultant.",
       "properties": {
         "recapitulatif": { "type": "string", "minLength": 1, "maxLength": 1200, "description": "De trois à six phrases, 1 200 caractères au plus : ce que la personne a décrit et validé au récapitulatif, corrections comprises. Texte simple, sans liste ni tiret long." },
@@ -58,6 +58,24 @@
           "maxItems": 3,
           "description": "De une à trois pistes. Chacune dit le résultat pour la personne, au conditionnel : ce qui serait trouvé, fait ou épargné pour elle, jamais le moyen. Aucun prix, aucun délai, aucun nom d'outil, aucun des mots « agent », « automatisation », « IA », « outil », « logiciel », « plateforme » ni leurs formes voisines.",
           "items": { "type": "string", "minLength": 1, "maxLength": 300, "description": "Une phrase, 300 caractères au plus." }
+        },
+        "cas_usage": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 15,
+          "description": "Tous les cas d'usage que la personne veut ne plus faire à la main, du plus au moins rentable (09/11 : ils préparent l'heure d'audit et la proposition). Aucun nom d'outil, aucun prix de solution, aucune promesse.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["cas", "chiffres", "heures_par_mois", "rentabilite", "a_mesurer"],
+            "properties": {
+              "cas": { "type": "string", "minLength": 1, "maxLength": 160, "description": "La tâche, en quelques mots, avec les mots de la personne." },
+              "chiffres": { "type": "string", "maxLength": 400, "description": "Ce qu'elle a dit : combien de fois, combien de temps, combien de personnes. Vide si elle n'a rien chiffré." },
+              "heures_par_mois": { "type": ["number", "null"], "description": "Le temps que la tâche prend aujourd'hui par mois, tiré de ses chiffres ; null s'ils ne le disent pas. La plateforme en tire les heures par an." },
+              "rentabilite": { "type": "string", "maxLength": 400, "description": "Ce qu'elle gagnerait, au conditionnel : temps, erreurs, clients. Sans prix de solution." },
+              "a_mesurer": { "type": "string", "maxLength": 400, "description": "Le chiffre à relever avant l'heure d'audit pour le prouver." }
+            }
+          }
         }
       }
     },
