@@ -24,7 +24,7 @@ SECTIONS = ["## Ce que cette compétence résout", "## Stratégie", "## Étapes"
 MARQUEURS = ["<!-- capitaliser:squelette-v1 -->", "<!-- dev-qa-link -->"]
 LIVRABLES = {
     "00-contexte.md", "01-cartographie-taches.md", "02-portefeuille.md", "03-chiffrage.md",
-    "04-feuille-de-route.md", "10-besoin.md", "20-diagnostic.md", "30-exigences.md",
+    "04-feuille-de-route.md", "10-besoin.md", "20-diagnostic.md", "30-exigences.md", "35-optimisation.md",
     "40-solutions.md", "50-rentabilite.md", "60-specification.md", "70-plan.md",
     "80-construction.md", "85-recette.md", "90-mise-en-service.md", "95-mesure.md",
 }

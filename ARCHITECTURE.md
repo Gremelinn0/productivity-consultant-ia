@@ -56,6 +56,7 @@ PORTE 1 — besoin connu
   cadrer-besoin ....................................... 10-besoin
   auditer-processus ................................... 20-diagnostic
   rediger-cahier-des-charges (exigences) .............. 30-exigences
+  operations:process-optimization (compagnon, facultatif) ... 35-optimisation
   concevoir-solution (stratégie d'automatisation) ..... 40-solutions
   chiffrer-rentabilite (business case) ................ 50-rentabilite
   rediger-cahier-des-charges (spécification) .......... 60-specification
@@ -69,6 +70,13 @@ PORTE 1 — besoin connu
 
 Cerveau des décisions, appelé là où une étape décide : router-consulting-strategy
 ```
+
+**Optimiser le processus avant de le spécifier** (décision du 09/11/2026) : `35-optimisation` se place entre les exigences
+et la comparaison des options, avec le compagnon d'Anthropic `operations:process-optimization` (cité dans `COMPAGNONS.md`,
+jamais copié). Il part du diagnostic, repère les pertes (attentes, reprises, étapes sans valeur, tâches manuelles), dit ce
+qu'on supprime, regroupe ou standardise et chiffre le gain par cycle ; `40-solutions` en part. L'étape est facultative : si
+le processus est déjà sain, le journal l'inscrit « sans objet » et la mission passe à 40. Si l'optimisation change le
+processus, les exigences de 30 se relisent avant de comparer des options.
 
 La porte affiche 80, 85 et 90 comme « au pack Créer un agent IA » et dit comment l'appeler ; elle ne les lance
 plus elle-même. Un lot fait seulement de simplifications (`40-solutions` ne retient que l'option 0, rien à
@@ -152,6 +160,7 @@ mission/
     10-besoin.md
     20-diagnostic.md
     30-exigences.md
+    35-optimisation.md       facultatif : les pertes repérées, l'état cible, le gain chiffré par cycle (compagnon, sans modèle du pack)
     40-solutions.md          dont la porte, quand on standardise avant de construire
     50-rentabilite.md
     60-specification.md

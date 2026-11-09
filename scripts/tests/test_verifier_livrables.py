@@ -615,6 +615,23 @@ class LivrablesAttendusEtPlaces(SurUneCopie):
 
 
 class ModuleCrm(SurUneCopie):
+    def test_l_optimisation_35_facultative_est_listee_jamais_un_ecart(self):
+        # sans 35 : aucun écart, la mission reste conforme (témoin négatif)
+        sans = vl.verifier(self.mission)
+        self.assertTrue(sans.conforme)
+        self.assertFalse(any("35-optimisation" in f for f in sans.non_controles))
+        # avec 35, même vide de sens : listé, jamais déclaré conforme, jamais un écart (témoin positif)
+        (self.cas / "35-optimisation.md").write_text("n'importe quoi", encoding="utf-8")
+        avec = vl.verifier(self.mission)
+        self.assertTrue(avec.conforme)
+        self.assertIn(f"{CAS}/35-optimisation.md", avec.non_controles)
+        self.assertEqual(len(avec.resultats), 12)
+        self.assertTrue(set(vl.FACULTATIFS).isdisjoint({l.nom for l in vl.LIVRABLES}))
+
+    def test_attendre_35_est_un_controle_impossible(self):
+        with self.assertRaises(vl.ControleImpossible):
+            vl.verifier(self.mission, ["35"])
+
     def test_un_audit_et_des_annexes_conformes_passent(self):
         self.ecrire("audit-crm", doc_conforme("audit-crm"))
         self.ecrire("annexes-crm", doc_conforme("annexes-crm"))

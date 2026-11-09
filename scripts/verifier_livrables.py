@@ -11,6 +11,7 @@ CRM, `20-diagnostic/audit-crm.md` et `30-exigences/annexes-crm.md` d'un cas. Un 
 livrable absent ne fait écart que s'il est attendu : `--attendus` donne ses codes (10, 20… ou `audit-crm`,
 `annexes-crm`) et vaut pour chaque dossier `cas-<slug>/`. 80, 85, 90 et 95 (construction, recette, mise en service,
 mesure) ne sont pas contrôlés : ils sont listés, jamais déclarés conformes, et les attendre est un contrôle impossible.
+Même sort pour `35-optimisation.md` (optimiser le processus), facultatif : listé s'il existe, jamais un écart s'il manque.
 Un livrable rangé au mauvais niveau est un écart. Sortie : un verdict OK ou KO par fichier avec ce qui manque, ou `--json`.
 Code de sortie : 0 tout ce qui est présent et attendu est conforme · 1 au moins un écart · 2 contrôle impossible
 (dossier introuvable ou sans livrable du pack, modèle introuvable).
@@ -75,6 +76,10 @@ LIVRABLES = (
     Livrable("70", "70-plan.md", "cas", "", PLANIFIER, r"70-plan\.md"),
 )
 # Les étapes 8 à 11 (construire, tester, mettre en service, mesurer) ont leurs modèles, que ce contrôle ne lit pas encore.
+# 35 (optimiser le processus, décision du 09/11/2026) est facultatif et n'a pas de modèle dans le pack : le compagnon
+# `operations:process-optimization` l'écrit. Présent, il est listé, jamais déclaré conforme ; absent, ce n'est pas un écart ;
+# l'attendre est un contrôle impossible.
+FACULTATIFS = ("35-optimisation.md",)
 HORS_CONTROLE = ("80-construction.md", "85-recette.md", "90-mise-en-service.md", "95-mesure.md")
 
 TITRE = re.compile(r" {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*")
@@ -416,9 +421,10 @@ def verifier(dossier, attendus=(), racine=RACINE):
     if not dossier.is_dir():
         raise ControleImpossible(f"dossier introuvable : {dossier}")
     attendus = list(dict.fromkeys(attendus))
-    hors = [a for a in attendus if a in {n[:2] for n in HORS_CONTROLE}]
+    hors = [a for a in attendus if a in {n[:2] for n in HORS_CONTROLE + FACULTATIFS}]
     if hors:
-        raise ControleImpossible(f"livrable attendu non contrôlé : {', '.join(hors)} (les étapes 8 à 11 sont hors de ce contrôle)")
+        raise ControleImpossible(f"livrable attendu non contrôlé : {', '.join(hors)} "
+                                 "(les étapes 8 à 11 et l'étape facultative 35 sont hors de ce contrôle)")
     inconnus = [a for a in attendus if a not in {l.code for l in LIVRABLES}]
     if inconnus:
         raise ControleImpossible(f"livrable attendu inconnu : {', '.join(inconnus)} "
@@ -447,7 +453,7 @@ def verifier(dossier, attendus=(), racine=RACINE):
                 ou = "à la racine de mission/" if livrable.ou == "mission" else "dans mission/cas-<slug>/"
                 resultats.append(Resultat(prefixe + livrable.nom, livrable.code, slug, True, False,
                                           [Ecart("place", f"{livrable.nom} est rangé au mauvais niveau : il va {ou}")]))
-        non_controles += [prefixe + nom for nom in HORS_CONTROLE if (base / nom).is_file()]
+        non_controles += [prefixe + nom for nom in FACULTATIFS + HORS_CONTROLE if (base / nom).is_file()]
     if not cas:
         for livrable in LIVRABLES:
             if livrable.ou == "cas" and livrable.code in attendus:
@@ -466,7 +472,7 @@ def rendre_texte(rapport):
         for e in r.ecarts:
             sortie.append(f"      {e.controle} : {e.message}" + (f" [ligne {e.ligne}]" if e.ligne else ""))
     if rapport.non_controles:
-        sortie.append("Non contrôlés (étapes 8 à 11, hors de ce contrôle) : " + ", ".join(rapport.non_controles))
+        sortie.append("Non contrôlés (étape facultative 35 et étapes 8 à 11, hors de ce contrôle) : " + ", ".join(rapport.non_controles))
     ko = [r for r in rapport.resultats if not r.ok]
     if ko:
         sortie.append(f"Verdict : KO ({len(ko)} fichier(s) en écart sur {len(rapport.resultats)})")

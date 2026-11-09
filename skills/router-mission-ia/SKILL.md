@@ -64,7 +64,7 @@ Lire `mission/` (le créer avec `journal.md` et `sources/` s'il n'existe pas), p
 ```text
 Mission           <nom du dossier de travail>          porte(s) : découverte · besoin connu
 Découverte        00 ✓  01 ✓  02 ✓  03 ✓  04 ✓         décision en attente : aucune
-cas-relances-factures  10 ✓  20 ✓  30 —  40 —  50 —  60 —  70 —  80 —  85 —  90 —  95 —
+cas-relances-factures  10 ✓  20 ✓  30 —  35 —  40 —  50 —  60 —  70 —  80 —  85 —  90 —  95 —
 À lancer          Tri des tickets entrants · Statut de commande
 Dernière décision 2026-10-14 · cas-relances-factures · 20-diagnostic validé
 Questions ouvertes  2 Q-xx sans réponse inscrite au journal
@@ -73,9 +73,9 @@ Entretiens        questionnaire-relances-factures-2026-10-12 · note reçue
 ```
 
 Chaque ligne se calcule à la lecture :
-- `✓` = le fichier existe ; `—` = il manque ; `80` et `85` affichent « sans objet » quand
-  `40-solutions.md` ne retient que l'option 0 (rien à construire) ;
-- « étape suivante » = le premier fichier manquant dans l'ordre de la porte (10 à 70, puis 80, 85, 90, 95), pour le
+- `✓` = le fichier existe ; `—` = il manque ; `35` affiche « sans objet » quand le journal l'inscrit ; `80` et `85`
+  quand `40-solutions.md` ne retient que l'option 0 (rien à construire) ;
+- « étape suivante » = le premier fichier manquant dans l'ordre de la porte (10 à 30, 35, 40 à 70, puis 80, 85, 90, 95), pour le
   cas le plus récemment modifié, sous les conditions ci-dessous ; pour 80, 85 et 90, écrits par le pack Créer un agent
   IA : « au pack Créer un agent IA : <livrable> » ; « 95-mesure, revue du <date> » quand la décision de `95-mesure.md`
   est « corriger » (le cas reste ouvert), la date étant celle de la revue suivante inscrite au journal ; « clore le
@@ -96,8 +96,9 @@ Chaque ligne se calcule à la lecture :
   journal la cite avec « répondue ». Le compte ne demande aucun jugement ; ni légende ni rappel de définition ;
 - un dossier `mission/` vide affiche « aucune mission en cours » et pose la question de la porte.
 
-**Passage de la main de 80 à 90, retour à 95**, lu au journal et aux livrables, jamais dans un fichier d'état :
+**Optimiser avant de spécifier (35), passage de la main de 80 à 90, retour à 95**, lu au journal et aux livrables, jamais dans un fichier d'état :
 
+- `35` : `30-exigences.md` validé ; l'étape est facultative et s'inscrit « sans objet » au journal quand le processus est déjà sain. `40` : `35-optimisation.md` validé ou « sans objet » ;
 - `80` : `70-plan.md` validé et la porte de `40-solutions.md` §10 constatée au journal ou « sans objet » ;
   sinon l'étape suivante est « constater la porte » (étape de `70-plan.md`, rubrique 3) ;
 - `85` : `80-construction.md` déclaré « prêt pour la recette » au journal ;
@@ -125,7 +126,7 @@ Chaque ligne se calcule à la lecture :
 - Une mission qui reprend → l'étape suivante affichée, sans reposer la question. Un cas « à lancer »
   repart par `cadrer-besoin`, avec sa fiche de `02-portefeuille.md`.
 - Un pré-audit en ligne fini, pour tout compte connecté → la même porte, menée par écrit par un agent hébergé, sans
-  consultant dans la conversation : `references/parcours-en-ligne.md` (questions de la base, une validation par étape,
+  consultant dans la conversation : `references/parcours-en-ligne.md` (et `references/carte-des-workflows.md`, la carte qu'il consulte ; questions de la base, une validation par étape,
   de `00` à `04` pour les deux portes : tous les cas, chiffrés, la solution la plus simple, trois propositions, puis les
   prochaines étapes avec le consultant ; `10` à `70` se mènent ensuite avec lui, jamais en ligne).
 
@@ -141,6 +142,7 @@ Chaque ligne se calcule à la lecture :
 | | `cadrer-besoin` | 10-besoin |
 | | `auditer-processus` | 20-diagnostic |
 | | `rediger-cahier-des-charges` (exigences) | 30-exigences |
+| | `operations:process-optimization` (compagnon, facultatif ; sans lui, la simplification reste celle du diagnostic) | 35-optimisation |
 | | `concevoir-solution` | 40-solutions |
 | | `chiffrer-rentabilite` (business case) | 50-rentabilite |
 | | `rediger-cahier-des-charges` (spécification) | 60-specification |
@@ -252,8 +254,7 @@ Décisions : … (cinq lignes au plus). Hypothèses lourdes : … Gain observé 
 - Éprouvée sur la mission fictive du 12/10/2026 (`examples/`), reprise depuis son seul dossier : les étapes 10 à 70,
   puis 80 à 95 avec leurs conditions d'ouverture et un « corriger » qui laisse le cas ouvert. Les frictions relevées sur
   l'état, le nom du cas, le journal et la clôture sont corrigées ici.
-- Écrits d'après les contrats des quatre compétences, jamais parcourus, même en fiction : le passage direct de 70 à 90,
-  la clôture après la mesure, « étendre » et « arrêter ».
+- Écrits d'après les contrats des quatre compétences, jamais parcourus, même en fiction : le passage direct de 70 à 90, la clôture après la mesure, « étendre » et « arrêter ».
 - NON MESURÉ sur une mission réelle : le premier cas réel dira si le compte des questions ouvertes aide à décider et si
   une seule ligne de journal suffit pour une décision à plusieurs rôles ; et si le passage de la main au pack Créer un
   agent IA (09/11/2026) tient avec le contrat des fichiers inchangé.

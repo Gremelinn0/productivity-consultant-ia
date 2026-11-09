@@ -48,7 +48,7 @@ Calculé sur les fichiers présents, comme le fait `router-mission-ia` (étape 1
 ```text
 Mission           societe-exemple                          porte(s) : découverte · besoin connu
 Découverte        00 ✓  01 ✓  02 ✓  03 ✓  04 ✓             décision en attente : aucune
-cas-relances-factures  10 ✓  20 ✓  30 ✓  40 ✓  50 ✓  60 ✓  70 ✓  80 ✓  85 ✓  90 ✓  95 ✓
+cas-relances-factures  10 ✓  20 ✓  30 ✓  35 sans objet  40 ✓  50 ✓  60 ✓  70 ✓  80 ✓  85 ✓  90 ✓  95 ✓
                   décision en attente : 80 fiche d'exploitation révision 5 · 85 version 1.4 (gravité de D-07) · 90 version 1.2 (actions A-22 à A-25, maintien du flux sous D-07)
 À lancer          Tri des tickets entrants · Statut de commande
 Dernière décision 2027-01-13 · cas-relances-factures · 95-mesure corrigé (version 1.2) : « pas de retour » tant que le gain net est négatif (direction générale)
