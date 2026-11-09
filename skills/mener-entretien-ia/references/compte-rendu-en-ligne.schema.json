@@ -67,10 +67,14 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["cas", "chiffres", "heures_par_mois", "rentabilite", "a_mesurer"],
+            "required": ["cas", "chiffres", "volume_par_mois", "minutes_par_occurrence", "cout_horaire_min_euros", "cout_horaire_max_euros", "heures_par_mois", "rentabilite", "a_mesurer"],
             "properties": {
               "cas": { "type": "string", "minLength": 1, "maxLength": 160, "description": "La tâche, en quelques mots, avec les mots de la personne." },
               "chiffres": { "type": "string", "maxLength": 400, "description": "Ce qu'elle a dit : combien de fois, combien de temps, combien de personnes. Vide si elle n'a rien chiffré." },
+              "volume_par_mois": { "type": ["number", "null"], "description": "Combien de fois par mois, d'après elle ; null si elle ne l'a pas dit." },
+              "minutes_par_occurrence": { "type": ["number", "null"], "description": "Les minutes que prend une fois, aujourd'hui ; null si elle ne l'a pas dit." },
+              "cout_horaire_min_euros": { "type": ["number", "null"], "description": "Le coût horaire de la personne qui le fait, bas de la fourchette qu'elle donne ; null sinon." },
+              "cout_horaire_max_euros": { "type": ["number", "null"], "description": "Le haut de la fourchette ; null sinon." },
               "heures_par_mois": { "type": ["number", "null"], "description": "Le temps que la tâche prend aujourd'hui par mois, tiré de ses chiffres ; null s'ils ne le disent pas. La plateforme en tire les heures par an." },
               "rentabilite": { "type": "string", "maxLength": 400, "description": "Ce qu'elle gagnerait, au conditionnel : temps, erreurs, clients. Sans prix de solution." },
               "a_mesurer": { "type": "string", "maxLength": 400, "description": "Le chiffre à relever avant l'heure d'audit pour le prouver." }

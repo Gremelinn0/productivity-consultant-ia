@@ -173,8 +173,9 @@ sans compte à créer ni prix à lire. Le compte rendu le porte dans `bilan_visi
   comprises ;
 - `pistes` : de une à trois, une phrase chacune, au conditionnel : le résultat pour elle, jamais le moyen ;
 - `cas_usage` : toutes les tâches qu'elle veut ne plus faire à la main, de la plus à la moins rentable, chacune avec
-  `chiffres` (ce qu'elle a dit), `heures_par_mois` (tiré de ses chiffres, ou null ; l'hôte calcule les heures par an,
-  jamais le modèle), `rentabilite` (au conditionnel) et `a_mesurer` (le chiffre à relever pour le prouver).
+  `chiffres` (ce qu'elle a dit), les nombres de la formule du chiffrage (`volume_par_mois`, `minutes_par_occurrence`,
+  `cout_horaire_min_euros`, `cout_horaire_max_euros` : la personne qui le fait, une fourchette suffit ; null s'ils
+  manquent), `heures_par_mois` (tiré de ses chiffres, ou null ; l'hôte calcule les heures, jamais le modèle), `rentabilite` (au conditionnel) et `a_mesurer` (le chiffre à relever pour le prouver).
 
 Le bilan est écrit pour la personne, pas pour le consultant : dans sa langue (le reste du compte rendu est en français),
 en la vouvoyant, sans nom, adresse ni numéro. Il ne promet rien : ses pistes ne portent aucun prix, aucun délai, aucun
