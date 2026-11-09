@@ -34,7 +34,7 @@ ENTETE_COMPLEMENTAIRES = ["Étape", "Compétence", "À quoi elle sert dans une m
                           "Auteur · licence"]
 ETAPES_COMPLEMENTAIRES = ("concevoir-solution",)  # construire-solution est au pack Créer un agent IA depuis le 09/11/2026
 # Compétences du pack Créer un agent IA (compétences globales, hors de ce dépôt) : citées comme renvois, jamais présentes ici.
-AU_PACK_CREER_UN_AGENT = {"construire-solution", "tester-solution"}
+AU_PACK_CREER_UN_AGENT = {"construire-solution", "tester-solution", "piloter-mise-en-service"}
 LICENCES_ADMISES = {"MIT", "Apache-2.0"}
 PLACE_INTEGREE = "claude-plugins-official"  # connue de Claude Code sans `marketplace add`
 PHRASE_ROUTEUR = "Une autre compétence installée a répondu à la place de l'étape"

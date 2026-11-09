@@ -30,7 +30,7 @@ metadata:
 > des quatre statuts (`confirmé`, `à vérifier`, `incohérent`, `à mettre en place`) et l'écran, l'export ou l'entretien
 > qui le fonde ; chaque recommandation a son plan d'action, son impact et sa faisabilité ; chaque nombre son statut
 > `[F]`, `[H]` ou `[E]` (définis dans `ARCHITECTURE.md`). Aucune action dans le CRM réel : elle passe par
-> `piloter-mise-en-service`. **Boucle** : aucune.
+> la mise en service du pack Créer un agent IA. **Boucle** : aucune.
 
 > ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`,
 > un fichier par sujet ; ici `crm` pour le diagnostic, `crm-parametrage` pour le cahier des charges, `donnees` et
@@ -174,8 +174,8 @@ le sujet `crm-parametrage` lui est fermé, il suppose une mission engagée.
   qu'un CRM y ajoute. Le choix entre garder, changer d'édition et changer d'outil → `concevoir-solution`.
 - Les questions vivent dans la base de `mener-entretien-ia` (`crm`, `crm-parametrage`) ; cette compétence n'en
   recopie aucune.
-- Toute action dans le CRM réel (archiver un segment, corriger un champ, couper un workflow) → `piloter-mise-en-service`,
-  action par action, avec son retour arrière. Le paramétrage lui-même → `construire-solution` du pack Créer un agent IA, en environnement d'essai.
+- Toute action dans le CRM réel (archiver un segment, corriger un champ, couper un workflow) → la mise en service du pack Créer un agent IA
+  (`piloter-mise-en-service`), action par action, avec son retour arrière. Le paramétrage lui-même → `construire-solution` du pack Créer un agent IA, en environnement d'essai.
 - Les procédures propres à un éditeur (appels d'API, écrans, assistant intégré) relèvent d'une compétence de cet
   éditeur, installée à part ; l'audit en reprend les constats, pas les gestes.
 

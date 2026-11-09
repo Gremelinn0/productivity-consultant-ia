@@ -125,7 +125,7 @@ si elle est recoupée par un relevé côté métier. Sans mesure de départ dat�
   résultats faux ; l'ancienne voie toujours imposée ou plus simple ; un processus qui a changé ; une charge déplacée. Appuis : les six questions d'adoption de 70 §4, l'histoire « adoption » du pré-mortem, un court entretien
   par rôle (guide préparé par le pack, réponses du client).
 - *Conduite.* Corriger si la cause est réparable et qu'une re-mesure courte est posée (action, rôle, date) ; arrêter si deux lectures de suite sans reprise, ou si la cause est de fond (le dispositif n'aide pas le travail réel :
-  retour à `20-diagnostic.md`). Le retrait passe par `piloter-mise-en-service`.
+  retour à `20-diagnostic.md`). Le retrait passe par la mise en service du pack Créer un agent IA.
 - *Piège.* Compter l'adoption en accès ou en formations suivies ; mettre sur le compte de la « résistance au changement » un défaut du dispositif.
 
 **Gain net devenu négatif.**
@@ -142,7 +142,7 @@ si elle est recoupée par un relevé côté métier. Sans mesure de départ dat�
   des droits ou des utilisateurs nouveaux ; des coûts ou des résultats qui bougent sans cause ; un modèle d'IA remplacé ou mis à jour par le fournisseur ; un processus amont qui a changé (nouvelle règle, nouveau format d'export).
 - *Effet sur la mesure.* La période concernée ne mesure plus la solution validée : elle est marquée « version non validée », ses indicateurs se lisent à part, et son gain ou sa perte ne s'attribue pas à la solution recettée.
 - *Conduite.* Dire le changement (date de la découverte, ce qui a changé, par qui si on le sait, effet sur les indicateurs) ; il s'écrit au journal comme un incident daté, rien n'est régularisé après coup. Demander au
-  propriétaire de choisir la suite, que `piloter-mise-en-service` inscrit en `A-xx` nouvelles, validées avant d'être faites : garder (tests concernés rejoués par `tester-solution`, pack Créer un agent IA) ou défaire (retour arrière). Rappeler la
+  propriétaire de choisir la suite, que la mise en service (pack Créer un agent IA) inscrit en `A-xx` nouvelles, validées avant d'être faites : garder (tests concernés rejoués par `tester-solution`, pack Créer un agent IA) ou défaire (retour arrière). Rappeler la
   règle : tout changement passe par une `A-xx` validée avant.
 - *Changement subi* (éditeur, fournisseur, processus amont) : même conduite, sans désigner de faute ; l'écrire à la date où on le constate, rejouer les tests, décider d'accepter ou de revenir.
 - *Approuvé mais non enregistré* : le propriétaire l'a décidé hors registre. Le journal l'écrit comme un incident daté ; la suite (garder ou défaire) est une `A-xx` validée avant d'être faite ; la mesure ne redevient

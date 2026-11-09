@@ -6,8 +6,8 @@ description: >-
   charte IA », « des salariés utilisent déjà ChatGPT avec leur compte », « et pour le RGPD ? ») → partir de l'usage
   réel, choisir l'assistant et le plan sur des contraintes écrites et des faits lus le jour même, écrire la charte
   d'usage, préparer le dossier de conformité, lister les réglages, prévoir le pilote, la formation par rôle et le
-  rendez-vous de pilotage. Module du pack consultant-ia : il ne possède aucune étape, il prépare ce que
-  piloter-mise-en-service exécute et ce que mesurer-gains lit. Triggers : « déployer Claude », « déployer Copilot »,
+  rendez-vous de pilotage. Module du pack consultant-ia : il ne possède aucune étape, il prépare le dossier
+  (assistant, charte, conformité, indicateurs) que la mise en service du pack Créer un agent IA reprend ; il n'agit pas. Triggers : « déployer Claude », « déployer Copilot »,
   « ChatGPT Business », « Claude Team », « licences IA », « charte IA », « IA fantôme », « adoption de l'IA », « shadow
   AI », « AI rollout ».
 metadata:
@@ -26,7 +26,7 @@ metadata:
 > indicateurs, et la décision s'inscrit dans `mission/journal.md`. Contrôle de forme : les rubriques du modèle sont
 > présentes ; chaque fait sur un éditeur porte sa page officielle et sa date de lecture, ou « non vérifié » ; chaque
 > nombre son statut `[F]`, `[H]` ou `[E]` (définis dans `ARCHITECTURE.md`) ; aucun gain annoncé ; aucune conclusion
-> juridique. Aucune action dans un outil réel : elle passe par `piloter-mise-en-service`. **Boucle** : aucune.
+> juridique. Aucune action dans un outil réel : la mise en service du pack Créer un agent IA la reprend. **Boucle** : aucune.
 
 > ❓ **Une question pour l'entreprise sort de la base de questions** (`mener-entretien-ia/references/base-questions/`,
 > un fichier par sujet ; ici le sujet assistant-ia, avec cadrage et transmission au besoin) : lire d'abord le bloc du
@@ -44,7 +44,7 @@ Cette compétence prépare le déploiement en une fois : ce qui se fait déjà, 
 contraintes, la charte, le dossier de conformité, les réglages, le pilote, la formation et le rendez-vous de pilotage.
 
 Résultat attendu : un document que le décideur lit en dix minutes et valide, une charte d'une page, et une liste
-d'actions prêtes pour `piloter-mise-en-service`.
+d'actions prêtes pour la mise en service du pack Créer un agent IA.
 
 ## Stratégie
 
@@ -124,15 +124,15 @@ d'actions prêtes pour `piloter-mise-en-service`.
     avant le pilote, sur les tâches et leur durée : sans elle, aucun gain ne pourra se déclarer observé. Un indicateur
     qui n'existe pas avant le premier siège part de zéro ; les familles non suivies se déclarent « non relevées : raison ».
 11. **Relire et faire décider.** Relecture de la règle commune 8 (`ARCHITECTURE.md`). Le décideur valide le choix, la
-    charte, les réglages à proposer et les indicateurs ; une ligne au journal. Étape suivante : `piloter-mise-en-service`.
+    charte, les réglages à proposer et les indicateurs ; une ligne au journal. Étape suivante : la mise en service, au pack Créer un agent IA.
 12. **Enrichir la base.** Ce qui a manqué se range dans le sujet assistant-ia, sans le nom du client ni ses chiffres
     (`entretien.py ajouter`, puis `entretien.py verifier`). Un fait d'éditeur périmé se corrige dans
     `references/fiches-assistants.md`, avec sa nouvelle date.
 
 ## Le livrable
 
-`mission/cas-<slug>/90-mise-en-service/assistant-ia.md`, avec la charte à côté. `piloter-mise-en-service` y renvoie en tête
-de `90-mise-en-service.md` quand il le crée :
+`mission/cas-<slug>/90-mise-en-service/assistant-ia.md`, avec la charte à côté. La mise en service du pack Créer un agent IA y renvoie en tête
+de `90-mise-en-service.md` quand elle le crée :
 
 ```markdown
 # Déploiement d'un assistant IA : <équipe> · <date>
@@ -150,7 +150,7 @@ La recommandation en trois lignes, le coût annuel `[E]`, la décision attendue.
 ## Décision attendue
 ```
 
-Dans ce parcours, ce document tient lieu de 60 et de 70 pour `piloter-mise-en-service` et `mesurer-gains` : sa rubrique 7
+Dans ce parcours, ce document tient lieu de 60 et de 70 pour la mise en service du pack Créer un agent IA et pour `mesurer-gains` : sa rubrique 7
 donne les critères du pilote, sa rubrique 8 les indicateurs, leurs seuils et la mesure de départ. Le mode opératoire de
 l'exploitant s'écrit dans `90-mise-en-service.md`, à sa propre rubrique 8.
 
@@ -171,7 +171,7 @@ l'exploitant s'écrit dans `90-mise-en-service.md`, à sa propre rubrique 8.
 
 - Automatiser un processus nommé, construire un agent ou un flux → le parcours normal, de `cadrer-besoin` à
   `mesurer-gains`. Un assistant peut y être une option de `concevoir-solution`.
-- Toute action dans un outil réel (créer l'organisation, couper un réglage, ouvrir un connecteur) → `piloter-mise-en-service`,
+- Toute action dans un outil réel (créer l'organisation, couper un réglage, ouvrir un connecteur) → la mise en service du pack Créer un agent IA,
   action par action. Les décisions de feu vert, de fin de pilote et de bascule y vivent.
 - La lecture des relevés et la décision continuer, corriger, étendre ou arrêter → `mesurer-gains`. Le business case d'un
   gros déploiement → `chiffrer-rentabilite`.

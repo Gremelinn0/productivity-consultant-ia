@@ -74,7 +74,7 @@ et avec le business case ; une décision que le décideur peut renverser.
 1. **Lire ce qui existe et fixer la période.** `20-diagnostic.md` (mesure de départ), `30-exigences.md` §10 et `60-specification.md` §14 (`IND-xx` : source,
    méthode, rythme, qui mesure, seuils, attribution), `50-rentabilite.md` (§2 hypothèses, §4 scénarios et point mort), `70-plan.md` (§6 rythme des revues et
    actions aux seuils, §8 pré-mortem), `90-mise-en-service.md` (début de période, versions en service, changements), le journal ; en porte découverte `02`, `03`,
-   `04`. Sans `90-mise-en-service.md`, la solution n'est pas en service : proposer `piloter-mise-en-service`. Un seuil absent de 60 §14 est un trou de 60 : le corriger
+   `04`. Sans `90-mise-en-service.md`, la solution n'est pas en service : proposer la mise en service du pack Créer un agent IA. Un seuil absent de 60 §14 est un trou de 60 : le corriger
    par version datée avant de lire les chiffres. En parcours court d'un assistant IA, la mesure de départ, les `IND-xx` et leurs seuils sont en rubrique 8 de `90-mise-en-service/assistant-ia.md`, sans 20, 50 ni 60 : un trou s'y corrige, et le coût de sa rubrique 4 tient lieu de 50 §2. Une lecture du pilote vaut pour son périmètre et sa période, sans extrapolation. Mesure de départ non datée ou postérieure
    au pilote : dire ce qui reste possible (équipe témoin, période de repli) ; sinon l'écart reste `[H]` ou `[E]`.
 2. **Dresser la demande de données, avant de lire quoi que ce soit.** Pour chaque `IND-xx` et chaque terme de `50-rentabilite.md` §2 : ce qu'on relève, le rôle qui
@@ -102,7 +102,7 @@ et avec le business case ; une décision que le décideur peut renverser.
 8. **Proposer la décision.** Règles par défaut `[H]` à confirmer par le décideur (`references/mesure.md`, §6) : continuer · corriger (révision : action, rôle, date de re-mesure) ·
    étendre (candidat nommé, nouveau business case avec les valeurs observées) · arrêter (retrait, fin des coûts récurrents). Pour arbitrer, appeler `router-consulting-strategy`
    (lentille options stratégiques, hypothèses restantes) ; le livrable reste celui de cette étape. Écrire la décision en tête, trois raisons au plus, ce qui la renverserait. Les actions
-   sur les outils réels (correction, extension, retrait) passent par `piloter-mise-en-service`.
+   sur les outils réels (correction, extension, retrait) passent par la mise en service du pack Créer un agent IA.
 9. **Dire ce que la mesure change pour le portefeuille.** Quels paramètres communs sont maintenant observés (part réemployée, adoption, maintenance, fonctionnement, montée en charge),
    quels cas de `02`, `03` et `04` en dépendent, lesquels se reclassent ou se rouvrent. La correction d'un de ces livrables se fait par version datée et ligne « correction » au journal,
    par la compétence qui le possède. Sans porte découverte : ce qui servira aux cas suivants du même client (`references/mesure.md`, §7).
@@ -160,7 +160,7 @@ Lignes de journal, au moment où le décideur tranche (exemples fictifs, une par
 
 - La mesure de départ, les causes → `auditer-processus`. Les formules, les hypothèses, le point mort, le business case → `chiffrer-rentabilite`. Les indicateurs, leurs seuils et leur
   attribution → `rediger-cahier-des-charges` (60 §14) ; un seuil manquant se corrige là, par version datée. Le rythme des revues, les actions aux seuils, le pré-mortem → `planifier-deploiement`.
-- Les actions de correction, d'extension ou de retrait sur des outils réels → `piloter-mise-en-service`. Une correction technique → `construire-solution`, puis `tester-solution` (pack Créer un agent IA).
+- Les actions de correction, d'extension ou de retrait sur des outils réels → la mise en service du pack Créer un agent IA. Une correction technique → `construire-solution`, puis `tester-solution` (pack Créer un agent IA).
 - Le portefeuille : `02` → `decouvrir-cas-usage`, `03` → `chiffrer-rentabilite`, `04` → `planifier-deploiement`. L'état de la mission et le journal → `router-mission-ia`.
 - Hors du pack : installer des compteurs et collecter les données à la place du client, évaluer des personnes, conclure sur la conformité. Pour un outil de mesure précis ou un composant d'IA en
   production : `COMPAGNONS.md` du pack, ligne de l'étape 95 ; sans compagnon, la méthode ci-dessus est le repli maison.

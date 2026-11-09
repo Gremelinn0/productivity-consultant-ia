@@ -70,7 +70,7 @@ application). Il prend `60-specification.md` et `70-plan.md` en entrée, constru
 fichiers ne change pas. Quand `90-mise-en-service.md` est validé au journal, la mesure reprend ici
 (`mesurer-gains`, `95-mesure.md`). La porte affiche ces étapes « au pack Créer un agent IA » et dit comment l'appeler ;
 elle ne les lance plus elle-même. `construire-solution` et `tester-solution` ont quitté ce pack le 09/11/2026 ;
-`piloter-mise-en-service` y reste le temps que le pack Créer un agent IA le reprenne (décision en attente).
+`piloter-mise-en-service` les a suivies le même jour : la mise en service est au pack Créer un agent IA.
 
 ## Les neuf compétences du pack
 
@@ -87,10 +87,10 @@ elle ne les lance plus elle-même. `construire-solution` et `tester-solution` on
 | `mesurer-gains` | la lecture des relevés réels, le gain observé, les coûts réels, et la décision : continuer, corriger, étendre ou arrêter |
 
 Sont au pack Créer un agent IA, sous leur nom court : `construire-solution` (la solution construite par tranches
-dans un environnement d'essai, avec sa fiche d'exploitation) et `tester-solution` (la recette critère par critère,
-l'évaluation de l'IA à part, un verdict). Leurs anciens dossiers sont archivés dans `.archive/2026-11-09/`.
-`piloter-mise-en-service` reste ici le temps que le pack Créer un agent IA le reprenne (décision en attente) : chaque action sur un outil réel proposée avec son
-retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant.
+dans un environnement d'essai, avec sa fiche d'exploitation), `tester-solution` (la recette critère par critère,
+l'évaluation de l'IA à part, un verdict) et `piloter-mise-en-service` (chaque action sur un outil réel proposée avec
+son retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant). Leurs anciens dossiers sont
+archivés dans `.archive/2026-11-09/`.
 
 ## Le module CRM
 

@@ -94,15 +94,12 @@ et la charte ici, puis la mise en service est au pack Créer un agent IA et `95-
 | Planifier | `planifier-deploiement` | feuille de route d'un portefeuille (avec son socle commun) ou plan de déploiement d'un cas : simplifications, porte, pilote, adoption, rythme des revues d'indicateurs, pré-mortem |
 | Mesurer | `mesurer-gains` | lire les relevés réels, les comparer au départ et au business case, déclarer un gain observé, décider : continuer, corriger, étendre ou arrêter |
 
-**Trois étapes rejoignent le pack Créer un agent IA** (décision du 09/11/2026). Construire (`construire-solution`) et
-tester (`tester-solution`) l'ont déjà rejoint : leurs dossiers sont archivés dans `.archive/2026-11-09/` et elles
-vivent là-bas sous leur nom court ; elles lisent `60-specification.md` et `70-plan.md` et écrivent
-`80-construction.md` et `85-recette.md` dans le même dossier de mission, le contrat ne change pas. Mettre en service
-reste ici, avec une ligne en tête de son `SKILL.md`, le temps que la décision soit prise.
-
-| Rôle | Compétence | Responsabilité unique |
-|---|---|---|
-| Mettre en service | `piloter-mise-en-service` | le registre des actions sur les outils réels (chacune validée par le client, avec son retour arrière), le pilote, la bascule, l'adoption, le transfert à un exploitant nommé |
+**Trois étapes ont rejoint le pack Créer un agent IA** (décision du 09/11/2026) : construire (`construire-solution`),
+tester (`tester-solution`) et mettre en service (`piloter-mise-en-service`). Leurs dossiers sont archivés dans
+`.archive/2026-11-09/` et elles vivent là-bas sous leur nom court ; elles lisent `60-specification.md` et
+`70-plan.md` et écrivent `80-construction.md`, `85-recette.md` et `90-mise-en-service.md` dans le même dossier de
+mission, le contrat ne change pas. Le conseil ne construit rien et n'agit dans aucun outil réel : il planifie,
+évalue et mesure les gains ; `mesurer-gains` se rouvre à 95 quand `90-mise-en-service.md` est validé au journal.
 
 Aucune compétence ne refait le travail d'une autre ligne. Si une responsabilité a un propriétaire
 ci-dessus, on l'appelle. Le dossier `skills/` contient en plus `router-consulting-strategy`, qui arbitre

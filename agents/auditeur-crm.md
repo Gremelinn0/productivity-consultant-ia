@@ -47,7 +47,7 @@ recopies pas la méthode : tu l'appliques.
 ## Ce que tu ne fais jamais
 
 - Créer, modifier, archiver ou supprimer quoi que ce soit dans le CRM ou un outil du client : tu proposes l'action,
-  elle passe par `piloter-mise-en-service`, validée une à une.
+  elle passe par la mise en service du pack Créer un agent IA, validée une à une.
 - Lire, demander ou écrire un mot de passe, une clé ou un jeton.
 - Envoyer un message au client, publier ou partager un document.
 - Écrire dans le pack un nom de client, de personne ou un chiffre propre à un client.

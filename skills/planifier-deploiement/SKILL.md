@@ -8,7 +8,7 @@ description: >-
   plan de déploiement (lots courts, porte, pilote, recette, adoption, exploitation, mesure), puis le
   soumettre à un pré-mortem avant de s'engager. Dernière étape de décision des deux portes du pack
   consultant-ia, après le chiffrage : le plan se lit avant de construire, et son exécution (pilote,
-  bascule) est dans `piloter-mise-en-service`. Triggers : « feuille de route », « roadmap », « plan de
+  bascule) est dans la mise en service du pack Créer un agent IA. Triggers : « feuille de route », « roadmap », « plan de
   déploiement », « plan de mise en œuvre », « par où commencer », « plan de pilote », « plan de mise en
   production », « plan d'adoption », « pré-mortem », « rollout plan », « change management plan ».
 metadata:
@@ -60,7 +60,7 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
    standardiser sont des tâches de la feuille de route, avec responsable et date, pas des retards. Une
    simplification sans construction (supprimer, standardiser, vérifier) est une action de la vague 0, ou du
    premier lot du plan : responsable, date, pièce. Elle se décide au journal quand elle ne modifie aucun
-   outil ; quand elle en modifie un, c'est une action `A-xx` de `piloter-mise-en-service`, validée à part.
+   outil ; quand elle en modifie un, c'est une action `A-xx` de la mise en service du pack Créer un agent IA, validée à part.
 4. **Un indicateur que l'entreprise suit déjà** pour chaque cas de la feuille de route (délai, volume,
    taux d'erreur, satisfaction) : pas de tableau de bord à bâtir, et la mesure de départ existe. Une action
    de la vague 0 n'en a pas toujours : on écrit « aucun indicateur suivi » et la mesure de départ de ce
@@ -145,7 +145,7 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
    définir ») devient une action, une hypothèse `[H]` avec son confirmateur, ou une question dans
    « Décision attendue ». Suite : chaque cas de la feuille de route entre par `cadrer-besoin` ; le plan
    se lance par son premier lot, puis `construire-solution` (pack Créer un agent IA) ouvre la construction quand la porte est
-   constatée ou sans objet (une option 0 seule passe directement à `piloter-mise-en-service`). Quand le
+   constatée ou sans objet (une option 0 seule passe directement à la mise en service du pack Créer un agent IA). Quand le
    décideur tranche, ajouter une ligne à `mission/journal.md`.
 
 ## Le livrable
@@ -211,8 +211,8 @@ pilote, bascule) citent la pièce qui les prouve :
   maintenance) → `rediger-cahier-des-charges` ; choix de l'option et définition de la porte →
   `concevoir-solution` ; processus actuel, ses mesures et ses simplifications → `auditer-processus` ; état de
   la mission et journal → `router-mission-ia`.
-- Construire en essai → `construire-solution` ; recetter → `tester-solution` (ces deux-là au pack Créer un agent IA) ; mettre en service (actions sur
-  les outils, feu vert, bascule, adoption réalisée, transmission) → `piloter-mise-en-service` ; relire les
+- Construire en essai → `construire-solution` ; recetter → `tester-solution` ; mettre en service (actions sur
+  les outils, feu vert, bascule, adoption réalisée, transmission) → `piloter-mise-en-service` (ces trois-là au pack Créer un agent IA) ; relire les
   relevés après déploiement → `mesurer-gains`. Ici on planifie et on cite ; on n'exécute pas.
 - Pour mettre en forme le retour arrière, la communication et l'exploitation : `COMPAGNONS.md` du pack,
   ligne « Mettre en service ». On ne dit s'en être servi que si on l'a réellement appelé.
