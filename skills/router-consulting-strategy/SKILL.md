@@ -10,7 +10,7 @@ description: >-
 metadata:
   scope: "une décision d'affaires ambiguë : marché, offre, produit, investissement, priorités, économie"
   owns: "le raisonnement de conseil en stratégie : cadrage, structure MECE, registre des faits et des hypothèses, options réelles, lentille, contre-cas, recommandation d'abord"
-  consumes: "la question et ses faits ; un routeur de réflexion profonde (pack reflechir-a-fond) pour une question technique bornée ; pack optionnel : gcamilo/management-consulting (MIT)"
+  consumes: "la question et ses faits ; un routeur de réflexion profonde (`router-reflexion-profonde`, pack reflechir-a-fond) pour une question technique bornée ; pack optionnel : gcamilo/management-consulting (MIT)"
 ---
 
 # Consulting Strategy Router

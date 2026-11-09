@@ -10,7 +10,7 @@
   ],
   "moment": "demarrer",
   "dossier_etat": "",
-  "mis_a_jour": "2026-10-19",
+  "mis_a_jour": "2026-11-09",
   "etapes": [
     {
       "n": 1,
@@ -27,7 +27,7 @@
       "n": 2,
       "slug": "structurer",
       "titre": "Structurer le problème",
-      "rend": "La plus petite structure sans recouvrement (MECE) qui couvre ce qui peut changer la décision, chaque branche pouvant se tester.",
+      "rend": "La plus petite structure sans recouvrement (MECE : mutuellement exclusives, collectivement exhaustives) qui couvre ce qui peut changer la décision, chaque branche pouvant se tester.",
       "fichier": "",
       "competences": [],
       "manque": "Aucune compétence ne dessine cette structure : le routeur la construit lui-même.",
@@ -52,9 +52,9 @@
           "titre": "Garder le journal des décisions",
           "competences": [
             {
-              "nom": "decision-log",
-              "pourquoi": "Pour noter chaque décision, ses raisons et ses inconvénients acceptés.",
-              "projet": "store"
+              "nom": "agent-skills:documentation-and-adrs",
+              "pourquoi": "Pour noter chaque décision, ses raisons et ses inconvénients acceptés, sous forme de fiche de décision (ADR).",
+              "maison": "faire-evoluer-une-app"
             }
           ],
           "reserve": []
@@ -76,7 +76,7 @@
       "n": 5,
       "slug": "lentille",
       "titre": "Choisir la bonne lentille",
-      "rend": "La lentille que la décision appelle, et seulement elle : état des lieux, audit des hypothèses, options stratégiques, dossier chiffré, priorités, jeu de rôle des concurrents, risques, feuille de route ou note de décision.",
+      "rend": "La lentille que la décision appelle, et seulement elle : état des lieux, audit des hypothèses, options stratégiques, dossier chiffré, priorités, jeu de rôle des concurrents, risques, feuille de route ou note de décision. La méthode classique que la décision appelle, et seulement elle : diagnostic de départ, liste d'hypothèses testées, matrice de décision, dossier chiffré, classement par impact et effort, analyse des concurrents, tableau des risques, feuille de route ou note de décision.",
       "fichier": "",
       "competences": [],
       "ecartees": [
@@ -117,7 +117,7 @@
           "raison": "Pour une décision écrite à un dirigeant. Même dépôt, sans licence : non installée."
         }
       ],
-      "manque": "Le pack management-consulting et les huit lentilles de strategy-skills-for-claude, que ce routeur sait déléguer, ne sont pas installés : il applique lui-même la lentille choisie. Pour un risque stratégique majeur, la lentille « risques et parades » n'a de toute façon pas de compétence propre.",
+      "manque": "Le pack management-consulting et les huit lentilles de strategy-skills-for-claude, que ce routeur sait déléguer, ne sont pas installés : il applique lui-même la lentille choisie. Pour un risque stratégique majeur, la lentille « risques et parades » n'a de toute façon pas de compétence propre. aucune compétence publique n'est appelée pour ces méthodes : le workflow applique lui-même celle qui est choisie.",
       "regle": "Une seule lentille, celle que le problème choisit. Porter, SWOT, BCG, JTBD, RICE ou un arbre des profits sont des outils, jamais des défauts : une salade de cadres, ou un SWOT à la place de l'analyse, est une erreur.",
       "cas": []
     },
