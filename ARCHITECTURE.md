@@ -322,6 +322,9 @@ le parcours ne change pas.
 
 1. **Ce fichier** — architecture, contrats, règles et conventions communes.
 2. **`router-mission-ia`** — comportement de la porte et état en direct.
+   Son `references/workflow.json` range, étape par étape, la compétence par défaut, ses compagnons et ses tâches : c'est la
+   seule source des étapes de conseil, lue par la Marketplace (page « Conseiller une mission IA »). Le workflow « Implémenter l'IA
+   en entreprise » (global) enchaîne cette porte avec la construction, la recette, la mise en service et la mesure, sans en recopier une étape.
 3. Chaque compétence — la méthode de sa responsabilité.
 4. **README** — présentation et installation.
 5. **`COMPAGNONS.md`** — les compétences d'autres auteurs qui vont avec le pack, et leurs licences.

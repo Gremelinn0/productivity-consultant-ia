@@ -244,6 +244,11 @@ Décisions : … (cinq lignes au plus). Hypothèses lourdes : … Gain observé 
   Construire, tester et mettre en service (80, 85, 90) sont au pack Créer un agent IA ; ces trois compétences restent
   dans ce dossier le temps du passage.
 - La carte complète, les contrats et les règles communes vivent dans `ARCHITECTURE.md` du pack.
+- `references/workflow.json` range, étape par étape, la compétence par défaut, ses compagnons et ses tâches : c'est la source de la page
+  « Conseiller une mission IA » de la Marketplace et de l'étape « Conseiller » du workflow « Implémenter l'IA en entreprise », qui n'en
+  recopie rien. Noms installés : `consultant-ia:decouvrir-cas-usage`, `consultant-ia:cadrer-besoin`, `consultant-ia:auditer-processus`,
+  `consultant-ia:rediger-cahier-des-charges`, `consultant-ia:concevoir-solution`, `consultant-ia:chiffrer-rentabilite`,
+  `consultant-ia:planifier-deploiement` ; compagnons : `operations:process-doc`, `operations:vendor-review`, `product-management:write-spec`.
 - Cette porte n'agit dans aucun outil de l'entreprise : toute action passe par la mise en service du pack Créer un agent
   IA, action par action. L'arbitrage d'une décision d'affaires → `router-consulting-strategy`, appelé par les étapes qui
   décident ; il ne possède aucun livrable.

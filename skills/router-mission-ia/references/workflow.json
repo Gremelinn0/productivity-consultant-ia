@@ -1,0 +1,262 @@
+{
+  "format": "workflow-v1",
+  "slug": "conseiller-une-mission-ia",
+  "titre": "Conseiller une mission IA, de la découverte au plan de déploiement",
+  "resume": "Huit étapes de conseil pour une mission d'IA ou d'automatisation chez un client : trouver où l'IA aide, cadrer, diagnostiquer le travail réel et en écrire les exigences, optimiser le processus, choisir la stratégie, concevoir, chiffrer, puis spécifier et planifier. Deux portes d'entrée : un besoin déjà nommé, ou aucun besoin et on découvre d'abord. C'est la porte du pack consultant IA : il tient l'état de la mission et le journal des décisions. En ligne, un agent mène ces étapes par écrit avec la personne ; le consultant relit le chiffrage, la spécification et le plan. Construire, tester, mettre en service et mesurer passent au workflow « Implémenter l'IA en entreprise ».",
+  "commande": "/router-mission-ia",
+  "routeur": "router-mission-ia",
+  "metiers": [
+    "conseil"
+  ],
+  "moment": "demarrer",
+  "dossier_etat": "mission/",
+  "mis_a_jour": "2026-11-09",
+  "methode": {
+    "titre": "Pack consultant IA",
+    "auteur": "Florent Maisoncelle (ZEROGRAVITY)",
+    "lien": "https://github.com/Gremelinn0/productivity-consultant-ia",
+    "note": "Le pack tient la méthode (onze compétences et un routeur), avec son entretien guidé par IA, son module CRM et son module de déploiement d'un assistant IA ; les compétences d'autres éditeurs qu'il cite comme compagnons entrent à l'étape qui les appelle, une fois installées."
+  },
+  "etapes": [
+    {
+      "n": 1,
+      "slug": "decouvrir",
+      "titre": "Découvrir où l'IA peut aider",
+      "optionnelle": "si aucun besoin n'est encore nommé",
+      "rend": "Le contexte de l'entreprise, la cartographie des tâches réelles, le tri en cinq issues (éliminer, simplifier d'abord, automatiser, déléguer à l'IA, garder) et un portefeuille de cas d'usage classés, avec la décision : quels cas creuser. Sur proposition, deux livrables facultatifs suivent : un ordre de grandeur des gains et des coûts des cas à creuser, puis une feuille de route du portefeuille.",
+      "fichier": "02-portefeuille.md",
+      "competences": [
+        {
+          "nom": "consultant-ia:decouvrir-cas-usage",
+          "role": "par défaut",
+          "pourquoi": "C'est l'étape propriétaire de la porte découverte du pack : elle part du travail réel des équipes et rend un portefeuille classé, pas une liste d'idées d'IA."
+        }
+      ],
+      "regle": "Deux portes d'entrée, un seul test : si le processus se nomme en une phrase, on saute cette étape (elle s'inscrit « sans objet » au journal) et chaque besoin entre par le cadrage ; sinon on découvre d'abord, puis chaque cas retenu repart par le cadrage. En cas de doute, la découverte commence court et rend la main dès qu'un cas clair apparaît. Le fichier de l'étape est 02-portefeuille.md, écrit après 00-contexte.md et 01-cartographie-taches.md. Sur proposition, deux fichiers facultatifs le suivent : 03-chiffrage.md, l'ordre de grandeur des seuls cas à creuser (compétence de l'étape 7), et 04-feuille-de-route.md, la feuille de route du portefeuille (compétence de l'étape 8). Sans consultant dans la conversation, la découverte finit par dix cas au plus, classés par rentabilité, ceux qu'un workflow existant couvre déjà et ceux qui sont propres à l'entreprise, puis trois propositions : la personne en choisit un, et ce cas ne commence qu'une fois l'accès ouvert.",
+      "cas": [
+        "identifier-et-prioriser-les-cas-d-automatisation-utiles"
+      ],
+      "taches": [
+        {
+          "slug": "trouver-des-modeles-d-automatisation",
+          "titre": "Trouver des modèles d'automatisation",
+          "competences": [
+            {
+              "nom": "hunting-automation-resources",
+              "pourquoi": "Pour chercher de bons modèles d'automatisations et de consignes dans des sources sûres.",
+              "projet": "marketplace"
+            }
+          ],
+          "reserve": []
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "slug": "cadrer",
+      "titre": "Cadrer le besoin",
+      "rend": "Une fiche besoin courte et validée : le vrai problème, la décision à prendre, le périmètre, les contraintes, les critères de succès, et le nom du dossier du cas.",
+      "fichier": "10-besoin.md",
+      "competences": [
+        {
+          "nom": "consultant-ia:cadrer-besoin",
+          "role": "par défaut",
+          "pourquoi": "Elle reformule une demande qui arrive en solution (« on veut un chatbot ») en problème, vérifie que c'est le bon, et fixe le nom unique du dossier que toutes les étapes suivantes reprennent."
+        }
+      ],
+      "regle": "On ne cherche pas de solution avant que le demandeur ait validé la fiche. Un cas porte un seul nom, fixé ici une fois (le dossier `mission/cas-<nom>/`). Les questions sortent de la base du pack : on lit d'abord ce qui existe, on ne pose que ce qui manque, et le consultant y range ensuite ce qui manquait. Un objectif qui relève d'un sujet de la base se prépare avec les questions de ce seul sujet.",
+      "cas": [],
+      "taches": [
+        {
+          "slug": "mener-l-entretien",
+          "titre": "Mener l'entretien par écrit, sans le consultant",
+          "competences": [
+            {
+              "nom": "consultant-ia:mener-entretien-ia",
+              "pourquoi": "Quand la personne répond seule : une IA mène l'entretien par écrit, avec les questions de la base, et rend une note au format du pack, que le consultant relit."
+            }
+          ],
+          "reserve": []
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "slug": "diagnostiquer",
+      "titre": "Diagnostiquer le travail réel, puis écrire les exigences",
+      "rend": "Le processus actuel décrit et mesuré, ses goulets, ses causes sur lesquelles on peut agir, sa stabilité, et ce qu'on simplifie ou standardise avant toute automatisation. Puis les exigences : ce que le dispositif doit faire, numérotées, classées et testables, sans nommer de solution.",
+      "fichier": "20-diagnostic.md",
+      "competences": [
+        {
+          "nom": "consultant-ia:auditer-processus",
+          "role": "par défaut",
+          "pourquoi": "Elle décrit comment le travail se fait vraiment, le mesure, trie chaque étape (éliminer, simplifier d'abord, automatiser, déléguer à l'IA, garder) et empêche d'automatiser une mauvaise habitude."
+        },
+        {
+          "nom": "consultant-ia:rediger-cahier-des-charges",
+          "role": "les exigences",
+          "pourquoi": "Une fois le diagnostic validé, elle écrit les exigences sans nommer de solution, pour comparer les options sur un même énoncé (son mode exigences). La même compétence écrit plus loin, à l'étape 8, la spécification de l'option retenue."
+        },
+        {
+          "nom": "operations:process-doc",
+          "role": "le mode opératoire",
+          "pourquoi": "Rédige le processus cible avec ses rôles, ses exceptions et ses variantes une fois l'audit fait ; elle vit à l'étape d'arrivée et de procédures du workflow « Recruter un collaborateur ».",
+          "maison": "recruter"
+        }
+      ],
+      "regle": "On mesure avant de décrire la cible, et un processus instable se stabilise avant de s'automatiser. Si le processus passe par un outil lisible, on lit d'abord ses traces, en lecture seule et sur une période nommée : l'entretien confirme ce qu'elles montrent et cherche le reste. Sans consultant dans la conversation, l'agent ne se connecte à aucun outil : il lit les documents que la personne joint. Le diagnostic validé, les exigences s'écrivent dans 30-exigences.md, sans nommer de solution avant de comparer des options : c'est le mode exigences de la compétence de rédaction, dont le mode spécification est repris à l'étape 8. L'étape n'est faite que quand les deux fichiers existent.",
+      "cas": [],
+      "taches": [
+        {
+          "slug": "auditer-un-crm",
+          "titre": "Auditer un CRM",
+          "competences": [
+            {
+              "nom": "consultant-ia:auditer-crm",
+              "pourquoi": "Quand le cas touche à un CRM : un audit en lecture seule sur quatre volets, un bilan priorisé en annexe du diagnostic, puis les annexes du cahier des charges pour une mise en place ou une refonte."
+            }
+          ],
+          "reserve": []
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "slug": "optimiser-le-processus",
+      "titre": "Optimiser le processus",
+      "rend": "Le processus simplifié avant toute spécification : les pertes repérées (attentes, reprises, étapes sans valeur, tâches manuelles), ce qu'on supprime, regroupe ou standardise, l'état cible et le gain chiffré par cycle.",
+      "fichier": "35-optimisation.md",
+      "competences": [
+        {
+          "nom": "operations:process-optimization",
+          "role": "par défaut",
+          "pourquoi": "Elle part du processus décrit à l'étape 3, repère les pertes (attentes, reprises, étapes sans valeur, tâches manuelles), dessine l'état cible et chiffre le gain par cycle : on automatise le processus simplifié, pas une mauvaise habitude. Très courte (1 Ko, sans références) : le gros du tri est déjà fait par l'audit de l'étape 3.",
+          "maison": "ameliorer-le-parcours-client"
+        }
+      ],
+      "regle": "On optimise avant de spécifier : supprimer ce qui ne sert à rien, regrouper, standardiser, et seulement ensuite choisir ce qu'on automatise. On part du diagnostic et des relevés de l'étape 3 ; un gain chiffré dit s'il est relevé ou estimé. Si l'optimisation change le processus, les exigences de 30-exigences.md se relisent avant de comparer des options. Le résultat s'écrit dans 35-optimisation.md et sert de base aux options de l'étape 6.",
+      "cas": []
+    },
+    {
+      "n": 5,
+      "slug": "strategie-d-automatisation",
+      "titre": "Choisir la stratégie d'automatisation",
+      "rend": "Le verdict sur le fond (faut-il automatiser, standardiser d'abord, assister l'humain ou ne rien construire), le type de solution et la plateforme, avec le contre-argument et la condition d'arrêt.",
+      "fichier": "40-solutions.md",
+      "competences": [
+        {
+          "nom": "consultant-ia:concevoir-solution",
+          "role": "par défaut",
+          "pourquoi": "Elle pose d'abord la stratégie d'automatisation (faire ou non, quel type de solution, sur quelle plateforme) avant de comparer des options, et recommande avec le contre-argument, la condition d'arrêt et un repli."
+        }
+      ],
+      "regle": "Ne rien construire est une option à part entière, et la plus simple qui tienne gagne. Une solution part de l'automatisation : les règles stables d'abord, l'IA là où il faut comprendre, classer ou rédiger. L'IA augmente l'automatisation et l'humain, et un geste à risque garde une validation humaine. Prix et capacités des plateformes se revérifient le jour même. Cette étape ne pose que les trois décisions de stratégie dans 40-strategie.md (faire ou non, type de solution, plateforme) ; l'étape 6 déroule le reste de la compétence et écrit 40-solutions.md, où la stratégie est reprise en tête.",
+      "cas": [],
+      "taches": [
+        {
+          "slug": "arbitrer-la-plateforme",
+          "titre": "Arbitrer la plateforme",
+          "competences": [
+            {
+              "nom": "automation-strategy",
+              "pourquoi": "Pour approfondir le choix d'automatiser ou non, d'acheter ou de construire, la plateforme et le coût de maintien. Capacités et prix se revérifient le jour même."
+            }
+          ],
+          "reserve": []
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "slug": "concevoir",
+      "titre": "Concevoir la solution et comparer les options",
+      "reprend": 5,
+      "rend": "Des options réellement différentes comparées sur une matrice (couverture des exigences, coûts, fiabilité, données, dépendance, délai), une recommandation et, si un logiciel du marché entre en jeu, ses risques et sa réversibilité.",
+      "fichier": "40-solutions.md",
+      "competences": [
+        {
+          "nom": "operations:vendor-review",
+          "role": "le fournisseur",
+          "pourquoi": "Compare des fournisseurs sur le coût complet, les risques, la continuité et la sortie : ce qu'il faut quand une option repose sur un logiciel du marché."
+        }
+      ],
+      "regle": "On reprend la compétence de l'étape 5 pour la partie options : au moins une option sans construction et les outils déjà en place. La revue du fournisseur ne s'ouvre que si une option en dépend. Le résultat s'écrit dans 40-solutions.md.",
+      "cas": [
+        "definir-un-systeme-ia-deployable-et-gouverne"
+      ],
+      "ressources": [
+        {
+          "nom": "The Claude Operations Team, sept agents du premier email à la facture payée",
+          "auteur": "Anthony Whitaker",
+          "lien": "https://impartial-money-fa9.notion.site/The-Claude-Operations-Team-Seven-Agents-From-First-Email-to-Paid-Invoice-3eb9112c6a1f803da383dd9c8a821363",
+          "apporte": "Sept agents Claude autour d'un cerveau commun de fichiers (boîte partagée, devis, factures, relances) : un exemple concret d'équipe d'agents à comparer aux options.",
+          "recue_le": "2026-10-17",
+          "source": "SRC-034",
+          "publie": false
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "slug": "chiffrer",
+      "titre": "Chiffrer la rentabilité",
+      "rend": "Le business case en trois scénarios : gains, coûts, maintenance, délai de retour, hypothèses visibles.",
+      "fichier": "50-rentabilite.md",
+      "competences": [
+        {
+          "nom": "consultant-ia:chiffrer-rentabilite",
+          "role": "par défaut",
+          "pourquoi": "Elle chiffre avec des hypothèses visibles, maintenance comprise, selon le critère d'investissement de l'entreprise ; son ordre de grandeur sert aussi à classer un portefeuille."
+        }
+      ],
+      "regle": "Un gain ne se promet pas sans mesure de départ. Les hypothèses sont écrites et chaque chiffre dit s'il est estimé ou relevé. Sans consultant dans la conversation, un consultant relit ce chiffrage avant que la personne le valide.",
+      "cas": [
+        "evaluer-le-benefice-les-couts-et-les-risques-d-un-scenario-ia"
+      ],
+      "ecartees": [
+        {
+          "nom": "rentabilite-ciblage",
+          "raison": "Elle chiffre une mission de ciblage B2B (crédits de données, TJM, commission), pas un projet d'IA : le business case d'une solution se chiffre avec consultant-ia:chiffrer-rentabilite."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "slug": "specifier-et-planifier",
+      "titre": "Spécifier et planifier",
+      "reprend": 3,
+      "rend": "La spécification de l'option retenue (étapes, données, erreurs, tests, porte et pilote, indicateurs), et le plan de déploiement soumis à un pré-mortem.",
+      "fichier": "60-specification.md",
+      "competences": [
+        {
+          "nom": "consultant-ia:planifier-deploiement",
+          "role": "le plan",
+          "pourquoi": "Elle ordonne en lots courts avec porte, pilote, adoption et mesure, puis soumet le plan à un pré-mortem avant de s'engager ; en début de mission, elle ordonne aussi le portefeuille en feuille de route."
+        },
+        {
+          "nom": "product-management:write-spec",
+          "role": "la spécification produit",
+          "pourquoi": "Structure la spécification et ses critères d'acceptation quand la solution devient un produit interne suivi ; elle vit à l'étape d'écriture du produit du workflow « Créer une app » (`/router-creer-une-app`).",
+          "maison": "creer-une-app"
+        }
+      ],
+      "regle": "On reprend la compétence de rédaction de l'étape 3, en mode spécification, pour l'option retenue (60-specification.md), après le chiffrage ; le plan de déploiement suit dans 70-plan.md et s'écrit avant toute construction. La spécification dit les cas de panne, les contrats d'entrée et de sortie et les cas de refus. Sans consultant dans la conversation, un consultant relit la spécification et le plan avant que la personne les valide, et le parcours s'arrête ici : construire, tester, mettre en service et mesurer ne se font pas dans ce mode. L'étape n'est faite que quand les deux fichiers existent.",
+      "cas": [
+        "formaliser-un-besoin-produit-en-specifications-testables"
+      ],
+      "taches": [
+        {
+          "slug": "evaluer-les-risques",
+          "titre": "Évaluer les risques",
+          "competences": [
+            {
+              "nom": "operations:risk-assessment",
+              "pourquoi": "Repérer les risques d'un projet et prévoir comment les réduire."
+            }
+          ],
+          "reserve": []
+        }
+      ]
+    }
+  ]
+}
