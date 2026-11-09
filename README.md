@@ -162,10 +162,11 @@ quel) et une section « Pour la base de questions » ; une question reprise sous
 faire refuser la note. La méthode est
 `skills/mener-entretien-ia/references/agent-en-ligne.md`.
 
-Après le bilan, la suite peut se faire en ligne elle aussi. Quand le consultant la débloque, un agent hébergé reprend le
-pré-audit et mène les étapes 1 à 7 par écrit, avec la personne seule : le même ordre, les mêmes compétences et les mêmes
-livrables que la mission accompagnée, une validation par étape, et le chiffrage, la spécification et le plan relus par
-le consultant avant qu'elle les voie. La méthode est `skills/router-mission-ia/references/parcours-en-ligne.md`. L'hôte
+Après le bilan, la suite peut se faire en ligne elle aussi. Un agent hébergé reprend le pré-audit et mène par écrit,
+avec la personne seule, la découverte jusqu'au bilan chiffré (`00` à `04`) : tous les cas d'usage, chacun chiffré à
+partir des volumes déclarés avec sa solution la plus simple, avec ou sans IA, et ce qu'il faudra mesurer, puis les
+prochaines étapes avec le consultant. Il s'arrête là : le cahier des charges, la spécification et le plan (`30`, `60`,
+`70`) se font ensuite avec le consultant, après l'heure d'audit. La méthode est `skills/router-mission-ia/references/parcours-en-ligne.md`. L'hôte
 suit l'avancement dans le dossier de mission, jamais dans les messages de l'agent, et contrôle la forme de chaque
 livrable contre son modèle, sans IA :
 

@@ -126,8 +126,8 @@ Chaque ligne se calcule à la lecture :
   repart par `cadrer-besoin`, avec sa fiche de `02-portefeuille.md`.
 - Un pré-audit en ligne fini, pour tout compte connecté → la même porte, menée par écrit par un agent hébergé, sans
   consultant dans la conversation : `references/parcours-en-ligne.md` (questions de la base, une validation par étape,
-  en découverte dix cas et trois propositions, situés grâce à `references/carte-des-workflows.md`, le cas choisi sur
-  accès, `50`, `60` et `70` relus par le consultant avant la personne).
+  de `00` à `04` pour les deux portes : tous les cas, chiffrés, la solution la plus simple, trois propositions, puis les
+  prochaines étapes avec le consultant ; `10` à `70` se mènent ensuite avec lui, jamais en ligne).
 
 ### 3. Lancer l'étape suivante
 
