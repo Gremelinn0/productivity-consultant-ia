@@ -66,8 +66,8 @@ recentré le 09/11/2026 sur le bilan chiffré (« Au bilan chiffré »).
    mesurer ; chacun dit d'où il vient (la personne, la liste des meilleurs cas, la recherche web, la carte). L'agent
    propose les trois meilleurs ; la phrase de la personne sur ce classement est la validation de `02`.
    `03-chiffrage.md` chiffre l'ordre de grandeur de chaque cas, en Python (règle 8).
-   **`04`, les prochaines étapes avec Florent.** `04-feuille-de-route.md` suit son modèle (`planifier-deploiement`,
-   partie A), et l'agent le présente comme « les prochaines étapes avec Florent » : les cas notés, puis une vague 0,
+   **`04`, les prochaines étapes avec le consultant.** `04-feuille-de-route.md` suit son modèle (`planifier-deploiement`,
+   partie A), et l'agent le présente comme « les prochaines étapes avec le consultant » : les cas notés, puis une vague 0,
    l'heure d'audit avec le consultant, où se mènent ensuite le cahier des charges, la spécification et le plan du cas
    retenu ; ce qui manque pour aller plus loin (données, accès au CRM, documents) et qui le fournit. Ni prix, ni date.
    L'agent ne construit rien : le bilan prépare l'heure d'audit et la proposition.

@@ -1,6 +1,6 @@
 # Archive du 2026-11-09 : construire-solution et tester-solution
 
-Décision de Florent, 09/11/2026 : le pack Conseil IA ne fait que le conseil.
+Décision du mainteneur, 09/11/2026 : le pack Conseil IA ne fait que le conseil.
 
 ## Provenance
 - `construire-solution/` : ancien `skills/construire-solution/` (SKILL.md, references/garde-fous.md, references/modeles.md).
@@ -21,7 +21,7 @@ dans `ETAPES_COMPLEMENTAIRES` et la liste de contrôle des noms dépréciés de 
 
 ## Ajout du 2026-11-09 (soir) : piloter-mise-en-service
 
-Décision de Florent, 09/11/2026, définitive : la mise en service quitte le pack Conseil IA comme `construire-solution`
+Décision du mainteneur, 09/11/2026, définitive : la mise en service quitte le pack Conseil IA comme `construire-solution`
 et `tester-solution` (le conseil ne construit rien et n'agit pas dans les outils réels ; il planifie, évalue et mesure).
 
 ### Provenance
