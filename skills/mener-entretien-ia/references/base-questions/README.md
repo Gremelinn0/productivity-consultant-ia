@@ -24,7 +24,7 @@ traverse ; ce que veut le client se choisit selon l'objectif de la demande.
 
 | Sujet | Préfixe | Quand l'ouvrir |
 |---|---|---|
-| [La découverte avec la direction](decouverte-direction.md) | DI | Aucun besoin nommé : où l'IA peut aider, vu par la direction |
+| [La découverte avec la direction](decouverte-direction.md) | DI | Aucun besoin nommé : ce qui peut s'automatiser, avec ou sans IA, vu par la direction |
 | [La découverte avec les équipes](decouverte-equipes.md) | EQ | Aucun besoin nommé : le travail réel des équipes, tâche par tâche |
 
 #### Cadrer

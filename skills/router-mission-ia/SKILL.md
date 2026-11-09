@@ -2,7 +2,7 @@
 name: router-mission-ia
 description: >-
   Quand une mission de conseil IA ou d'automatisation commence ou reprend — un besoin à automatiser,
-  une entreprise qui demande « où l'IA peut-elle nous aider ? », un audit IA, une stratégie
+  une entreprise qui demande « où l'IA peut-elle nous aider ? » ou « qu'est-ce qu'on peut automatiser ? », un audit IA, une stratégie
   d'automatisation à bâtir, ou « où en est la mission ? » — → afficher l'état du dossier de mission,
   choisir la porte (besoin connu ou découverte), lancer l'étape suivante du pack consultant-ia (découvrir,
   cadrer, décider, planifier, puis mesurer le gain), passer la main au pack Créer un agent IA pour construire,

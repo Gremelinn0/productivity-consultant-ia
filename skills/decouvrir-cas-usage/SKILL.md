@@ -1,13 +1,14 @@
 ---
 name: decouvrir-cas-usage
 description: >-
-  Quand une entreprise veut savoir où l'IA peut l'aider sans pouvoir nommer un processus (« où
-  peut-on utiliser l'IA chez nous ? », « on perd du temps mais on ne sait pas où », « trouvez-nous
+  Quand une entreprise veut savoir ce qu'elle peut et devrait automatiser, avec ou sans IA, sans
+  pouvoir nommer un processus (« où peut-on utiliser l'IA chez nous ? », « qu'est-ce qu'on pourrait
+  automatiser ? », « on perd du temps mais on ne sait pas où », « trouvez-nous
   des cas d'usage ») → brancher le contexte, cartographier les tâches réelles des équipes, les trier
   en cinq issues (éliminer, simplifier d'abord, automatiser, déléguer à l'IA, garder) et rendre un
   portefeuille de cas d'usage classés, avec la décision : quels cas creuser. Porte « on ne part
   d'aucun besoin » du pack consultant-ia ; chaque cas retenu entre ensuite par la porte « besoin
-  connu », à partir de cadrer-besoin. Triggers : « où l'IA peut nous aider », « découverte de cas
+  connu », à partir de cadrer-besoin. Triggers : « où l'IA peut nous aider », « qu'est-ce qu'on peut automatiser », « découverte de cas
   d'usage », « use case discovery », « cartographier les tâches », « portefeuille de cas d'usage »,
   « par où commencer avec l'IA », « opportunités d'automatisation », « AI opportunity assessment ».
 metadata:
@@ -32,11 +33,12 @@ metadata:
 
 ## Ce que cette compétence résout
 
-« Où l'IA peut-elle nous aider ? » n'est pas un besoin, c'est une question sur un travail que l'entreprise ne voit
+« Où l'IA peut-elle nous aider ? » n'est pas un besoin, et la réponse n'est pas forcément l'IA : la découverte cherche
+tout ce qui peut s'automatiser, avec ou sans IA, et tout ce qui peut simplement disparaître. C'est une question sur un travail que l'entreprise ne voit
 plus : la direction parle d'objectifs, les équipes de leurs journées, et personne ne met les deux côte à côte. Cette
 compétence part du travail réel : elle branche ce que l'entreprise fournit, recense les tâches, décide pour chacune
 si elle doit disparaître, être simplifiée d'abord, automatisée, confiée à l'IA ou rester humaine, puis rend une liste
-courte de cas d'usage classés.
+courte de cas d'usage classés, chacun avec la solution la plus simple qui suffit.
 
 Résultat attendu : trois documents (contexte, cartographie, portefeuille) et une décision — quels cas creuser. Pas
 de solution choisie, pas de chiffrage fin.
@@ -109,8 +111,8 @@ de solution choisie, pas de chiffrage fin.
    |---|---|---|
    | **Éliminer** | prend du temps, apporte peu, personne ne remarquerait sa disparition ; ou née d'un défaut dont on peut supprimer la cause | souvent le gain le plus rapide : on supprime, on ne construit rien |
    | **Simplifier d'abord** | règles floues ou non écrites, tâche faite de plusieurs façons, étape mécanique d'un processus instable | standardiser ou simplifier, re-mesurer, puis reclasser la tâche dans une autre issue |
-   | **Automatiser** | même schéma à chaque fois, relie plusieurs outils, règles stables | on construit une fois, puis on surveille |
-   | **Déléguer à l'IA** | processus clair, résultat contrôlable | l'IA prépare ou exécute, un humain valide si nécessaire |
+   | **Automatiser** | même schéma à chaque fois, relie plusieurs outils, règles stables | sans IA : la forme la plus simple d'abord (une règle de l'outil déjà en place, CRM ou messagerie ; un flux sans code ; un script) ; on construit une fois, puis on surveille |
+   | **Déléguer à l'IA** | processus clair, résultat contrôlable, et une part qu'une règle ne sait pas faire : lire, rédiger ou juger un texte libre | l'IA prépare ou exécute, un humain valide si nécessaire ; si une règle suffit, c'est « Automatiser » |
    | **Garder** | jugement, relation, négociation, décision importante | l'IA peut préparer, comparer, challenger, sans porter la responsabilité |
 
    « Simplifier d'abord » n'est pas une destination. Des règles floues ne donnent jamais « Automatiser ». Faire

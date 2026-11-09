@@ -118,6 +118,7 @@ simplification.*
 - **Limites et validation humaine** : cas ambigus, qui valide, contraintes.
 - **Preuve** : observé ou appuyé par une pièce `[F]` (ligne de `01`, source) · déclaré de mémoire `[H]` (qui peut le confirmer).
 - **Déjà disponible** : outil en place, modèle, brique du marché, rien.
+- **Solution la plus simple qui suffit** : ne rien construire · une règle de l'outil en place (CRM, messagerie) · un flux sans code · un script · un agent IA ; l'IA seulement si une règle ne suffit pas, et pourquoi.
 
 ## 3. Recommandation
 *À éliminer d'abord, sans IA : les tâches triées « Éliminer » et les causes à supprimer avant d'automatiser,

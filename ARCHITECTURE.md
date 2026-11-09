@@ -4,7 +4,7 @@ Ce fichier est la carte canonique du pack. Si une compétence et cette carte se 
 corrige l'écart au lieu de documenter deux méthodes.
 
 Le pack porte **la méthode d'un conseil IA et automatisation : décider, puis mesurer** (décision du
-09/11/2026). Découvrir où l'IA peut aider, cadrer le besoin, auditer le travail réel (le CRM compris), écrire
+09/11/2026). Découvrir ce qui peut et devrait s'automatiser, avec ou sans IA, cadrer le besoin, auditer le travail réel (le CRM compris), écrire
 le cahier des charges, concevoir et comparer les options (dont ne rien construire), chiffrer, planifier,
 recommander l'assistant IA d'une équipe, puis, une fois la solution en service, mesurer ce qu'elle rapporte
 vraiment. **Construire, tester et mettre en service sont au pack « Créer un agent IA »** (plugin

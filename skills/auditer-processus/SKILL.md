@@ -112,9 +112,10 @@ d'abord.
      peut supprimer (à tester avant « Automatiser ») ;
    - **Simplifier d'abord** : règles floues, étape mécanique d'un processus instable, tâche faite de plusieurs façons :
      standardiser ou simplifier, re-mesurer, puis reclasser l'étape dans une des quatre autres issues ;
-   - **Automatiser** : même schéma à chaque fois, relie plusieurs outils, règles stables ;
-   - **Déléguer à l'IA** : processus clair, résultat contrôlable ; l'IA prépare ou exécute, un humain valide si
-     nécessaire ;
+   - **Automatiser** : même schéma à chaque fois, relie plusieurs outils, règles stables ; sans IA, la forme la plus
+     simple d'abord (une règle de l'outil en place, un flux sans code, un script) ;
+   - **Déléguer à l'IA** : processus clair, résultat contrôlable, et une part qu'une règle ne sait pas faire (lire,
+     rédiger ou juger un texte libre) ; l'IA prépare ou exécute, un humain valide si nécessaire ;
    - **Garder** : jugement, relation, négociation, décision importante ; l'IA peut préparer, comparer, challenger,
      sans porter la responsabilité.
 
