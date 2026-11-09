@@ -3,12 +3,17 @@
 Ce fichier est la carte canonique du pack. Si une compétence et cette carte se contredisent, on
 corrige l'écart au lieu de documenter deux méthodes.
 
-Le pack porte **la méthode d'une mission de conseil IA et automatisation, de l'idée à la solution
-mesurée** : comprendre le travail réel, trouver ce qui mérite d'être automatisé, comparer les
-solutions, chiffrer, spécifier et planifier, puis construire et tester dans un environnement d'essai,
-mettre en service action par action et mesurer ce que la solution rapporte vraiment. Il ne décide pas
-à la place du client, il ne touche aucun outil réel sans la validation de l'action précise (règle 7) et
-il ne détient aucune donnée propre à une entreprise : celles-ci vivent dans le dossier de la mission.
+Le pack porte **la méthode d'un conseil IA et automatisation : décider, puis mesurer** (décision du
+09/11/2026). Découvrir où l'IA peut aider, cadrer le besoin, auditer le travail réel (le CRM compris), écrire
+le cahier des charges, concevoir et comparer les options (dont ne rien construire), chiffrer, planifier,
+recommander l'assistant IA d'une équipe, puis, une fois la solution en service, mesurer ce qu'elle rapporte
+vraiment. **Construire, tester et mettre en service sont au pack « Créer un agent IA »** (plugin
+`creer-un-agent-ia`, workflow du site https://zerogravity.builders/marketplace/workflow/creer-un-agent-ia ; ou
+« Créer une app », https://zerogravity.builders/marketplace/workflow/creer-une-app, quand la solution est une
+application) : il reprend `60-specification.md` et `70-plan.md`, écrit 80, 85 et 90 dans le même dossier de
+mission, et `90-mise-en-service.md` validé au journal rouvre la mesure à 95. Le pack ne décide pas à la place du
+client, ne touche aucun outil réel sans la validation de l'action précise (règle 7) et ne détient aucune donnée
+propre à une entreprise : celles-ci vivent dans le dossier de la mission.
 
 ## Les trois statuts d'un nombre
 
@@ -32,7 +37,7 @@ un gain devient un fait : l'estimation de `50-rentabilite` reste intacte, le ré
 
 | Porte | Commande | Quand | Ce qu'on obtient |
 |---|---|---|---|
-| **1 — On part d'un besoin** | `/mission-besoin` | quelqu'un nomme un processus ou une douleur en une phrase (« automatiser la relance des factures », « un agent pour le support ») | besoin cadré → diagnostic → exigences → solutions comparées → rentabilité → spécification → plan → solution construite en essai → recette → mise en service → gain mesuré |
+| **1 — On part d'un besoin** | `/mission-besoin` | quelqu'un nomme un processus ou une douleur en une phrase (« automatiser la relance des factures », « un agent pour le support ») | besoin cadré → diagnostic → exigences → solutions comparées → rentabilité → spécification → plan ; puis, au pack Créer un agent IA, solution construite en essai → recette → mise en service ; puis gain mesuré ici |
 | **2 — On ne part d'aucun besoin** | `/mission-decouverte` | la question est « où l'IA peut-elle nous aider ? » | contexte branché → cartographie des tâches → tri → portefeuille de cas d'usage → ordre de grandeur → feuille de route ; chaque cas retenu entre ensuite par la porte 1 |
 
 **Frontière, décidable** : la personne peut-elle nommer le processus concerné en une phrase ?
@@ -55,30 +60,31 @@ PORTE 1 — besoin connu
   chiffrer-rentabilite (business case) ................ 50-rentabilite
   rediger-cahier-des-charges (spécification) .......... 60-specification
   planifier-deploiement (plan + pré-mortem) ........... 70-plan
-  CONSTRUIRE ET ÉPROUVER — environnement d'essai, données fictives ou anonymisées
-  construire-solution ................................. 80-construction
-  tester-solution ..................................... 85-recette
-  METTRE EN SERVICE ET MESURER — outils réels, action par action
-  piloter-mise-en-service ............................. 90-mise-en-service
+  AU PACK « CRÉER UN AGENT IA » (ou « Créer une app ») : même dossier de mission, 60 et 70 en entrée
+  construire (environnement d'essai, données fictives ou anonymisées) ... 80-construction
+  tester (recette) ..................................... 85-recette
+  mettre en service (outils réels, action par action) .. 90-mise-en-service
+  MESURER : de retour dans ce pack, quand 90 est validé au journal
   mesurer-gains ....................................... 95-mesure
 
 Cerveau des décisions, appelé là où une étape décide : router-consulting-strategy
 ```
 
-Un lot fait seulement de simplifications (`40-solutions` ne retient que l'option 0, rien à construire)
-passe de `70-plan` à `90-mise-en-service` sans 80 ni 85 : le registre de 90 ne porte alors que les
-actions sur les outils que ces simplifications modifient. L'ordre exact et les conditions d'ouverture
-de chaque étape sont dans `router-mission-ia`.
+La porte affiche 80, 85 et 90 comme « au pack Créer un agent IA » et dit comment l'appeler ; elle ne les lance
+plus elle-même. Un lot fait seulement de simplifications (`40-solutions` ne retient que l'option 0, rien à
+construire) passe de `70-plan` à `90-mise-en-service` sans 80 ni 85 : le registre de 90 ne porte alors que les
+actions sur les outils que ces simplifications modifient. L'ordre exact et les conditions d'ouverture de
+chaque étape sont dans `router-mission-ia` (et `references/passage-de-main.md`).
 
 Une équipe à équiper d'un assistant IA général, sans processus à automatiser, suit le parcours court : `10-besoin` porte la
 ligne `Parcours : déploiement d'un assistant`, le module `deployer-assistant-ia` écrit `90-mise-en-service/assistant-ia.md`
-et la charte, puis `90-mise-en-service` et `95-mesure` s'enchaînent, sans 20 à 85.
+et la charte ici, puis la mise en service est au pack Créer un agent IA et `95-mesure` reprend ici, sans 20 à 85.
 
-## Les douze compétences
+## Les neuf compétences du pack
 
 | Rôle | Compétence | Responsabilité unique |
 |---|---|---|
-| Porte | `router-mission-ia` | affiche l'état de la mission, choisit la porte, lance l'étape suivante, tient le journal des décisions |
+| Porte | `router-mission-ia` | affiche l'état de la mission, choisit la porte, lance l'étape suivante, passe la main au pack Créer un agent IA après le plan, tient le journal des décisions |
 | Découvrir | `decouvrir-cas-usage` | brancher le contexte, cartographier les tâches, les trier en cinq issues, rendre un portefeuille de cas classés |
 | Cadrer | `cadrer-besoin` | reformuler le besoin, vérifier que c'est le bon problème, fixer périmètre, contraintes et critères de succès, nommer le dossier du cas |
 | Auditer | `auditer-processus` | décrire le processus actuel, le mesurer, trouver les goulets et leurs causes, simplifier avant d'automatiser |
@@ -86,10 +92,17 @@ et la charte, puis `90-mise-en-service` et `95-mesure` s'enchaînent, sans 20 à
 | Concevoir | `concevoir-solution` | la stratégie d'automatisation (faire ou non, quel type de solution, quelle plateforme), de vraies options dont ne rien construire, une recommandation, une porte quand il faut standardiser avant de construire |
 | Chiffrer | `chiffrer-rentabilite` | ordre de grandeur d'un portefeuille ou business case d'une option, hypothèses visibles, scénarios |
 | Planifier | `planifier-deploiement` | feuille de route d'un portefeuille (avec son socle commun) ou plan de déploiement d'un cas : simplifications, porte, pilote, adoption, rythme des revues d'indicateurs, pré-mortem |
+| Mesurer | `mesurer-gains` | lire les relevés réels, les comparer au départ et au business case, déclarer un gain observé, décider : continuer, corriger, étendre ou arrêter |
+
+**Trois compétences rejoignent le pack Créer un agent IA** (décision du 09/11/2026). Leurs dossiers restent dans
+`skills/` le temps du passage, avec une ligne en tête de leur `SKILL.md` qui le dit ; leur contrat de fichiers (80,
+85, 90) ne change pas.
+
+| Rôle | Compétence | Responsabilité unique |
+|---|---|---|
 | Construire | `construire-solution` | construire par tranches contrôlables dans un environnement d'essai, sur des données fictives ou anonymisées, avec les garde-fous de la spécification ; rendre une version gelée et sa fiche d'exploitation |
 | Tester | `tester-solution` | la recette de chaque critère d'acceptation (preuves, sabotage), l'évaluation de l'IA à part, un verdict : « prêt », « prêt avec réserves » ou « pas prêt » |
 | Mettre en service | `piloter-mise-en-service` | le registre des actions sur les outils réels (chacune validée par le client, avec son retour arrière), le pilote, la bascule, l'adoption, le transfert à un exploitant nommé |
-| Mesurer | `mesurer-gains` | lire les relevés réels, les comparer au départ et au business case, déclarer un gain observé, décider : continuer, corriger, étendre ou arrêter |
 
 Aucune compétence ne refait le travail d'une autre ligne. Si une responsabilité a un propriétaire
 ci-dessus, on l'appelle. Le dossier `skills/` contient en plus `router-consulting-strategy`, qui arbitre
@@ -102,7 +115,7 @@ en dehors, puis remet au visiteur un bilan écrit pour lui. `auditer-crm` est le
 et son bilan en annexe de `20-diagnostic`, et les annexes CRM des exigences. Son agent, `agents/auditeur-crm.md`, mène
 l'audit en lecture seule et s'arrête avant toute action dans le CRM réel. `deployer-assistant-ia` est le module du
 parcours court : il ne possède aucune étape non plus ; il prépare le choix de l'assistant et du plan, la charte, le dossier
-de conformité et les indicateurs, que `piloter-mise-en-service` et `mesurer-gains` reprennent.
+de conformité et les indicateurs, que la mise en service du pack Créer un agent IA et `mesurer-gains` reprennent.
 
 ## Le cerveau des décisions
 
@@ -145,14 +158,14 @@ mission/
     40-solutions.md          dont la porte, quand on standardise avant de construire
     50-rentabilite.md
     60-specification.md
-    70-plan.md
-    80-construction.md       ce qui est construit en essai, écarts avec la spécification, version gelée
+    70-plan.md               fin du pack consultant-ia avant la mesure : 60 et 70 sont l'entrée du pack Créer un agent IA
+    80-construction.md       écrit par le pack Créer un agent IA : ce qui est construit en essai, écarts avec la spécification, version gelée
     80-construction/         versions, fiche d'exploitation, données d'essai, sorties simulées, livraison
     85-recette.md            preuves, défauts, évaluation de l'IA, verdict pour le pilote
     85-recette/              facultatif : preuves longues et jeu d'évaluation (EV-xx)
-    90-mise-en-service.md    registre des actions sur les outils réels, pilote, bascule, adoption, transfert
+    90-mise-en-service.md    écrit par le pack Créer un agent IA : registre des actions sur les outils réels, pilote, bascule, adoption, transfert
     90-mise-en-service/      parcours court d'un assistant IA : assistant-ia.md, charte-usage.md
-    95-mesure.md             relevés, gain observé, décision ; une version par revue
+    95-mesure.md             écrit ici, à partir de 90 validé au journal : relevés, gain observé, décision ; une version par revue
 ```
 
 Un besoin traité seul par la porte 1 n'a que `journal.md` et son dossier `cas-<slug>/`.
@@ -179,9 +192,9 @@ Un besoin traité seul par la porte 1 n'a que `journal.md` et son dossier `cas-<
 6. **Ce qui existe déjà passe avant ce qu'on construit.** Un outil en place, un modèle, une brique
    du marché : on le compare toujours aux options à construire.
 7. **Rien ne touche un outil réel sans la validation de l'action précise.** Le pack lit ce qu'on lui
-   donne, écrit dans `mission/`, construit et teste dans un environnement d'essai, avec des données
-   fictives ou anonymisées. Toute action sur un outil de l'entreprise (importer un flux, écrire dans un
-   logiciel, envoyer, publier) est proposée dans 90-mise-en-service avec son retour arrière, et ne se
+   donne et écrit dans `mission/`. Le pack Créer un agent IA construit et teste dans un environnement d'essai,
+   avec des données fictives ou anonymisées. Toute action sur un outil de l'entreprise (importer un flux, écrire
+   dans un logiciel, envoyer, publier) est proposée dans 90-mise-en-service avec son retour arrière, et ne se
    fait qu'après la validation de cette action par le client.
 8. **Relire chaque livrable avant de le remettre.** Avant la « Décision attendue », la compétence relit
    son livrable contre trois choses. Le besoin (`10-besoin`, ou `00-contexte` pour une découverte) : il
@@ -222,10 +235,10 @@ Un besoin traité seul par la porte 1 n'a que `journal.md` et son dossier `cas-<
   seul endroit, le protocole de la spécification. Les seuils du pilote sont distincts, et dits tels.
 - **La plateforme.** `40-solutions` nomme la plateforme ; si elle ne donne que la famille (flux sans
   code, scénario, script, agent), elle dit qui tranche la plateforme avant la construction. Dans ce cas,
-  la plateforme arrêtée par `70-plan` et confirmée par le décideur au journal fait foi ; sans elle,
-  `construire-solution` attend (question bloquante).
-- **L'environnement d'essai.** `construire-solution` le nomme une fois (`essai-<slug>`) ; `tester-solution`
-  et `piloter-mise-en-service` reprennent ce nom tel quel. Rien de réel ne peut en partir : la simulation
+  la plateforme arrêtée par `70-plan` et confirmée par le décideur au journal fait foi ; sans elle, la
+  construction, au pack Créer un agent IA, attend (question bloquante).
+- **L'environnement d'essai.** La construction (pack Créer un agent IA) le nomme une fois (`essai-<slug>`) ; la
+  recette et la mise en service reprennent ce nom tel quel. Rien de réel ne peut en partir : la simulation
   y est le mode par défaut.
 
 ## Brancher le contexte
@@ -242,9 +255,10 @@ Sources lues, dans cet ordre, et toujours nommées dans le livrable :
 
 ## Ce que le pack ne fait pas
 
-- Toucher un outil réel sans la validation de l'action précise. Il construit et teste dans un
-  environnement d'essai ; l'import en production, l'écriture dans un logiciel de l'entreprise, l'envoi
-  et la publication sont des actions du client, proposées une à une avec leur retour arrière.
+- Construire, tester ni mettre en service la solution : ces trois étapes sont au pack Créer un agent IA.
+- Toucher un outil réel sans la validation de l'action précise : l'import en production, l'écriture dans un
+  logiciel de l'entreprise, l'envoi et la publication sont des actions du client, proposées une à une avec leur
+  retour arrière dans la mise en service du pack Créer un agent IA.
 - Remplacer les entretiens : il les prépare et les synthétise. Quand le consultant ne peut pas les mener,
   `mener-entretien-ia` les fait mener par écrit par une IA ; la note qui en sort reste une source que le
   consultant relit, avec ses `[H]` à confirmer.
@@ -278,6 +292,8 @@ le parcours ne change pas.
   une grille de 15 points écrite avant l'essai : 14 contre 12. L'écart est sous le seuil de 3 points fixé
   d'avance. Il tient à des gains mieux qualifiés et à la maintenance comptée dans le coût complet. L'aveugle
   était imparfait : les livrables du pack se nommaient eux-mêmes.
+- Le passage de la main au pack Créer un agent IA (décision du 09/11/2026) n'a été parcouru sur aucune mission,
+  même fictive : il reprend les conditions d'ouverture de 80 à 95 d'avant la décision, sans les changer.
 - Dans une session chargée de nombreuses compétences, une demande de mission peut partir vers une autre
   compétence (essai du 13/10, dans `COMPAGNONS.md`) : une mission se commence par `/mission-besoin` ou
   `/mission-decouverte`.

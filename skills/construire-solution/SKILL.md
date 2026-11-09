@@ -16,11 +16,11 @@ metadata:
   owns: "le découpage en tranches, l'environnement d'essai, les garde-fous construits, la recherche d'un modèle existant avant de construire, le registre des écarts avec la spécification, le journal des versions, la fiche d'exploitation, la liste de ce qui reste au client"
   consumes: "60-specification (version lue), 40-solutions (option, plateforme, porte), 70-plan (lots, porte, limites du lot), 30-exigences et 50-rentabilite du cas ; mission/sources/ ; mission/journal.md ; COMPAGNONS.md et COMPLEMENTAIRES.md du pack"
 ---
+> Cette compétence rejoint le pack Créer un agent IA (décision du 09/11/2026) ; elle reste ici le temps du passage.
 
 # Construire la solution
 
 <!-- capitaliser:squelette-v1 -->
-
 <!-- dev-qa-link -->
 > 🔗 **Lien Dev / Test / QA.** Produit `mission/cas-<slug>/80-construction.md` et le dossier
 > `mission/cas-<slug>/80-construction/`. Preuve : le valideur déclare une version précise « prête pour la

@@ -17,6 +17,7 @@ metadata:
   owns: "le registre des actions sur les outils réels (identifiants A-xx ; cinq états : proposée, validée, faite, annulée, revenue en arrière), les décisions écrites de feu vert du pilote, de fin de pilote et de bascule, le journal du pilote et la surveillance renforcée, l'impact par rôle, les approbations, la formation et la communication réalisées, le transfert à l'exploitant"
   consumes: "mission/cas-<slug>/85-recette.md (verdict, réserves, défauts D-xx) ; 70-plan.md (lots, porte, pilote, adoption, exploitation) ; 60-specification.md (§6 droits, §9 secrets, §11 environnements, §13 pilote, §14 indicateurs, §17 maintenance) ; 80-construction.md et sa fiche d'exploitation ; 40-solutions.md (§1 condition d'arrêt, §10 porte) ; mission/journal.md ; les relevés que le client remet pendant le pilote"
 ---
+> Cette compétence rejoint le pack Créer un agent IA (décision du 09/11/2026) ; elle reste ici le temps du passage.
 
 # Piloter la mise en service
 

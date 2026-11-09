@@ -16,6 +16,7 @@ metadata:
   owns: "la couverture et l'exécution de la recette (tests ajoutés à la suite de ceux de 60), les preuves, le sabotage, le registre des défauts (D-xx, une seule série par cas : trouvés en recette, en pilote ou en exploitation), le jeu d'évaluation de l'IA (EV-xx) et son analyse, l'échelle des environnements, le verdict pour le pilote (trois libellés exacts)"
   consumes: "60-specification (version lue : critères, tests, seuils du pilote, rôle de l'IA), 30-exigences §9, 80-construction et son dossier (version gelée, essai, données, écarts, fiche), mission/journal.md"
 ---
+> Cette compétence rejoint le pack Créer un agent IA (décision du 09/11/2026) ; elle reste ici le temps du passage.
 
 # Tester la solution
 

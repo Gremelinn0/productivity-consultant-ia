@@ -1,10 +1,10 @@
 # consultant-ia
 
-**Le pack du consultant IA et automatisation, de l'idée à la solution mesurée** — douze compétences
-(plus un routeur de stratégie, un module CRM, un module de déploiement d'un assistant IA et un entretien guidé par IA) pour Claude Code et Cowork qui mènent une mission de bout en
-bout : comprendre le travail réel, trouver ce qui mérite d'être automatisé, comparer les solutions,
-chiffrer, spécifier et planifier, puis construire et tester dans un environnement d'essai, mettre en
-service action par action et mesurer ce que la solution rapporte vraiment.
+**Le pack du consultant IA et automatisation : décider, puis mesurer.** Neuf compétences
+(plus un routeur de stratégie, un module CRM, un module de déploiement d'un assistant IA et un entretien guidé par IA) pour Claude Code et Cowork qui mènent
+le conseil : comprendre le travail réel, trouver ce qui mérite d'être automatisé, comparer les solutions (dont ne
+rien construire), chiffrer, spécifier et planifier, puis, une fois la solution en service, mesurer ce qu'elle
+rapporte vraiment. Construire, tester et mettre en service sont au pack Créer un agent IA (voir plus bas).
 
 ---
 
@@ -31,7 +31,7 @@ Ce pack donne à l'IA la méthode d'un consultant : des étapes dans l'ordre, de
 
 | Vous… | Tapez | Le pack enchaîne |
 |---|---|---|
-| **avez un besoin** (« automatiser la relance des factures ») | `/mission-besoin <le besoin>` | besoin cadré → diagnostic du processus → exigences → solutions comparées → rentabilité → spécification → plan → construction en essai → recette → mise en service → mesure |
+| **avez un besoin** (« automatiser la relance des factures ») | `/mission-besoin <le besoin>` | besoin cadré → diagnostic du processus → exigences → solutions comparées → rentabilité → spécification → plan ; puis, au pack Créer un agent IA, construction en essai → recette → mise en service ; puis mesure ici |
 | **n'avez pas encore de besoin** (« où l'IA peut-elle nous aider ? ») | `/mission-decouverte` | contexte branché → cartographie des tâches → tri → portefeuille de cas d'usage → chiffrage → feuille de route |
 
 Chaque cas retenu par la découverte repart ensuite par la porte « besoin connu ».
@@ -49,10 +49,8 @@ flowchart TB
     S --> R["chiffrer-rentabilite<br/>business case"]
     R --> P["rediger-cahier-des-charges<br/>spécification"]
     P --> PL["planifier-deploiement<br/>plan + pré-mortem"]
-    PL --> K["construire-solution<br/>essai, données fictives"]
-    K --> T["tester-solution<br/>recette + évaluation de l'IA"]
-    T --> M["piloter-mise-en-service<br/>action par action"]
-    M --> G["mesurer-gains<br/>gain observé"]
+    PL --> H["au pack Créer un agent IA<br/>construire · tester · mettre en service"]
+    H --> G["mesurer-gains<br/>gain observé"]
   end
   F -- "chaque cas retenu" --> B
   CS["router-consulting-strategy<br/>options, contre-cas, conditions d'arrêt"] -.-> D
@@ -62,7 +60,19 @@ flowchart TB
   CS -.-> G
 ```
 
-## Les douze compétences
+## Après le plan : le pack Créer un agent IA
+
+Quand `70-plan.md` est validé, la mission passe au pack Créer un agent IA (plugin `creer-un-agent-ia`, workflow du site
+[Créer un agent IA](https://zerogravity.builders/marketplace/workflow/creer-un-agent-ia), ou
+[Créer une app](https://zerogravity.builders/marketplace/workflow/creer-une-app) quand la solution est une
+application). Il prend `60-specification.md` et `70-plan.md` en entrée, construit, teste et met en service, et écrit
+`80-construction.md`, `85-recette.md` et `90-mise-en-service.md` dans le même dossier de mission : le contrat des
+fichiers ne change pas. Quand `90-mise-en-service.md` est validé au journal, la mesure reprend ici
+(`mesurer-gains`, `95-mesure.md`). La porte affiche ces étapes « au pack Créer un agent IA » et dit comment l'appeler ;
+elle ne les lance plus elle-même. Les dossiers `construire-solution`, `tester-solution` et `piloter-mise-en-service`
+restent dans ce pack le temps que le pack Créer un agent IA les reprenne (décision du 09/11/2026).
+
+## Les neuf compétences du pack
 
 | Compétence | Ce qu'elle produit |
 |---|---|
@@ -74,10 +84,13 @@ flowchart TB
 | `concevoir-solution` | la stratégie d'automatisation (faire ou non, quel type de solution, quelle plateforme), des options réellement différentes, y compris ne rien construire, et une recommandation |
 | `chiffrer-rentabilite` | gains, coûts, maintenance, délai de retour, en trois scénarios et hypothèses visibles |
 | `planifier-deploiement` | feuille de route (avec son socle commun) ou plan de déploiement : simplifications, porte, pilote, adoption, mesure, pré-mortem |
-| `construire-solution` | la solution construite par tranches dans un environnement d'essai, sur des données fictives ou anonymisées, en version gelée, avec sa fiche d'exploitation |
-| `tester-solution` | la recette critère par critère, l'évaluation de l'IA à part, les défauts et un verdict : prêt, prêt avec réserves, pas prêt |
-| `piloter-mise-en-service` | chaque action sur un outil réel proposée avec son retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant |
 | `mesurer-gains` | la lecture des relevés réels, le gain observé, les coûts réels, et la décision : continuer, corriger, étendre ou arrêter |
+
+Rejoignent le pack Créer un agent IA, et restent ici le temps du passage : `construire-solution` (la solution
+construite par tranches dans un environnement d'essai, sur des données fictives ou anonymisées, en version gelée, avec
+sa fiche d'exploitation), `tester-solution` (la recette critère par critère, l'évaluation de l'IA à part, un verdict :
+prêt, prêt avec réserves, pas prêt) et `piloter-mise-en-service` (chaque action sur un outil réel proposée avec son
+retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant).
 
 ## Le module CRM
 
@@ -96,7 +109,7 @@ le consultant.
 
 Quand une entreprise veut équiper une équipe d'un assistant (Claude, ChatGPT, Copilot ou un autre) sans nommer de
 processus à automatiser, le pack prend un parcours court : la fiche besoin, puis `deployer-assistant-ia`, puis la mise en
-service et la mesure. Le module part de l'usage déjà là, compare l'option de ne rien ajouter et deux candidats sur des
+service au pack Créer un agent IA, puis la mesure ici. Le module part de l'usage déjà là, compare l'option de ne rien ajouter et deux candidats sur des
 faits relus le jour même aux pages officielles, écrit une charte d'une page, prépare le dossier de conformité sans
 conclure à la place du rôle compétent, liste les réglages, prévoit le pilote, la formation par rôle et le rendez-vous de
 pilotage. Il n'annonce aucun gain : la mesure le dira, sur relevé.
@@ -174,9 +187,9 @@ pour arbitrer, et gardent leur propre livrable.
   s'inscrit au journal de la mission.
 - **On observe le travail, jamais les personnes.** Aucune évaluation individuelle.
 - **Supprimer et simplifier avant d'automatiser ; ce qui existe déjà passe avant ce qu'on construit.**
-- **Rien ne touche un outil réel sans la validation de l'action précise** : le pack construit et teste
-  dans un environnement d'essai, sur des données fictives ou anonymisées ; chaque action sur un outil de
-  l'entreprise est proposée avec son retour arrière et ne se fait qu'après la validation du client
+- **Rien ne touche un outil réel sans la validation de l'action précise** : la construction et la recette se font
+  en environnement d'essai, sur des données fictives ou anonymisées, au pack Créer un agent IA ; chaque action sur un
+  outil de l'entreprise est proposée avec son retour arrière et ne se fait qu'après la validation du client
   (règle 7 d'[ARCHITECTURE.md](ARCHITECTURE.md)).
 
 Tous les livrables s'écrivent dans un dossier `mission/` à la racine de votre répertoire de travail.
@@ -271,8 +284,9 @@ Ce qui manque est écrit comme manquant, jamais supposé.
 
 ## Ce que le pack ne fait pas
 
-- Toucher un outil réel sans la validation de l'action précise : il construit et teste en environnement
-  d'essai, et les actions sur vos outils (importer, écrire, envoyer, publier) sont les vôtres, une à une.
+- Construire, tester ni mettre en service la solution : ces trois étapes sont au pack Créer un agent IA.
+- Toucher un outil réel sans la validation de l'action précise : les actions sur vos outils (importer, écrire,
+  envoyer, publier) sont les vôtres, une à une, dans la mise en service du pack Créer un agent IA.
 - Remplacer les entretiens ni décider à la place du client.
 - Relever à votre place : la mesure se lit sur les relevés que vous fournissez.
 
@@ -287,6 +301,8 @@ Ce qui manque est écrit comme manquant, jamais supposé.
   menée par une session avec le pack et par une session sans ; un autre modèle les a notées à l'aveugle sur
   15 points, avec une grille écrite avant l'essai : 14 contre 12. L'écart est sous le seuil de 3 points
   fixé d'avance. L'aveugle était imparfait : les livrables du pack se nommaient eux-mêmes.
+- Le passage de la main au pack Créer un agent IA (décision du 09/11/2026) n'a été parcouru sur aucune mission, même
+  fictive : il reprend les conditions d'ouverture de 80 à 95 d'avant la décision, sans les changer.
 - Dans une session chargée de nombreuses compétences, une demande peut partir vers une autre compétence :
   commencez une mission par `/mission-besoin` ou `/mission-decouverte` (essai dans
   [COMPAGNONS.md](COMPAGNONS.md)).

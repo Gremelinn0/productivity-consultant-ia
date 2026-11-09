@@ -12,7 +12,7 @@
     {
       "name": "consultant-ia",
       "source": "./",
-      "description": "Deux portes (besoin connu, découverte) et onze compétences d'étape, de la découverte à la mesure du gain : découvrir, cadrer, auditer, spécifier, concevoir, chiffrer, planifier, construire, tester, mettre en service, mesurer. Rien ne touche un outil réel sans la validation de l'action précise.",
+      "description": "Deux portes (besoin connu, découverte) et huit compétences d'étape : découvrir, cadrer, auditer, spécifier, concevoir, chiffrer, planifier, mesurer le gain. Construire, tester et mettre en service sont au pack Créer un agent IA. Rien ne touche un outil réel sans la validation de l'action précise.",
       "category": "productivity"
     }
   ]
