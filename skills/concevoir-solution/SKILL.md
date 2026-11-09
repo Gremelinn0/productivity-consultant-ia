@@ -190,8 +190,8 @@ Ligne de journal, au moment où le décideur tranche (exemple fictif) :
 - Calendrier, plan de simplification, constat de la porte, pilote planifié, formation, pré-mortem →
   `planifier-deploiement`.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.
-- Construire l'option retenue, en essai → `construire-solution`, qui reprend l'option et la plateforme de
-  cette fiche ; la recette → `tester-solution` ; toute action sur un outil de l'entreprise →
+- Construire l'option retenue, en essai → `construire-solution` du pack Créer un agent IA, qui reprend l'option et la
+  plateforme de cette fiche ; la recette → `tester-solution` (même pack) ; toute action sur un outil de l'entreprise →
   `piloter-mise-en-service`.
 - Pour une plateforme ou un fournisseur précis : `COMPAGNONS.md` du pack, lignes « Stratégie
   d'automatisation » et « Concevoir ». On ne dit s'en être servi que si on l'a réellement appelé ; sans

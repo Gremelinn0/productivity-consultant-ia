@@ -220,7 +220,7 @@ Lignes de journal, au moment où le demandeur tranche (exemples fictifs) :
   revues d'indicateurs après déploiement → `planifier-deploiement` ; ici on fixe chaque indicateur, sa décision, son
   départ, sa fréquence de lecture souhaitée et ses seuils.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.
-- Construire en essai → `construire-solution` ; recetter → `tester-solution` ; agir sur un outil réel →
+- Construire en essai → `construire-solution` ; recetter → `tester-solution` (ces deux-là au pack Créer un agent IA) ; agir sur un outil réel →
   `piloter-mise-en-service` ; mesurer le gain après déploiement → `mesurer-gains`. Ici on spécifie.
 - Pour approfondir un PRD de produit logiciel : `COMPAGNONS.md` du pack, ligne « Spécifier ». On ne dit
   s'en être servi que si on l'a réellement appelé ; sans compagnon, le modèle de la partie B est le repli maison.

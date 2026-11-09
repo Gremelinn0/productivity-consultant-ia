@@ -110,7 +110,7 @@ si elle est recoupée par un relevé côté métier. Sans mesure de départ dat�
 - **Mode de découverte.** Alerte · lecture · réclamation (ou retour d'un tiers). Chaque échec compte une fois, par le premier mode qui l'a trouvé.
 - **Ce qu'on en tire.** Le taux d'échec estimé (échecs ÷ n de l'échantillon au hasard : un petit n donne une fourchette large, on écrit n et on ne promet pas une précision que l'échantillon n'a pas) ; la part des échecs
   vus par une alerte ; les échecs silencieux, qui appellent chacun une alerte ou un contrôle de plus, à tester. Un échec qui atteint un client ou une écriture irréversible appelle une action immédiate (suspendre : `A-xx`).
-- **Composant d'IA.** À chaque revue et après tout changement de modèle ou de consignes, demander à `tester-solution` de rejouer le jeu d'évaluation sur la version en service : l'écart avec le résultat de la recette est
+- **Composant d'IA.** À chaque revue et après tout changement de modèle ou de consignes, demander à `tester-solution` (pack Créer un agent IA) de rejouer le jeu d'évaluation sur la version en service : l'écart avec le résultat de la recette est
   la dérive. Les cas réels échoués, anonymisés, s'ajoutent au jeu.
 - **Pré-mortem et risques.** Rapprocher les échecs et les incidents des histoires de 70 §8 et des `R-xx` : lesquelles se sont produites, quel signal a parlé. Une histoire non prévue s'ajoute au pré-mortem à la revue suivante.
 - **Incidents.** Une ligne datée par incident (détecté par, durée, effet, cause) ; leur coût de reprise alimente la ligne « incidents » du gain net ; un défaut de la solution prend un `D-xx`, un risque réalisé renvoie à son `R-xx`.
@@ -142,7 +142,7 @@ si elle est recoupée par un relevé côté métier. Sans mesure de départ dat�
   des droits ou des utilisateurs nouveaux ; des coûts ou des résultats qui bougent sans cause ; un modèle d'IA remplacé ou mis à jour par le fournisseur ; un processus amont qui a changé (nouvelle règle, nouveau format d'export).
 - *Effet sur la mesure.* La période concernée ne mesure plus la solution validée : elle est marquée « version non validée », ses indicateurs se lisent à part, et son gain ou sa perte ne s'attribue pas à la solution recettée.
 - *Conduite.* Dire le changement (date de la découverte, ce qui a changé, par qui si on le sait, effet sur les indicateurs) ; il s'écrit au journal comme un incident daté, rien n'est régularisé après coup. Demander au
-  propriétaire de choisir la suite, que `piloter-mise-en-service` inscrit en `A-xx` nouvelles, validées avant d'être faites : garder (tests concernés rejoués par `tester-solution`) ou défaire (retour arrière). Rappeler la
+  propriétaire de choisir la suite, que `piloter-mise-en-service` inscrit en `A-xx` nouvelles, validées avant d'être faites : garder (tests concernés rejoués par `tester-solution`, pack Créer un agent IA) ou défaire (retour arrière). Rappeler la
   règle : tout changement passe par une `A-xx` validée avant.
 - *Changement subi* (éditeur, fournisseur, processus amont) : même conduite, sans désigner de faute ; l'écrire à la date où on le constate, rejouer les tests, décider d'accepter ou de revenir.
 - *Approuvé mais non enregistré* : le propriétaire l'a décidé hors registre. Le journal l'écrit comme un incident daté ; la suite (garder ou défaire) est une `A-xx` validée avant d'être faite ; la mesure ne redevient

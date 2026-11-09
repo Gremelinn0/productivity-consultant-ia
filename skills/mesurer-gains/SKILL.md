@@ -96,7 +96,7 @@ et avec le business case ; une décision que le décideur peut renverser.
 6. **Lire de vrais cas.** Échantillon tiré avant lecture (au hasard, plus les réclamations et les cas à risque de 60 §12), lu par un rôle du client, jamais par le dispositif.
    Classer les échecs par catégorie (celles de la recette ; pour l'IA, celles des `EV-xx`) et par mode de découverte : alerte, lecture, réclamation. Un échec trouvé hors alerte est
    un échec silencieux : il appelle une alerte de plus. Rapprocher des histoires du pré-mortem (70 §8) et des risques `R-xx` : lesquels se sont produits, quel signal a parlé. Si la
-   solution contient de l'IA, demander à `tester-solution` de rejouer le jeu d'évaluation sur la version en service (`references/mesure.md`, §4).
+   solution contient de l'IA, demander à `tester-solution` (pack Créer un agent IA) de rejouer le jeu d'évaluation sur la version en service (`references/mesure.md`, §4).
 7. **Passer les trois cas difficiles** : adoption nulle ou presque, gain net devenu négatif, changement non approuvé. Pour chacun, écrire « non constaté », ou le constat et la
    conduite (`references/mesure.md`, §5).
 8. **Proposer la décision.** Règles par défaut `[H]` à confirmer par le décideur (`references/mesure.md`, §6) : continuer · corriger (révision : action, rôle, date de re-mesure) ·
@@ -160,7 +160,7 @@ Lignes de journal, au moment où le décideur tranche (exemples fictifs, une par
 
 - La mesure de départ, les causes → `auditer-processus`. Les formules, les hypothèses, le point mort, le business case → `chiffrer-rentabilite`. Les indicateurs, leurs seuils et leur
   attribution → `rediger-cahier-des-charges` (60 §14) ; un seuil manquant se corrige là, par version datée. Le rythme des revues, les actions aux seuils, le pré-mortem → `planifier-deploiement`.
-- Les actions de correction, d'extension ou de retrait sur des outils réels → `piloter-mise-en-service`. Une correction technique → `construire-solution`, puis `tester-solution`.
+- Les actions de correction, d'extension ou de retrait sur des outils réels → `piloter-mise-en-service`. Une correction technique → `construire-solution`, puis `tester-solution` (pack Créer un agent IA).
 - Le portefeuille : `02` → `decouvrir-cas-usage`, `03` → `chiffrer-rentabilite`, `04` → `planifier-deploiement`. L'état de la mission et le journal → `router-mission-ia`.
 - Hors du pack : installer des compteurs et collecter les données à la place du client, évaluer des personnes, conclure sur la conformité. Pour un outil de mesure précis ou un composant d'IA en
   production : `COMPAGNONS.md` du pack, ligne de l'étape 95 ; sans compagnon, la méthode ci-dessus est le repli maison.

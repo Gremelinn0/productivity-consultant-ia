@@ -94,14 +94,14 @@ et la charte ici, puis la mise en service est au pack Créer un agent IA et `95-
 | Planifier | `planifier-deploiement` | feuille de route d'un portefeuille (avec son socle commun) ou plan de déploiement d'un cas : simplifications, porte, pilote, adoption, rythme des revues d'indicateurs, pré-mortem |
 | Mesurer | `mesurer-gains` | lire les relevés réels, les comparer au départ et au business case, déclarer un gain observé, décider : continuer, corriger, étendre ou arrêter |
 
-**Trois compétences rejoignent le pack Créer un agent IA** (décision du 09/11/2026). Leurs dossiers restent dans
-`skills/` le temps du passage, avec une ligne en tête de leur `SKILL.md` qui le dit ; leur contrat de fichiers (80,
-85, 90) ne change pas.
+**Trois étapes rejoignent le pack Créer un agent IA** (décision du 09/11/2026). Construire (`construire-solution`) et
+tester (`tester-solution`) l'ont déjà rejoint : leurs dossiers sont archivés dans `.archive/2026-11-09/` et elles
+vivent là-bas sous leur nom court ; elles lisent `60-specification.md` et `70-plan.md` et écrivent
+`80-construction.md` et `85-recette.md` dans le même dossier de mission, le contrat ne change pas. Mettre en service
+reste ici, avec une ligne en tête de son `SKILL.md`, le temps que la décision soit prise.
 
 | Rôle | Compétence | Responsabilité unique |
 |---|---|---|
-| Construire | `construire-solution` | construire par tranches contrôlables dans un environnement d'essai, sur des données fictives ou anonymisées, avec les garde-fous de la spécification ; rendre une version gelée et sa fiche d'exploitation |
-| Tester | `tester-solution` | la recette de chaque critère d'acceptation (preuves, sabotage), l'évaluation de l'IA à part, un verdict : « prêt », « prêt avec réserves » ou « pas prêt » |
 | Mettre en service | `piloter-mise-en-service` | le registre des actions sur les outils réels (chacune validée par le client, avec son retour arrière), le pilote, la bascule, l'adoption, le transfert à un exploitant nommé |
 
 Aucune compétence ne refait le travail d'une autre ligne. Si une responsabilité a un propriétaire
@@ -274,9 +274,9 @@ condition où les appeler. Elles ne sont jamais copiées dans le pack. Une étap
 que si elle les a réellement appelées ; sans compagnon, elle suit sa méthode maison.
 
 `COMPLEMENTAIRES.md` liste de la même façon les compétences d'autres auteurs qui aident à concevoir
-l'architecture d'un système IA (agents, mémoire, intégrations, site) puis à fabriquer ses compétences, ses
-agents et sa mémoire, avec leur auteur, leur licence et leur commande d'installation. Elles sont
-facultatives aussi : le livrable reste celui de l'étape (`concevoir-solution` ou `construire-solution`) et
+l'architecture d'un système IA (agents, mémoire, intégrations, site), avec leur auteur, leur licence et leur
+commande d'installation. Elles sont
+facultatives aussi : le livrable reste celui de l'étape (`concevoir-solution`) et
 le parcours ne change pas.
 
 ## Ce qui reste imparfait
@@ -320,5 +320,5 @@ le parcours ne change pas.
 4. **README** — présentation et installation.
 5. **`COMPAGNONS.md`** — les compétences d'autres auteurs qui vont avec le pack, et leurs licences.
 6. **`COMPLEMENTAIRES.md`** — les compétences d'autres auteurs qui aident à concevoir l'architecture d'un
-   système IA puis à fabriquer ses compétences, ses agents et sa mémoire, avec leur commande d'installation.
+   système IA, avec leur commande d'installation.
 7. `examples/` — une mission fictive déroulée par les deux portes, jamais une source de méthode.

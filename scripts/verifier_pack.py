@@ -32,7 +32,9 @@ MAX_LIGNES = 260
 COMPLEMENTAIRES = "COMPLEMENTAIRES.md"
 ENTETE_COMPLEMENTAIRES = ["Étape", "Compétence", "À quoi elle sert dans une mission", "Installation",
                           "Auteur · licence"]
-ETAPES_COMPLEMENTAIRES = ("concevoir-solution", "construire-solution")
+ETAPES_COMPLEMENTAIRES = ("concevoir-solution",)  # construire-solution est au pack Créer un agent IA depuis le 09/11/2026
+# Compétences du pack Créer un agent IA (compétences globales, hors de ce dépôt) : citées comme renvois, jamais présentes ici.
+AU_PACK_CREER_UN_AGENT = {"construire-solution", "tester-solution"}
 LICENCES_ADMISES = {"MIT", "Apache-2.0"}
 PLACE_INTEGREE = "claude-plugins-official"  # connue de Claude Code sans `marketplace add`
 PHRASE_ROUTEUR = "Une autre compétence installée a répondu à la place de l'étape"
@@ -179,7 +181,7 @@ def controler_competence(dossier, noms):
             semble_competence = cite.endswith(("-ia", "-usage", "-besoin", "-processus", "-charges",
                                                 "-solution", "-rentabilite", "-deploiement",
                                                 "-service", "-gains", "-strategy"))
-            if semble_competence and cite not in noms and not cite.startswith("cas-"):
+            if semble_competence and cite not in noms and cite not in AU_PACK_CREER_UN_AGENT and not cite.startswith("cas-"):
                 ecart(f"{nom_fichier} : compétence inconnue `{cite}`")
 
 
@@ -287,8 +289,7 @@ def controler_complementaires(noms):
             ecart(f"{etape} : l'entrée « Compétences complémentaires » qui renvoie à {COMPLEMENTAIRES} manque")
         if "| Installation |" in competence:
             ecart(f"{etape} : la table de {COMPLEMENTAIRES} est recopiée dans la compétence")
-    for chemin in (COMPLEMENTAIRES, "README.md", "ARCHITECTURE.md", "skills/concevoir-solution/SKILL.md",
-                   "skills/construire-solution/SKILL.md"):
+    for chemin in (COMPLEMENTAIRES, "README.md", "ARCHITECTURE.md", "skills/concevoir-solution/SKILL.md"):
         for ancien in NOMS_DEPRECIES:
             if ancien in lire(RACINE / chemin):
                 ecart(f"{chemin} : cite « {ancien} », nom déprécié par son auteur")

@@ -143,7 +143,7 @@ tant qu'aucune question n'y a servi ; le cadrage et l'automatisation d'un proces
 - **Les grilles que le consultant remplit lui-même**, sans les poser : la stabilité d'un processus
   (`auditer-processus/references/modeles.md`, rubrique 5), la porte d'automatisation et les familles d'options
   (`concevoir-solution/references/criteres-et-options.md`), le plan de transmission (`planifier-deploiement`,
-  `70-plan.md`, rubrique 4) et la fiche d'exploitation (`construire-solution`). Les questions à poser pour la
+  `70-plan.md`, rubrique 4) et la fiche d'exploitation (`construire-solution`, pack Créer un agent IA). Les questions à poser pour la
   reprise du dispositif sont dans `transmission`.
 - **Les réglages d'un outil**, posés à la personne qui l'installe et non à l'entreprise (`propale-setup`).
 - **Les questions d'organisation** (un jour de rendez-vous, un accord de principe) et **les validations propres à

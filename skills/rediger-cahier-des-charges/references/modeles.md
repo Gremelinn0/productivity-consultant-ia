@@ -319,7 +319,7 @@ l'exécution attendue n'a pas eu lieu dans sa fenêtre, parce qu'une tâche qui 
 produit aucune erreur. Destinataire : un rôle nommé. Revue : qui lit le journal, à quel rythme.*
 
 ## 11. Environnements et versions
-*Un environnement de test séparé de la production (l'environnement d'essai, que `construire-solution` nomme une fois),
+*Un environnement de test séparé de la production (l'environnement d'essai, que `construire-solution` du pack Créer un agent IA nomme une fois),
 avec des données fictives ou anonymisées (ou le rejeu d'une situation réelle reconstituée sans donnée personnelle :
 le dire) ; une sauvegarde (export ou instantané) avant
 toute modification du dispositif en production ; une version numérotée à chaque changement ; un retour arrière :
@@ -349,7 +349,7 @@ anonymisées, ou rejeu d'une séance réelle reconstituée), avec quels critère
 *Périmètre réduit (qui, quoi, combien), durée, **mode — toujours écrit**, l'un des trois : *parallèle* (la méthode
 actuelle continue, le dispositif ne produit aucun effet réel : rien n'est envoyé ni écrit chez un tiers) ;
 *préparation avec validation* (le dispositif prépare, une personne valide chaque action : l'effet est réel dès cette
-validation) ; *réel*. Le mode décide de ce que la recette peut laisser au pilote : `tester-solution` ne rend
+validation) ; *réel*. Le mode décide de ce que la recette peut laisser au pilote : `tester-solution` (pack Créer un agent IA) ne rend
 « prêt » avec un critère Indispensable laissé au pilote que si le mode empêche tout effet réel tant qu'il n'est pas
 vérifié, c'est-à-dire en parallèle. Puis mesures relevées, seuils du pilote —
 généralisation, prolongation, arrêt — écrits à l'avance, et qui décide. Ce sont les seuils du pilote : ils sont

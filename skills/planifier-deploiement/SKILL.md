@@ -144,7 +144,7 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
 8. **Relire, puis finir par la décision attendue.** Toute formule en suspens (« on verra », « à
    définir ») devient une action, une hypothèse `[H]` avec son confirmateur, ou une question dans
    « Décision attendue ». Suite : chaque cas de la feuille de route entre par `cadrer-besoin` ; le plan
-   se lance par son premier lot, puis `construire-solution` ouvre la construction quand la porte est
+   se lance par son premier lot, puis `construire-solution` (pack Créer un agent IA) ouvre la construction quand la porte est
    constatée ou sans objet (une option 0 seule passe directement à `piloter-mise-en-service`). Quand le
    décideur tranche, ajouter une ligne à `mission/journal.md`.
 
@@ -211,7 +211,7 @@ pilote, bascule) citent la pièce qui les prouve :
   maintenance) → `rediger-cahier-des-charges` ; choix de l'option et définition de la porte →
   `concevoir-solution` ; processus actuel, ses mesures et ses simplifications → `auditer-processus` ; état de
   la mission et journal → `router-mission-ia`.
-- Construire en essai → `construire-solution` ; recetter → `tester-solution` ; mettre en service (actions sur
+- Construire en essai → `construire-solution` ; recetter → `tester-solution` (ces deux-là au pack Créer un agent IA) ; mettre en service (actions sur
   les outils, feu vert, bascule, adoption réalisée, transmission) → `piloter-mise-en-service` ; relire les
   relevés après déploiement → `mesurer-gains`. Ici on planifie et on cite ; on n'exécute pas.
 - Pour mettre en forme le retour arrière, la communication et l'exploitation : `COMPAGNONS.md` du pack,

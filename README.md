@@ -69,8 +69,8 @@ application). Il prend `60-specification.md` et `70-plan.md` en entrée, constru
 `80-construction.md`, `85-recette.md` et `90-mise-en-service.md` dans le même dossier de mission : le contrat des
 fichiers ne change pas. Quand `90-mise-en-service.md` est validé au journal, la mesure reprend ici
 (`mesurer-gains`, `95-mesure.md`). La porte affiche ces étapes « au pack Créer un agent IA » et dit comment l'appeler ;
-elle ne les lance plus elle-même. Les dossiers `construire-solution`, `tester-solution` et `piloter-mise-en-service`
-restent dans ce pack le temps que le pack Créer un agent IA les reprenne (décision du 09/11/2026).
+elle ne les lance plus elle-même. `construire-solution` et `tester-solution` ont quitté ce pack le 09/11/2026 ;
+`piloter-mise-en-service` y reste le temps que le pack Créer un agent IA le reprenne (décision en attente).
 
 ## Les neuf compétences du pack
 
@@ -86,11 +86,11 @@ restent dans ce pack le temps que le pack Créer un agent IA les reprenne (déci
 | `planifier-deploiement` | feuille de route (avec son socle commun) ou plan de déploiement : simplifications, porte, pilote, adoption, mesure, pré-mortem |
 | `mesurer-gains` | la lecture des relevés réels, le gain observé, les coûts réels, et la décision : continuer, corriger, étendre ou arrêter |
 
-Rejoignent le pack Créer un agent IA, et restent ici le temps du passage : `construire-solution` (la solution
-construite par tranches dans un environnement d'essai, sur des données fictives ou anonymisées, en version gelée, avec
-sa fiche d'exploitation), `tester-solution` (la recette critère par critère, l'évaluation de l'IA à part, un verdict :
-prêt, prêt avec réserves, pas prêt) et `piloter-mise-en-service` (chaque action sur un outil réel proposée avec son
-retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant).
+Sont au pack Créer un agent IA, sous leur nom court : `construire-solution` (la solution construite par tranches
+dans un environnement d'essai, avec sa fiche d'exploitation) et `tester-solution` (la recette critère par critère,
+l'évaluation de l'IA à part, un verdict). Leurs anciens dossiers sont archivés dans `.archive/2026-11-09/`.
+`piloter-mise-en-service` reste ici le temps que le pack Créer un agent IA le reprenne (décision en attente) : chaque action sur un outil réel proposée avec son
+retour arrière, le pilote, la bascule, l'adoption, le transfert à un exploitant.
 
 ## Le module CRM
 
@@ -206,8 +206,8 @@ une étape ne dit s'en être servie que si elle les a réellement appelées. San
 ## Compétences complémentaires (à installer à part)
 
 Quand l'option retenue est un système (des agents, une mémoire, des intégrations), des compétences d'autres
-auteurs aident à en dessiner l'architecture, puis à fabriquer ses compétences, ses agents et sa mémoire.
-Elles sont facultatives : le livrable reste celui de l'étape, et sans elles le parcours ne change pas. Le rôle
+auteurs aident à en dessiner l'architecture. Les compétences qui servent à fabriquer ses pièces sont au pack Créer
+un agent IA. Elles sont facultatives : le livrable reste celui de l'étape, et sans elles le parcours ne change pas. Le rôle
 de chacune, la version lue, l'auteur et la licence sont dans [COMPLEMENTAIRES.md](COMPLEMENTAIRES.md).
 
 **Concevoir l'architecture** : `system-design` et `architecture` (plugin `engineering` d'Anthropic),
@@ -226,16 +226,6 @@ README) :
 
 ```bash
 npx bmad-method install
-```
-
-**Fabriquer en essai** : `skill-creator` (une compétence), `agent-development` du plugin `plugin-dev` (un
-agent) et `memory-management` du plugin `productivity` (une mémoire).
-
-```bash
-/plugin install skill-creator@claude-plugins-official
-/plugin install plugin-dev@claude-plugins-official
-/plugin marketplace add anthropics/knowledge-work-plugins
-/plugin install productivity@knowledge-work-plugins
 ```
 
 Un plugin apporte d'autres compétences que celle citée et peut déclarer des connecteurs : n'installer que ce

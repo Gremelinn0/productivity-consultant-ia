@@ -1,8 +1,8 @@
 # Le passage de la main au pack Créer un agent IA
 
 Décision du 09/11/2026 : le pack consultant-ia décide et mesure ; construire, tester et mettre en service partent au
-pack Créer un agent IA (compétences construire-solution, tester-solution et piloter-mise-en-service, qui restent dans
-ce dossier le temps du passage). Le contrat des fichiers ne change pas : le dossier de mission reste le même, et le
+pack Créer un agent IA (compétences globales construire-solution et tester-solution, déjà parties ; piloter-mise-en-service
+reste dans ce dossier le temps que la décision soit prise). Le contrat des fichiers ne change pas : le dossier de mission reste le même, et le
 journal aussi.
 
 ## Comment l'appeler

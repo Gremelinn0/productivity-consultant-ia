@@ -175,7 +175,7 @@ le sujet `crm-parametrage` lui est fermé, il suppose une mission engagée.
 - Les questions vivent dans la base de `mener-entretien-ia` (`crm`, `crm-parametrage`) ; cette compétence n'en
   recopie aucune.
 - Toute action dans le CRM réel (archiver un segment, corriger un champ, couper un workflow) → `piloter-mise-en-service`,
-  action par action, avec son retour arrière. Le paramétrage lui-même → `construire-solution`, en environnement d'essai.
+  action par action, avec son retour arrière. Le paramétrage lui-même → `construire-solution` du pack Créer un agent IA, en environnement d'essai.
 - Les procédures propres à un éditeur (appels d'API, écrans, assistant intégré) relèvent d'une compétence de cet
   éditeur, installée à part ; l'audit en reprend les constats, pas les gestes.
 
