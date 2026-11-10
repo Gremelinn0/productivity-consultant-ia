@@ -128,12 +128,6 @@
               "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
             },
             {
-              "nom": "mckinsey-bcg-consulting:mckinsey-issue-tree-structuring",
-              "role": "autre choix",
-              "pourquoi": "Pour poser les questions du cas en arbre de trois branches (cinq au plus), avec une place pour les idées qui ne rentrent nulle part. Écrite en chinois.",
-              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
-            },
-            {
               "nom": "management-consulting",
               "role": "autre choix",
               "pourquoi": "Quand le besoin est plus stratégique que d'un seul processus : trois niveaux d'effort (réfléchir à voix haute, cas complet, livrable pour un comité), quarante-deux cadres et la règle de ne pas en appliquer un par réflexe.",
@@ -279,6 +273,7 @@
           "competences": [
             {
               "nom": "automation-strategy",
+              "role": "autre choix",
               "pourquoi": "Pour approfondir le choix d'automatiser ou non, d'acheter ou de construire, la plateforme et le coût de maintien. Capacités et prix se revérifient le jour même."
             }
           ],
@@ -449,6 +444,7 @@
           "competences": [
             {
               "nom": "operations:risk-assessment",
+              "role": "autre choix",
               "pourquoi": "Repérer les risques d'un projet et prévoir comment les réduire."
             }
           ],
