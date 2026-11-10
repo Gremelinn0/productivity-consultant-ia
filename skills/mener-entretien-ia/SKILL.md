@@ -131,6 +131,9 @@ lisent comme n'importe quelle autre, avec ses citations mot pour mot et des nomb
    - **en local** : la session Claude Code ou Codex de l'entreprise, pack installé. Elle a lu les dossiers à
      l'étape 2, pose à la personne seulement ce qui reste, une question à la fois, selon la même consigne, puis
      écrit le compte rendu au schéma dans un fichier JSON. Ce qu'elle a lu reste chez l'entreprise.
+
+   La façon de poser, dans les deux modes (hypothèses préparées, du large au précis, chiffres et exemples réels,
+   reformulation, question de fin) : `references/entretien-d-expert.md`.
 5. **À la fin, l'IA récapitule et fait valider** le récapitulatif par la personne, puis rend le compte rendu.
    L'hôte remplace la date, la durée et le guide par ce qu'il sait : le modèle ne connaît pas le jour.
 6. **Tirer la note** :

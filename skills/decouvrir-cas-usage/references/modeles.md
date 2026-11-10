@@ -100,6 +100,10 @@ la donnée et la personne qui la fournit (le cas est alors « À creuser »).*
 |---|---|---|---|---|---|
 | | | | | | |
 
+*Sous le tableau, « Impact et vitesse » : une ligne par cas, dans l'ordre du classement, au format de
+`matrice-impact-vitesse.md` (gain, vitesse en semaines, case de la matrice, pourquoi) ; les trois cas proposés en
+sont les trois premiers. Obligatoire dans le parcours en ligne.*
+
 ## 2. Fiches
 *Une fiche par tâche triée « Automatiser », « Déléguer à l'IA » ou « Simplifier d'abord » ; une tâche
 « Garder » seulement si l'IA y prépare, compare ou challenge sans décider (la fiche nomme qui décide). Pour

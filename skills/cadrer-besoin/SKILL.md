@@ -87,7 +87,7 @@ quelle décision la suite de la mission doit permettre.
    peut la confirmer, et continuer. On ne bloque que si la décision dépend entièrement de cette
    inconnue. Une valeur que le rédacteur propose (une cible, un seuil) reste `[H]` jusqu'à la validation ;
    acceptée, elle devient `[F]` et sa source est la ligne du journal.
-5. **Rédiger la fiche** avec le modèle ci-dessous. La citation de la rubrique 1 figure mot pour mot dans une
+5. **Rédiger la fiche** avec le modèle ci-dessous. Demande large ou plusieurs causes possibles : d'abord l'arbre de problèmes (`references/arbre-de-problemes.md`), dont la branche retenue nourrit les rubriques 3 et 10. La citation de la rubrique 1 figure mot pour mot dans une
    note de `mission/sources/` ; sinon la demande est reformulée, sans guillemets, et la fiche le dit.
 6. **Vérifier que c'est le bon problème** : la solution demandée règle-t-elle le problème posé ?
    une solution plus simple le réglerait-elle (supprimer une étape, configurer un outil déjà en

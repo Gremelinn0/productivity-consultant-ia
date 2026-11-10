@@ -38,13 +38,16 @@ recentré le 09/11/2026 sur le bilan chiffré (« Au bilan chiffré »).
    pré-audit sous `sources/pre-audit.md`. L'état se calcule depuis les fichiers, comme dans la porte, jamais de mémoire.
 2. **La porte.** Celle du pré-audit, mais un seul chemin : les deux portes mènent `decouvrir-cas-usage`, de `00` à
    `04`. En besoin connu, le processus nommé est le premier cas de `01` et `02`, cadré avec les questions de
-   `cadrer-besoin` ; l'agent cherche ensuite les autres cas.
+   `cadrer-besoin` ; l'agent cherche ensuite les autres cas. Quand le besoin décrit est large (« on perd du temps »),
+   il le découpe d'abord en branches et retient celle qui pèse le plus (`cadrer-besoin/references/arbre-de-problemes.md`).
 3. **Aucune question reposée.** Ce que le pré-audit dit déjà ne se redemande pas : le livrable le reprend et le note
    « dit au pré-audit ». Ces réponses restent `[H]` tant que la personne ne les a pas confirmées dans un livrable validé.
 4. **Les questions viennent de la base.** Pour chaque étape, celles de sa compétence et de la base
    (`skills/mener-entretien-ia/references/base-questions/`, lisible avec `entretien.py base --sujet <sujet>`),
    toutes celles qui manquent pour écrire le livrable, sans plafond (décision du 02/11), une seule chose par message,
-   comme l'agent en ligne. La personne peut en passer une. Jamais inventées. Une question qui manque à la base s'écrit dans `mission/sources/pour-la-base.md`
+   comme l'agent en ligne. La personne peut en passer une. Jamais inventées. Il les pose selon
+   `mener-entretien-ia/references/entretien-d-expert.md` (du large au précis, un exemple réel, une reformulation, sans
+   souffler la réponse) et finit chaque entretien par « Qu'aurais-je dû vous demander ? », seule question hors base. Une question qui manque à la base s'écrit dans `mission/sources/pour-la-base.md`
    (le consultant l'ajoutera ; la base est en lecture seule ici), et l'agent avance avec une hypothèse `[H]`.
 5. **Une étape, un livrable validé.** L'agent lit la compétence de l'étape (son `SKILL.md`, ses modèles), écrit le
    livrable à son chemin, puis le présente dans le chat : cinq à huit lignes dans la langue de la personne, ce qu'il
@@ -65,6 +68,9 @@ recentré le 09/11/2026 sur le bilan chiffré (« Au bilan chiffré »).
    quand des règles suffisent, de l'IA seulement là où il faut comprendre, classer ou rédiger) et ce qu'il faudra
    mesurer ; chacun dit d'où il vient (la personne, la liste des meilleurs cas, la recherche web, la carte). L'agent
    propose les trois meilleurs ; la phrase de la personne sur ce classement est la validation de `02`.
+   **Impact et vitesse.** Chaque cas est aussi noté sur sa vitesse, et `02` montre sous son tableau une ligne par cas,
+   gain, vitesse, case, pourquoi (`decouvrir-cas-usage/references/matrice-impact-vitesse.md`) : les trois proposés sont
+   les trois premiers de cette liste, ce qui rapporte vite d'abord.
    `03-chiffrage.md` chiffre l'ordre de grandeur de chaque cas, en Python (règle 8).
    **`04`, les prochaines étapes avec le consultant.** `04-feuille-de-route.md` suit son modèle (`planifier-deploiement`,
    partie A), et l'agent le présente comme « les prochaines étapes avec le consultant » : les cas notés, puis une vague 0,

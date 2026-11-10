@@ -134,6 +134,9 @@ de solution choisie, pas de chiffrage fin.
    - **Projets** : valeur haute mais facilité moyenne ou basse, ou risque qui impose des garde-fous ;
    - **À creuser** : une donnée manquante empêche de classer — écrire laquelle et qui la fournit ;
    - **À écarter** : valeur faible, risque disproportionné ou besoin déjà couvert — écrire la raison.
+
+   Pour ordonner les cas, noter aussi leur vitesse (temps pour livrer un premier résultat) : matrice impact et vitesse,
+   une ligne par cas, ce qui rapporte vite d'abord (`references/matrice-impact-vitesse.md`).
 10. **Recommander, puis s'arrêter sur la décision.** Recommander trois à cinq cas à faible effort et forte valeur,
     idéalement un par équipe concernée, et dire ce qui ferait changer cette recommandation. En ligne, sans consultant :
     tous les cas classés par rentabilité, chacun chiffré avec sa solution la plus simple, trois proposés, puis `03` et `04`
