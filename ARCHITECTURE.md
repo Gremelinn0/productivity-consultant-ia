@@ -276,7 +276,9 @@ Sources lues, dans cet ordre, et toujours nommées dans le livrable :
 
 `COMPAGNONS.md` liste les compétences d'autres auteurs qui vont plus loin sur une plateforme ou un outil
 précis (flux, scénario, agent codé, évaluation de l'IA, mise en service, mesure), avec leur licence et la
-condition où les appeler. Elles ne sont jamais copiées dans le pack. Une étape ne dit s'en être servie
+condition où les appeler ; sa section « Méthodes de conseil » (10/11/2026) nomme, étape par étape, les méthodes reconnues
+d'autres auteurs (McKinsey et BCG, `management-consulting`, BMad, `operations`) qui aident à raisonner, en autre choix à côté de la
+compétence de l'étape. Elles ne sont jamais copiées dans le pack. Une étape ne dit s'en être servie
 que si elle les a réellement appelées ; sans compagnon, elle suit sa méthode maison.
 
 `COMPLEMENTAIRES.md` liste de la même façon les compétences d'autres auteurs qui aident à concevoir

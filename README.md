@@ -200,8 +200,9 @@ Le détail des contrats est dans [ARCHITECTURE.md](ARCHITECTURE.md).
 
 [COMPAGNONS.md](COMPAGNONS.md) cite les compétences d'autres auteurs qui vont plus loin sur une
 plateforme ou un outil précis (flux n8n ou Make, agent codé, évaluation de l'IA, mise en service,
-mesure), avec leur licence et la condition où les appeler. Elles ne sont jamais copiées dans le pack, et
-une étape ne dit s'en être servie que si elle les a réellement appelées. Sans compagnon installé, chaque
+mesure), avec leur licence et la condition où les appeler. Pour raisonner à une étape, il nomme aussi des méthodes de
+conseil reconnues (McKinsey et BCG, BMad, le plugin `operations`), rangées à l'étape où elles servent. Elles ne sont
+jamais copiées dans le pack, et une étape ne dit s'en être servie que si elle les a réellement appelées. Sans compagnon installé, chaque
 étape suit sa méthode maison.
 
 ## Compétences complémentaires (à installer à part)

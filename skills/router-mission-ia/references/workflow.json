@@ -10,7 +10,7 @@
   ],
   "moment": "demarrer",
   "dossier_etat": "mission/",
-  "mis_a_jour": "2026-11-09",
+  "mis_a_jour": "2026-11-10",
   "methode": {
     "titre": "Pack consultant IA",
     "auteur": "Florent Maisoncelle (ZEROGRAVITY)",
@@ -48,8 +48,41 @@
             }
           ],
           "reserve": []
+        },
+        {
+          "slug": "comprendre-l-entreprise-vite",
+          "titre": "Comprendre l'entreprise avant de cartographier",
+          "competences": [
+            {
+              "nom": "mckinsey-bcg-consulting:mckinsey-research-methodology",
+              "role": "autre choix",
+              "pourquoi": "Pour comprendre une entreprise vite : lire ses documents publics d'un oeil critique, repérer les chiffres qui détonnent, chercher les meilleures pratiques de son secteur. Écrite en chinois, tirée d'un livre.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "trouver-et-ordonner-les-cas-en-seance",
+          "titre": "Trouver et ordonner les cas d'usage en séance",
+          "competences": [
+            {
+              "nom": "bmad-brainstorming",
+              "role": "autre choix",
+              "pourquoi": "Des techniques de créativité menées en séance, pour faire sortir des cas d'usage auxquels l'équipe n'aurait pas pensé.",
+              "maison": "cadrer-un-chantier"
+            },
+            {
+              "nom": "mckinsey-bcg-consulting:impact-speed-prioritization-matrix",
+              "role": "autre choix",
+              "pourquoi": "Pour ordonner les cas retenus sur une grille impact contre rapidité : les gains rapides d'abord, les gros chantiers ensuite, quand les moyens du client sont limités.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
         }
-      ]
+      ],
+      "departement": "Trouver"
     },
     {
       "n": 2,
@@ -74,11 +107,43 @@
             {
               "nom": "consultant-ia:mener-entretien-ia",
               "pourquoi": "Quand la personne répond seule : une IA mène l'entretien par écrit, avec les questions de la base, et rend une note au format du pack, que le consultant relit."
+            },
+            {
+              "nom": "mckinsey-bcg-consulting:expert-interviewing-mckinsey",
+              "role": "autre choix",
+              "pourquoi": "Pour un entretien mené en direct avec quelqu'un qui répond « je ne sais pas » : le faire soutenir par son supérieur, venir à deux, écouter sans guider.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "structurer-le-probleme",
+          "titre": "Structurer le problème",
+          "competences": [
+            {
+              "nom": "mckinsey-bcg-consulting:mckinsey-problem-solving-methodology",
+              "role": "autre choix",
+              "pourquoi": "Quand la demande est floue ou que le client s'est déjà fait son diagnostic : suspendre l'action, valider ou redéfinir le problème, partir des faits plutôt que d'une conviction. Écrite en chinois.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            },
+            {
+              "nom": "mckinsey-bcg-consulting:mckinsey-issue-tree-structuring",
+              "role": "autre choix",
+              "pourquoi": "Pour poser les questions du cas en arbre de trois branches (cinq au plus), avec une place pour les idées qui ne rentrent nulle part. Écrite en chinois.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            },
+            {
+              "nom": "management-consulting",
+              "role": "autre choix",
+              "pourquoi": "Quand le besoin est plus stratégique que d'un seul processus : trois niveaux d'effort (réfléchir à voix haute, cas complet, livrable pour un comité), quarante-deux cadres et la règle de ne pas en appliquer un par réflexe.",
+              "source": "gcamilo, gcamilo/management-consulting"
             }
           ],
           "reserve": []
         }
-      ]
+      ],
+      "departement": "Comprendre"
     },
     {
       "n": 3,
@@ -117,8 +182,41 @@
             }
           ],
           "reserve": []
+        },
+        {
+          "slug": "chercher-les-causes-qui-comptent",
+          "titre": "Chercher les causes qui comptent",
+          "competences": [
+            {
+              "nom": "mckinsey-bcg-consulting:hypothesis-driven-data-analysis",
+              "role": "autre choix",
+              "pourquoi": "Pour lire les relevés sans se fier aux corrélations : partir d'une hypothèse, vérifier le pourquoi avant d'agir sur ce que les données montrent. En anglais, avec exemples.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            },
+            {
+              "nom": "mckinsey-bcg-consulting:key-driver-analysis",
+              "role": "autre choix",
+              "pourquoi": "Quand les facteurs possibles sont trop nombreux : garder les quelques facteurs qui pèsent vraiment et n'analyser que ceux-là. Écrite en chinois.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "ecrire-les-exigences-d-un-produit-logiciel",
+          "titre": "Écrire les exigences d'un produit logiciel",
+          "competences": [
+            {
+              "nom": "bmad-prd",
+              "role": "autre choix",
+              "pourquoi": "Quand l'option retenue devient un produit logiciel suivi : un cahier des charges produit pensé avec le décideur (pour qui, quel enjeu), relu avant de le figer.",
+              "maison": "creer-une-app"
+            }
+          ],
+          "reserve": []
         }
-      ]
+      ],
+      "departement": "Comprendre"
     },
     {
       "n": 4,
@@ -135,7 +233,29 @@
         }
       ],
       "regle": "On optimise avant de spécifier : supprimer ce qui ne sert à rien, regrouper, standardiser, et seulement ensuite choisir ce qu'on automatise. On part du diagnostic et des relevés de l'étape 3 ; un gain chiffré dit s'il est relevé ou estimé. Si l'optimisation change le processus, les exigences de 30-exigences.md se relisent avant de comparer des options. Le résultat s'écrit dans 35-optimisation.md et sert de base aux options de l'étape 6.",
-      "cas": []
+      "cas": [],
+      "departement": "Comprendre",
+      "taches": [
+        {
+          "slug": "reperer-les-pertes-et-standardiser",
+          "titre": "Repérer les pertes et standardiser",
+          "competences": [
+            {
+              "nom": "mckinsey-bcg-consulting:process-standardization-for-leverage",
+              "role": "autre choix",
+              "pourquoi": "Avant d'automatiser ou de déléguer : écrire ce qui dépend du savoir-faire d'une personne pour que d'autres, ou un agent, puissent le faire.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            },
+            {
+              "nom": "mckinsey-bcg-consulting:qcd-issue-tree-production-analysis",
+              "role": "autre choix",
+              "pourquoi": "Une grille qualité, coût, délai pour chercher les pertes d'un processus de production ou de livraison. Écrite pour une usine : à adapter hors production.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
+        }
+      ]
     },
     {
       "n": 5,
@@ -163,8 +283,22 @@
             }
           ],
           "reserve": []
+        },
+        {
+          "slug": "verifier-que-la-solution-est-a-portee",
+          "titre": "Vérifier que la solution est à la portée du client",
+          "competences": [
+            {
+              "nom": "mckinsey-bcg-consulting:solution-feasibility-assessment",
+              "role": "autre choix",
+              "pourquoi": "Avant de recommander : vérifier que la solution est à la portée du client (ses forces, ses limites, ses blocages internes), quitte à choisir moins ambitieux. Écrite en chinois.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
         }
-      ]
+      ],
+      "departement": "Décider"
     },
     {
       "n": 6,
@@ -194,6 +328,41 @@
           "source": "SRC-034",
           "publie": false
         }
+      ],
+      "departement": "Décider",
+      "taches": [
+        {
+          "slug": "fixer-l-architecture-et-les-roles",
+          "titre": "Fixer l'architecture et les rôles",
+          "competences": [
+            {
+              "nom": "bmad-architecture",
+              "role": "autre choix",
+              "pourquoi": "Quand l'option est un système de plusieurs pièces : le court document des règles qui doivent rester vraies pour tout ce qu'on construira ensuite.",
+              "maison": "creer-une-app"
+            },
+            {
+              "nom": "strategy-skills-for-claude:operating-model-design",
+              "role": "autre choix",
+              "pourquoi": "Pour dire qui fait quoi une fois la solution en place : rôles, droits de décision, validations humaines, rythme de travail. Courte : un canevas, pas un guide.",
+              "source": "aapersh, aapersh/strategy-skills-for-claude"
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "presenter-la-recommandation",
+          "titre": "Présenter la recommandation",
+          "competences": [
+            {
+              "nom": "mckinsey-bcg-consulting:consulting-proposal-structures",
+              "role": "autre choix",
+              "pourquoi": "Pour présenter la recommandation : choisir entre le plan « conclusion d'abord » et le plan « histoire » selon le public et le temps dont on dispose. En anglais, avec exemples.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
+        }
       ]
     },
     {
@@ -217,6 +386,35 @@
         {
           "nom": "rentabilite-ciblage",
           "raison": "Elle chiffre une mission de ciblage B2B (crédits de données, TJM, commission), pas un projet d'IA : le business case d'une solution se chiffre avec consultant-ia:chiffrer-rentabilite."
+        }
+      ],
+      "departement": "Décider",
+      "taches": [
+        {
+          "slug": "tester-les-hypotheses-du-gain",
+          "titre": "Tester les hypothèses du gain",
+          "competences": [
+            {
+              "nom": "strategy-skills-for-claude:assumption-audit",
+              "role": "autre choix",
+              "pourquoi": "Pour repérer les hypothèses qui portent le gain, noter la solidité de la preuve de chacune et transformer les plus fragiles en vérifications. Courte.",
+              "source": "aapersh, aapersh/strategy-skills-for-claude"
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "montrer-le-gain-en-cascade",
+          "titre": "Montrer le gain en cascade",
+          "competences": [
+            {
+              "nom": "mckinsey-bcg-consulting:waterfall-chart-visualization",
+              "role": "autre choix",
+              "pourquoi": "Pour montrer le gain en cascade, du coût actuel au coût cible, terme par terme. Écrite en chinois.",
+              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
+            }
+          ],
+          "reserve": []
         }
       ]
     },
@@ -255,8 +453,35 @@
             }
           ],
           "reserve": []
+        },
+        {
+          "slug": "preparer-l-adoption",
+          "titre": "Préparer l'adoption",
+          "competences": [
+            {
+              "nom": "operations:change-request",
+              "role": "autre choix",
+              "pourquoi": "Pour le volet adoption du plan : la demande de changement avec ses impacts, ses approbations, la formation et le retour arrière.",
+              "maison": "organiser-sa-force-de-vente"
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "decouper-en-lots-pour-construire",
+          "titre": "Découper en lots pour construire",
+          "competences": [
+            {
+              "nom": "bmad-create-epics-and-stories",
+              "role": "autre choix",
+              "pourquoi": "Quand la solution est un logiciel à écrire : découper les besoins en lots et en histoires prêtes à construire.",
+              "maison": "construire"
+            }
+          ],
+          "reserve": []
         }
-      ]
+      ],
+      "departement": "Décider"
     }
   ]
 }
