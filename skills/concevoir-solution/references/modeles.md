@@ -29,6 +29,9 @@ Date · Demandeur (rôle) · Valideur (rôle) · Décideur (rôle, ou la règle 
 ## 1. Recommandation
 **Option retenue** : <numéro et nom>, construite par <interne · éditeur · recrutement · indépendant · prestataire>.
 **Porte** : la condition qui ouvre la construction (rubrique 10), ou « aucune ».
+**Pourquoi ce n'est pas déjà fait** : le point d'étouffement, en une ou deux phrases (une donnée éclatée dans trois
+outils, personne à qui la tâche revient, un outil sans connecteur). Une recommandation qui ne dit pas ce qui a bloqué
+jusqu'ici ne dit pas non plus ce qui sera différent.
 **Trois raisons porteuses** : 1. … 2. … 3. …
 **Ce qui doit être vrai** : chaque condition avec la personne qui peut la confirmer `[H]`. Un seuil qui ne se calcule
 qu'au business case s'écrit « seuil fixé par le point mort de 50-rentabilite » : la fiche est validée avant le chiffre,
@@ -58,6 +61,13 @@ qu'elle règle des exigences, ce qu'elle ne règle pas.
 |---|---|---|---|
 | | | | |
 
+*Droits de décision : pour chaque décision que le dispositif touche, un rôle qui décide, ceux qui contribuent, celui qui
+valide, et le rythme (à chaque cas, chaque semaine, à chaque exception).*
+
+| Décision | Décide | Contribue | Valide | Rythme |
+|---|---|---|---|---|
+| | | | | |
+
 ## 5. Les options examinées
 | N° | Famille | Retenue pour la matrice ? | Pourquoi |
 |---|---|---|---|
@@ -78,7 +88,8 @@ avec « non évalué » dans ses cellules et son motif dans cette ligne.
 Une colonne par option, et deux pour une même option si deux profils de constructeur sont plausibles (coût,
 délai et maintenance changent). Neuf lignes : couverture des exigences · coût de construction · coût de
 fonctionnement (unité facturée × volume) · maintenance · fiabilité et risque · sécurité et lieu des données ·
-dépendance et portabilité · compétences internes pour maintenir · délai. Cellule : favorable · acceptable ·
+dépendance et portabilité · compétences internes pour maintenir (ce que l'équipe peut porter, et les projets en cours
+que l'option remet en cause) · délai. Cellule : favorable · acceptable ·
 défavorable, une raison courte, le statut du chiffre.
 
 ## 7. L'option de repli
@@ -90,7 +101,9 @@ nommée ; si la fiche ne donne que sa famille (flux sans code, scénario, script
 rôle tranche la plateforme avant la construction** (la plateforme arrêtée par `70-plan` et confirmée par le
 décideur au journal fait foi). Puis : unité de facturation, volume, ordre de grandeur du coût mensuel `[E]`,
 page de l'éditeur lue (date) ou `[H]`, continuité du service (disponibilité promise, support, préavis
-d'arrêt), façon d'en sortir et devenir des données à la résiliation.
+d'arrêt), façon d'en sortir et devenir des données à la résiliation. Pour une option fournisseur : les points à
+négocier (prix à l'unité, plafond de hausse, préavis, export des données) et une recommandation, signer · négocier ·
+passer.
 
 ## 9. À vérifier avant de signer
 | Hypothèse `[H]` | Qui la confirme | Avant quand |

@@ -117,10 +117,12 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
    constatée, fin de pilote, bascule) s'inscrit au journal avec sa pièce. Recette : tests et critères repris de
    `60-specification.md` ; le plan ajoute qui recette (pas celui qui construit), sur des données réelles ou
    fidèlement reconstituées. Mise en production : quel jour et dans quel ordre on bascule ; qui déclenche le
-   retour arrière, sur quel signal, et comment on vérifie que l'ancienne méthode a repris. Le plan prévoit,
+   retour arrière, sur quel signal, et comment on vérifie que l'ancienne méthode a repris ; la liste des approbations à
+   obtenir avant la bascule (qui, pour quoi, avant quand). Le plan prévoit,
    il n'exécute pas : les actions, le feu vert et la bascule se tiennent dans `90-mise-en-service.md`.
 5. **Plan — adoption et exploitation.** Répondre aux six questions de la rubrique 4 du modèle, ou les
-   marquer `?` avec le rôle qui doit trancher. Propriétaire et suppléant (cf. spécification) ; heures de
+   marquer `?` avec le rôle qui doit trancher, puis remplir le tableau d'impact par zone (personnes, outils,
+   processus, coût), chaque zone avec son niveau. Propriétaire et suppléant (cf. spécification) ; heures de
    maintenance cohérentes avec `50-rentabilite.md` ; fiche d'une page, essayée par quelqu'un qui ne l'a pas
    écrite ; alerte sur l'échec et sur le silence ; comptes de l'entreprise, non personnels.
 6. **Plan — protocole de mesure et communication.** Reprendre chaque `IND-xx` de la spécification par son
@@ -133,7 +135,9 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
    (adoption, qualité des données, processus qui change, outil ou fournisseur qui change, dérive des
    coûts, panne silencieuse, départ du responsable), chacune avec son signal d'alerte précoce, sa
    parade et sa condition d'arrêt (partir de celle de `40-solutions.md`). Classer les objections :
-   bloquante, à mitiger, écartée mais nommée. Verdict rendu sur la première version du plan, avec son compte
+   bloquante, à mitiger, écartée mais nommée. Chaque histoire garde son niveau (vraisemblance croisée avec gravité)
+   et son statut (ouvert, atténué, accepté, clos), que le plan relit à chaque jalon pour suivre les risques après
+   l'engagement. Verdict rendu sur la première version du plan, avec son compte
    (n parades manquantes sur m histoires) : **engager** (aucune parade manquante), **durcir** (chaque parade
    manquante s'écrit comme une étape, un test ou un seuil du plan), **pivoter** (un bloquant réel, ou une parade
    qui change le cas, l'option ou le périmètre). Les parades ajoutées portent « (pré-mortem n° k) ». Sans rôle

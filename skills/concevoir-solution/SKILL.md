@@ -106,12 +106,15 @@ plateforme arrêtée par `70-plan` et confirmée par le décideur au journal fai
 4. **Partager le processus cible entre machine et humain.** Pour chaque étape de `30-exigences` §3 :
    automatisée, préparée puis validée par un humain, ou humaine ; un niveau par étape, le plus prudent. Justifier
    en une phrase toute étape qui n'est pas « humaine » alors qu'elle touche un jugement, une action irréversible
-   ou un fort impact.
+   ou un fort impact. Écrire aussi la table des droits de décision : pour chaque décision que le dispositif touche
+   (par exemple accorder un délai de paiement), qui décide, qui contribue, qui valide, à quel rythme.
 5. **Parcourir les huit familles d'options** (catalogue : `references/criteres-et-options.md`, partie
    2) : une ligne par famille, « retenue » ou « écartée parce que… ». Chercher réellement ce qui existe
    déjà — outils connectés à la session en lecture seule, documentation des éditeurs, modèles publics
    — et écrire « non vérifié `[H]` » quand la recherche n'a pas été faite ou n'a pas pu l'être (pas d'accès à
-   ces pages) ; elle passe alors en rubrique 9, avec son responsable et sa date.
+   ces pages) ; elle passe alors en rubrique 9, avec son responsable et sa date. Avant de promettre une
+   plateforme, vérifier qu'elle se pilote par programme si le plan en dépend, et chercher les boucles d'écho entre
+   deux automatisations (`references/criteres-et-options.md`, parties 5 et 6).
 6. **Retenir trois ou quatre options pour la matrice** : l'option 0, au moins une option « existant »
    (1 ou 2) quand l'une est pertinente, au moins une option à construire. Pour chacune, dire qui
    construit : équipe interne, éditeur de l'outil, recrutement, indépendant, prestataire (partie 3).
@@ -120,17 +123,22 @@ plateforme arrêtée par `70-plan` et confirmée par le décideur au journal fai
    chiffre. Un tarif ou une capacité de plateforme est daté (« lu le … sur la page de l'éditeur ») ou `[H]`.
    L'option 0 ne s'élimine pas par la couverture ; une option éliminée garde sa colonne, marquée telle. Pour une
    option fournisseur, lire aussi sa continuité (disponibilité promise, support, préavis d'arrêt), le devenir des
-   données à la résiliation et la sortie (critère « dépendance et portabilité »).
+   données à la résiliation et la sortie (critère « dépendance et portabilité »), puis dresser la liste des points
+   à négocier avec une recommandation par fournisseur : signer, négocier ou passer. Le critère « compétences
+   internes » dit aussi ce que l'équipe peut porter et les projets en cours que l'option remet en cause.
 8. **Lire la matrice, ne pas la sommer.** Dégager l'option retenue et le repli. Si les décideurs ne
    s'accordent pas sur ce qui compte, leur faire classer les trois critères les plus importants et
-   relire la matrice avec ce classement.
+   relire la matrice avec ce classement. Si le client ne peut mener que trois choses de front, garder les trois
+   plus grosses plutôt que dix petites.
 9. **Éprouver la recommandation.** Contre-argument le plus fort ; ce qui doit être vrai, chaque
    condition avec la personne qui la confirme ; ce qui ferait changer d'avis ; condition d'arrêt
    observable. Un seuil qui ne se calcule qu'au business case s'écrit « fixé par le point mort de
    `50-rentabilite` » et la porte le reprend. Examiner le repli avec la même grille. Si le contre-argument
    est plus fort que les raisons, changer de recommandation. Pour arbitrer, appeler
    `router-consulting-strategy` (lentille options stratégiques) ; le livrable reste celui de cette étape.
-10. **Écrire la fiche en commençant par la recommandation**, finir par la décision attendue, proposer
+10. **Écrire la fiche en commençant par la recommandation**, y dire pourquoi ce n'est pas déjà fait (le point
+    d'étouffement : donnée dispersée, personne à qui revient la tâche, outil sans connecteur), et pour un public
+    réticent mener par des questions puis des preuves plutôt que par l'assertion. Finir par la décision attendue, proposer
     `chiffrer-rentabilite` (business case de l'option retenue et du repli, apport de chaque phase). Quand le
     décideur tranche, ajouter une ligne à `mission/journal.md`. Une solution imposée par le client suit le même
     chemin : la matrice vérifie qu'elle couvre les exigences et documente un repli ; le journal note

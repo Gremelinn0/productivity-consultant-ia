@@ -98,6 +98,8 @@ Une parade écrite mais jamais essayée ne rassure pas : chaque parade est soit 
 étape avec sa preuve), soit une action datée avec un propriétaire. Et un pré-mortem ne trouve que ce
 que ses participants peuvent imaginer : il ne prouve pas l'absence d'autres risques.
 
+**Niveau et statut.** Le niveau croise la vraisemblance et la gravité (bas, moyen, haut ; une gravité haute avec une vraisemblance basse reste « moyen » et se surveille). Le statut suit l'histoire après l'engagement : *ouvert* (le signal n'a pas été vu, la parade n'est pas en place), *atténué* (la parade tourne, le risque demeure), *accepté* (le décideur garde le risque en connaissance de cause, son rôle est écrit), *clos* (la cause a disparu, la pièce est citée). À chaque jalon du plan, relire la colonne : un « ouvert » de niveau haut sans parade datée se traite avant de passer le jalon.
+
 ## 6. Écrire une condition d'arrêt
 
 Une condition d'arrêt est un fait observable, relevé à une fréquence connue, avec un seuil fixé à
@@ -119,8 +121,8 @@ Thèse attaquée : …
 Contributions : rôles consultés, ou « rédigé par le consultant seul » (et l'étape du plan où chaque rôle écrit seul ses raisons d'échec).
 Point de départ des conditions d'arrêt (plan d'un cas seulement) : celle de 40-solutions §1, et les histoires qui la reprennent.
 
-| # | Histoire d'échec (au passé) | Vraisemblance | Gravité | Signal d'alerte précoce | Parade | Condition d'arrêt | Propriétaire (rôle) | Classement |
-|---|---|---|---|---|---|---|---|---|
+| # | Histoire d'échec (au passé) | Vraisemblance | Gravité | Niveau (croisé) | Signal d'alerte précoce | Parade | Condition d'arrêt | Propriétaire (rôle) | Classement | Statut |
+|---|---|---|---|---|---|---|---|---|---|---|
 
 Écartées : objection — raison.
 Verdict : engager | durcir | pivoter — en une phrase, avec le compte « n parades manquantes sur m histoires retenues ».

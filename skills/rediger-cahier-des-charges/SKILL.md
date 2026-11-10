@@ -108,7 +108,9 @@ PRD qu'un constructeur qui n'a pas vécu la mission peut suivre.
    ou seuil mesurable avec son moyen de vérification ; couvrir cas nominal, erreur, limite, cas interdit.
 5. **Définir les indicateurs.** Mode exigences : pour chacun, un identifiant `IND-xx`, son type (activité,
    qualité, conversion, résultat), la décision qu'il permet, sa mesure de départ avec son statut et la période où
-   elle est fiable, la cible issue de `10-besoin` ; pas de seuils ici. Mode spécification : la fréquence de lecture,
+   elle est fiable, la cible issue de `10-besoin`, et sa nature : « avancé » (bouge vite, sert à piloter pendant le pilote) ou « retardé »
+   (le gain final, qui se lit tard) ; pas de seuils ici. Écrire aussi, sous le tableau, les indicateurs écartés parce
+   qu'ils ne servent aucune décision. Mode spécification : la fréquence de lecture,
    le responsable de la qualité de la donnée, les seuils de production (correction, alerte, arrêt ; « arrêt : sans
    objet » pour un indicateur de contexte) et la façon d'attribuer sans fausse causalité. À tout indicateur de volume
    ou de rapidité, associer un indicateur de qualité. La spécification ajoute, à la suite de la série, un indicateur
@@ -130,7 +132,9 @@ PRD qu'un constructeur qui n'a pas vécu la mission peut suivre.
    puis se demander si un prestataire pourrait chiffrer sans question bloquante. Spécification :
    lister les questions qu'un constructeur extérieur poserait ; chacune désigne une rubrique à compléter. Si
    une question révèle un trou dans `30-exigences`, corriger `30-exigences` par une version datée, pas
-   seulement la spécification.
+   seulement la spécification. Passe finale, dans les deux modes : relire chaque source fournie (notes d'entretien,
+   courriel du demandeur, procédure) contre le document, pour retrouver ce que la structure a laissé tomber en
+   silence : un ton imposé, une contrainte dite en passant, une exception citée une seule fois.
 9. **Finir par la décision attendue**, proposer la suite (`concevoir-solution` après les exigences,
    `planifier-deploiement` après la spécification). Quand le demandeur valide, ajouter une ligne à
    `mission/journal.md`.

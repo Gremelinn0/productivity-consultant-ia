@@ -92,7 +92,10 @@ et avec le business case ; une décision que le décideur peut renverser.
    `20-diagnostic.md` §9 : une minute ne se compte qu'une fois (`references/mesure.md`, §2).
 5. **Recalculer le gain et les coûts réels** avec les formules de `chiffrer-rentabilite` (`references/formules.md`, qu'on ne redéfinit pas) et les valeurs observées : gain brut,
    construction réelle (payée, mobilisée), fonctionnement et coûts d'usage, maintenance, incidents, gain net observé, retour constaté (cumul réel), projeté `[E]` (formule de 50 §4) ou « pas de retour ». Calcul montré.
-   Un terme observé en exploitation contient déjà l'adoption : ne pas la lui réappliquer. Le temps libéré n'est de l'argent que si l'usage nommé a eu lieu (`references/mesure.md`, §3).
+   Un terme observé en exploitation contient déjà l'adoption : ne pas la lui réappliquer. Le temps libéré n'est de l'argent que si l'usage nommé a eu lieu (`references/mesure.md`, §3). Nommer aussi le
+   propriétaire du gain, celui qui le garde dans ses comptes (la direction des ventes, pas seulement l'équipe qui
+   fait tourner le dispositif), et séparer le gain unique (une remise à niveau, un stock de dossiers résorbé) du
+   gain récurrent : seul le second se projette sur douze mois.
 6. **Lire de vrais cas.** Échantillon tiré avant lecture (au hasard, plus les réclamations et les cas à risque de 60 §12), lu par un rôle du client, jamais par le dispositif.
    Classer les échecs par catégorie (celles de la recette ; pour l'IA, celles des `EV-xx`) et par mode de découverte : alerte, lecture, réclamation. Un échec trouvé hors alerte est
    un échec silencieux : il appelle une alerte de plus. Rapprocher des histoires du pré-mortem (70 §8) et des risques `R-xx` : lesquels se sont produits, quel signal a parlé. Si la

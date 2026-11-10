@@ -64,6 +64,11 @@ si elle est recoupée par un relevé côté métier. Sans mesure de départ dat�
 - **Coûts réels.** Construction payée (la facture, pas le devis) et mobilisée (heures notées de pilote, recette, formation × taux) ; fonctionnement (factures de la période) ; coûts d'usage (unités consommées ×
   tarif daté : exécutions, appels, jetons, crédits) ; maintenance (heures notées × taux de celui qui la fait) ; incidents (heures de reprise × taux, coûts directs). Chaque ligne a sa source.
 - **Gain net observé** = gain brut − fonctionnement − coûts d'usage − maintenance − incidents.
+- **Qui garde le gain, et combien de temps.** Écrire le rôle qui retrouve le gain dans ses comptes (un temps libéré dans
+  l'équipe de saisie devient un gain pour la direction qui évite une embauche, ou qui absorbe plus de volume) : sans ce
+  propriétaire, personne ne défend le gain quand le budget se discute. Séparer ensuite le gain unique (un stock de dossiers
+  en retard résorbé la première semaine, une remise à niveau) du gain récurrent : seul le récurrent se projette, et le
+  retour projeté n'utilise que lui.
 - **Retour constaté** : le premier mois où le cumul des gains nets observés atteint la construction réelle. Sinon **retour projeté** `[E]`, par une seule formule, celle de 50 (`chiffrer-rentabilite`,
   `formules.md` §4), appliquée aux termes observés : (construction payée + construction mobilisée réelles + gain brut observé × m) ÷ gain net mensuel observé. `m` est le manque à gagner de montée en
   charge de 50 (`[H]`) ; une fois le régime établi observé, il se recalcule sur les mois lus. Aucune autre formule de retour n'est écrite ici. Un gain net observé nul ou négatif n'a pas de délai de

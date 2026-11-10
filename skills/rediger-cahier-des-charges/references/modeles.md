@@ -136,9 +136,14 @@ elle est fiable (par exemple depuis le changement du système source). Cible : c
 seuils de correction, d'alerte ni d'arrêt ici : ils vivent dans 60-specification §14. L'adoption, le coût d'usage et
 la maintenance se fixent en spécification (rubrique 14), pas ici.*
 
-| ID | Indicateur | Type | Pourquoi (décision permise) | Départ et période fiable | Cible issue du besoin |
+| ID | Indicateur | Type · nature (avancé ou retardé) | Pourquoi (décision permise) | Départ et période fiable | Cible issue du besoin |
 |---|---|---|---|---|---|
 | IND-01 | | | | | |
+
+*Nature : « avancé » bouge vite et sert à piloter pendant le pilote (relances envoyées sous cinq jours) ; « retardé »
+est le gain final, qui se lit tard (délai moyen d'encaissement). Garder au moins un avancé, sans quoi on attend le
+résultat pour savoir si ça marche. Sous le tableau, une ligne « Indicateurs écartés » : ceux qu'on a pensé suivre et
+qu'on retire parce qu'aucune décision n'en dépend, avec la raison.*
 
 ## 11. Hors périmètre
 
@@ -375,9 +380,12 @@ reste « estimé » tant qu'il n'est pas observé.*
 
 ## 15. Risques
 
-| ID | Risque | Probabilité `[H]` | Impact | Parade | Signal d'alerte |
-|---|---|---|---|---|---|
-| R-01 | | | | | |
+| ID | Risque | Probabilité `[H]` | Impact | Niveau (probabilité × impact : bas · moyen · haut) | Parade | Signal d'alerte | Statut (ouvert · atténué · accepté · clos) |
+|---|---|---|---|---|---|---|---|
+| R-01 | | | | | | | |
+
+*Le statut se relit à chaque jalon du plan (`planifier-deploiement`) : un risque « accepté » nomme le rôle qui l'accepte,
+un risque « clos » dit ce qui l'a fermé.*
 
 ## 16. Questions ouvertes
 

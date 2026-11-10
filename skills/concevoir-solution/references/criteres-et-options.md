@@ -103,7 +103,7 @@ Dans tous les cas, nommer le rôle qui maintient après la livraison : la spéci
 | Fiabilité et risque | comment ça tombe en panne, si on le voit, ce que coûte une erreur silencieuse ; pour une option IA, le taux d'erreur sur échantillon réel | `[F]` si mesuré, sinon `[H]` ; la parade (validation, file des échecs, interrupteur d'arrêt) |
 | Sécurité et lieu des données | où les données transitent et sont stockées ; ce qui part vers un service tiers ou un modèle ; durée de conservation ; sous-traitants | documentation de l'éditeur lue et datée ; conformité à confirmer par le responsable concerné `[H]` |
 | Dépendance et portabilité | si l'éditeur change de prix, de conditions, est racheté ou disparaît : export possible, coût de sortie, devenir des données à la résiliation ; continuité du service (disponibilité promise, support, préavis d'arrêt) | conditions de l'éditeur ; test d'export si possible |
-| Compétences internes pour maintenir | qui sait faire, qui peut apprendre, formation nécessaire | échange avec le responsable de l'équipe concernée ; des rôles, pas des noms |
+| Compétences internes pour maintenir | qui sait faire, qui peut apprendre, formation nécessaire ; la charge que l'équipe peut absorber, et tout projet en cours que l'option remet en cause ou retarde | échange avec le responsable de l'équipe concernée ; des rôles, pas des noms. Si le client ne peut mener que trois choses de front, garder les trois plus grosses |
 | Délai | jusqu'à une première version utilisable, puis jusqu'à la production | `[E]` ; compter les accès à obtenir et les validations |
 
 **Lire la matrice.**
@@ -159,7 +159,11 @@ vérifie sur la page de l'éditeur à la date du choix.
 **Capacités à ne pas supposer `[H]`.** Au moment des sources (2026), certaines plateformes ne
 permettaient pas de créer une automatisation par programme : elle se construisait dans l'interface. Si
 le plan suppose de créer ou de déployer des automatisations en série (modèles réutilisés chez plusieurs
-clients, déploiement automatisé), vérifier que l'éditeur le permet avant de retenir l'option.
+clients, déploiement automatisé), vérifier que l'éditeur le permet avant de retenir l'option. Deux exemples
+connus à relire sur la page de l'éditeur avant de s'y fier : une plateforme de flux grand public peut ne pas
+créer un flux par son interface de programmation, et l'outil d'automatisation d'une suite bureautique peut ne
+pas gérer les flux personnels par programme. Ce qui ne se pilote pas par programme se construit à la main, une fois
+par client : le coût de construction et le délai montent d'autant.
 
 **Lire la page d'un éditeur.** Noter l'adresse de la page et la date de lecture ; l'unité de facturation
 et le quota inclus ; les limites (taille des données, durée d'exécution, nombre d'étapes, appels par
@@ -171,6 +175,12 @@ de l'offre (engagement, évolution des prix). Ce qu'on n'a pas pu lire reste `[H
 
 - **Choisir par familiarité** : la facture « explose » parce que l'unité facturée ne correspond pas à la
   forme du flux.
+- **Laisser deux automatisations se répondre** : l'une écrit dans l'outil, l'autre réagit à cette écriture, et
+  l'écho tourne sans fin (un statut modifié par un flux qui déclenche l'autre, qui le remodifie). Pour chaque
+  automatisation qui écrit, nommer ce qui la déclenche et s'assurer qu'une écriture du dispositif ne la déclenche
+  pas ; sinon une marque « écrit par le dispositif » que les flux ignorent.
+- **Signer sans négocier** : prix à l'unité, plafond de hausse, préavis de résiliation, export des données ; ce qui
+  n'est pas écrit avant la signature ne se négocie plus après.
 - **Comparer un prototype à un produit** : une démonstration fluide n'est pas un dispositif exploité ;
   compter les erreurs, les accès à renouveler, la maintenance.
 - **Oublier la maintenance** : la ligne qu'on omet facilement, et qui fait mentir les gains.

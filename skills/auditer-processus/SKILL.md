@@ -100,12 +100,19 @@ d'abord.
    automatisant le travail qui l'entoure.
 6. **Remonter aux causes** : demander « pourquoi » jusqu'à une cause sur laquelle quelqu'un peut agir, puis
    l'étiqueter processus, organisation, donnée ou outil (la dominante). Une cause d'organisation (« personne ne
-   tient la liste ») ne se règle pas avec un outil.
+   tient la liste ») ne se règle pas avec un outil. Deux garde-fous : une corrélation vue dans les relevés (les
+   dossiers du lundi ont plus d'erreurs) ne guide aucune action tant que son « pourquoi » n'est pas vérifié, elle
+   reste `[H]` ; et au-delà de dix causes possibles, en creuser trois à cinq, les plus lourdes en heures, et écrire
+   les autres « pas creusées » avec leur poids.
 7. **Tester la stabilité** avec les quatre questions de la rubrique 5. Une réponse négative ne bloque pas le
    diagnostic : elle fait de la standardisation la première opportunité — écrire le mode opératoire du processus
-   cible (rubrique 7 : étapes, rôle de chacune, exceptions et conduite à tenir, variantes gardées ou supprimées,
-   indicateur de suivi), le tester à la main sur quelques occurrences, re-mesurer, puis seulement automatiser. Si
-   une seule personne a été observée, le dire et garder les deux versions du récit.
+   cible (rubrique 7 : étapes, rôle de chacune avec son RACI, sortie de chaque étape, exceptions et conduite à tenir,
+   variantes gardées ou supprimées, indicateur de suivi), le tester à la main sur quelques occurrences, re-mesurer,
+   puis seulement automatiser. Si une seule personne a été observée, le dire et garder les deux versions du récit.
+   Trois réflexes en l'écrivant : une tâche qui ne tient que sur une personne s'écrit avec elle, pas à sa place ;
+   avant de la déléguer à un agent, fixer l'entrée et la sortie attendues ; les étapes qui ne dépendent pas l'une
+   de l'autre se font en parallèle, avec des points de contrôle plutôt que des barrières, et on compare avant et
+   après avec la mesure de la rubrique 2 (`references/modeles.md`, rubrique 7).
 8. **Trier chaque étape en cinq issues**, avec les critères de la découverte (fréquence, coût, valeur, risque si
    ça se trompe), dans cet ordre de questions :
    - **Éliminer** : prend du temps, apporte peu, personne ne remarquerait sa disparition, ou naît d'une cause qu'on

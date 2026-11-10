@@ -8,12 +8,14 @@ Méthode inspirée de `expert-interviewing-mckinsey` (MichaelRochonnn, dépôt s
 
 ## Les étapes
 
-1. **Préparer deux ou trois hypothèses**, avant d'ouvrir. Ce que les sources lues laissent penser (« les devis traînent à cause de la collecte d'informations »), écrit `[H]`, avec ce qui la ferait tomber. Elles servent à viser les questions, jamais à orienter la personne.
-2. **Du large au précis.** Une question ouverte d'abord (« racontez-moi la dernière fois que vous avez fait un devis »), puis des questions précises sur ce qui a été dit (« combien de temps, combien de fois par mois, avec quel outil ? »). Les questions viennent de la base ; seule leur forme change.
-3. **Demander des chiffres et des exemples réels.** La dernière fois, pas « d'habitude » ; un ordre de grandeur plutôt que « beaucoup ». Un chiffre dit de mémoire est `[H]`. Deux relances au plus par question.
-4. **Reformuler en une phrase et faire confirmer.** « Si je comprends bien, deux heures par devis, surtout pour retrouver les plans : c'est juste ? » Une correction remplace la phrase.
-5. **Ne pas souffler la réponse.** Pas de question qui contient sa réponse (« c'est bien Excel ? »), pas de liste d'options sauf les réponses à cliquer prévues, qui couvrent tout et gardent « Je ne sais pas ». Une hypothèse se vérifie par une question ouverte, jamais en la proposant.
-6. **Clore par « Qu'aurais-je dû vous demander ? »**, avant le récapitulatif. La réponse s'écrit telle quelle dans « Questions restées ouvertes » ; elle donne souvent le cas auquel personne n'avait pensé.
+1. **Faire annoncer l'entretien par le responsable de la personne.** Un message de son supérieur (« Florent va vous poser quelques questions sur le suivi des devis, c'est utile pour l'équipe ») vaut mieux qu'une invitation d'un inconnu : la personne sait pourquoi on la sollicite et que sa réponse est attendue. Avec une IA, ce message précède le lien envoyé.
+2. **Préparer deux ou trois hypothèses**, avant d'ouvrir. Ce que les sources lues laissent penser (« les devis traînent à cause de la collecte d'informations »), écrit `[H]`, avec ce qui la ferait tomber. Elles servent à viser les questions, jamais à orienter la personne.
+3. **Du large au précis.** Une question ouverte d'abord (« racontez-moi la dernière fois que vous avez fait un devis »), puis des questions précises sur ce qui a été dit (« combien de temps, combien de fois par mois, avec quel outil ? »). Les questions viennent de la base ; seule leur forme change.
+4. **Demander des chiffres et des exemples réels.** La dernière fois, pas « d'habitude » ; un ordre de grandeur plutôt que « beaucoup ». Un chiffre dit de mémoire est `[H]`. Deux relances au plus par question.
+5. **Reformuler en une phrase et faire confirmer.** « Si je comprends bien, deux heures par devis, surtout pour retrouver les plans : c'est juste ? » Une correction remplace la phrase.
+6. **Ne pas souffler la réponse.** Pas de question qui contient sa réponse (« c'est bien Excel ? »), pas de liste d'options sauf les réponses à cliquer prévues, qui couvrent tout et gardent « Je ne sais pas ». Une hypothèse se vérifie par une question ouverte, jamais en la proposant.
+7. **Clore par « Qu'aurais-je dû vous demander ? »**, avant le récapitulatif. La réponse s'écrit telle quelle dans « Questions restées ouvertes » ; elle donne souvent le cas auquel personne n'avait pensé.
+8. **Relancer le lendemain, avec une seule question de plus.** Un message court qui remercie pour un point précis de l'entretien (« votre façon de retrouver les plans dans trois fichiers m'a fait comprendre le vrai goulet ») et pose une seule question de plus, celle que la nuit a fait remonter. La réponse, si elle vient, s'ajoute à la note avec sa date ; sinon on ne relance pas deux fois. Les étapes 1 et 8 reviennent au consultant : l'agent en ligne d'un visiteur ne les fait pas.
 
 ## Exemple (fictif)
 

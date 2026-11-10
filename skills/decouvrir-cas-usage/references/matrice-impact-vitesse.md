@@ -18,10 +18,15 @@ Quand `02-portefeuille.md` compte plus de trois cas, ou que les moyens du client
    | **Impact faible** | petit gain facile | laisser |
 
 4. **Ordonner : ce qui rapporte vite d'abord.** Gagner d'abord, puis le petit gain facile, puis planifier, puis laisser ; dans une même case, le plus gros gain en tête. Un cas dont une donnée manque est « à classer » : il n'entre pas dans les trois.
-5. **Justifier en une ligne par cas**, dans l'ordre du classement :
+5. **Découper un cas à fort gain mais lent.** Avant de le ranger dans « planifier », chercher son premier morceau
+   livrable en quatre semaines au plus (le tri des demandes avant leur traitement complet, une seule équipe avant
+   toutes, un seul type de document) : ce morceau devient un cas à part, noté « gagner d'abord », et le reste reste
+   « planifier ». Ne pas remplir la liste de petits gains pour faire vite : trois gains faibles ne valent pas un
+   gain fort découpé.
+6. **Justifier en une ligne par cas**, dans l'ordre du classement :
    `<cas> : gain <heures> h par mois [E] (fort ou faible) · vitesse <semaines> semaines (rapide ou lente) · <case> · pourquoi : <la raison>`.
    Un écart à l'ordre par défaut s'écrit dans la ligne, avec sa raison.
-6. **Les trois proposés** sont les trois premiers de cette liste. La matrice ne remplace pas les classes de `02` : « Gains rapides » correspond à « gagner d'abord » et au petit gain facile, « Projets » à « planifier ».
+7. **Les trois proposés** sont les trois premiers de cette liste. La matrice ne remplace pas les classes de `02` : « Gains rapides » correspond à « gagner d'abord » et au petit gain facile, « Projets » à « planifier ».
 
 ## Exemple (fictif)
 

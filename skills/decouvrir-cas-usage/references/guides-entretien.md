@@ -82,6 +82,15 @@ rien lui-même ; le consultant et l'entreprise organisent la séance, la session
    typique tant qu'on n'a pas plusieurs occurrences (`ARCHITECTURE.md`).
 3. Noter ce qu'on n'a pas vu (fin de mois, cas rares, exceptions, suppléante) et le demander en entretien.
 
+## La séance d'équipe
+
+Quand on réunit plusieurs personnes pour faire sortir des cas d'usage, la séance s'essouffle vite si elle reste sur
+un seul angle. Changer d'angle toutes les cinq à dix réponses : d'abord ce qui fait perdre du temps, puis ce qui
+agace les clients, puis ce qu'on recopie d'un outil à l'autre, puis ce qu'on ferait si le volume doublait. Chaque
+changement rouvre des réponses que le précédent n'avait pas fait venir. Ne conclure que lorsqu'un angle neuf ne rend
+plus rien de nouveau, pas à l'heure prévue. Les cas sortis se notent tels quels, sans les trier pendant la séance :
+le tri vient après, avec les cinq issues.
+
 ## Sans le consultant : l'entretien guidé par IA
 
 Quand la personne ne peut pas donner le temps d'un entretien en direct, `mener-entretien-ia` fait poser ces mêmes

@@ -92,7 +92,10 @@ quelle décision la suite de la mission doit permettre.
 6. **Vérifier que c'est le bon problème** : la solution demandée règle-t-elle le problème posé ?
    une solution plus simple le réglerait-elle (supprimer une étape, configurer un outil déjà en
    place) ? le problème vient-il d'ailleurs (processus, organisation, donnée) ? Écrire la réponse,
-   même quand elle conforte la demande.
+   même quand elle conforte la demande. À chaque nouvel entretien ou relevé, relire la reformulation : tient-elle
+   encore, ou sert-elle seulement à confirmer ce qu'on croyait ? Quand les faits contredisent la demande, l'écrire
+   sans détour : « vous demandez X, les faits montrent Y » (« vous demandez un agent de relance, les faits montrent
+   que la liste des factures échues n'est pas à jour »).
 7. **Finir par la décision attendue**, puis proposer l'étape suivante : `auditer-processus`. Une équipe à équiper
    d'un assistant IA général, sans processus nommé : écrire la ligne `Parcours : déploiement d'un assistant` en tête
    de la fiche, et l'étape suivante est `deployer-assistant-ia`. Quand

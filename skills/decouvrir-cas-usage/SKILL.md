@@ -76,6 +76,8 @@ de solution choisie, pas de chiffrage fin.
      d'abord. Autorisation explicite de l'entreprise, source par source (qui, quand, quel périmètre), puis lecture
      seule. Minimiser les données personnelles : lire catégories, objets, volumes et dates des tickets plutôt que
      les messages des personnes, ne rien copier de nominatif ;
+   - les comptes publiés et le site de l'entreprise, lus d'un oeil critique : relever le chiffre qui détonne et
+     chercher l'équipe qui fait déjà le mieux, qui devient le cas modèle (`references/modeles.md`, partie A) ;
    - l'entretien de cadrage avec la direction (guide direction), mené avant de rédiger `00` : il apporte les
      objectifs, les contraintes, le budget et les essais passés que la fiche entreprise exige.
 
@@ -85,7 +87,8 @@ de solution choisie, pas de chiffrage fin.
 3. **Mener les entretiens des équipes** : semaine type, tâches répétitives, volumes, outils, copier-coller,
    validations, erreurs, exceptions, ce qu'elles voudraient ne plus faire. Questions, version courte, modèle de
    note : `references/guides-entretien.md`, à adapter aux équipes et aux outils déjà repérés. Si la session ne mène
-   pas l'entretien, remettre le guide au consultant et lire sa note, déposée dans `mission/sources/`. Après chaque
+   pas l'entretien, remettre le guide au consultant et lire sa note, déposée dans `mission/sources/`. En séance avec plusieurs personnes, changer d'angle pour ne pas tourner en rond
+   (`references/guides-entretien.md`, « La séance d'équipe »). Après chaque
    entretien ou séance, la ligne « à venir » de `00` prend sa date réelle ; si la liste des sources manquantes ou des
    équipes à écouter change, `00` prend une version datée et le journal une ligne « correction ».
 4. **Proposer la séance d'enregistrement, la source la plus riche** : des personnes font réellement leurs tâches

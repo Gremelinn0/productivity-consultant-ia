@@ -28,7 +28,11 @@ Date · Demandeur (rôle) · Valideur (rôle) · Rédigé par
 *Activité · taille et équipes concernées (rôles) · outils en place · données disponibles et où elles vivent ·
 objectifs · contraintes (sécurité, conformité, budget, calendrier) · ce qui a été essayé · porte choisie et
 pourquoi. Objectifs, contraintes, budget et essais passés viennent de l'entretien de cadrage avec la
-direction : une règle ou une contrainte énoncée par son détenteur est `[F]`, sa source est l'entretien.*
+direction : une règle ou une contrainte énoncée par son détenteur est `[F]`, sa source est l'entretien.
+Avant l'entretien, lire les comptes publiés et le site avec un oeil critique : un chiffre qui détonne (une marge
+qui baisse, un délai de livraison annoncé trop beau) devient une question pour la direction. Repérer aussi, dans
+l'entreprise, l'équipe qui fait déjà le mieux (par exemple l'agence qui répond aux devis en deux jours quand les
+autres mettent une semaine) : ses pratiques sont le cas modèle, et elle est la première à écouter.*
 
 ## 2. Sources branchées et autorisations obtenues
 *Une ligne par source. Un entretien ou une séance prévus s'écrivent « à venir », avec leur date prévue ;

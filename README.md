@@ -332,6 +332,22 @@ auteurs qui vont avec lui sont créditées, avec leur licence, dans [COMPAGNONS.
   (`change-request`, `runbook`), forme de l'entretien (`smb-onboard`) ;
 - `router-consulting-strategy` — options réelles, contre-cas, recommandation d'abord (sa maison est ce
   pack) ;
+- Idées reprises le 10/11/2026, après avoir comparé nos compétences à d'autres, réécrites avec nos mots et jamais
+  copiées (les dépôts de MichaelRochonnn, [mckinsey-bcg-consulting](https://github.com/MichaelRochonnn/mckinsey-bcg-consulting),
+  et d'aapersh, [strategy-skills-for-claude](https://github.com/aapersh/strategy-skills-for-claude), ne déclarent
+  aucune licence) : lecture critique des comptes publiés et équipe de référence (`mckinsey-research-methodology`),
+  garde contre le biais de confirmation du cadrage (`mckinsey-problem-solving-methodology`), corrélation sans
+  « pourquoi » et choix des causes à creuser (`hypothesis-driven-data-analysis`, `key-driver-analysis`), procédure
+  écrite avec la personne qui détient le savoir-faire (`process-standardization-for-leverage`), ce que le client peut
+  porter (`solution-feasibility-assessment`), point d'étouffement et public réticent (`consulting-proposal-structures`),
+  cascade du gain (`waterfall-chart-visualization`), test de réfutation par branche de l'arbre (`management-consulting`),
+  droits de décision (`operating-model-design`), solidité de la preuve et test le moins cher (`assumption-audit`),
+  indicateurs avancés et retardés, propriétaire du gain, gain unique et récurrent (`kpi-architect`,
+  `value-realization`), changement d'angle en séance (`bmad-brainstorming`, MIT), relecture des sources contre le
+  document (`bmad-prd`, MIT), RACI, parallélisme et points de contrôle (`process-doc`, `process-optimization`),
+  points de négociation d'un fournisseur (`vendor-review`), statut des risques (`risk-assessment`), tableau d'impact et
+  approbations avant bascule (`change-request`), tous du plugin `operations` d'Anthropic (Apache-2.0), enfin
+  capacités des plateformes par programme et boucles d'écho (`automation-strategy`, MIT) ;
 - « Performing a Project Premortem » de Gary Klein (Harvard Business Review, 2007) — le pré-mortem.
 
 Si ces outils sont installés dans votre session, les compétences peuvent s'en servir pour aller plus

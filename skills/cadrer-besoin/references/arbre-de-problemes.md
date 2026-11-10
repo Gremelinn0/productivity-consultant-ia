@@ -17,6 +17,7 @@ Quand la demande est large ou floue (« on perd du temps », « on veut plus de 
 3. **Descendre d'un niveau seulement là où ça pèse.** Une branche sans poids ne se découpe pas.
 4. **Peser chaque branche dans la même unité que la question** : heures par mois, jours de délai, euros. Chaque nombre porte son statut `[F]`, `[H]` ou `[E]` (`ARCHITECTURE.md`). Un poids inconnu s'écrit `?` avec qui le fournit ; on ne le devine pas.
 5. **Retenir la branche qui pèse le plus**, la nommer, et écrire les autres « pas creusées » avec leur poids. Vérifier que la branche retenue est une cause et non un symptôme (on peut encore demander « pourquoi ? »).
+6. **Écrire, pour chaque branche, ce qui la ferait tomber.** Une branche est une hypothèse `[H]` tant qu'elle n'a pas passé son test : le chiffre ou le fait qui la réfuterait, et qui peut le relever. « La collecte pèse 80 h par mois » tombe si un relevé de trois semaines montre moins de 60 h par mois, le poids de la branche suivante ; « la validation fait attendre » tombe si les devis validés le jour même sont aussi lents. Une branche dont on ne sait pas dire ce qui la réfuterait n'est pas encore une hypothèse, c'est une impression.
 
 ## Exemple (fictif)
 
@@ -24,7 +25,7 @@ Un bureau d'études de douze personnes : « nos devis sont trop lents ». Quaran
 
 ```text
 Pourquoi un devis part-il en 6 jours au lieu de 2 ?
-├─ Recueillir les infos du client : 2 h par devis, soit 80 h par mois [H]  ← retenue
+├─ Recueillir les infos du client : 2 h par devis, soit 80 h par mois [H]  ← retenue (tombe sous 60 h)
 ├─ Chiffrer : 1 h 30 par devis, soit 60 h par mois [H]
 ├─ Rédiger et mettre en forme : 1 h par devis, soit 40 h par mois [H]
 └─ Valider et envoyer : 0 h de travail, mais 2 jours d'attente en moyenne [H]

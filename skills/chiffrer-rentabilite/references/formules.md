@@ -204,6 +204,19 @@ plus 20 × 25 € = 500 € d'erreurs évitées ; × 80 % d'adoption = **gain br
 environ **5,4 mois** `[E]` (vérifié mois par mois : le cumul devient positif au sixième mois). Payé seul :
 (7 200 + 2 400 × 1,5) ÷ 2 100 = environ **5,1 mois**.
 
+Cascade du gain, au central (en tête de la rubrique 4 du business case) :
+
+| Terme | Montant par mois | Cumul |
+|---|---|---|
+| Temps libéré réemployé (50 h × 50 €) | + 2 500 € | 2 500 € |
+| Erreurs évitées (20 × 25 €) | + 500 € | 3 000 € |
+| Part de l'équipe qui s'en sert (adoption 80 %) | − 600 € | 2 400 € `[E]` gain brut |
+| Fonctionnement | − 150 € | 2 250 € |
+| Maintenance | − 150 € | 2 100 € `[E]` gain net |
+
+Quand on connaît le coût actuel de la tâche (temps passé × coût horaire, plus le coût des erreurs), la cascade peut
+partir de lui et descendre jusqu'au coût après dispositif ; sinon elle part du gain théorique, comme ici.
+
 | | Bas | Central | Haut |
 |---|---|---|---|
 | Minutes · réemploi · adoption | 3 · 25 % · 60 % | 6 · 50 % · 80 % | 8 · 80 % · 90 % |

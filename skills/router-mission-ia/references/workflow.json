@@ -195,19 +195,6 @@
             }
           ],
           "reserve": []
-        },
-        {
-          "slug": "ecrire-les-exigences-d-un-produit-logiciel",
-          "titre": "Écrire les exigences d'un produit logiciel",
-          "competences": [
-            {
-              "nom": "bmad-prd",
-              "role": "autre choix",
-              "pourquoi": "Quand l'option retenue devient un produit logiciel suivi : un cahier des charges produit pensé avec le décideur (pour qui, quel enjeu), relu avant de le figer.",
-              "maison": "creer-une-app"
-            }
-          ],
-          "reserve": []
         }
       ],
       "departement": "Comprendre"
@@ -238,12 +225,6 @@
               "nom": "mckinsey-bcg-consulting:process-standardization-for-leverage",
               "role": "autre choix",
               "pourquoi": "Avant d'automatiser ou de déléguer : écrire ce qui dépend du savoir-faire d'une personne pour que d'autres, ou un agent, puissent le faire.",
-              "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
-            },
-            {
-              "nom": "mckinsey-bcg-consulting:qcd-issue-tree-production-analysis",
-              "role": "autre choix",
-              "pourquoi": "Une grille qualité, coût, délai pour chercher les pertes d'un processus de production ou de livraison. Écrite pour une usine : à adapter hors production.",
               "source": "MichaelRochonnn, MichaelRochonnn/mckinsey-bcg-consulting"
             }
           ],
@@ -427,9 +408,9 @@
           "pourquoi": "Elle ordonne en lots courts avec porte, pilote, adoption et mesure, puis soumet le plan à un pré-mortem avant de s'engager ; en début de mission, elle ordonne aussi le portefeuille en feuille de route."
         },
         {
-          "nom": "product-management:write-spec",
+          "nom": "bmad-prd",
           "role": "la spécification produit",
-          "pourquoi": "Structure la spécification et ses critères d'acceptation quand la solution devient un produit interne suivi ; elle vit à l'étape d'écriture du produit du workflow « Créer une app » (`/router-creer-une-app`).",
+          "pourquoi": "Quand la solution devient un produit logiciel suivi : un cahier des charges produit pensé avec le décideur (pour qui, quel enjeu), relu avant de le figer. Il vit à l'étape d'écriture du produit du workflow « Créer une app » (`/router-creer-une-app`).",
           "maison": "creer-une-app"
         }
       ],

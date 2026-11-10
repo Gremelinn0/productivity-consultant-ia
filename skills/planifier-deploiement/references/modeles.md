@@ -127,6 +127,12 @@ signés avant de commencer : on cite la fiche signée sans recopier les valeurs)
 
 *Recette : qui accepte (pas celui qui construit), sur quelles données, quand.*
 
+*Approbations à obtenir avant la bascule :*
+
+| Approbation | Donnée par (rôle) | Pour quoi | Avant le |
+|---|---|---|---|
+| | | | |
+
 *Mise en production : jour et ordre de bascule · retour arrière (qui, sur quel signal, comment on vérifie que
 l'ancienne méthode a repris) · interrupteur. Le plan prévoit ; les actions, le feu vert et la bascule se
 tiennent dans 90-mise-en-service.*
@@ -140,6 +146,16 @@ tiennent dans 90-mise-en-service.*
 4. Quels accès, propriétaires de comptes et procédures de secours faut-il transmettre ?
 5. Comment vérifier que l'équipe a compris et sait corriger une erreur courante ?
 6. Quel support après la transmission, et qu'est-ce qui relève d'une nouvelle mission ?
+
+*Puis le tableau d'impact : ce que le déploiement change, zone par zone, avec un niveau (faible · moyen · fort) et ce
+qu'on fait pour l'absorber.*
+
+| Zone | Ce qui change | Niveau | Ce qui l'absorbe (formation, guide, période de double saisie…) |
+|---|---|---|---|
+| Personnes | | | |
+| Outils | | | |
+| Processus | | | |
+| Coût | | | |
 
 ## 5. Exploitation
 *Propriétaire et suppléant (rôles, de 60-specification §17) · maintenance : qui, rythme, heures `[H]` (cohérentes
@@ -182,9 +198,9 @@ Thèse attaquée : … (une ou deux phrases falsifiables)
 Contributions : rôles consultés, ou « rédigé par le consultant seul » (et l'étape du plan où chacun écrit seul ses raisons d'échec).
 Point de départ des conditions d'arrêt (plan d'un cas seulement) : celle de 40-solutions §1, et les histoires qui la reprennent.
 
-| # | Histoire d'échec (au passé) | Vraisemblance | Gravité | Signal d'alerte précoce | Parade | Condition d'arrêt | Propriétaire (rôle) | Classement |
-|---|---|---|---|---|---|---|---|---|
-| 1 | | | | | (pré-mortem n° 1) si elle a durci le plan | | | |
+| # | Histoire d'échec (au passé) | Vraisemblance | Gravité | Niveau (croisé) | Signal d'alerte précoce | Parade | Condition d'arrêt | Propriétaire (rôle) | Classement | Statut |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | | | | | | (pré-mortem n° 1) si elle a durci le plan | | | | |
 
 Écartées : objection — raison.
 Verdict : engager | durcir | pivoter — en une phrase, avec le compte : « n parades manquantes sur m histoires retenues ».

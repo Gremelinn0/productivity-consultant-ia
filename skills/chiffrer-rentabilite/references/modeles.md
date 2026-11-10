@@ -74,9 +74,13 @@ Date · Demandeur (rôle) · Valideur (rôle) · Décideur (rôle) · Rédigé p
 en suit une autre (simplifications, puis construction), la référence de la seconde est l'état après la première.*
 
 ## 2. Hypothèses et mesure
-| Terme | Valeur centrale | Basse–haute plausible | Statut | Source, ou qui peut confirmer |
-|---|---|---|---|---|
-| | | | | |
+| Terme | Valeur centrale | Basse–haute plausible | Statut | Source, ou qui peut confirmer | Solidité de la preuve | Test le moins cher et seuil qui change la décision |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+
+*Les deux dernières colonnes ne se remplissent que pour les hypothèses fragiles qui portent le gain. Solidité : relevé
+(forte), dit de mémoire par un rôle (moyenne), supposé (faible). Test : le geste le moins cher qui lèverait le doute
+(chronométrer vingt dossiers, demander un export), avec le seuil qui ferait changer la décision.*
 
 *Puis : valeurs à relever avant le déploiement (qui, comment) et valeurs à relire après dans `95-mesure.md`
 (`mesurer-gains`), où le réel s'écrit à côté de cette estimation, qui reste intacte.*
@@ -100,6 +104,10 @@ lui (phases, hypothèses) ; si l'écart révèle un trou de `03`, celui-ci est c
 | Délai de retour, payé seul | | | |
 
 ## 4. Trois scénarios et point mort
+*En tête, la cascade du gain, du total théorique au gain net par mois (modèle : `formules.md` §9) : un tableau d'une
+ligne par terme (gains par terme, effet de l'adoption, fonctionnement, maintenance) avec son montant et son cumul, que le
+décideur lit de haut en bas ; il peut être dessiné en cascade, mais le tableau fait foi. Puis la sensibilité.*
+
 *Sensibilité d'abord : chaque hypothèse seule, les autres au central ; retenir les deux ou trois qui écartent le plus
 (elles peuvent différer de celles de `03-chiffrage.md` ; `50` fait foi). Un scénario bas dont le gain net est négatif
 s'écrit « ne se rembourse pas » et se dit sous le seuil de rentabilité mensuelle.*

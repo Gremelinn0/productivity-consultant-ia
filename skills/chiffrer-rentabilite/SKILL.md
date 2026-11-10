@@ -123,8 +123,12 @@ recommandation — y aller, ne pas y aller ou mesurer d'abord — que le décide
    termes restent au central, sans classement de sensibilité à ce niveau. Business case : bouger chaque
    hypothèse seule pour repérer les deux ou trois qui déplacent le résultat (elles peuvent différer de celles
    de l'ordre de grandeur : le business case fait foi), construire bas, central et haut avec elles, puis
-   calculer le point mort (méthode en référence). Un scénario bas dont le gain net est négatif s'écrit « ne se
-   rembourse pas » ; on dit alors sous quel gain brut mensuel le dispositif coûte plus qu'il ne rapporte.
+   calculer le point mort (méthode en référence). Pour chaque hypothèse fragile qui porte le gain, écrire la solidité
+   de sa preuve (relevé, dit de mémoire, supposé) et le test le moins cher qui la lèverait, avec le seuil qui ferait
+   changer la décision (« si un chronométrage de vingt dossiers donne moins de 2 minutes, on ne construit pas »).
+   Un scénario bas dont le gain net est négatif s'écrit « ne se rembourse pas » ; on dit alors sous quel gain brut
+   mensuel le dispositif coûte plus qu'il ne rapporte. Le business case ouvre cette rubrique par la cascade du gain,
+   du total théorique au gain net, terme par terme (`references/formules.md`, §9).
 7. **Chiffrer une option qui en suit une autre.** Si l'option retenue vient après des simplifications (option
    0 de `40-solutions.md`), la situation de référence de la seconde est l'état après la première. Le calcul
    gagne une colonne « apport de l'option » : ce que la seconde ajoute à la première. Le gain se répartit

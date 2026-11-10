@@ -81,6 +81,8 @@ Statut : `[F]` si tous les termes sont `[F]`, sinon `[E]` avec le terme supposé
 | Gain net par mois | | | | |
 | Retour : constaté (cumul réel), projeté `[E]` (formule de 50 §4) ou « pas de retour » (gain net nul ou négatif) | | | | |
 
+*Sous le tableau : le propriétaire du gain (le rôle qui le retrouve dans ses comptes, distinct de celui du dispositif quand ils diffèrent) et la part du gain brut qui est unique (à ne pas projeter) ou récurrente.*
+
 ## 5. Adoption et usage
 *Adoption active = occurrences passées par le dispositif ÷ occurrences totales, par rôle ; pas les comptes ouverts, pas les formations suivies. Contournements : tableur parallèle, ancienne voie reprise, demandes de
 dérogation. Jamais une ligne par personne.*
