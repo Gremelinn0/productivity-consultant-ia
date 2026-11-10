@@ -2,7 +2,7 @@
   "format": "workflow-v1",
   "slug": "conseiller-une-mission-ia",
   "titre": "Conseiller une mission IA, de la découverte au plan de déploiement",
-  "resume": "Huit étapes de conseil pour une mission d'IA ou d'automatisation chez un client : trouver où l'IA aide, cadrer, diagnostiquer le travail réel et en écrire les exigences, optimiser le processus, choisir la stratégie, concevoir, chiffrer, puis spécifier et planifier. Deux portes d'entrée : un besoin déjà nommé, ou aucun besoin et on découvre d'abord. C'est la porte du pack consultant IA : il tient l'état de la mission et le journal des décisions. En ligne, un agent mène ces étapes par écrit avec la personne ; le consultant relit le chiffrage, la spécification et le plan. Construire, tester, mettre en service et mesurer passent au workflow « Implémenter l'IA en entreprise ».",
+  "resume": "Neuf étapes de conseil pour une mission d'IA ou d'automatisation chez un client : trouver où l'IA aide, cadrer, diagnostiquer le travail réel et en écrire les exigences, optimiser le processus, choisir la stratégie, concevoir, chiffrer, puis spécifier et planifier, et, une fois la solution en service, mesurer le gain. Deux portes d'entrée : un besoin déjà nommé, ou aucun besoin et on découvre d'abord. C'est la porte du pack consultant IA : il tient l'état de la mission et le journal des décisions. En ligne, un agent mène ces étapes par écrit avec la personne ; le consultant relit le chiffrage, la spécification et le plan. Construire, tester et mettre en service passent au workflow « Implémenter l'IA en entreprise ».",
   "commande": "/router-mission-ia",
   "routeur": "router-mission-ia",
   "metiers": [
@@ -482,6 +482,78 @@
         }
       ],
       "departement": "Décider"
+    },
+    {
+      "n": 9,
+      "slug": "mesurer-le-gain",
+      "titre": "Mesurer le gain",
+      "rend": "Le gain observé sur relevés réels (jamais déclaré avant), comparé à la mesure de départ et au business case ; les coûts réels, l'adoption active, les incidents et de vrais cas lus ; puis la décision (continuer, corriger, étendre ou arrêter) et ce que la mesure change pour le portefeuille.",
+      "fichier": "95-mesure.md",
+      "competences": [
+        {
+          "nom": "consultant-ia:mesurer-gains",
+          "role": "par défaut",
+          "pourquoi": "C'est le seul endroit où un gain devient un fait : elle compare des relevés réels à la mesure de départ et au business case, lit de vrais cas (les échecs silencieux comptent) et dit ce qui n'est pas encore observé."
+        }
+      ],
+      "humaine": "Le client dépose ses relevés et le décideur tranche entre continuer, corriger, étendre et arrêter ; la compétence propose, elle ne décide pas à sa place.",
+      "regle": "La mesure s'ouvre quand `90-mise-en-service.md` est validé au journal et la bascule inscrite ; sans lui, la solution n'est pas en service. La première version est la demande de relevés : le pack ne collecte rien et n'installe aucun compteur, donc rien n'est observé sans un relevé daté du client. Ensuite vient une version par revue. On compare des périodes comparables, avec le temps humain complet et les coûts réels : les traces d'un outil disent que ça tourne, pas que ça rapporte. L'estimation de `50-rentabilite.md` reste intacte, le réel s'écrit à côté, dans `95-mesure.md`. En parcours court d'un assistant IA, la mesure de départ et les indicateurs sont en rubrique 8 de `90-mise-en-service/assistant-ia.md`. La décision est l'une de : continuer, corriger, étendre, arrêter. Avec « corriger », le cas reste ouvert et la revue suivante est datée au journal ; le cas se clôt à la décision en régime établi, sur un arrêt, ou si le client renonce aux relevés. La mesure remonte au portefeuille. Une correction, une extension ou un retrait sur un outil réel passe par la mise en service du pack Créer un agent IA.",
+      "cas": [],
+      "taches": [
+        {
+          "slug": "choisir-les-indicateurs",
+          "titre": "Compléter les indicateurs à suivre",
+          "competences": [
+            {
+              "nom": "strategy-skills-for-claude:kpi-architect",
+              "role": "autre choix",
+              "pourquoi": "Quand les indicateurs de la spécification (60, rubrique 14) sont trop maigres pour suivre la décision : avancés et retardés, un responsable chacun, un rythme de revue. Un seuil ajouté se corrige dans 60, par version datée. Courte : un canevas, pas un guide.",
+              "source": "aapersh, aapersh/strategy-skills-for-claude"
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "faire-les-releves",
+          "titre": "Faire les relevés",
+          "competences": [
+            {
+              "nom": "querying-posthog-data",
+              "pourquoi": "Quand l'entreprise suit son produit dans PostHog : calcule usages et métriques pour les relevés de la mesure."
+            },
+            {
+              "nom": "logfire-query",
+              "pourquoi": "Quand l'agent est suivi par Logfire : lit erreurs, coûts, durées et tendances."
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "reperer-les-echecs-silencieux",
+          "titre": "Repérer les échecs silencieux",
+          "competences": [
+            {
+              "nom": "exploring-ai-failures",
+              "pourquoi": "Repère dans les traces de PostHog les réponses d'IA qui échouent sans déclencher d'alerte."
+            }
+          ],
+          "reserve": []
+        },
+        {
+          "slug": "faire-tenir-le-gain",
+          "titre": "Faire tenir le gain dans la durée",
+          "competences": [
+            {
+              "nom": "strategy-skills-for-claude:value-realization",
+              "role": "autre choix",
+              "pourquoi": "Pour que le gain tienne : qui le suit, comment il se mesure, comment on le capte après la mise en service. Courte.",
+              "source": "aapersh, aapersh/strategy-skills-for-claude"
+            }
+          ],
+          "reserve": []
+        }
+      ],
+      "departement": "Mesurer"
     }
   ]
 }
