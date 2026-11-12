@@ -92,7 +92,7 @@ d'actions prêtes pour la mise en service du pack Créer un agent IA.
    plan. Une contrainte dite de mémoire reste `[H]` jusqu'à sa pièce (contrat, clause, attestation demandée).
 4. **Comparer.** Trois colonnes au plus : ne rien ajouter, et deux candidats, dont celui qui s'impose par l'existant
    (la suite bureautique déjà payée). Lire `references/fiches-assistants.md`, puis relever chaque ligne de sa grille sur
-   les pages officielles, le jour même. Pour une décision difficile, appeler `router-consulting-strategy` (lentille
+   les pages officielles, le jour même. Pour une décision difficile, appeler `router-decider-une-strategie` (lentille
    options stratégiques). Écrire la recommandation, ce qui la ferait changer, et le plan minimal. Un outil déjà inclus
    dans une licence payée est la colonne « ne rien ajouter » ; le second candidat reste libre. Une recommandation ne
    repose sur un fait non vérifié que s'il est écrit comme condition.

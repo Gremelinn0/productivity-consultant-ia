@@ -53,7 +53,7 @@ flowchart TB
     H --> G["mesurer-gains<br/>gain observé"]
   end
   F -- "chaque cas retenu" --> B
-  CS["router-consulting-strategy<br/>options, contre-cas, conditions d'arrêt"] -.-> D
+  CS["router-decider-une-strategie<br/>options, contre-cas, conditions d'arrêt"] -.-> D
   CS -.-> S
   CS -.-> R
   CS -.-> PL
@@ -174,7 +174,7 @@ livrable contre son modèle, sans IA :
 python scripts/verifier_livrables.py mission --attendus 10,20,30
 ```
 
-Le dossier `skills/` porte aussi `router-consulting-strategy`, le cerveau des décisions : les étapes qui
+Le dossier `skills/` porte aussi `router-decider-une-strategie`, le cerveau des décisions : les étapes qui
 décident (portefeuille, choix de l'option, recommandation, priorités, continuer ou arrêter) l'appellent
 pour arbitrer, et gardent leur propre livrable.
 
@@ -330,7 +330,7 @@ auteurs qui vont avec lui sont créditées, avec leur licence, dans [COMPAGNONS.
   structure d'une spécification, priorisation et critères d'acceptation (`write-spec`), comparaison de
   solutions (`vendor-review`), retour arrière, communication et mode opératoire d'exploitation
   (`change-request`, `runbook`), forme de l'entretien (`smb-onboard`) ;
-- `router-consulting-strategy` — options réelles, contre-cas, recommandation d'abord (sa maison est ce
+- `router-decider-une-strategie` — options réelles, contre-cas, recommandation d'abord (sa maison est ce
   pack) ;
 - Idées reprises le 10/11/2026, après avoir comparé nos compétences à d'autres, réécrites avec nos mots et jamais
   copiées (les dépôts de MichaelRochonnn, [mckinsey-bcg-consulting](https://github.com/MichaelRochonnn/mckinsey-bcg-consulting),

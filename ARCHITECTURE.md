@@ -68,7 +68,7 @@ PORTE 1 — besoin connu
   MESURER : de retour dans ce pack, quand 90 est validé au journal
   mesurer-gains ....................................... 95-mesure
 
-Cerveau des décisions, appelé là où une étape décide : router-consulting-strategy
+Cerveau des décisions, appelé là où une étape décide : router-decider-une-strategie
 ```
 
 **Optimiser le processus avant de le spécifier** (décision du 09/11/2026) : `35-optimisation` se place entre les exigences
@@ -110,7 +110,7 @@ mission, le contrat ne change pas. Le conseil ne construit rien et n'agit dans a
 évalue et mesure les gains ; `mesurer-gains` se rouvre à 95 quand `90-mise-en-service.md` est validé au journal.
 
 Aucune compétence ne refait le travail d'une autre ligne. Si une responsabilité a un propriétaire
-ci-dessus, on l'appelle. Le dossier `skills/` contient en plus `router-consulting-strategy`, qui arbitre
+ci-dessus, on l'appelle. Le dossier `skills/` contient en plus `router-decider-une-strategie`, qui arbitre
 sans posséder d'étape (voir la section suivante), et `mener-entretien-ia`, l'outil qui fait mener un entretien
 du pack par écrit par une IA quand le consultant n'est pas là : il lit les questions chez leurs propriétaires
 (guides de `decouvrir-cas-usage`, `cadrer-besoin`, `auditer-processus`) et rend une note `mission/sources/`. Devant un
@@ -124,7 +124,7 @@ de conformité et les indicateurs, que la mise en service du pack Créer un agen
 
 ## Le cerveau des décisions
 
-`router-consulting-strategy` apporte la discipline de décision : cadrage, options réelles, contre-cas,
+`router-decider-une-strategie` apporte la discipline de décision : cadrage, options réelles, contre-cas,
 conditions d'arrêt, recommandation d'abord. Il ne possède aucune étape ni aucun dossier : chaque étape
 garde son livrable et son modèle, l'appelle au moment de décider et n'en recopie pas la méthode. Depuis
 le 28/10/2026, ce pack en est la seule maison : on l'édite ici, et `python scripts/verifier_pack.py`

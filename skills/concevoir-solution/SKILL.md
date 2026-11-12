@@ -135,7 +135,7 @@ plateforme arrêtée par `70-plan` et confirmée par le décideur au journal fai
    observable. Un seuil qui ne se calcule qu'au business case s'écrit « fixé par le point mort de
    `50-rentabilite` » et la porte le reprend. Examiner le repli avec la même grille. Si le contre-argument
    est plus fort que les raisons, changer de recommandation. Pour arbitrer, appeler
-   `router-consulting-strategy` (lentille options stratégiques) ; le livrable reste celui de cette étape.
+   `router-decider-une-strategie` (lentille options stratégiques) ; le livrable reste celui de cette étape.
 10. **Écrire la fiche en commençant par la recommandation**, y dire pourquoi ce n'est pas déjà fait (le point
     d'étouffement : donnée dispersée, personne à qui revient la tâche, outil sans connecteur), et pour un public
     réticent mener par des questions puis des preuves plutôt que par l'assertion. Finir par la décision attendue, proposer

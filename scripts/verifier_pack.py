@@ -6,8 +6,8 @@ Agent Skill (Skills API d'Anthropic), unicité du routeur de stratégie, compét
 Usage :
   python scripts/verifier_pack.py      contrôle tout (0 = aucun écart)
 
-Depuis le 28/10/2026, le pack est la seule maison de `router-consulting-strategy` : aucune copie n'est tenue
-ailleurs. Sur le poste de l'auteur, ~/.claude/skills/router-consulting-strategy doit être un lien (jonction) vers
+Depuis le 28/10/2026, le pack est la seule maison de `router-decider-une-strategie` : aucune copie n'est tenue
+ailleurs. Sur le poste de l'auteur, ~/.claude/skills/router-decider-une-strategie doit être un lien (jonction) vers
 le dossier du pack ; un vrai dossier à cet endroit est une seconde copie, et le contrôle la signale.
 """
 import json
@@ -17,7 +17,7 @@ import re
 import sys
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
-ROUTEUR = "router-consulting-strategy"  # format d'origine (anglais) : exempté des sections du pack
+ROUTEUR = "router-decider-une-strategie"  # format d'origine (anglais) : exempté des sections du pack
 BIBLIOTHEQUE = pathlib.Path.home() / ".claude" / "skills" / ROUTEUR
 SECTIONS = ["## Ce que cette compétence résout", "## Stratégie", "## Étapes", "## Le livrable",
             "## Décisions et rejets", "## Frontières", "## Preuves restantes"]

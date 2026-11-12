@@ -103,7 +103,7 @@ et avec le business case ; une décision que le décideur peut renverser.
 7. **Passer les trois cas difficiles** : adoption nulle ou presque, gain net devenu négatif, changement non approuvé. Pour chacun, écrire « non constaté », ou le constat et la
    conduite (`references/mesure.md`, §5).
 8. **Proposer la décision.** Règles par défaut `[H]` à confirmer par le décideur (`references/mesure.md`, §6) : continuer · corriger (révision : action, rôle, date de re-mesure) ·
-   étendre (candidat nommé, nouveau business case avec les valeurs observées) · arrêter (retrait, fin des coûts récurrents). Pour arbitrer, appeler `router-consulting-strategy`
+   étendre (candidat nommé, nouveau business case avec les valeurs observées) · arrêter (retrait, fin des coûts récurrents). Pour arbitrer, appeler `router-decider-une-strategie`
    (lentille options stratégiques, hypothèses restantes) ; le livrable reste celui de cette étape. Écrire la décision en tête, trois raisons au plus, ce qui la renverserait. Les actions
    sur les outils réels (correction, extension, retrait) passent par la mise en service du pack Créer un agent IA.
 9. **Dire ce que la mesure change pour le portefeuille.** Quels paramètres communs sont maintenant observés (part réemployée, adoption, maintenance, fonctionnement, montée en charge),

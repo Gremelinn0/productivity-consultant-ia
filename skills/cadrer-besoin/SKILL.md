@@ -173,7 +173,7 @@ Ligne de journal, au moment où le demandeur tranche :
 - Aucun besoin nommé (« où l'IA peut-elle nous aider ? ») → `decouvrir-cas-usage`.
 - L'état de la mission et le journal des décisions → `router-mission-ia`.
 - Seulement quand la demande est elle-même une décision d'affaires ambiguë (marché, offre,
-  investissement) : appeler `router-consulting-strategy`, qui structure cette décision et ne possède
+  investissement) : appeler `router-decider-une-strategie`, qui structure cette décision et ne possède
   aucun livrable. Pour un besoin ordinaire, cette étape ne l'appelle pas.
 
 ## Preuves restantes

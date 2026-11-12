@@ -124,7 +124,7 @@ Histoires du pré-mortem (70 §8) produites : … · signal qui a parlé : … �
 Décision proposée : continuer · corriger · étendre · arrêter.
 Trois raisons au plus : …
 Ce qui la renverserait : …
-Contre-cas le plus fort : … (`router-consulting-strategy`, si appelé : le dire ; sinon l'écrire soi-même)
+Contre-cas le plus fort : … (`router-decider-une-strategie`, si appelé : le dire ; sinon l'écrire soi-même)
 
 | Action | Rôle | Date | Passe par 90 (`A-xx`) ? |
 |---|---|---|---|

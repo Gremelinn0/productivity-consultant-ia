@@ -3,8 +3,8 @@
   "slug": "decider-une-strategie",
   "titre": "Décider d'une stratégie d'affaires, la recommandation d'abord",
   "resume": "Huit étapes de conseil en stratégie pour une décision d'affaires floue (marché, offre, produit, investissement, priorités) : poser la décision, la structurer, séparer les faits des hypothèses, comparer de vraies options, éprouver le contre-cas, puis recommander d'abord. C'est une discipline de raisonnement : presque toutes les étapes sont menées par le routeur lui-même, et chaque étape sans compétence à appeler le dit.",
-  "commande": "/router-consulting-strategy",
-  "routeur": "router-consulting-strategy",
+  "commande": "/router-decider-une-strategie",
+  "routeur": "router-decider-une-strategie",
   "metiers": [
     "conseil"
   ],
@@ -69,7 +69,7 @@
       "fichier": "",
       "competences": [],
       "manque": "Aucune compétence ne génère ces options : le routeur les établit lui-même.",
-      "regle": "Les options s'examinent à égalité : l'option préférée ne gagne pas par défaut parce que les autres n'ont pas été regardées. Quand les faits viennent déjà de router-reflexion-profonde, on entre ici : ce routeur ne sert alors qu'aux options, à l'économie, aux priorités et à la recommandation.",
+      "regle": "Les options s'examinent à égalité : l'option préférée ne gagne pas par défaut parce que les autres n'ont pas été regardées. Quand les faits viennent déjà de router-reflechir-a-fond, on entre ici : ce routeur ne sert alors qu'aux options, à l'économie, aux priorités et à la recommandation.",
       "cas": []
     },
     {
@@ -125,7 +125,7 @@
       "fichier": "",
       "competences": [
         {
-          "nom": "router-reflexion-profonde",
+          "nom": "router-reflechir-a-fond",
           "role": "routeur : une question technique bornée",
           "pourquoi": "Quand un point technique ou système peut renverser la décision (est-ce faisable, est-ce vrai en production), il prend cette seule question et rend les faits, les contradictions et les inconnues : une cause prouvée plutôt qu'un avis, rapportée ensuite dans la décision d'affaires."
         }

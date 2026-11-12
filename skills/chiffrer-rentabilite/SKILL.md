@@ -143,7 +143,7 @@ recommandation — y aller, ne pas y aller ou mesurer d'abord — que le décide
    dans la même logique, et les repères du pack restent affichés à côté, en alerte. Le décideur peut renverser
    la recommandation : sa décision s'inscrit au journal. « Mesurer d'abord » n'empêche pas de préparer la
    spécification quand la mesure est déjà au calendrier ; la construction, elle, attend la porte. Pour
-   arbitrer, appeler `router-consulting-strategy` (lentille business case) ; le livrable reste celui de
+   arbitrer, appeler `router-decider-une-strategie` (lentille business case) ; le livrable reste celui de
    cette étape.
 9. **Définir la mesure** : avant le déploiement, les valeurs `[H]` à relever (comment, par qui) ;
    après, les valeurs à relire dans `mesurer-gains` : l'estimation de cette fiche reste intacte, le réel

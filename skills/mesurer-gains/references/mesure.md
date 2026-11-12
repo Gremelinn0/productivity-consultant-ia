@@ -167,7 +167,7 @@ après la bascule.
 | Continuer | sinon : seuils respectés, gain net positif, point mort tenu ; pas de candidat d'extension, ou conditions d'extension pas encore réunies | prochaine lecture datée au rythme de 70 §6 ; rien d'autre à changer |
 
 - **Cas partagé** (un seuil franchi et un business case qui tient, ou l'inverse) : le décideur tranche, et la décision écrit pourquoi.
-- **Appeler `router-consulting-strategy`** pour arbitrer : la décision à prendre (une des quatre), les faits observés `[F]` de ce document, les hypothèses restantes `[H]`, les options réelles (les quatre, y compris ne rien changer),
+- **Appeler `router-decider-une-strategie`** pour arbitrer : la décision à prendre (une des quatre), les faits observés `[F]` de ce document, les hypothèses restantes `[H]`, les options réelles (les quatre, y compris ne rien changer),
   le contre-cas, les conditions d'arrêt (60 §14, 40 §1). Il rend une recommandation en réponse d'abord, que 95 reprend sans recopier sa méthode ; ne dire qu'on l'a appelé que si c'est fait.
 - **Dire ce que coûte d'attendre** : coût mensuel de poursuite `[E]` (fonctionnement + maintenance), temps libéré non réemployé.
 - **Une décision sans actions est un vœu** : « corriger » donne l'action, le rôle, la date de re-mesure et les relevés attendus ; « arrêter » donne les actions de retrait ; « étendre » nomme le candidat et la porte d'entrée.

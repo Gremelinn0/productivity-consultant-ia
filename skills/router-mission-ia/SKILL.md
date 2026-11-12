@@ -230,7 +230,7 @@ Décisions : … (cinq lignes au plus). Hypothèses lourdes : … Gain observé 
   `consultant-ia:planifier-deploiement`, `consultant-ia:mesurer-gains` ; compagnons : `operations:process-doc`, `operations:vendor-review`, `bmad-prd`.
 - **Pour raisonner à une étape, la méthode McKinsey nommée à cette étape** (compagnon, `COMPAGNONS.md`, « Méthodes de conseil » ; d'autres auteurs y sont rangés de même). Elle ne remplace pas la compétence de l'étape, qui garde le livrable ; ses autres choix et le quand de chacun sont les tâches de `references/workflow.json`, étape par étape.
 - Cette porte n'agit dans aucun outil de l'entreprise : toute action passe par la mise en service du pack Créer un agent
-  IA, action par action. L'arbitrage d'une décision d'affaires → `router-consulting-strategy`, appelé par les étapes qui
+  IA, action par action. L'arbitrage d'une décision d'affaires → `router-decider-une-strategie`, appelé par les étapes qui
   décident ; il ne possède aucun livrable.
 - Hors du pack : exploiter la solution après la transmission, collecter les relevés à la place du client.
 

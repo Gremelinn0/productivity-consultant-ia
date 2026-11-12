@@ -143,7 +143,7 @@ avec ce qu'on ne fait pas et ce qui arrêterait le projet.
    qui change le cas, l'option ou le périmètre). Les parades ajoutées portent « (pré-mortem n° k) ». Sans rôle
    de l'entreprise, il est « rédigé par le consultant seul » et le plan prévoit l'étape où chaque rôle écrit
    seul ses raisons d'échec. Ouvrir `references/pre-mortem.md` pour le déroulé, les familles d'échec et le gabarit.
-   Pour arbitrer l'ordre des priorités (étape 2) ou le verdict, appeler `router-consulting-strategy` (lentilles
+   Pour arbitrer l'ordre des priorités (étape 2) ou le verdict, appeler `router-decider-une-strategie` (lentilles
    priorisation, risques et parades) ; le livrable reste celui de cette étape.
 8. **Relire, puis finir par la décision attendue.** Toute formule en suspens (« on verra », « à
    définir ») devient une action, une hypothèse `[H]` avec son confirmateur, ou une question dans
