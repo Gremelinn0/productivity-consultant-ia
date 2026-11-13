@@ -223,7 +223,7 @@ Lignes de journal, au moment où le demandeur tranche (exemples fictifs) :
 - Calendrier, simplifications, constat de la porte, déploiement, formation, communication, pré-mortem, rythme des
   revues d'indicateurs après déploiement → `planifier-deploiement` ; ici on fixe chaque indicateur, sa décision, son
   départ, sa fréquence de lecture souhaitée et ses seuils.
-- L'état de la mission et le journal des décisions → `router-mission-ia`.
+- L'état de la mission et le journal des décisions → `router-conseiller-une-mission-ia`.
 - Construire en essai → `construire-solution` ; recetter → `tester-solution` ; agir sur un outil réel →
   `piloter-mise-en-service` (ces trois-là au pack Créer un agent IA) ; mesurer le gain après déploiement → `mesurer-gains`. Ici on spécifie.
 - Pour approfondir un PRD de produit logiciel : `COMPAGNONS.md` du pack, ligne « Spécifier ». On ne dit

@@ -197,7 +197,7 @@ Ligne de journal, au moment où le décideur tranche (exemple fictif) :
 - Le processus actuel, ses mesures et ses causes → `auditer-processus`.
 - Calendrier, plan de simplification, constat de la porte, pilote planifié, formation, pré-mortem →
   `planifier-deploiement`.
-- L'état de la mission et le journal des décisions → `router-mission-ia`.
+- L'état de la mission et le journal des décisions → `router-conseiller-une-mission-ia`.
 - Construire l'option retenue, en essai → `construire-solution` du pack Créer un agent IA, qui reprend l'option et la
   plateforme de cette fiche ; la recette → `tester-solution` (même pack) ; toute action sur un outil de l'entreprise →
   la mise en service, au pack Créer un agent IA aussi.
@@ -206,7 +206,7 @@ Ligne de journal, au moment où le décideur tranche (exemple fictif) :
   compagnon, la méthode ci-dessus est le repli maison.
 - Compétences complémentaires (facultatives, à installer à part) : quand l'option retenue est un système
   (agents, mémoire, intégrations) ou comprend un site, `COMPLEMENTAIRES.md` du pack cite celles qui aident à
-  en dessiner l'architecture. Le livrable reste celui de cette étape (`router-mission-ia`, étape 3).
+  en dessiner l'architecture. Le livrable reste celui de cette étape (`router-conseiller-une-mission-ia`, étape 3).
 
 ## Preuves restantes
 

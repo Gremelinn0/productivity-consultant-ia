@@ -5,7 +5,7 @@ L'agent hébergé n'a pas internet : il ne peut pas ouvrir la carte du site pour
 retiré ou renommé, avant de remonter le pack sur l'agent.
 
 Usage :
-  python skills/router-mission-ia/scripts/carte_des_workflows.py <workflows.generated.json> [--date AAAA-MM-JJ]
+  python skills/router-conseiller-une-mission-ia/scripts/carte_des_workflows.py <workflows.generated.json> [--date AAAA-MM-JJ]
 
 La source est le fichier public du site : il ne contient que les workflows publiés et leurs compétences publiques.
 Seuls le titre et le résumé de chaque workflow entrent ici, jamais ses compétences.

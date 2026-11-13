@@ -207,7 +207,7 @@ Ligne de journal, au moment où le demandeur tranche :
   bord) et rend son bilan en annexe de ce diagnostic.
 - Le gain et le coût → `chiffrer-rentabilite` ; le calendrier, dont le plan des simplifications →
   `planifier-deploiement`.
-- L'état de la mission et le journal des décisions → `router-mission-ia`.
+- L'état de la mission et le journal des décisions → `router-conseiller-une-mission-ia`.
 - Pour rédiger le mode opératoire du processus cible, un compagnon existe : `COMPAGNONS.md` du pack, ligne
   « Diagnostiquer ». On ne dit s'en être servi que si on l'a réellement appelé ; sans lui, la rubrique 7 du modèle
   est le repli maison.

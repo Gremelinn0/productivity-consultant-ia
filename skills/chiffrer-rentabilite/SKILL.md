@@ -220,7 +220,7 @@ Lignes de journal, au moment où le décideur tranche (étiquette « découverte
   `planifier-deploiement`.
 - Le réel après la mise en service (relevés, gain observé, coûts réels, continuer · corriger · étendre ·
   arrêter) → `mesurer-gains`.
-- L'état de la mission et le journal des décisions → `router-mission-ia`.
+- L'état de la mission et le journal des décisions → `router-conseiller-une-mission-ia`.
 - Pour la décision d'automatiser et le choix de plateforme selon l'unité de facturation : `COMPAGNONS.md`
   du pack, ligne « Stratégie d'automatisation ». On ne dit s'en être servi que si on l'a réellement appelé.
 

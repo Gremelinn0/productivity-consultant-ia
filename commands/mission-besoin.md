@@ -5,7 +5,7 @@ argument-hint: "<le besoin, en une phrase>"
 
 # Mission IA — porte « besoin connu »
 
-Utilise la compétence `router-mission-ia` :
+Utilise la compétence `router-conseiller-une-mission-ia` :
 
 1. Affiche d'abord l'état du dossier `mission/` du répertoire de travail.
 2. Ouvre la porte « besoin connu » pour ce besoin : $ARGUMENTS

@@ -76,7 +76,7 @@ elle ne les lance plus elle-même. `construire-solution` et `tester-solution` on
 
 | Compétence | Ce qu'elle produit |
 |---|---|
-| `router-mission-ia` | l'état de la mission, la porte, l'étape suivante, le journal des décisions |
+| `router-conseiller-une-mission-ia` | l'état de la mission, la porte, l'étape suivante, le journal des décisions |
 | `decouvrir-cas-usage` | fiche entreprise, cartographie des tâches, tri en cinq issues, portefeuille de cas d'usage classés |
 | `cadrer-besoin` | une fiche besoin courte : vrai problème, décision, périmètre, critères de succès, et le nom du dossier du cas |
 | `auditer-processus` | le diagnostic du processus actuel : mesures, goulets, causes, ce qu'on simplifie d'abord |
@@ -166,7 +166,7 @@ Après le bilan, la suite peut se faire en ligne elle aussi. Un agent hébergé 
 avec la personne seule, la découverte jusqu'au bilan chiffré (`00` à `04`) : tous les cas d'usage, chacun chiffré à
 partir des volumes déclarés avec sa solution la plus simple, avec ou sans IA, et ce qu'il faudra mesurer, puis les
 prochaines étapes avec le consultant. Il s'arrête là : le cahier des charges, la spécification et le plan (`30`, `60`,
-`70`) se font ensuite avec le consultant, après l'heure d'audit. La méthode est `skills/router-mission-ia/references/parcours-en-ligne.md`. L'hôte
+`70`) se font ensuite avec le consultant, après l'heure d'audit. La méthode est `skills/router-conseiller-une-mission-ia/references/parcours-en-ligne.md`. L'hôte
 suit l'avancement dans le dossier de mission, jamais dans les messages de l'agent, et contrôle la forme de chaque
 livrable contre son modèle, sans IA :
 

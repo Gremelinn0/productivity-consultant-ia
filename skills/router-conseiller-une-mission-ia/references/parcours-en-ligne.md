@@ -60,7 +60,7 @@ recentré le 09/11/2026 sur le bilan chiffré (« Au bilan chiffré »).
    **Tous les cas.** L'agent fait tout le travail du consultant, sans limite de questions : il cerne tous les besoins et
    fait sortir tous les cas que la personne veut automatiser. Une fois le type d'entreprise connu, il cherche ceux
    qu'elle n'a pas nommés dans la liste des meilleurs cas (`meilleurs-cas.md`), dans la recherche web et dans la carte
-   des workflows (`skills/router-mission-ia/references/carte-des-workflows.md`), et il les lui soumet : un cas ne compte
+   des workflows (`skills/router-conseiller-une-mission-ia/references/carte-des-workflows.md`), et il les lui soumet : un cas ne compte
    que si elle confirme qu'il la concerne. N'en invente aucun pour faire nombre.
    **Chaque cas, chiffré.** Ses volumes déclarés : combien de fois par mois, combien de minutes par fois, qui le fait et
    son coût horaire (une fourchette suffit). `02-portefeuille.md` les classe tous (vingt au plus) par rentabilité, du
@@ -84,7 +84,7 @@ recentré le 09/11/2026 sur le bilan chiffré (« Au bilan chiffré »).
    « non vérifié » et `[H]`.
 8 bis. **Les documents joints.** L'hôte écrit « [hôte] document joint : <chemin> » quand la personne ajoute un fichier
    (PDF, Word, Excel ; cinq de 10 Mo au plus). Un PDF se confie tel quel au Lecteur de documents. Un Word ou un Excel se
-   convertit d'abord en texte : `python3 <pack>/skills/router-mission-ia/scripts/lire_document.py <chemin> <sortie.md>`,
+   convertit d'abord en texte : `python3 <pack>/skills/router-conseiller-une-mission-ia/scripts/lire_document.py <chemin> <sortie.md>`,
    sortie dans `mission/documents/`, puis le Lecteur lit ce texte. Un fichier illisible se dit à la personne, sans
    inventer son contenu. Les pièces jointes ne donnent accès à aucun outil de la personne : l'agent ne se connecte à rien.
 8 ter. **L'automatisation d'abord.** Une solution se choisit dans cet ordre : une automatisation déterministe si des

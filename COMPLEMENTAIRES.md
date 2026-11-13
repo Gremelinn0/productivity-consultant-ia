@@ -28,7 +28,7 @@ dans le lien. Aucune n'a été essayée sur une mission : ce sont des notes de l
 
 - **Le livrable reste celui de l'étape.** Si l'une d'elles répond à la place de l'étape, son texte entre dans
   `mission/sources/` comme une source datée, l'étape le reprend dans son modèle et le journal le note
-  (`router-mission-ia`, étape 3, « Une autre compétence installée a répondu à la place de l'étape »). Une étape
+  (`router-conseiller-une-mission-ia`, étape 3, « Une autre compétence installée a répondu à la place de l'étape »). Une étape
   ne dit s'en être servie que si elle l'a réellement appelée.
 - **N'installer que ce que la mission utilise.** Un plugin apporte d'autres compétences que celle citée, et
   `engineering` déclare des connecteurs (messagerie, agenda, tâches, code) : n'en

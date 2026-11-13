@@ -279,9 +279,9 @@ def controler_complementaires(noms):
         if not any(e == etape for e, _ in vues):
             ecart(f"{COMPLEMENTAIRES} : aucune compétence pour {etape}")
     if PHRASE_ROUTEUR not in texte:
-        ecart(f"{COMPLEMENTAIRES} : le renvoi à router-mission-ia (« {PHRASE_ROUTEUR} ») manque")
-    if PHRASE_ROUTEUR not in lire(RACINE / "skills" / "router-mission-ia" / "SKILL.md"):
-        ecart(f"router-mission-ia ne dit plus « {PHRASE_ROUTEUR} » : le renvoi de {COMPLEMENTAIRES} ne mène nulle part")
+        ecart(f"{COMPLEMENTAIRES} : le renvoi à router-conseiller-une-mission-ia (« {PHRASE_ROUTEUR} ») manque")
+    if PHRASE_ROUTEUR not in lire(RACINE / "skills" / "router-conseiller-une-mission-ia" / "SKILL.md"):
+        ecart(f"router-conseiller-une-mission-ia ne dit plus « {PHRASE_ROUTEUR} » : le renvoi de {COMPLEMENTAIRES} ne mène nulle part")
     for etape in ETAPES_COMPLEMENTAIRES:
         competence = lire(RACINE / "skills" / etape / "SKILL.md")
         entree = re.search(r"^- Compétences complémentaires[^\n]*(?:\n  [^\n]*)*", competence, re.M)

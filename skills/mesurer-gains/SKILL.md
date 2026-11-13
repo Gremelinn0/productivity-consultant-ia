@@ -110,7 +110,7 @@ et avec le business case ; une décision que le décideur peut renverser.
    quels cas de `02`, `03` et `04` en dépendent, lesquels se reclassent ou se rouvrent. La correction d'un de ces livrables se fait par version datée et ligne « correction » au journal,
    par la compétence qui le possède. Sans porte découverte : ce qui servira aux cas suivants du même client (`references/mesure.md`, §7).
 10. **Dater, versionner, finir par la décision attendue.** Chaque revue produit une nouvelle version de `95-mesure.md` (période, décision, historique des revues) ; le journal reçoit une ligne
-    par décision. Le cas se clôt (`router-mission-ia`) quand la mesure en régime établi est rendue et la décision prise. Si le client renonce à fournir des relevés, le journal le dit : le gain
+    par décision. Le cas se clôt (`router-conseiller-une-mission-ia`) quand la mesure en régime établi est rendue et la décision prise. Si le client renonce à fournir des relevés, le journal le dit : le gain
     reste estimé, rien n'est `[F]`, et le cas peut se clore sans mesure.
 
 ## Le livrable
@@ -164,7 +164,7 @@ Lignes de journal, au moment où le décideur tranche (exemples fictifs, une par
 - La mesure de départ, les causes → `auditer-processus`. Les formules, les hypothèses, le point mort, le business case → `chiffrer-rentabilite`. Les indicateurs, leurs seuils et leur
   attribution → `rediger-cahier-des-charges` (60 §14) ; un seuil manquant se corrige là, par version datée. Le rythme des revues, les actions aux seuils, le pré-mortem → `planifier-deploiement`.
 - Les actions de correction, d'extension ou de retrait sur des outils réels → la mise en service du pack Créer un agent IA. Une correction technique → `construire-solution`, puis `tester-solution` (pack Créer un agent IA).
-- Le portefeuille : `02` → `decouvrir-cas-usage`, `03` → `chiffrer-rentabilite`, `04` → `planifier-deploiement`. L'état de la mission et le journal → `router-mission-ia`.
+- Le portefeuille : `02` → `decouvrir-cas-usage`, `03` → `chiffrer-rentabilite`, `04` → `planifier-deploiement`. L'état de la mission et le journal → `router-conseiller-une-mission-ia`.
 - Hors du pack : installer des compteurs et collecter les données à la place du client, évaluer des personnes, conclure sur la conformité. Pour un outil de mesure précis ou un composant d'IA en
   production : `COMPAGNONS.md` du pack, ligne de l'étape 95 ; sans compagnon, la méthode ci-dessus est le repli maison.
 

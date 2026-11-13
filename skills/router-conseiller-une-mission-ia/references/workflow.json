@@ -3,8 +3,8 @@
   "slug": "conseiller-une-mission-ia",
   "titre": "Conseiller une mission IA, de la découverte au plan de déploiement",
   "resume": "Neuf étapes de conseil pour une mission d'IA ou d'automatisation chez un client : trouver où l'IA aide, cadrer, diagnostiquer le travail réel et en écrire les exigences, optimiser le processus, choisir la stratégie, concevoir, chiffrer, puis spécifier et planifier, et, une fois la solution en service, mesurer le gain. Deux portes d'entrée : un besoin déjà nommé, ou aucun besoin et on découvre d'abord. C'est la porte du pack consultant IA : il tient l'état de la mission et le journal des décisions. En ligne, un agent mène ces étapes par écrit avec la personne ; le consultant relit le chiffrage, la spécification et le plan. Construire, tester et mettre en service passent au workflow « Implémenter l'IA en entreprise ».",
-  "commande": "/router-mission-ia",
-  "routeur": "router-mission-ia",
+  "commande": "/router-conseiller-une-mission-ia",
+  "routeur": "router-conseiller-une-mission-ia",
   "metiers": [
     "conseil"
   ],

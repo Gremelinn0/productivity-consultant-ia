@@ -5,7 +5,7 @@ argument-hint: "[entreprise, équipe ou périmètre]"
 
 # Mission IA — porte « découverte »
 
-Utilise la compétence `router-mission-ia` :
+Utilise la compétence `router-conseiller-une-mission-ia` :
 
 1. Affiche d'abord l'état du dossier `mission/` du répertoire de travail.
 2. Ouvre la porte « découverte » pour : $ARGUMENTS

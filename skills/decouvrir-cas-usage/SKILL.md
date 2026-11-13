@@ -143,7 +143,7 @@ de solution choisie, pas de chiffrage fin.
 10. **Recommander, puis s'arrêter sur la décision.** Recommander trois à cinq cas à faible effort et forte valeur,
     idéalement un par équipe concernée, et dire ce qui ferait changer cette recommandation. En ligne, sans consultant :
     tous les cas classés par rentabilité, chacun chiffré avec sa solution la plus simple, trois proposés, puis `03` et `04`
-    (les prochaines étapes avec le consultant) : `router-mission-ia`, `references/parcours-en-ligne.md`, règle 6. Pour arbitrer,
+    (les prochaines étapes avec le consultant) : `router-conseiller-une-mission-ia`, `references/parcours-en-ligne.md`, règle 6. Pour arbitrer,
     appeler `router-decider-une-strategie` (lentille priorisation) ; le livrable reste celui de cette étape. À chaque
     validation (`00`, `01`, `02`), ajouter une ligne à `mission/journal.md` ; celle de `02` nomme les cas à creuser. Proposer
     ensuite `chiffrer-rentabilite` (ordre de grandeur des seuls cas à creuser → `03-chiffrage.md`),
@@ -212,7 +212,7 @@ Ligne de journal, au moment où le décideur tranche (une par document validé ;
 - L'ordre de grandeur des gains et des coûts → `chiffrer-rentabilite` ; l'ordre de mise en œuvre, vague 0 des
   suppressions et simplifications comprise → `planifier-deploiement` ; les exigences et la comparaison de solutions
   d'un cas → `rediger-cahier-des-charges`, `concevoir-solution`. L'état de la mission et le journal des décisions →
-  `router-mission-ia`.
+  `router-conseiller-une-mission-ia`.
 - Facultatif : les outils connectés à la session (documents, messagerie, tickets, CRM) ne servent qu'en lecture ; ne
   dire qu'on a lu une source que si l'outil a réellement été appelé.
 

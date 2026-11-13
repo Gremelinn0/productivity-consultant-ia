@@ -214,7 +214,7 @@ pilote, bascule) citent la pièce qui les prouve :
 - Exigences et spécification (recette, critères de pilote, indicateurs et seuils, propriétaire de la
   maintenance) → `rediger-cahier-des-charges` ; choix de l'option et définition de la porte →
   `concevoir-solution` ; processus actuel, ses mesures et ses simplifications → `auditer-processus` ; état de
-  la mission et journal → `router-mission-ia`.
+  la mission et journal → `router-conseiller-une-mission-ia`.
 - Construire en essai → `construire-solution` ; recetter → `tester-solution` ; mettre en service (actions sur
   les outils, feu vert, bascule, adoption réalisée, transmission) → `piloter-mise-en-service` (ces trois-là au pack Créer un agent IA) ; relire les
   relevés après déploiement → `mesurer-gains`. Ici on planifie et on cite ; on n'exécute pas.

@@ -41,7 +41,7 @@ membre de la communauté : vérifier son auteur, ses autorisations et ses coûts
 
 ## Méthodes de conseil (ajout du 10 novembre 2026)
 
-Pour raisonner à une étape, la porte `router-mission-ia` nomme une méthode de conseil reconnue à l'étape où elle sert. Ces méthodes viennent de quatre bibliothèques publiques et de deux ensembles déjà installés (le plugin `operations` d'Anthropic et la méthode BMad). Elles sont rangées comme tâches de `skills/router-mission-ia/references/workflow.json` : la compétence de l'étape reste l'outil par défaut et garde le livrable, la méthode est un autre choix, cité, jamais recopié. Chaque étape a son département : Trouver (découvrir), Comprendre (cadrer, auditer, optimiser), Décider (exigences, solutions, chiffrage, spécification, plan), Mesurer (le gain, étape 9, rouverte après la mise en service).
+Pour raisonner à une étape, la porte `router-conseiller-une-mission-ia` nomme une méthode de conseil reconnue à l'étape où elle sert. Ces méthodes viennent de quatre bibliothèques publiques et de deux ensembles déjà installés (le plugin `operations` d'Anthropic et la méthode BMad). Elles sont rangées comme tâches de `skills/router-conseiller-une-mission-ia/references/workflow.json` : la compétence de l'étape reste l'outil par défaut et garde le livrable, la méthode est un autre choix, cité, jamais recopié. Chaque étape a son département : Trouver (découvrir), Comprendre (cadrer, auditer, optimiser), Décider (exigences, solutions, chiffrage, spécification, plan), Mesurer (le gain, étape 9, rouverte après la mise en service).
 
 Lecture du 10 novembre 2026, aux commits indiqués. Ce sont des notes de lecture, pas des essais : aucune méthode n'a été jouée sur une mission réelle.
 
@@ -83,7 +83,7 @@ Plusieurs compétences installées peuvent répondre à la même demande : un ru
 mode opératoire génériques existent aussi chez d'autres éditeurs. Dans une mission, l'étape du pack
 possède le livrable. Un compagnon n'est appelé que par l'étape, dans la condition écrite ci-dessus ; si
 une autre compétence a répondu à sa place, son texte devient une source de l'étape, rangée dans
-`mission/sources/`, et l'étape le reprend dans son modèle (`router-mission-ia`, étape 3). Hors d'une
+`mission/sources/`, et l'étape le reprend dans son modèle (`router-conseiller-une-mission-ia`, étape 3). Hors d'une
 mission, le pack n'a pas à prendre la demande.
 
 Essai du 13 octobre 2026, dans une session chargée de 151 compétences (le pack, les plugins `operations`

@@ -43,7 +43,7 @@ Pour rejouer la partie réelle, depuis `mission/cas-relances-factures/85-recette
 
 ## État de la mission
 
-Calculé sur les fichiers présents, comme le fait `router-mission-ia` (étape 1) :
+Calculé sur les fichiers présents, comme le fait `router-conseiller-une-mission-ia` (étape 1) :
 
 ```text
 Mission           societe-exemple                          porte(s) : découverte · besoin connu

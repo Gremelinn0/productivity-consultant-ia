@@ -1,5 +1,5 @@
 ---
-name: router-mission-ia
+name: router-conseiller-une-mission-ia
 description: >-
   Quand une mission de conseil IA ou d'automatisation commence ou reprend — un besoin à automatiser,
   une entreprise qui demande « où l'IA peut-elle nous aider ? » ou « qu'est-ce qu'on peut automatiser ? », un audit IA, une stratégie

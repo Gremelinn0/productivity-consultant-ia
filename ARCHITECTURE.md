@@ -82,7 +82,7 @@ La porte affiche 80, 85 et 90 comme « au pack Créer un agent IA » et dit comm
 plus elle-même. Un lot fait seulement de simplifications (`40-solutions` ne retient que l'option 0, rien à
 construire) passe de `70-plan` à `90-mise-en-service` sans 80 ni 85 : le registre de 90 ne porte alors que les
 actions sur les outils que ces simplifications modifient. L'ordre exact et les conditions d'ouverture de
-chaque étape sont dans `router-mission-ia` (et `references/passage-de-main.md`).
+chaque étape sont dans `router-conseiller-une-mission-ia` (et `references/passage-de-main.md`).
 
 Une équipe à équiper d'un assistant IA général, sans processus à automatiser, suit le parcours court : `10-besoin` porte la
 ligne `Parcours : déploiement d'un assistant`, le module `deployer-assistant-ia` écrit `90-mise-en-service/assistant-ia.md`
@@ -92,7 +92,7 @@ et la charte ici, puis la mise en service est au pack Créer un agent IA et `95-
 
 | Rôle | Compétence | Responsabilité unique |
 |---|---|---|
-| Porte | `router-mission-ia` | affiche l'état de la mission, choisit la porte, lance l'étape suivante, passe la main au pack Créer un agent IA après le plan, tient le journal des décisions |
+| Porte | `router-conseiller-une-mission-ia` | affiche l'état de la mission, choisit la porte, lance l'étape suivante, passe la main au pack Créer un agent IA après le plan, tient le journal des décisions |
 | Découvrir | `decouvrir-cas-usage` | brancher le contexte, cartographier les tâches, les trier en cinq issues, rendre un portefeuille de cas classés |
 | Cadrer | `cadrer-besoin` | reformuler le besoin, vérifier que c'est le bon problème, fixer périmètre, contraintes et critères de succès, nommer le dossier du cas |
 | Auditer | `auditer-processus` | décrire le processus actuel, le mesurer, trouver les goulets et leurs causes, simplifier avant d'automatiser |
@@ -323,7 +323,7 @@ le parcours ne change pas.
 ## Documentation canonique
 
 1. **Ce fichier** — architecture, contrats, règles et conventions communes.
-2. **`router-mission-ia`** — comportement de la porte et état en direct.
+2. **`router-conseiller-une-mission-ia`** — comportement de la porte et état en direct.
    Son `references/workflow.json` range, étape par étape, la compétence par défaut, ses compagnons et ses tâches : c'est la
    seule source des étapes de conseil, lue par la Marketplace (page « Conseiller une mission IA »). Le workflow « Implémenter l'IA
    en entreprise » (global) enchaîne cette porte avec la construction, la recette, la mise en service et la mesure, sans en recopier une étape.

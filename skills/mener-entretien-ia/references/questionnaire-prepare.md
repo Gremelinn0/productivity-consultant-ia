@@ -71,7 +71,7 @@ Base : <sujet de la base> (<numéros gardés>)
 ```
 
 Les questions portent les numéros 1 à n dans l'ordre ; le script leur donne les identifiants Q1 à Qn, que le
-compte rendu reprend. La note d'entretien cite ce fichier ; `router-mission-ia` sait ainsi quel questionnaire
+compte rendu reprend. La note d'entretien cite ce fichier ; `router-conseiller-une-mission-ia` sait ainsi quel questionnaire
 attend encore sa réponse.
 
 ## Règles
